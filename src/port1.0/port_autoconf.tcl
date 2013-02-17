@@ -33,8 +33,8 @@ package provide port 1.0
 
 namespace eval portutil::autoconf {
 	variable bzip2_path "/usr/bin/bzip2"
-	variable lzma_path "/opt/local/bin/lzma"
-	variable xz_path "/opt/local/bin/xz"
+	variable lzma_path "/sw/bin/lzma"
+	variable xz_path "/sw/bin/xz"
 	variable cp_path "/bin/cp"
 	variable cpio_path "/usr/bin/cpio"
 	variable diff_path "/usr/bin/diff"
@@ -71,7 +71,7 @@ namespace eval portutil::autoconf {
 	variable tar_path "/usr/bin/tar"
 	variable tar_q "q"
 	variable hdiutil_path "/usr/bin/hdiutil"
-	variable swig_path "/opt/local/bin/swig"
+	variable swig_path "/sw/bin/swig"
 	variable have_launchd "yes"
 	variable launchctl_path "/bin/launchctl"
 	variable install_command "/usr/bin/install -c"

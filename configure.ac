@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 dnl $Id: configure.ac 91520 2012-04-04 00:40:40Z jmr@macports.org $
-AC_PREREQ(2.63)
+AC_PREREQ([2.63])
 AC_DEFUN([MACPORTS_VERSION_MACRO], [esyscmd(<config/macports_version tr -d '\n')])
 AC_INIT([MacPorts],MACPORTS_VERSION_MACRO,[macports-dev@lists.macosforge.org],[macports])
 AC_CONFIG_SRCDIR([src/pextlib1.0/Pextlib.c])
@@ -8,6 +8,7 @@ AC_CONFIG_HEADERS([src/config.h])
 
 AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
+AC_USE_SYSTEM_EXTENSIONS
 AM_INIT_AUTOMAKE
 AM_MAINTAINER_MODE
 AM_SANITY_CHECK
@@ -22,11 +23,26 @@ AC_MSG_RESULT([$MACPORTS_VERSION])
 AC_SUBST(MACPORTS_VERSION)
 
 # Check user PATH for MP paths, and remove as necessary.
-# MP_PATH_SCAN
+# I'd like to remove this macro, but removing it breaks the build...
+MP_PATH_SCAN
+# ...so instead I'll just do this:
+echo "adding MacPorts prefix back in to path..."
+PATH=$PATH:/opt/local/bin
+if test "x$PREFIX" != "x"; then
+  if test "x$PREFIX" != "x/opt/local"; then
+    PATH=$PATH:$PREFIX/bin
+  else
+    echo "prefix is default, not adding it again"
+  fi
+else
+  echo "prefix is not defined, only using default"
+fi
+AC_MSG_CHECKING([path])
+AC_MSG_RESULT([$PATH])
 
-AC_PATH_PROG(SW_VERS, sw_vers)
-AC_PATH_PROG(DEFAULTS, defaults)
-AC_PATH_PROG(XCODE_SELECT, xcode-select)
+AC_PATH_PROG([SW_VERS], [sw_vers])
+AC_PATH_PROG([DEFAULTS], [defaults])
+AC_PATH_PROG([XCODE_SELECT], [xcode-select])
 
 if test "x$SW_VERS" != "x"; then
   AC_MSG_CHECKING(Mac OS X version)
@@ -116,6 +132,12 @@ AC_PROG_MAKE_SET
 AC_PROG_MKDIR_P
 AC_PROG_RANLIB
 AC_PROG_OBJC
+PKG_PROG_PKG_CONFIG
+
+# AX_* macros are from the autoconf-archive package
+AX_PTHREAD
+AX_PROG_TCL([8.4])
+AX_CHECK_GNU_MAKE
 
 AC_PATH_PROGS(BSDMAKE, [bsdmake pmake], [])
 AC_PATH_PROG(BZIP2, [bzip2], [])
@@ -127,6 +149,7 @@ AC_PATH_PROG(CVS, [cvs], [])
 AC_PATH_PROG(DIFF, [diff], [])
 AC_PATH_PROG(DSCL, [dscl], [])
 AC_PATH_PROG(DSEDITGROUP, [dseditgroup], [])
+AC_PATH_PROG(DYLIBBUNDLER, [dylibbundler], [])
 AC_PATH_PROG(ED, [ed])
 AC_PATH_PROG(FILE, [file], [])
 AC_PATH_PROG(GIT, [git], [])
@@ -208,6 +231,17 @@ MP_COMPILER_ATTRIBUTE_LF_PRIVATE
 # Foundation checks
 ACX_PTHREAD
 MP_OBJC_RUNTIME
+AC_MSG_CHECKING([for GNUStep system root])
+if test "x$GNUSTEP_SYSTEM_ROOT" = "x"; then
+  if test -d /opt/local/GNUStep/System; then
+    export GNUSTEP_SYSTEM_ROOT=/opt/local/GNUSTEP/System
+    AC_MSG_RESULT([using MacPorts GNUStep system root: $GNUSTEP_SYSTEM_ROOT])
+  else
+    AC_MSG_RESULT([using user GNUStep system root: $GNUSTEP_SYSTEM_ROOT])
+  fi
+else
+  AC_MSG_RESULT([not found])
+fi
 MP_OBJC_FOUNDATION
 
 MP_PROG_DAEMONDO
@@ -425,28 +459,26 @@ prefix=$oldprefix
 
 dnl man page settings (compressed, links, etc)
 dnl
-dnl SC_CONFIG_MANPAGES
+SC_CONFIG_MANPAGES
 
 # Output
-AC_CONFIG_FILES([
-	Doxyfile
-	Makefile
-	Mk/macports.autoconf.mk
-	doc/base.mtree
-	doc/prefix.mtree
-	doc/macosx.mtree
-	doc/macports.conf
-	doc/pubkeys.conf
-	portmgr/freebsd/Makefile
-	src/Makefile
-	src/machista1.0/Makefile
-	src/macports1.0/macports_autoconf.tcl
-	src/port1.0/port_autoconf.tcl
-	src/registry2.0/registry_autoconf.tcl
-	src/programs/Makefile
-	src/macports1.0/macports_fastload.tcl
-	setupenv.bash
-])
+AC_CONFIG_FILES([Doxyfile
+		 Makefile
+		 Mk/macports.autoconf.mk
+		 doc/base.mtree
+		 doc/prefix.mtree
+		 doc/macosx.mtree
+		 doc/macports.conf
+		 doc/pubkeys.conf
+		 portmgr/freebsd/Makefile
+		 src/Makefile
+		 src/machista1.0/Makefile
+	 	 src/macports1.0/macports_autoconf.tcl
+	 	 src/port1.0/port_autoconf.tcl
+		 src/registry2.0/registry_autoconf.tcl
+		 src/programs/Makefile
+		 src/macports1.0/macports_fastload.tcl
+		 setupenv.bash])
 
 AC_CONFIG_FILES([src/pkg_mkindex.sh], [chmod +x src/pkg_mkindex.sh])
 

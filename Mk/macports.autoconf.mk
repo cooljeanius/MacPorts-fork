@@ -42,7 +42,7 @@ LIBS			= -ltcl
 READLINE_LIBS		= 
 MD5_LIBS		= 
 SQLITE3_LIBS		= -L/opt/local/lib -lsqlite3
-CURL_LIBS		= -L/opt/local/lib -lcurl -lidn -lssl -lcrypto -lssl -lcrypto -lz
+CURL_LIBS		= -L/opt/local/lib -lcurl -lcares -lidn -lssh2 -lssh2 -lssl -lcrypto -lssl -lcrypto -lz
 INSTALL			= /usr/bin/install -c
 MTREE			= /usr/sbin/mtree
 LN_S			= ln -s
@@ -71,6 +71,6 @@ localstatedir		= ${prefix}/var
 infodir			= ${datarootdir}/info
 
 mpconfigdir		= ${sysconfdir}/macports
-portsdir		= /opt/local/var/macports/sources/rsync.macports.org/release/tarballs/ports
+portsdir		= 
 
 SILENT			= @

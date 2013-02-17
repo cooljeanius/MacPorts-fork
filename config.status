@@ -437,10 +437,10 @@ Copyright (C) 2012 Free Software Foundation, Inc.
 This config.status script is free software; the Free Software Foundation
 gives unlimited permission to copy, distribute and modify it."
 
-ac_pwd='/opt/local/var/macports/sources/rsync.macports.org/release/tarballs/base'
+ac_pwd='/private/var/root/MacPorts-fork'
 srcdir='.'
 INSTALL='/usr/bin/install -c'
-MKDIR_P='./install-sh -c -d'
+MKDIR_P='/sw/bin/gmkdir -p'
 AWK='gawk'
 test -n "$AWK" || AWK=awk
 # The default lists apply if the user does not specify any file.
@@ -635,6 +635,7 @@ cat >>"$ac_tmp/subs1.awk" <<\_ACAWK &&
 S["am__EXEEXT_FALSE"]=""
 S["am__EXEEXT_TRUE"]="#"
 S["LTLIBOBJS"]=" ${LIBOBJDIR}lstat$U.lo"
+S["MKLINKS_FLAGS"]=""
 S["macports_tcl_dir"]="/opt/local/share/macports/Tcl"
 S["localstatedir_expanded"]="/opt/local/var"
 S["MPCONFIGDIR_EXPANDED"]="/opt/local/etc/macports"
@@ -666,11 +667,9 @@ S["subdirs"]=""
 S["SQLITE3_TCL_DIR"]="/usr/lib/sqlite3"
 S["LDFLAGS_SQLITE3"]="-L/opt/local/lib -lsqlite3"
 S["CFLAGS_SQLITE3"]="-I/opt/local/include"
-S["PKG_CONFIG"]=""
-S["LDFLAGS_LIBCURL"]="-L/opt/local/lib -lcurl -lidn -lssl -lcrypto -lssl -lcrypto -lz"
+S["LDFLAGS_LIBCURL"]="-L/opt/local/lib -lcurl -lcares -lidn -lssh2 -lssh2 -lssl -lcrypto -lssl -lcrypto -lz"
 S["CFLAGS_LIBCURL"]="-I/opt/local/include"
 S["CURL_CONFIG"]="/opt/local/bin/curl-config"
-S["TCLSH"]="/usr/bin/tclsh"
 S["TCL_INCLUDES"]="-I\"/opt/local/include\""
 S["TCL_STUB_LIB_SPEC"]="-L/opt/local/lib -ltclstub8.6"
 S["TCL_STUB_LIB_FLAG"]="-ltclstub8.6"
@@ -694,7 +693,7 @@ S["RUNUSR"]="macports"
 S["DSTGRP"]="admin"
 S["DSTUSR"]="root"
 S["MPCONFIGDIR"]="${sysconfdir}/macports"
-S["PORTSDIR"]="/opt/local/var/macports/sources/rsync.macports.org/release/tarballs/ports"
+S["PORTSDIR"]=""
 S["EXTRA_PROGS"]=" daemondo"
 S["HAVE_FUNCTION_CFNOTIFICATIONCENTERGETDARWINNOTIFYCENTER"]=""
 S["HAVE_FRAMEWORK_IOKIT"]=""
@@ -704,14 +703,12 @@ S["OBJC_FOUNDATION_LIBS"]="-framework Foundation"
 S["OBJC_FOUNDATION_CPPFLAGS"]=""
 S["OBJC_FOUNDATION_LDFLAGS"]=""
 S["OBJC_FOUNDATION"]="Apple"
-S["OBJC_PTHREAD_CFLAGS"]="-D_THREAD_SAFE "
+S["OBJC_PTHREAD_CFLAGS"]="-D_THREAD_SAFE -D_THREAD_SAFE -pthread"
 S["OBJC_PTHREAD_LIBS"]=""
 S["OBJC_LIBS"]="-lobjc"
 S["OBJC_RUNTIME_FLAGS"]="-fnext-runtime"
 S["OBJC_RUNTIME"]="APPLE_RUNTIME"
 S["OBJCPP"]="gcc -E"
-S["PTHREAD_CFLAGS"]="-D_THREAD_SAFE "
-S["PTHREAD_LIBS"]=""
 S["acx_pthread_config"]=""
 S["CFLAGS_WERROR"]=""
 S["CFLAGS_PEDANTIC"]="-pedantic"
@@ -721,14 +718,14 @@ S["TAR_Q"]="q"
 S["SED_EXT"]="-E"
 S["HAVE_LAUNCHD"]="yes"
 S["ZIP"]="/usr/bin/zip"
-S["XZ"]="/opt/local/bin/xz"
+S["XZ"]="/sw/bin/xz"
 S["XCRUN"]="/usr/bin/xcrun"
 S["XCODEBUILD"]="/usr/bin/xcodebuild"
 S["XAR"]="/usr/bin/xar"
 S["XATTR"]="/usr/bin/xattr"
 S["UNZIP"]="/usr/bin/unzip"
 S["TAR"]="/usr/bin/tar"
-S["SWIG"]="/opt/local/bin/swig"
+S["SWIG"]="/sw/bin/swig"
 S["SVN"]="/usr/bin/svn"
 S["SED"]="/usr/bin/sed"
 S["RSYNC"]="/usr/bin/rsync"
@@ -742,7 +739,7 @@ S["MKBOM"]="/usr/bin/mkbom"
 S["MDLS"]="/usr/bin/mdls"
 S["MDFIND"]="/usr/bin/mdfind"
 S["MAKE"]="/usr/bin/make"
-S["LZMA"]="/opt/local/bin/lzma"
+S["LZMA"]="/sw/bin/lzma"
 S["LSBOM"]="/usr/bin/lsbom"
 S["LIPO"]="/usr/bin/lipo"
 S["LAUNCHCTL"]="/bin/launchctl"
@@ -755,6 +752,7 @@ S["GNUMAKE"]="/usr/bin/gnumake"
 S["GIT"]="/usr/bin/git"
 S["FILE"]="/usr/bin/file"
 S["ED"]="/bin/ed"
+S["DYLIBBUNDLER"]="/opt/local/bin/dylibbundler"
 S["DSEDITGROUP"]="/usr/sbin/dseditgroup"
 S["DSCL"]="/usr/bin/dscl"
 S["DIFF"]="/usr/bin/diff"
@@ -765,6 +763,16 @@ S["CHOWN"]="/usr/sbin/chown"
 S["BZR"]="/opt/local/bin/bzr"
 S["BZIP2"]="/usr/bin/bzip2"
 S["BSDMAKE"]="/opt/local/bin/bsdmake"
+S["ifGNUmake"]=""
+S["WISH"]="/usr/bin/wish"
+S["TCLSH"]="/usr/bin/tclsh"
+S["PTHREAD_CFLAGS"]="-D_THREAD_SAFE -D_THREAD_SAFE -pthread"
+S["PTHREAD_LIBS"]=""
+S["PTHREAD_CC"]="gcc"
+S["ax_pthread_config"]=""
+S["PKG_CONFIG_LIBDIR"]=""
+S["PKG_CONFIG_PATH"]=""
+S["PKG_CONFIG"]="/sw/bin/pkg-config"
 S["am__fastdepOBJC_FALSE"]=""
 S["am__fastdepOBJC_TRUE"]="#"
 S["OBJCDEPMODE"]="depmode=none"
@@ -773,15 +781,12 @@ S["OBJCFLAGS"]="-g -O2"
 S["OBJC"]="gcc"
 S["RANLIB"]="ranlib"
 S["LN_S"]="ln -s"
-S["EGREP"]="/usr/bin/grep -E"
-S["GREP"]="/usr/bin/grep"
 S["am__fastdepCXX_FALSE"]=""
 S["am__fastdepCXX_TRUE"]="#"
 S["CXXDEPMODE"]="depmode=none"
 S["ac_ct_CXX"]="g++"
 S["CXXFLAGS"]="-g -O2"
 S["CXX"]="g++"
-S["CPP"]="gcc -E"
 S["am__fastdepCCAS_FALSE"]=""
 S["am__fastdepCCAS_TRUE"]="#"
 S["CCASDEPMODE"]="depmode=none"
@@ -791,7 +796,11 @@ S["DEVELOPER_DIR"]="/Applications/Xcode.app/Contents/Developer"
 S["XCODE_SELECT"]="/usr/bin/xcode-select"
 S["DEFAULTS"]="/usr/bin/defaults"
 S["SW_VERS"]="/usr/bin/sw_vers"
+S["PATH_CLEANED"]="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/usr/X11/bin:/sw/bin:/sw/sbin:/var/root/usr/bin:/usr/local/bin:/usr/local/sbin"
 S["MACPORTS_VERSION"]="2.1.3"
+S["MAINT"]="#"
+S["MAINTAINER_MODE_FALSE"]=""
+S["MAINTAINER_MODE_TRUE"]="#"
 S["am__fastdepCC_FALSE"]=""
 S["am__fastdepCC_TRUE"]="#"
 S["CCDEPMODE"]="depmode=none"
@@ -802,36 +811,22 @@ S["AMDEP_TRUE"]=""
 S["am__quote"]=""
 S["am__include"]="include"
 S["DEPDIR"]=".deps"
-S["OBJEXT"]="o"
-S["EXEEXT"]=""
-S["ac_ct_CC"]="gcc"
-S["CPPFLAGS"]=""
-S["LDFLAGS"]=""
-S["CFLAGS"]="-g -O2"
-S["CC"]="gcc"
-S["MAINT"]="#"
-S["MAINTAINER_MODE_FALSE"]=""
-S["MAINTAINER_MODE_TRUE"]="#"
-S["AM_BACKSLASH"]="\\"
-S["AM_DEFAULT_VERBOSITY"]="1"
-S["AM_DEFAULT_V"]="$(AM_DEFAULT_VERBOSITY)"
-S["AM_V"]="$(V)"
 S["am__untar"]="$${TAR-tar} xf -"
 S["am__tar"]="$${TAR-tar} chof - \"$$tardir\""
 S["AMTAR"]="$${TAR-tar}"
 S["am__leading_dot"]="."
 S["SET_MAKE"]=""
 S["AWK"]="gawk"
-S["mkdir_p"]="$(MKDIR_P)"
-S["MKDIR_P"]="./install-sh -c -d"
+S["mkdir_p"]="/sw/bin/gmkdir -p"
+S["MKDIR_P"]="/sw/bin/gmkdir -p"
 S["INSTALL_STRIP_PROGRAM"]="$(install_sh) -c -s"
 S["STRIP"]=""
-S["install_sh"]="${SHELL} /opt/local/var/macports/sources/rsync.macports.org/release/tarballs/base/install-sh"
-S["MAKEINFO"]="${SHELL} /opt/local/var/macports/sources/rsync.macports.org/release/tarballs/base/missing makeinfo"
-S["AUTOHEADER"]="${SHELL} /opt/local/var/macports/sources/rsync.macports.org/release/tarballs/base/missing autoheader"
-S["AUTOMAKE"]="${SHELL} /opt/local/var/macports/sources/rsync.macports.org/release/tarballs/base/missing automake-1.13"
-S["AUTOCONF"]="${SHELL} /opt/local/var/macports/sources/rsync.macports.org/release/tarballs/base/missing autoconf"
-S["ACLOCAL"]="${SHELL} /opt/local/var/macports/sources/rsync.macports.org/release/tarballs/base/missing aclocal-1.13"
+S["install_sh"]="${SHELL} /private/var/root/MacPorts-fork/install-sh"
+S["MAKEINFO"]="${SHELL} /private/var/root/MacPorts-fork/missing --run makeinfo"
+S["AUTOHEADER"]="${SHELL} /private/var/root/MacPorts-fork/missing --run autoheader"
+S["AUTOMAKE"]="${SHELL} /private/var/root/MacPorts-fork/missing --run automake-1.11"
+S["AUTOCONF"]="${SHELL} /private/var/root/MacPorts-fork/missing --run autoconf"
+S["ACLOCAL"]="${SHELL} /private/var/root/MacPorts-fork/missing --run aclocal-1.11"
 S["VERSION"]="2.1.3"
 S["PACKAGE"]="macports"
 S["CYGPATH_W"]="echo"
@@ -839,6 +834,16 @@ S["am__isrc"]=""
 S["INSTALL_DATA"]="${INSTALL} -m 644"
 S["INSTALL_SCRIPT"]="${INSTALL}"
 S["INSTALL_PROGRAM"]="${INSTALL}"
+S["EGREP"]="/usr/bin/grep -E"
+S["GREP"]="/usr/bin/grep"
+S["CPP"]="gcc -E"
+S["OBJEXT"]="o"
+S["EXEEXT"]=""
+S["ac_ct_CC"]="gcc"
+S["CPPFLAGS"]=""
+S["LDFLAGS"]=""
+S["CFLAGS"]="-g -O2"
+S["CC"]="gcc"
 S["target_os"]="darwin11.4.2"
 S["target_vendor"]="apple"
 S["target_cpu"]="x86_64"
@@ -936,11 +941,6 @@ D["PACKAGE_VERSION"]=" \"2.1.3\""
 D["PACKAGE_STRING"]=" \"MacPorts 2.1.3\""
 D["PACKAGE_BUGREPORT"]=" \"macports-dev@lists.macosforge.org\""
 D["PACKAGE_URL"]=" \"\""
-D["PACKAGE"]=" \"macports\""
-D["VERSION"]=" \"2.1.3\""
-D["UNUSED"]=" __attribute__((unused))"
-D["MP_PRIVATE"]=" __attribute__((visibility(\"hidden\")))"
-D["HAVE_PTHREAD"]=" 1"
 D["STDC_HEADERS"]=" 1"
 D["HAVE_SYS_TYPES_H"]=" 1"
 D["HAVE_SYS_STAT_H"]=" 1"
@@ -951,6 +951,18 @@ D["HAVE_STRINGS_H"]=" 1"
 D["HAVE_INTTYPES_H"]=" 1"
 D["HAVE_STDINT_H"]=" 1"
 D["HAVE_UNISTD_H"]=" 1"
+D["__EXTENSIONS__"]=" 1"
+D["_ALL_SOURCE"]=" 1"
+D["_GNU_SOURCE"]=" 1"
+D["_POSIX_PTHREAD_SEMANTICS"]=" 1"
+D["_TANDEM_SOURCE"]=" 1"
+D["PACKAGE"]=" \"macports\""
+D["VERSION"]=" \"2.1.3\""
+D["HAVE_PTHREAD_PRIO_INHERIT"]=" 1"
+D["HAVE_PTHREAD"]=" 1"
+D["UNUSED"]=" __attribute__((unused))"
+D["MP_PRIVATE"]=" __attribute__((visibility(\"hidden\")))"
+D["HAVE_PTHREAD"]=" 1"
 D["HAVE_OBJC_OBJC_H"]=" 1"
 D["APPLE_RUNTIME"]=" 1"
 D["APPLE_FOUNDATION"]=" 1"
@@ -1364,7 +1376,7 @@ $as_echo "$as_me: executing $ac_file commands" >&6;}
 
   case $ac_file$ac_mode in
     "depfiles":C) test x"$AMDEP_TRUE" != x"" || {
-  # Older Autoconf quotes --file arguments for eval, but not when files
+  # Autoconf 2.62 quotes --file arguments for eval, but not when files
   # are listed without --file.  Let's play safe and only enable the eval
   # if we detect the quoting.
   case $CONFIG_FILES in
@@ -1377,7 +1389,7 @@ $as_echo "$as_me: executing $ac_file commands" >&6;}
     # Strip MF so we end up with the name of the file.
     mf=`echo "$mf" | sed -e 's/:.*$//'`
     # Check whether this is an Automake generated Makefile or not.
-    # We used to match only the files named 'Makefile.in', but
+    # We used to match only the files named `Makefile.in', but
     # some people rename them; so instead we look at the file content.
     # Grep'ing the first line is not enough: some people post-process
     # each Makefile.in and add a new line on top of each file to say so.
@@ -1411,19 +1423,21 @@ $as_echo X"$mf" |
       continue
     fi
     # Extract the definition of DEPDIR, am__include, and am__quote
-    # from the Makefile without running 'make'.
+    # from the Makefile without running `make'.
     DEPDIR=`sed -n 's/^DEPDIR = //p' < "$mf"`
     test -z "$DEPDIR" && continue
     am__include=`sed -n 's/^am__include = //p' < "$mf"`
     test -z "am__include" && continue
     am__quote=`sed -n 's/^am__quote = //p' < "$mf"`
+    # When using ansi2knr, U may be empty or an underscore; expand it
+    U=`sed -n 's/^U = //p' < "$mf"`
     # Find all dependency output files, they are included files with
     # $(DEPDIR) in their names.  We invoke sed twice because it is the
     # simplest approach to changing $(DEPDIR) to its actual value in the
     # expansion.
     for file in `sed -n "
       s/^$am__include $am__quote\(.*(DEPDIR).*\)$am__quote"'$/\1/p' <"$mf" | \
-	 sed -e 's/\$(DEPDIR)/'"$DEPDIR"'/g'`; do
+	 sed -e 's/\$(DEPDIR)/'"$DEPDIR"'/g' -e 's/\$U/'"$U"'/g'`; do
       # Make sure the directory exists.
       test -f "$dirpart/$file" && continue
       fdir=`$as_dirname -- "$file" ||

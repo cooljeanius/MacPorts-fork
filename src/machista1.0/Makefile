@@ -2,7 +2,7 @@ OBJS= 		libmachista.o hashmap.o machista_wrap.o
 SHLIB_NAME= machista${SHLIB_SUFFIX}
 INSTALLDIR=	${DESTDIR}${datadir}/macports/Tcl/machista1.0
 
-SWIG         = /opt/local/bin/swig
+SWIG         = /sw/bin/swig
 SWIG_FLAGS   = -tcl8 -pkgversion 1.0 -namespace
 SWIG_LDFLAGS = -ltcl
 
