@@ -65,7 +65,7 @@ namespace eval portutil::autoconf {
 	variable xcode_select_path "/usr/bin/xcode-select"
 	variable xcodebuild_path "/usr/bin/xcodebuild"
 	variable xcrun_path "/usr/bin/xcrun"
-	variable sed_command "/usr/bin/sed"
+	variable sed_command "/sw/bin/sed"
 	variable sed_ext_flag "-E"
 	variable tar_command "/usr/bin/gnutar --no-same-owner"
 	variable tar_path "/usr/bin/tar"

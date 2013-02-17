@@ -59,6 +59,9 @@
    */
 #define HAVE_DIRENT_H 1
 
+/* Define to 1 if you have the <dlfcn.h> header file. */
+#define HAVE_DLFCN_H 1
+
 /* Define to 1 if you have the `dup2' function. */
 #define HAVE_DUP2 1
 
@@ -349,6 +352,10 @@
 /* Define to 1 if `lstat' dereferences a symlink specified with a trailing
    slash. */
 /* #undef LSTAT_FOLLOWS_SLASHED_SYMLINK */
+
+/* Define to the sub-directory in which libtool stores uninstalled libraries.
+   */
+#define LT_OBJDIR ".libs/"
 
 /* Lowest non-system-reserved GID. */
 #define MIN_USABLE_GID 500

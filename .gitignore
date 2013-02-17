@@ -4,3 +4,9 @@
 *.o
 *~
 *.status
+libtool
+*.gz
+*.dylib
+*/build/*
+config.h
+src/config.h

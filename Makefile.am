@@ -1,5 +1,7 @@
 # $Id: Makefile.in 90002 2012-02-19 17:25:25Z jmr@macports.org $
 
+ACLOCAL_AMFLAGS = -I m4
+
 PATH		= @PATH_CLEANED@
 SUBDIR		= doc src tests
 DISTDIR		= dist
