@@ -57,7 +57,7 @@ namespace eval portutil::autoconf {
 	variable lsbom_path "/usr/bin/lsbom"
 	variable make_path "/usr/bin/make"
 	variable gnumake_path "/usr/bin/gnumake"
-	variable bsdmake_path "/opt/local/bin/bsdmake"
+	variable bsdmake_path "/usr/bin/bsdmake"
 	variable mkbom_path "/usr/bin/mkbom"
 	variable mtree_path "/usr/sbin/mtree"
 	variable pax_path "/bin/pax"
@@ -77,5 +77,5 @@ namespace eval portutil::autoconf {
 	variable install_command "/usr/bin/install -c"
 	variable install_user "root"
 	variable install_group "admin"
-	variable prefix "/opt/local"
+	variable prefix "/opt/local/share/venv-py27"
 }

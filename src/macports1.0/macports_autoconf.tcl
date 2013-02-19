@@ -36,7 +36,7 @@ namespace eval macports::autoconf {
     variable bzip2_path "/usr/bin/bzip2"
     variable chown_path "/usr/sbin/chown"
     variable gzip_path "/usr/bin/gzip"
-    variable macports_conf_path "/opt/local/etc/macports"
+    variable macports_conf_path "/opt/local/share/venv-py27/etc/macports"
     variable macports_version "2.1.3"
     variable macports_user_dir "~/.macports"
     variable macportsuser "macports"
