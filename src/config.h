@@ -2,7 +2,7 @@
 /* src/config.h.in.  Generated from configure.ac by autoheader.  */
 
 /* Define if using the Apple Foundation framework */
-#define APPLE_FOUNDATION 1
+/* #undef APPLE_FOUNDATION */
 
 /* Define if using the Apple Objective-C runtime and compiler. */
 #define APPLE_RUNTIME 1
@@ -33,27 +33,27 @@
 
 /* Define to 1 if you have the declaration of `completion_matches', and to 0
    if you don't. */
-/* #undef HAVE_DECL_COMPLETION_MATCHES */
+#define HAVE_DECL_COMPLETION_MATCHES 1
 
 /* Define to 1 if you have the declaration of `filename_completion_function',
    and to 0 if you don't. */
-/* #undef HAVE_DECL_FILENAME_COMPLETION_FUNCTION */
+#define HAVE_DECL_FILENAME_COMPLETION_FUNCTION 1
 
 /* Define to 1 if you have the declaration of `rl_completion_matches', and to
    0 if you don't. */
-/* #undef HAVE_DECL_RL_COMPLETION_MATCHES */
+#define HAVE_DECL_RL_COMPLETION_MATCHES 1
 
 /* Define to 1 if you have the declaration of
    `rl_filename_completion_function', and to 0 if you don't. */
-/* #undef HAVE_DECL_RL_FILENAME_COMPLETION_FUNCTION */
+#define HAVE_DECL_RL_FILENAME_COMPLETION_FUNCTION 1
 
 /* Define to 1 if you have the declaration of
    `rl_username_completion_function', and to 0 if you don't. */
-/* #undef HAVE_DECL_RL_USERNAME_COMPLETION_FUNCTION */
+#define HAVE_DECL_RL_USERNAME_COMPLETION_FUNCTION 0
 
 /* Define to 1 if you have the declaration of `username_completion_function',
    and to 0 if you don't. */
-/* #undef HAVE_DECL_USERNAME_COMPLETION_FUNCTION */
+#define HAVE_DECL_USERNAME_COMPLETION_FUNCTION 1
 
 /* Define to 1 if you have the <dirent.h> header file, and it defines `DIR'.
    */
@@ -81,17 +81,17 @@
 #define HAVE_FORK 1
 
 /* Define if CoreFoundation framework is available */
-#define HAVE_FRAMEWORK_COREFOUNDATION /**/
+/* #undef HAVE_FRAMEWORK_COREFOUNDATION */
 
 /* Define if IOKit framework is available */
-#define HAVE_FRAMEWORK_IOKIT /**/
+/* #undef HAVE_FRAMEWORK_IOKIT */
 
 /* Define if SystemConfiguration framework is available */
-#define HAVE_FRAMEWORK_SYSTEMCONFIGURATION /**/
+/* #undef HAVE_FRAMEWORK_SYSTEMCONFIGURATION */
 
 /* Define if function CFNotificationCenterGetDarwinNotifyCenter in
    CoreFoundation framework */
-#define HAVE_FUNCTION_CFNOTIFICATIONCENTERGETDARWINNOTIFYCENTER /**/
+/* #undef HAVE_FUNCTION_CFNOTIFICATIONCENTERGETDARWINNOTIFYCENTER */
 
 /* Define to 1 if you have the `getcwd' function. */
 #define HAVE_GETCWD 1
@@ -115,7 +115,7 @@
 /* #undef HAVE_LIBMD */
 
 /* Define to 1 if you have the 'readline' library (-lreadline). */
-/* #undef HAVE_LIBREADLINE */
+#define HAVE_LIBREADLINE 1
 
 /* Define to 1 if you have the `tcl' library (-ltcl). */
 #define HAVE_LIBTCL 1

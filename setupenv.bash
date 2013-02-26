@@ -30,8 +30,8 @@
 # $Id: setupenv.bash.in 101266 2013-01-07 14:04:54Z jmr@macports.org $
 
 function export_path() {
-    local binpath="/opt/local/share/venv-py27/bin"
-    local sbinpath="/opt/local/share/venv-py27/sbin"
+    local binpath="/Users/egall/macports/bin"
+    local sbinpath="/Users/egall/macports/sbin"
 
     local IFS=":"
     local p
@@ -56,7 +56,7 @@ function export_path() {
 }
 
 function export_manpath() {
-    local mpath="/opt/local/share/venv-py27/share/man"
+    local mpath="/Users/egall/macports/share/man"
     local IFS=":"
     local p
 

@@ -10,3 +10,5 @@ libtool
 */build/*
 config.h
 src/config.h
+*.sqlext
+*.a

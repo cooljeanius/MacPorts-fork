@@ -1,6 +1,6 @@
 # $Id: Makefile.in 90002 2012-02-19 17:25:25Z jmr@macports.org $
 
-PATH		= /usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/usr/X11/bin:/sw/bin:/sw/sbin:/var/root/usr/bin:/opt/local/bin:/usr/local/bin:/usr/local/sbin
+PATH		= /Users/egall/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/Users/egall/usr/bin:/Users/egall/usr/local/bin:/Users/egall/homebrew/bin:/Users/egall/opt/local/bin:/usr/local/sbin
 SUBDIR		= doc src tests
 DISTDIR		= dist
 DISTVER		=
