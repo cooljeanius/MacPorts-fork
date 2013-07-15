@@ -84,6 +84,12 @@
 /* Defined to 1 if we have the struct stat64 */
 #undef HAVE_STRUCT_STAT64
 
+/* Define to 1 if you have the <sys/filio.h> header file. */
+#undef HAVE_SYS_FILIO_H
+
+/* Define to 1 if you have the <sys/ioctl.h> header file. */
+#undef HAVE_SYS_IOCTL_H
+
 /* Define to 1 if you have the <sys/param.h> header file. */
 #undef HAVE_SYS_PARAM_H
 
@@ -191,6 +197,9 @@
 /* Defined to 1 if using delta for tz */
 #undef USE_DELTA_FOR_TZ
 
+/* Defined to 1 if using fionbio */
+#undef USE_FIONBIO
+
 /* Defined to 1 if using sys/exec_aout.h */
 #undef USE_SYS_EXEC_AOUT_H
 
@@ -246,3 +255,6 @@
 
 /* Define to `unsigned int' if <sys/types.h> does not define. */
 #undef size_t
+
+/* Defined to fixstrtod if the original strtod was buggy */
+#undef strtod

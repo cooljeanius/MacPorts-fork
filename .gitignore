@@ -13,3 +13,5 @@ libtool
 *.a
 *(Autosaved)*
 *stamp-h*
+*confdefs*
+*conftest*

@@ -32,6 +32,8 @@ AM_MAINTAINER_MODE
 AC_ISC_POSIX
 AC_EXEEXT
 AC_OBJEXT
+AX_CHECK_GNU_MAKE
+AC_BAKEFILE_GNUMAKE
 
 #--------------------------------------------------------------------
 # Call TEA_INIT as the first TEA_ macro to set up initial vars.
@@ -65,8 +67,11 @@ TEA_PREFIX
 
 TEA_SETUP_COMPILER
 AM_PROG_CC_C_O
+AC_BAKEFILE_METROWERKS_EXTO
 AC_PROG_CXX
+XORG_PROG_RAWCPP
 AM_PROG_AR
+XORG_LD_WRAP
 PKG_PROG_PKG_CONFIG
 
 #--------------------------------------------------------------------
@@ -137,15 +142,26 @@ AC_SUBST([CLEANFILES])
 
 AC_CHECK_HEADERS([sys/time.h sys/timeb.h])
 TEA_PUBLIC_TCL_HEADERS
+TEA_BUGGY_STRTOD
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_TYPE_SIZE_T
 AC_C_FLEXIBLE_ARRAY_MEMBER
 AC_C_VARARRAYS
 AC_CHECK_MEMBERS([Tcl_Interp.errorLine])
+XORG_MEMORY_CHECK_FLAGS
+XORG_CHECK_MALLOC_ZERO
+XORG_CWARNFLAGS
 
 # Checks for library functions.
 AC_CHECK_FUNCS([ftime gettimeofday memset strchr strstr])
+
+dnl#
+#--------------------------------------------------------------------
+# Check Tcl blocking style
+#--------------------------------------------------------------------
+
+TEA_BLOCKING_STYLE
 
 #--------------------------------------------------------------------
 # Check whether --enable-threads or --disable-threads was given.
@@ -180,6 +196,7 @@ TEA_ENABLE_SYMBOLS
 # Checks for libraries.
 # FIXME: Replace `main' with a function in `-ltcl':
 AC_CHECK_LIB([tcl], [main])
+TEA_MAKE_LIB
 
 #--------------------------------------------------------------------
 # Everyone should be linking against the Tcl stub library.  If you

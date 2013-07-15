@@ -106,11 +106,14 @@ DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/tclconfig/ltmain.sh \
 	$(top_srcdir)/tclconfig/missing
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/m4/ax_prog_tcl.m4 \
-	$(top_srcdir)/m4/ax_pthread.m4 $(top_srcdir)/m4/libtool.m4 \
-	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
-	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
-	$(top_srcdir)/acinclude.m4 $(top_srcdir)/configure.ac
+am__aclocal_m4_deps = $(top_srcdir)/m4/ax_check_gnu_make.m4 \
+	$(top_srcdir)/m4/ax_prog_tcl.m4 $(top_srcdir)/m4/ax_pthread.m4 \
+	$(top_srcdir)/m4/bakefile-lang.m4 $(top_srcdir)/m4/bakefile.m4 \
+	$(top_srcdir)/m4/libtool.m4 $(top_srcdir)/m4/ltoptions.m4 \
+	$(top_srcdir)/m4/ltsugar.m4 $(top_srcdir)/m4/ltversion.m4 \
+	$(top_srcdir)/m4/lt~obsolete.m4 \
+	$(top_srcdir)/m4/xorg-macros.m4 $(top_srcdir)/acinclude.m4 \
+	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
@@ -237,10 +240,11 @@ AUTOCONF = ${SHELL} /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-f
 AUTOHEADER = ${SHELL} /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/tclconfig/missing autoheader
 AUTOMAKE = ${SHELL} /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/tclconfig/missing automake-1.14
 AWK = gawk
-CC = gcc -pipe
+BASE_CFLAGS =  -Wall -Wpointer-arith -Wmissing-declarations -Wformat=2 -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Wbad-function-cast -Wold-style-definition -Wdeclaration-after-statement -Wunused -Wuninitialized -Wshadow -Wcast-qual -Wmissing-noreturn -Wmissing-format-attribute -Wredundant-decls -Werror=implicit -Werror=nonnull -Werror=init-self -Werror=main -Werror=missing-braces -Werror=sequence-point -Werror=return-type -Werror=trigraphs -Werror=array-bounds -Werror=write-strings -Werror=address -Werror=int-to-pointer-cast -Werror=pointer-to-int-cast
+CC = gcc -pipe -std=gnu99
 CCDEPMODE = depmode=none
 CELIB_DIR = 
-CFLAGS = -g -O2 ${CFLAGS_DEFAULT} ${CFLAGS_WARNING} ${SHLIB_CFLAGS}
+CFLAGS = -g -O2 ${CFLAGS_DEFAULT} ${CFLAGS_WARNING} ${SHLIB_CFLAGS} ${CFLAGS_DEFAULT} ${CFLAGS_WARNING} ${SHLIB_CFLAGS}
 CFLAGS_DEBUG = -g
 CFLAGS_DEFAULT = -g
 CFLAGS_OPTIMIZE = -Os
@@ -248,6 +252,7 @@ CFLAGS_WARNING = -Wall -Wno-implicit-int
 CLEANFILES = 
 CPP = gcc -E
 CPPFLAGS = 
+CWARNFLAGS =  -Wall -Wpointer-arith -Wmissing-declarations -Wformat=2 -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Wbad-function-cast -Wold-style-definition -Wdeclaration-after-statement -Wunused -Wuninitialized -Wshadow -Wcast-qual -Wmissing-noreturn -Wmissing-format-attribute -Wredundant-decls -Werror=implicit -Werror=nonnull -Werror=init-self -Werror=main -Werror=missing-braces -Werror=sequence-point -Werror=return-type -Werror=trigraphs -Werror=array-bounds -Werror=write-strings -Werror=address -Werror=int-to-pointer-cast -Werror=pointer-to-int-cast -fno-strict-aliasing
 CXX = g++
 CXXCPP = g++ -E
 CXXDEPMODE = depmode=none
@@ -267,6 +272,7 @@ EGREP = /opt/local/bin/grep -E
 EXEEXT = 
 FGREP = /opt/local/bin/grep -F
 GREP = /opt/local/bin/grep
+IF_GNU_MAKE = 
 INSTALL = /opt/local/bin/ginstall -c
 INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
@@ -280,7 +286,7 @@ LDFLAGS_DEFAULT =  -prebind
 LDFLAGS_OPTIMIZE = 
 LD_LIBRARY_PATH_VAR = DYLD_LIBRARY_PATH
 LIBOBJS = 
-LIBS =  -L"/opt/local/lib" -lgdbm -ltcl 
+LIBS =  -ltcl 
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = lipo
 LN_S = ln -s
@@ -291,6 +297,7 @@ MAKE_LIB = ${SHLIB_LD} -o $@ $(PKG_OBJECTS) ${SHLIB_LD_FLAGS} ${SHLIB_LD_LIBS}
 MAKE_SHARED_LIB = ${SHLIB_LD} -o $@ $(PKG_OBJECTS) ${SHLIB_LD_FLAGS} ${SHLIB_LD_LIBS}
 MAKE_STATIC_LIB = ${STLIB_LD} $@ $(PKG_OBJECTS)
 MAKE_STUB_LIB = ${STLIB_LD} $@ $(PKG_STUB_OBJECTS)
+MALLOC_ZERO_CFLAGS = 
 MANIFEST_TOOL = :
 MATH_LIBS = 
 MKDIR_P = /opt/local/bin/gmkdir -p
@@ -308,7 +315,7 @@ PACKAGE_TARNAME = thread
 PACKAGE_URL = 
 PACKAGE_VERSION = 2.6
 PATH_SEPARATOR = :
-PKG_CFLAGS =  -I"/opt/local/include"
+PKG_CFLAGS =  
 PKG_CONFIG = /opt/local/bin/pkg-config
 PKG_CONFIG_LIBDIR = 
 PKG_CONFIG_PATH = 
@@ -318,7 +325,7 @@ PKG_CONFIG_PATH =
 #========================================================================
 PKG_HEADERS = 
 PKG_INCLUDES = 
-PKG_LIBS =  -L"/opt/local/lib" -lgdbm
+PKG_LIBS = 
 
 #========================================================================
 # "PKG_LIB_FILE" refers to the library (dynamic or static as per
@@ -356,11 +363,13 @@ PKG_STUB_SOURCES =
 #========================================================================
 PKG_TCL_SOURCES =  lib/ttrace.tcl
 PKGdir = $(PKG_DIR)
-PTHREAD_CC = gcc -pipe
+PTHREAD_CC = gcc -pipe -std=gnu99
 PTHREAD_CFLAGS = -D_THREAD_SAFE -pthread
 PTHREAD_LIBS = 
 RANLIB = :
-RANLIB_STUB = ranlib
+RANLIB_STUB = :
+RAWCPP = /opt/local/bin/cpp
+RAWCPPFLAGS =  -traditional
 SED = /opt/local/bin/gsed
 SET_MAKE = 
 SHARED_BUILD = 1
@@ -368,33 +377,36 @@ SHELL = /bin/sh
 SHLIB_CFLAGS = -fno-common
 SHLIB_LD = cc -dynamiclib ${LDFLAGS}
 SHLIB_LD_FLAGS = 
-SHLIB_LD_LIBS = ${LIBS} -L/opt/local/lib -ltclstub8.6
+SHLIB_LD_LIBS = ${LIBS} -L/System/Library/Frameworks/Tcl.framework/Versions/8.5 -ltclstub8.5 -L/System/Library/Frameworks/Tcl.framework/Versions/8.5 -ltclstub8.5
 STLIB_LD = ${AR} cr
 STRIP = strip
 TCLSH = $(TCLSH_ENV) $(TCLSH_PROG)
-TCLSH_PROG = /opt/local/lib/../bin/tclsh8.6
-TCL_BIN_DIR = /opt/local/lib
-TCL_BUILD_LIB_SPEC = -L/opt/local/var/macports/build/_opt_local_var_macports_sources_rsync.macports.org_release_tarballs_ports_lang_tcl/tcl/work/tcl8.6.0/unix -ltcl8.6
-TCL_BUILD_STUB_LIB_SPEC = -L/opt/local/var/macports/build/_opt_local_var_macports_sources_rsync.macports.org_release_tarballs_ports_lang_tcl/tcl/work/tcl8.6.0/unix -ltclstub8.6
+TCLSH_PROG = /System/Library/Frameworks/Tcl.framework/Versions/8.5/tclsh8.5
+TCL_BIN_DIR = /System/Library/Frameworks/Tcl.framework/Versions/8.5
+TCL_BUILD_LIB_SPEC = -F/var/tmp/tcl/tcl-87~296/tcl/Deployment -framework Tcl
+TCL_BUILD_STUB_LIB_SPEC = -L/var/tmp/tcl/tcl-87~296/tcl/Deployment -ltclstub8.5
 TCL_DBGX = g
-TCL_DEFS = -DPACKAGE_NAME=\"tcl\" -DPACKAGE_TARNAME=\"tcl\" -DPACKAGE_VERSION=\"8.6\" -DPACKAGE_STRING=\"tcl\ 8.6\" -DPACKAGE_BUGREPORT=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DNO_VALUES_H=1 -DHAVE_LIMITS_H=1 -DHAVE_SYS_PARAM_H=1 -DUSE_THREAD_ALLOC=1 -D_REENTRANT=1 -D_THREAD_SAFE=1 -DHAVE_PTHREAD_ATTR_SETSTACKSIZE=1 -DTCL_THREADS=1 -DTCL_CFGVAL_ENCODING=\"iso8859-1\" -DHAVE_ZLIB=1 -DMODULE_SCOPE=extern -DMAC_OSX_TCL=1 -DHAVE_COREFOUNDATION=1 -DHAVE_CAST_TO_UNION=1 -DTCL_SHLIB_EXT=\".dylib\" -DTCL_MEM_DEBUG=1 -DTCL_TOMMATH=1 -DMP_PREC=4 -DTCL_WIDE_INT_TYPE=long\ long -DHAVE_STRUCT_STAT64=1 -DHAVE_GETCWD=1 -DHAVE_MKSTEMP=1 -DHAVE_OPENDIR=1 -DHAVE_STRTOL=1 -DHAVE_WAITPID=1 -DHAVE_GETNAMEINFO=1 -DHAVE_GETADDRINFO=1 -DHAVE_FREEADDRINFO=1 -DHAVE_GAI_STRERROR=1 -DHAVE_STRUCT_ADDRINFO=1 -DHAVE_STRUCT_IN6_ADDR=1 -DHAVE_STRUCT_SOCKADDR_IN6=1 -DHAVE_STRUCT_SOCKADDR_STORAGE=1 -DHAVE_GETPWUID_R_5=1 -DHAVE_GETPWUID_R=1 -DHAVE_GETPWNAM_R_5=1 -DHAVE_GETPWNAM_R=1 -DHAVE_GETGRGID_R_5=1 -DHAVE_GETGRGID_R=1 -DHAVE_GETGRNAM_R_5=1 -DHAVE_GETGRNAM_R=1 -DHAVE_MTSAFE_GETHOSTBYNAME=1 -DHAVE_MTSAFE_GETHOSTBYADDR=1 -DHAVE_SYS_TIME_H=1 -DTIME_WITH_SYS_TIME=1 -DHAVE_GMTIME_R=1 -DHAVE_LOCALTIME_R=1 -DHAVE_MKTIME=1 -DHAVE_TM_GMTOFF=1 -DHAVE_TIMEZONE_VAR=1 -DHAVE_STRUCT_STAT_ST_BLOCKS=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_BLKCNT_T=1 -DHAVE_INTPTR_T=1 -DHAVE_UINTPTR_T=1 -DHAVE_SIGNED_CHAR=1 -DHAVE_LANGINFO=1 -DHAVE_CHFLAGS=1 -DHAVE_MKSTEMPS=1 -DHAVE_GETATTRLIST=1 -DHAVE_COPYFILE_H=1 -DHAVE_COPYFILE=1 -DHAVE_LIBKERN_OSATOMIC_H=1 -DHAVE_OSSPINLOCKLOCK=1 -DHAVE_PTHREAD_ATFORK=1 -DUSE_VFORK=1 -DTCL_DEFAULT_ENCODING=\"utf-8\" -DTCL_LOAD_FROM_MEMORY=1 -DTCL_WIDE_CLICKS=1 -DHAVE_AVAILABILITYMACROS_H=1 -DHAVE_WEAK_IMPORT=1 -D_DARWIN_C_SOURCE=1 -DHAVE_FTS=1 -DHAVE_SYS_IOCTL_H=1 -DHAVE_SYS_FILIO_H=1 -DTCL_UNLOAD_DLLS=1 -DHAVE_CPUID=1 
-TCL_EXTRA_CFLAGS = -pipe -O2   -pipe -fvisibility=hidden   
-TCL_INCLUDES = -I"/opt/local/include"
-TCL_LD_FLAGS =   -headerpad_max_install_names -Wl,-search_paths_first 
+TCL_DEFS = -DPACKAGE_NAME=\"tcl\" -DPACKAGE_TARNAME=\"tcl\" -DPACKAGE_VERSION=\"8.5\" -DPACKAGE_STRING=\"tcl\ 8.5\" -DPACKAGE_BUGREPORT=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DNO_VALUES_H=1 -DHAVE_LIMITS_H=1 -DHAVE_SYS_PARAM_H=1 -DUSE_THREAD_ALLOC=1 -D_REENTRANT=1 -D_THREAD_SAFE=1 -DHAVE_PTHREAD_ATTR_SETSTACKSIZE=1 -DHAVE_PTHREAD_GET_STACKSIZE_NP=1 -DTCL_THREADS=1 -DTCL_CFGVAL_ENCODING=\"iso8859-1\" -DMODULE_SCOPE=extern\ __attribute__\(\(__visibility__\(\"hidden\"\)\)\) -DMAC_OSX_TCL=1 -DHAVE_COREFOUNDATION=1 -DTCL_SHLIB_EXT=\".dylib\" -DTCL_CFG_OPTIMIZED=1 -DTCL_CFG_DEBUG=1 -DTCL_TOMMATH=1 -DMP_PREC=4 -DTCL_WIDE_INT_IS_LONG=1 -DHAVE_GETCWD=1 -DHAVE_OPENDIR=1 -DHAVE_STRTOL=1 -DHAVE_WAITPID=1 -DHAVE_GETADDRINFO=1 -DHAVE_GETPWUID_R_5=1 -DHAVE_GETPWUID_R=1 -DHAVE_GETPWNAM_R_5=1 -DHAVE_GETPWNAM_R=1 -DHAVE_GETGRGID_R_5=1 -DHAVE_GETGRGID_R=1 -DHAVE_GETGRNAM_R_5=1 -DHAVE_GETGRNAM_R=1 -DHAVE_MTSAFE_GETHOSTBYNAME=1 -DHAVE_MTSAFE_GETHOSTBYADDR=1 -DHAVE_SYS_TIME_H=1 -DTIME_WITH_SYS_TIME=1 -DHAVE_STRUCT_TM_TM_ZONE=1 -DHAVE_TM_ZONE=1 -DHAVE_GMTIME_R=1 -DHAVE_LOCALTIME_R=1 -DHAVE_MKTIME=1 -DHAVE_TM_GMTOFF=1 -DHAVE_TIMEZONE_VAR=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_ST_BLKSIZE=1 -DHAVE_INTPTR_T=1 -DHAVE_UINTPTR_T=1 -DHAVE_SIGNED_CHAR=1 -DHAVE_LANGINFO=1 -DHAVE_CHFLAGS=1 -DHAVE_GETATTRLIST=1 -DHAVE_COPYFILE_H=1 -DHAVE_COPYFILE=1 -DHAVE_LIBKERN_OSATOMIC_H=1 -DHAVE_OSSPINLOCKLOCK=1 -DHAVE_PTHREAD_ATFORK=1 -DUSE_VFORK=1 -DTCL_DEFAULT_ENCODING=\"utf-8\" -DTCL_LOAD_FROM_MEMORY=1 -DTCL_WIDE_CLICKS=1 -DHAVE_AVAILABILITYMACROS_H=1 -DHAVE_WEAK_IMPORT=1 -D_DARWIN_C_SOURCE=1 -DHAVE_FTS=1 -DHAVE_SYS_IOCTL_H=1 -DHAVE_SYS_FILIO_H=1 -DTCL_UNLOAD_DLLS=1 -DUSE_DTRACE=1 -DTCL_FRAMEWORK=1 
+TCL_EXTRA_CFLAGS = -pipe   
+TCL_INCLUDES = -I"/System/Library/Frameworks/Tcl.framework/Versions/8.5/Headers"
+TCL_LD_FLAGS =  -headerpad_max_install_names -Wl,-search_paths_first 
 # Not used, but retained for reference of what libs Tcl required
 TCL_LIBS = ${DL_LIBS} ${LIBS} ${MATH_LIBS}
-TCL_LIB_FILE = libtcl8.6.dylib
-TCL_LIB_FLAG = -ltcl8.6
-TCL_LIB_SPEC = -L/opt/local/lib -ltcl8.6
+TCL_LIB_FILE = Tcl
+TCL_LIB_FLAG = -framework Tcl
+TCL_LIB_SPEC = -F/System/Library/Frameworks -framework Tcl
 TCL_SHLIB_LD_LIBS = ${LIBS}
-TCL_SRC_DIR = /opt/local/var/macports/build/_opt_local_var_macports_sources_rsync.macports.org_release_tarballs_ports_lang_tcl/tcl/work/tcl8.6.0
-TCL_STUB_LIB_FILE = libtclstub8.6.a
-TCL_STUB_LIB_FLAG = -ltclstub8.6
-TCL_STUB_LIB_SPEC = -L/opt/local/lib -ltclstub8.6
+TCL_SRC_DIR = /SourceCache/tcl/tcl-87/tcl/tcl
+TCL_STUB_LIB_FILE = libtclstub8.5.a
+TCL_STUB_LIB_FLAG = -ltclstub8.5
+TCL_STUB_LIB_SPEC = -L/System/Library/Frameworks/Tcl.framework/Versions/8.5 -ltclstub8.5
 TCL_THREADS = 1
-TCL_VERSION = 8.6
+TCL_VERSION = 8.5
 VERSION = 2.6
 WISH = /opt/local/bin/wish
+XMALLOC_ZERO_CFLAGS = 
+XORG_MALLOC_DEBUG_ENV = MallocPreScribble=1 MallocScribble=1 DYLD_INSERT_LIBRARIES=/usr/lib/libgmalloc.dylib
+XTMALLOC_ZERO_CFLAGS = 
 abs_builddir = /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6
 abs_srcdir = /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6
 abs_top_builddir = /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6
@@ -427,6 +439,7 @@ host_cpu = x86_64
 host_os = darwin10.8.0
 host_vendor = apple
 htmldir = ${docdir}
+ifGNUmake = 
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
 install_sh = ${SHELL} /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/tclconfig/install-sh
@@ -458,6 +471,7 @@ lib_BINARIES = $(PKG_LIB_FILE)
 BINARIES = $(lib_BINARIES)
 DESTDIR = 
 PKG_DIR = $(PACKAGE_NAME)$(PACKAGE_VERSION)
+AM_CFLAGS = -Wall
 
 #========================================================================
 # TCLLIBPATH seeds the auto_path in Tcl's init.tcl so we can test our
@@ -471,7 +485,7 @@ TCLSH_ENV = TCL_LIBRARY=`echo $(TCL_SRC_DIR)/library` \
 		  PATH="$(EXTRA_PATH)" \
 		  TCLLIBPATH="$(top_builddir) $(top_builddir)/../lib"
 
-AM_CPPFLAGS =  -I"/opt/local/include"
+AM_CPPFLAGS =  -I"/System/Library/Frameworks/Tcl.framework/Versions/8.5/Headers"
 
 # TCL_DEFS is not strictly need here, but if you remove it, then you
 # must make sure that configure.in checks for the necessary components

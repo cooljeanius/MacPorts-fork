@@ -2701,8 +2701,8 @@ AC_DEFUN([TEA_ADD_STUB_SOURCES], [
 	fi
 	PKG_STUB_OBJECTS="$PKG_STUB_OBJECTS $j"
     done
-    AC_SUBST(PKG_STUB_SOURCES)
-    AC_SUBST(PKG_STUB_OBJECTS)
+    AC_SUBST([PKG_STUB_SOURCES])
+    AC_SUBST([PKG_STUB_OBJECTS])
 ])
 
 #------------------------------------------------------------------------
@@ -3402,7 +3402,7 @@ AC_DEFUN([TEA_PUBLIC_TK_HEADERS], [
 AC_DEFUN([TEA_PROG_TCLSH], [
     AC_MSG_CHECKING([for tclsh])
 
-    AC_CACHE_VAL(ac_cv_path_tclsh, [
+    AC_CACHE_VAL([ac_cv_path_tclsh], [
 	if test "x${CELIB_DIR}" != "x" ; then
 	    # If CELIB_DIR is defined, assume Windows/CE target is requested
 	    # which means target tclsh cannot be run (cross-compile)
@@ -3410,11 +3410,11 @@ AC_DEFUN([TEA_PROG_TCLSH], [
 	else
 	    search_path=`echo ${TCL_BIN_DIR}:${TCL_BIN_DIR}/../bin:${exec_prefix}/bin:${prefix}/bin:${PATH} | sed -e 's/:/ /g'`
 	fi
-	for dir in $search_path ; do
-	    for j in `ls -r $dir/tclsh[[8-9]]*${EXEEXT} 2> /dev/null` \
-		    `ls -r $dir/tclsh*${EXEEXT} 2> /dev/null` ; do
+	for dir in ${search_path} ; do
+	    for j in `ls -r ${dir}/tclsh*${EXEEXT} 2> /dev/null` \
+		     `ls -r ${dir}/tclsh[[8-9]]*${EXEEXT} 2> /dev/null` ; do
 		if test x"$ac_cv_path_tclsh" = x ; then
-		    if test -f "$j" ; then
+		    if test -x "$j" ; then
 			ac_cv_path_tclsh=$j
 			break
 		    fi
