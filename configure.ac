@@ -1,5 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 dnl $Id: configure.ac 91520 2012-04-04 00:40:40Z jmr@macports.org $
+
 AC_PREREQ([2.63])
 AC_DEFUN([MACPORTS_VERSION_MACRO], [esyscmd(<config/macports_version tr -d '\n')])
 AC_INIT([MacPorts],MACPORTS_VERSION_MACRO,[macports-dev@lists.macosforge.org],[macports])
@@ -7,22 +8,21 @@ AC_CONFIG_SRCDIR([src/pextlib1.0/Pextlib.c])
 AC_CONFIG_HEADERS([src/config.h])
 AC_CONFIG_MACRO_DIR([m4])
 
-AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
 AC_USE_SYSTEM_EXTENSIONS
-AM_INIT_AUTOMAKE
+AM_INIT_AUTOMAKE([foreign dejagnu dist-bzip2 dist-lzip dist-xz dist-zip no-installinfo tar-pax -Wall])
 AM_DEP_TRACK
 AM_MAINTAINER_MODE
-AM_MAKE_INCLUDE
 AM_SILENT_RULES([no])
 AC_ISC_POSIX
 AC_EXEEXT
+AC_LANG([C])
 
 # Read in the MacPorts version from the base/config/macports_version file
-AC_MSG_CHECKING(MacPorts version)
+AC_MSG_CHECKING([MacPorts version])
 MACPORTS_VERSION=MACPORTS_VERSION_MACRO
 AC_MSG_RESULT([$MACPORTS_VERSION])
-AC_SUBST(MACPORTS_VERSION)
+AC_SUBST([MACPORTS_VERSION])
 
 # Check user PATH for MP paths, and remove as necessary.
 # I'd like to remove this macro, but removing it breaks the build...
@@ -47,22 +47,22 @@ AC_PATH_PROG([DEFAULTS], [defaults])
 AC_PATH_PROG([XCODE_SELECT], [xcode-select])
 
 if test "x$SW_VERS" != "x"; then
-  AC_MSG_CHECKING(Mac OS X version)
+  AC_MSG_CHECKING([Mac OS X version])
   MACOSX_VERSION=`$SW_VERS -productVersion`
   AC_MSG_RESULT([$MACOSX_VERSION])
 fi
 
 case "$MACOSX_VERSION" in
   10.0*|10.1*|10.2*|10.3*)
-    AC_MSG_ERROR([This version of Mac OS X is not supported
+    AC_MSG_ERROR([This version of Mac OS X is not supported any more.
                   Please upgrade at http://store.apple.com/])
     ;;
   10.4.[[0-9]]|10.4.10|10.5.[[0-7]]|10.6.[[0-7]]|10.7.[[0-2]])
-    AC_MSG_WARN([This version of Mac OS X is out of date])
-    AC_MSG_WARN([Please run Software Update to update it])
+    AC_MSG_WARN([This version of Mac OS X is out of date.])
+    AC_MSG_WARN([Please run Software Update to update it.])
     ;;
   10.4*|10.5*|10.6*|10.7*)
-    dnl Supported version
+    dnl# Supported version
     ;;
   *)
     ;;
@@ -70,7 +70,7 @@ esac
 
 # locate currently selected Xcode path
 if test "x$XCODE_SELECT" != "x"; then
-  AC_MSG_CHECKING(Xcode location)
+  AC_MSG_CHECKING([Xcode location])
   DEVELOPER_DIR=`$XCODE_SELECT -print-path`
 fi
 if test -z "$DEVELOPER_DIR" -o ! -d "$DEVELOPER_DIR" ; then
@@ -81,7 +81,7 @@ if test -z "$DEVELOPER_DIR" -o ! -d "$DEVELOPER_DIR" ; then
     fi
 fi
 AC_MSG_RESULT([$DEVELOPER_DIR])
-AC_SUBST(DEVELOPER_DIR)
+AC_SUBST([DEVELOPER_DIR])
 
 case "$DEVELOPER_DIR" in
   *Xcode.app/Contents/Developer)
@@ -121,22 +121,19 @@ esac
 # Checks for programs.
 AM_PROG_AS
 AM_PROG_AR
-AC_PROG_AWK
-AC_PROG_CC
 AM_PROG_CC_C_O
 AC_PROG_CPP
 AC_PROG_CXX
 AM_WITH_DMALLOC
 AC_PROG_GCC_TRADITIONAL
-AM_PROG_GCJ
 AC_PROG_INSTALL
 AM_PROG_LEX
 AC_PROG_LN_S
-AC_PROG_RANLIB
 AC_PROG_OBJC
 AM_PATH_PYTHON
 AC_PROG_YACC
-AC_PROG_LIBTOOL
+LT_INIT
+LT_LANG([C])
 PKG_PROG_PKG_CONFIG
 
 # AX_* macros are from the autoconf-archive package
@@ -145,83 +142,77 @@ AX_PROG_JAVAC
 AX_PROG_PERL_VERSION([5.12])
 AX_PROG_TCL([8.4])
 AX_CHECK_GNU_MAKE
+AX_PKG_SWIG([2.0.9])
+AX_SWIG_MULTI_MODULE_SUPPORT
 
-AC_PATH_PROGS(BSDMAKE, [bsdmake pmake], [])
-AC_PATH_PROG(BZIP2, [bzip2], [])
-AC_PATH_PROG(BZR, [bzr], [])
-AC_PATH_PROG(CHOWN, [chown], [], [$PATH:/usr/sbin])
-AC_PATH_PROG(CHGRP, [chgrp], [], [$PATH:/usr/sbin])
-AC_PATH_PROG(CHMOD, [chmod], [], [$PATH:/usr/sbin])
-AC_PATH_PROG(CODESIGN, [codesign], [])
-AC_PATH_PROG(CP, [cp], [])
-AC_PATH_PROG(CPIO, [cpio], [])
-AC_PATH_PROG(CVS, [cvs], [])
-AC_PATH_PROG(DIFF, [diff], [])
-AC_PATH_PROG(DOXYGEN, [doxygen], [])
-AC_PATH_PROG(DSCL, [dscl], [])
-AC_PATH_PROG(DSEDITGROUP, [dseditgroup], [])
-AC_PATH_PROG(DYLIBBUNDLER, [dylibbundler], [])
-AC_PATH_PROG(ED, [ed])
-AC_PATH_PROG(FILE, [file], [])
-AC_PATH_PROG(GIT, [git], [])
-AC_PATH_PROGS(GNUMAKE, [gnumake gmake], [], [$PATH:/usr/local/bin])
-AC_PATH_PROGS(GNUPATCH, [gnupatch gpatch], [], [$PATH:/usr/local/bin])
-AC_PATH_PROGS(GNUTAR, [gnutar gtar], [], [$PATH:/usr/local/bin])
-AC_PATH_PROG(GZIP, [gzip], [])
-AC_PATH_PROG(HDIUTIL, [hdiutil], [])
-AC_PATH_PROG(HG, [hg], [])
-AC_PATH_PROG(LAUNCHCTL, [launchctl], [])
-AC_PATH_PROG(LIPO, [lipo], [])
-AC_PATH_PROG(LSBOM, [lsbom], [])
-AC_PATH_PROG(LZMA, [lzma], [])
-AC_PATH_PROG(MAKE, [make])
-AC_PATH_PROG(MDFIND, [mdfind], [])
-AC_PATH_PROG(MDLS, [mdls], [])
-AC_PATH_PROG(MKBOM, [mkbom], [])
-AC_PATH_PROG(MTREE, [mtree], [], [$PATH:/usr/sbin])
-AC_PATH_PROG(OPEN, [open], [])
-AC_PATH_PROG(OPENSSL, [openssl], [])
-AC_PATH_PROG(PATCH, [patch], [])
-AC_PATH_PROG(PAX, [pax], [])
-AC_PATH_PROG(PERL5, [perl], [])
-AC_PATH_PROG(RM, [rm], [])
-AC_PATH_PROG(RMDIR, [rmdir], [])
-AC_PATH_PROG(RSYNC, [rsync], [])
-AC_PATH_PROG(SED, [sed])
-AC_PATH_PROG(SVN, [svn], [])
-AC_PATH_PROG(SWIG, [swig], [], [$PATH:/usr/local/bin])
-AC_PATH_PROG(TAR, [tar])
-AC_PATH_PROG(UNZIP, [unzip])
-AC_PATH_PROG(XATTR, [xattr], [])
-AC_PATH_PROG(XAR, [xar], [])
-AC_PATH_PROG(XCODEBUILD, [xcodebuild], [])
-AC_PATH_PROG(XCRUN, [xcrun], [])
-AC_PATH_PROG(XZ, [xz], [])
-AC_PATH_PROG(ZIP, [zip])
+AC_PATH_PROGS([BSDMAKE], [bsdmake pmake], [])
+AC_PATH_PROG([BZIP2], [bzip2], [])
+AC_PATH_PROG([BZR], [bzr], [])
+AC_PATH_PROG([CHOWN], [chown], [], [$PATH:/usr/sbin])
+AC_PATH_PROG([CHGRP], [chgrp], [], [$PATH:/usr/sbin])
+AC_PATH_PROG([CHMOD], [chmod], [], [$PATH:/usr/sbin])
+AC_PATH_PROG([CODESIGN], [codesign], [])
+AC_PATH_PROG([CP], [cp], [])
+AC_PATH_PROG([CPIO], [cpio], [])
+AC_PATH_PROG([CVS], [cvs], [])
+AC_PATH_PROG([DIFF], [diff], [])
+AC_PATH_PROG([DOXYGEN], [doxygen], [])
+AC_PATH_PROG([DSCL], [dscl], [])
+AC_PATH_PROG([DSEDITGROUP], [dseditgroup], [])
+AC_PATH_PROG([DYLIBBUNDLER], [dylibbundler], [])
+AC_PATH_PROG([ED], [ed])
+AC_PATH_PROG([FILE], [file], [])
+AC_PATH_PROG([GIT], [git], [])
+AC_PATH_PROGS([GNUMAKE], [gnumake gmake], [], [$PATH:/usr/local/bin])
+AC_PATH_PROGS([GNUPATCH], [gnupatch], [], [$PATH:/usr/local/bin])
+AC_PATH_PROGS([GNUTAR], [gnutar gtar], [], [$PATH:/usr/local/bin])
+AC_PATH_PROG([GZIP], [gzip], [])
+AC_PATH_PROG([HDIUTIL], [hdiutil], [])
+AC_PATH_PROG([HG], [hg], [])
+AC_PATH_PROG([LAUNCHCTL], [launchctl], [])
+AC_PATH_PROG([LIPO], [lipo], [])
+AC_PATH_PROG([LSBOM], [lsbom], [])
+AC_PATH_PROG([LZMA], [lzma], [])
+AC_PATH_PROG([MAKE], [make])
+AC_PATH_PROG([MDFIND], [mdfind], [])
+AC_PATH_PROG([MDLS], [mdls], [])
+AC_PATH_PROG([MKBOM], [mkbom], [])
+AC_PATH_PROG([MTREE], [mtree], [], [$PATH:/usr/sbin])
+AC_PATH_PROG([OPEN], [open], [])
+AC_PATH_PROG([OPENSSL], [openssl], [])
+AC_PATH_PROG([PAX], [pax], [])
+AC_PATH_PROG([PERL5], [perl], [])
+AC_PATH_PROG([RMDIR], [rmdir], [])
+AC_PATH_PROG([RSYNC], [rsync], [])
+AC_PATH_PROG([SVN], [svn], [])
+AC_PATH_PROG([UNZIP], [unzip])
+AC_PATH_PROG([XATTR], [xattr], [])
+AC_PATH_PROG([XAR], [xar], [])
+AC_PATH_PROG([XCODEBUILD], [xcodebuild], [])
+AC_PATH_PROG([XCRUN], [xcrun], [])
+AC_PATH_PROG([XZ], [xz], [])
+AC_PATH_PROG([ZIP], [zip])
 
-AC_CHECK_PROG(HAVE_LAUNCHD, [launchd], [yes], [])
+AC_CHECK_PROG([HAVE_LAUNCHD], [launchd], [yes], [])
 
 # Define some precious variables allowing user to override PATH for some programs
-AC_ARG_VAR(BSDMAKE, [path to bsdmake/pmake command])
-AC_ARG_VAR(BZIP2, [path to bzip2 command])
-AC_ARG_VAR(CVS, [path to cvs command])
-AC_ARG_VAR(GNUMAKE, [path to gnumake command])
-AC_ARG_VAR(GNUTAR, [path to gnutar command])
-AC_ARG_VAR(LZMA, [path to lzma command])
-AC_ARG_VAR(MAKE, [path to make command])
-AC_ARG_VAR(MTREE, [path to mtree command])
-AC_ARG_VAR(OPEN, [path to open command])
-AC_ARG_VAR(OPENSSL, [path to openssl command])
-AC_ARG_VAR(RSYNC, [path to rsync command])
-AC_ARG_VAR(SED, [path to sed command])
-AC_ARG_VAR(SVN, [path to svn command])
-AC_ARG_VAR(SWIG, [path to swig command])
-AC_ARG_VAR(TAR, [path to tar command])
-AC_ARG_VAR(XAR, [path to xar command])
-AC_ARG_VAR(XZ, [path to xz command])
+AC_ARG_VAR([BSDMAKE], [path to bsdmake/pmake command])
+AC_ARG_VAR([BZIP2], [path to bzip2 command])
+AC_ARG_VAR([CVS], [path to cvs command])
+AC_ARG_VAR([GNUMAKE], [path to gnumake command])
+AC_ARG_VAR([GNUTAR], [path to gnutar command])
+AC_ARG_VAR([LZMA], [path to lzma command])
+AC_ARG_VAR([MAKE], [path to make command])
+AC_ARG_VAR([MTREE], [path to mtree command])
+AC_ARG_VAR([OPEN], [path to open command])
+AC_ARG_VAR([OPENSSL], [path to openssl command])
+AC_ARG_VAR([RSYNC], [path to rsync command])
+AC_ARG_VAR([SVN], [path to svn command])
+AC_ARG_VAR([XAR], [path to xar command])
+AC_ARG_VAR([XZ], [path to xz command])
 
 if test "x$MTREE" = "x"; then
-    AC_MSG_ERROR([mtree not found])
+    AC_MSG_ERROR([mtree not found; you can get a copy from http://opensource.apple.com/source/file_cmds/file_cmds-220.7/])
 fi
 
 MP_SED_EXTENDED_REGEXP
@@ -234,8 +225,8 @@ if test x$GCC = xyes; then
 	CFLAGS_QUICHEEATERS='-Wextra -Wall'
 	CFLAGS_PEDANTIC='-pedantic'
 fi
-AC_SUBST(CFLAGS_QUICHEEATERS)
-AC_SUBST(CFLAGS_PEDANTIC)
+AC_SUBST([CFLAGS_QUICHEEATERS])
+AC_SUBST([CFLAGS_PEDANTIC])
 MP_WERROR
 
 MP_COMPILER_ATTRIBUTE_UNUSED
@@ -259,17 +250,16 @@ MP_OBJC_FOUNDATION
 
 MP_PROG_DAEMONDO
 
-AC_SUBST(EXTRA_PROGS)
+AC_SUBST([EXTRA_PROGS])
 
 # set default ports-directory
 PORTS_DIR_DEFAULT=`pwd | sed -e "s/base/ports/"`
 
 # Check for paths
-AC_PREFIX_DEFAULT(/opt/local)
-AC_ARG_WITH(
-		unsupported-prefix,
-		AS_HELP_STRING([--with-unsupported-prefix],
-		[Acknowledge that you accept the consequences of using an unsupported prefix.]),
+AC_PREFIX_DEFAULT([/opt/local])
+AC_ARG_WITH([unsupported-prefix],
+		[AS_HELP_STRING([--with-unsupported-prefix],
+		[Acknowledge that you accept the consequences of using an unsupported prefix.])],
 		[with_unsupported_prefix=$withval],
 		[with_unsupported_prefix=no])
 if test x$prefix = x/usr/local -o x$prefix = x/usr && test x$with_unsupported_prefix != xyes; then
@@ -298,18 +288,15 @@ MP_PATH_FRAMEWORKS
 MP_UNIVERSAL_OPTIONS
 
 # Checks for libraries.
-# FIXME: Replace `main' with a function in `-list':
-AC_CHECK_LIB([ist], [main])
 # FIXME: Replace `main' with a function in `-ltcl':
 AC_CHECK_LIB([tcl], [main])
 
 # Check for standard header files.
-AC_HEADER_STDC
 AC_HEADER_DIRENT
 AC_HEADER_SYS_WAIT
-AC_CHECK_HEADERS([crt_externs.h err.h fcntl.h inttypes.h limits.h mach/mach.h paths.h pwd.h stdint.h stdlib.h string.h strings.h sys/cdefs.h sys/file.h sys/fcntl.h sys/ioctl.h sys/mount.h sys/paths.h sys/param.h sys/socket.h sys/sysctl.h sys/time.h readline/readline.h readline/history.h unistd.h utime.h])
+AC_CHECK_HEADERS([crt_externs.h err.h fcntl.h limits.h mach/mach.h paths.h pwd.h stdio.h sys/cdefs.h sys/file.h sys/fcntl.h sys/ioctl.h sys/mount.h sys/paths.h sys/socket.h sys/sysctl.h sys/time.h readline/readline.h readline/history.h utime.h])
 
-INCLUDES="-I.. -I. $INCLUDES"
+AM_CPPFLAGS="-I.. -I. $AM_CPPFLAGS"
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_CHECK_HEADER_STDBOOL
@@ -337,7 +324,7 @@ MP_CHECK_READLINK_IS_P1003_1A
 AC_CHECK_HEADER([CommonCrypto/CommonDigest.h], [AC_DEFINE([HAVE_COMMONCRYPTO_COMMONDIGEST_H], [1], [Define if CommonCrypto is available.])], [MP_LIB_MD5])
 
 # Check for readline
-AC_ARG_ENABLE(readline, AS_HELP_STRING([--enable-readline],[Enable addition of readline support, if readline present.]),
+AC_ARG_ENABLE([readline], [AS_HELP_STRING([--enable-readline],[Enable addition of readline support, if readline present.])],
 [
 	AC_CHECK_LIB([readline], [readline], [
 				  READLINE_LIBS=-lreadline
@@ -351,7 +338,7 @@ AC_ARG_ENABLE(readline, AS_HELP_STRING([--enable-readline],[Enable addition of r
 	#endif
 	])
 ])
-AC_SUBST(READLINE_LIBS)
+AC_SUBST([READLINE_LIBS])
 
 # Lowest non-system-reserved uid and gid (Apple claims <500)
 AC_DEFINE([MIN_USABLE_UID], [500], [Lowest non-system-reserved UID.])
@@ -362,7 +349,7 @@ SC_PATH_TCLCONFIG
 SC_LOAD_TCLCONFIG
 
 # Check for Tcl public headers
-dnl XXX	 hardwire CYGPATH (CYGPATH must be set for SC_PUBLIC_TCL_HEADERS)
+dnl# XXX hardwire CYGPATH (CYGPATH must be set for SC_PUBLIC_TCL_HEADERS)
 CYGPATH=echo
 SC_PUBLIC_TCL_HEADERS
 
@@ -390,17 +377,15 @@ fi
 OUR_INCLUDED_PACKAGES=
 
 ## Thread package.
-AC_ARG_WITH(
-		included-tclthread,
-		AS_HELP_STRING([--with-included-tclthread],
-			[install included Thread package.]),
+AC_ARG_WITH([included-tclthread],
+		[AS_HELP_STRING([--with-included-tclthread],
+			[install included Thread package.])],
 		[with_included_tclthread=$withval],
 		[with_included_tclthread="unspecified"])
 
 # Check if thread package is already installed.
 if test "x$with_included_tclthread" = "xunspecified" ; then
-	MP_TCL_PACKAGE(
-		[Thread],
+	MP_TCL_PACKAGE([Thread],
 		[AC_MSG_RESULT([yes]); with_included_tclthread=no],
 		[AC_MSG_RESULT([no]); with_included_tclthread=yes])
 fi
@@ -416,10 +401,9 @@ if test "$with_included_tclthread" = "yes"; then
 fi
 
 AH_TEMPLATE([TRACE_SDK], [SDK for SDK redirect in tracelib])
-AC_ARG_WITH(
-	trace-sdk,
-	AS_HELP_STRING([--with-trace-sdk=SDK],
-		[SDK for redirection in trace lib (for example MacOSX10.4u.sdk)]),
+AC_ARG_WITH([trace-sdk],
+	[AS_HELP_STRING([--with-trace-sdk=SDK],
+		[SDK for redirection in trace lib (for example MacOSX10.4u.sdk)])],
 	[test -d ${DEVELOPER_DIR}/SDKs/$withval && AC_DEFINE_UNQUOTED([TRACE_SDK], "${withval}")], [])
 
 # Allows building of shared libraries
@@ -433,17 +417,17 @@ STLIB_LD=${TCL_STLIB_LD}
 SHLIB_CFLAGS=${TCL_SHLIB_CFLAGS}
 SHLIB_SUFFIX=${TCL_SHLIB_SUFFIX}
 
-AC_SUBST(INCLUDES)
-AC_SUBST(PATHCONF)
-AC_SUBST(STLIB_LD)
-AC_SUBST(SHLIB_LD)
-AC_SUBST(SHLIB_CFLAGS)
-AC_SUBST(SHLIB_LDFLAGS)
-AC_SUBST(SHLIB_SUFFIX)
-AC_SUBST(TCL_DEFS)
-AC_SUBST(TCL_STUB_LIB_SPEC)
-AC_SUBST(TCL_CC)
-AC_SUBST(OUR_INCLUDED_PACKAGES)
+AC_SUBST([AM_CPPFLAGS])
+AC_SUBST([PATHCONF])
+AC_SUBST([STLIB_LD])
+AC_SUBST([SHLIB_LD])
+AC_SUBST([SHLIB_CFLAGS])
+AC_SUBST([SHLIB_LDFLAGS])
+AC_SUBST([SHLIB_SUFFIX])
+AC_SUBST([TCL_DEFS])
+AC_SUBST([TCL_STUB_LIB_SPEC])
+AC_SUBST([TCL_CC])
+AC_SUBST([OUR_INCLUDED_PACKAGES])
 
 # misc variables that need to be expanded for substitution into tcl
 
@@ -456,22 +440,22 @@ fi
 MP_CHECK_OLDLAYOUT
 
 eval "prefix_expanded=$prefix"
-AC_SUBST(prefix_expanded)
+AC_SUBST([prefix_expanded])
 # do this twice, since there is a nested variable of
 # ${prefix} inside of ${sysconfdir}
 eval "MPCONFIGDIR_EXPANDED=$MPCONFIGDIR"
 eval "MPCONFIGDIR_EXPANDED=$MPCONFIGDIR_EXPANDED"
-AC_SUBST(MPCONFIGDIR_EXPANDED)
+AC_SUBST([MPCONFIGDIR_EXPANDED])
 eval "localstatedir_expanded=$localstatedir"
-AC_SUBST(localstatedir_expanded)
+AC_SUBST([localstatedir_expanded])
 eval "macports_tcl_dir=${datadir}/macports/Tcl"
 eval "macports_tcl_dir=$macports_tcl_dir"
-AC_SUBST(macports_tcl_dir)
+AC_SUBST([macports_tcl_dir])
 
 prefix=$oldprefix
 
-dnl man page settings (compressed, links, etc)
-dnl
+dnl# man page settings (compressed, links, etc)
+dnl#
 SC_CONFIG_MANPAGES
 
 # Output
@@ -483,7 +467,6 @@ AC_CONFIG_FILES([Doxyfile
 		 doc/macosx.mtree
 		 doc/macports.conf
 		 doc/pubkeys.conf
-		 portmgr/freebsd/Makefile
 		 src/Makefile
 		 src/machista1.0/Makefile
 	 	 src/macports1.0/macports_autoconf.tcl
@@ -492,6 +475,9 @@ AC_CONFIG_FILES([Doxyfile
 		 src/programs/Makefile
 		 src/macports1.0/macports_fastload.tcl
 		 setupenv.bash])
+
+# Things removed from outpur files:
+# portmgr/freebsd/Makefile (not a regular "makefile")
 
 AC_CONFIG_FILES([src/pkg_mkindex.sh], [chmod +x src/pkg_mkindex.sh])
 

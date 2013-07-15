@@ -11,7 +11,7 @@ SUBDIR=		${TCLPKG} port programs
 
 all::
 
-distclean::
+distclean-local::
 	rm -f config.h
 	rm -f Makefile
 	rm -f pkg_mkindex.sh

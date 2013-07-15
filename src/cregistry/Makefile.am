@@ -2,7 +2,7 @@
 
 OBJS = registry.o entry.o sql.o vercomp.o util.o file.o
 STLIB_NAME = cregistry.a
-RANLIB = ranlib
+RANLIB = @RANLIB@
 
 SQLEXT_NAME = macports.sqlext
 SQLEXT_OBJS = sqlext.o vercomp.o
@@ -21,10 +21,10 @@ ${STLIB_NAME}:: ${OBJS}
 ${SQLEXT_NAME}: ${SQLEXT_OBJS}
 	${SHLIB_LD} ${SQLEXT_OBJS} -o $@
 
-clean::
+clean-local::
 	rm -f ${STLIB_NAME} ${SQLEXT_NAME} ${SQLEXT_OBJS} ${OBJS}
 
-distclean:: clean
+distclean-local:: clean-local
 
 test:
 

@@ -14,10 +14,10 @@ all:: ${SHLIB_NAME}
 $(SHLIB_NAME):: ${OBJS}
 	${SHLIB_LD} ${OBJS} -o ${SHLIB_NAME} ${SHLIB_LDFLAGS} ${LIBS}
 
-clean::
+clean-local::
 	rm -f ${OBJS} ${SHLIB_NAME} so_locations
 
-distclean:: clean
+distclean-local:: clean-local
 
 install:: all
 	$(INSTALL) -d -o ${DSTUSR} -g ${DSTGRP} -m ${DSTMODE} ${INSTALLDIR}

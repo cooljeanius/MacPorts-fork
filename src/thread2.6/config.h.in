@@ -1,0 +1,248 @@
+/* config.h.in.  Generated from configure.ac by autoheader.  */
+
+/* Define if building universal (internal helper macro) */
+#undef AC_APPLE_UNIVERSAL_BUILD
+
+/* Defined to 1 if building sample */
+#undef BUILD_sample
+
+/* Define to nothing if C supports flexible array members, and to 1 if it does
+   not. That way, with a declaration like `struct s { int n; double
+   d[FLEXIBLE_ARRAY_MEMBER]; };', the struct hack can be used with pre-C99
+   compilers. When computing the size of such an object, don't use 'sizeof
+   (struct s)' as it overestimates the size. Use 'offsetof (struct s, d)'
+   instead. Don't use 'offsetof (struct s, d[0])', as this doesn't work with
+   MSVC and with C++ compilers. */
+#undef FLEXIBLE_ARRAY_MEMBER
+
+/* Define to 1 if C supports variable-length arrays. */
+#undef HAVE_C_VARARRAYS
+
+/* Define to 1 if you have the <dlfcn.h> header file. */
+#undef HAVE_DLFCN_H
+
+/* Define to 1 if you have the `ftime' function. */
+#undef HAVE_FTIME
+
+/* Defined to 1 if we have gdbm */
+#undef HAVE_GDBM
+
+/* Define to 1 if you have the `gettimeofday' function. */
+#undef HAVE_GETTIMEOFDAY
+
+/* Define to 1 if you have the <inttypes.h> header file. */
+#undef HAVE_INTTYPES_H
+
+/* Define to 1 if you have the `tcl' library (-ltcl). */
+#undef HAVE_LIBTCL
+
+/* Defined to 1 if we have limits.h */
+#undef HAVE_LIMITS_H
+
+/* Define to 1 if you have the <memory.h> header file. */
+#undef HAVE_MEMORY_H
+
+/* Define to 1 if you have the `memset' function. */
+#undef HAVE_MEMSET
+
+/* Defined to 1 if we have net/errno.h */
+#undef HAVE_NET_ERRNO_H
+
+/* Define if you have POSIX threads libraries and header files. */
+#undef HAVE_PTHREAD
+
+/* Define to 1 if you have the `pthread_attr_setstacksize' function. */
+#undef HAVE_PTHREAD_ATTR_SETSTACKSIZE
+
+/* Have PTHREAD_PRIO_INHERIT. */
+#undef HAVE_PTHREAD_PRIO_INHERIT
+
+/* Define to 1 if you have the `readdir_r' function. */
+#undef HAVE_READDIR_R
+
+/* Define to 1 if you have the <stdint.h> header file. */
+#undef HAVE_STDINT_H
+
+/* Define to 1 if you have the <stdlib.h> header file. */
+#undef HAVE_STDLIB_H
+
+/* Define to 1 if you have the `strchr' function. */
+#undef HAVE_STRCHR
+
+/* Define to 1 if you have the <strings.h> header file. */
+#undef HAVE_STRINGS_H
+
+/* Define to 1 if you have the <string.h> header file. */
+#undef HAVE_STRING_H
+
+/* Define to 1 if you have the `strstr' function. */
+#undef HAVE_STRSTR
+
+/* Defined to 1 if we have the struct dirent64 */
+#undef HAVE_STRUCT_DIRENT64
+
+/* Defined to 1 if we have the struct stat64 */
+#undef HAVE_STRUCT_STAT64
+
+/* Define to 1 if you have the <sys/param.h> header file. */
+#undef HAVE_SYS_PARAM_H
+
+/* Define to 1 if you have the <sys/stat.h> header file. */
+#undef HAVE_SYS_STAT_H
+
+/* Define to 1 if you have the <sys/timeb.h> header file. */
+#undef HAVE_SYS_TIMEB_H
+
+/* Define to 1 if you have the <sys/time.h> header file. */
+#undef HAVE_SYS_TIME_H
+
+/* Define to 1 if you have the <sys/types.h> header file. */
+#undef HAVE_SYS_TYPES_H
+
+/* Define to 1 if `errorLine' is a member of `Tcl_Interp'. */
+#undef HAVE_TCL_INTERP_ERRORLINE
+
+/* Defined to 1 if we have the type off64_t */
+#undef HAVE_TYPE_OFF64_T
+
+/* Define to 1 if you have the <unistd.h> header file. */
+#undef HAVE_UNISTD_H
+
+/* Define to the sub-directory in which libtool stores uninstalled libraries.
+   */
+#undef LT_OBJDIR
+
+/* Defined to 1 if there is no dirent.h */
+#undef NO_DIRENT_H
+
+/* Defined to 1 if there is no dirent.h */
+#undef NO_DLFCN_H
+
+/* Defined to 1 if there is no errno.h */
+#undef NO_ERRNO_H
+
+/* Defined to 1 if there is no float.h */
+#undef NO_FLOAT_H
+
+/* Defined to 1 if there is no limits.h */
+#undef NO_LIMITS_H
+
+/* Defined to 1 if there is no stdlib.h */
+#undef NO_STDLIB_H
+
+/* Defined to 1 if there is no string.h */
+#undef NO_STRING_H
+
+/* Defined to 1 if there is no sys/wait.h */
+#undef NO_SYS_WAIT_H
+
+/* Defined to 1 if there is no values.h */
+#undef NO_VALUES_H
+
+/* Name of package */
+#undef PACKAGE
+
+/* Define to the address where bug reports for this package should be sent. */
+#undef PACKAGE_BUGREPORT
+
+/* Define to the full name of this package. */
+#undef PACKAGE_NAME
+
+/* Define to the full name and version of this package. */
+#undef PACKAGE_STRING
+
+/* Define to the one symbol short name of this package. */
+#undef PACKAGE_TARNAME
+
+/* Define to the home page for this package. */
+#undef PACKAGE_URL
+
+/* Define to the version of this package. */
+#undef PACKAGE_VERSION
+
+/* Define to necessary symbol if this constant uses a non-standard name on
+   your system. */
+#undef PTHREAD_CREATE_JOINABLE
+
+/* Defined to 1 if doing a static build */
+#undef STATIC_BUILD
+
+/* Define to 1 if you have the ANSI C header files. */
+#undef STDC_HEADERS
+
+/* Defined to 1 if enabled symbols for mem debugging */
+#undef TCL_MEM_DEBUG
+
+/* Defined to 1 if using threads */
+#undef TCL_THREADS
+
+/* Defined to 1 if wide int is long */
+#undef TCL_WIDE_INT_IS_LONG
+
+/* wide int type */
+#undef TCL_WIDE_INT_TYPE
+
+/* Version of WINCE */
+#undef UNDER_CE
+
+/* Defined to 1 if using a.out.h */
+#undef USE_A_OUT_H
+
+/* Defined to 1 if using delta for tz */
+#undef USE_DELTA_FOR_TZ
+
+/* Defined to 1 if using sys/exec_aout.h */
+#undef USE_SYS_EXEC_AOUT_H
+
+/* Defined to 1 if using sys/exec.h */
+#undef USE_SYS_EXEC_H
+
+/* Defined to 1 if using Tcl stubs */
+#undef USE_TCL_STUBS
+
+/* Defined to 1 if using thread alloc */
+#undef USE_THREAD_ALLOC
+
+/* Version number of package */
+#undef VERSION
+
+/* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most
+   significant byte first (like Motorola and SPARC, unlike Intel). */
+#if defined AC_APPLE_UNIVERSAL_BUILD
+# if defined __BIG_ENDIAN__
+#  define WORDS_BIGENDIAN 1
+# endif
+#else
+# ifndef WORDS_BIGENDIAN
+#  undef WORDS_BIGENDIAN
+# endif
+#endif
+
+/* Defined to 1 if _ISOC99_SOURCE is required */
+#undef _ISOC99_SOURCE
+
+/* Defined to 1 if _LARGEFILE64_SOURCE is required */
+#undef _LARGEFILE64_SOURCE
+
+/* Apparently this define is needed in sys/socket.h */
+#undef _OE_SOCKETS
+
+/* Defined to 1 if using POSIX pthread semantics */
+#undef _POSIX_PTHREAD_SEMANTICS
+
+/* If this is not defined, then Solaris will not define thread-safe library
+   routines. */
+#undef _REENTRANT
+
+/* Not sure what this define means... */
+#undef _THREAD_SAFE
+
+/* Version of WINCE */
+#undef _WIN32_WCE
+
+/* Defined to 1 if we are going to use updated header definitions where
+   possible */
+#undef _XOPEN_SOURCE_EXTENDED
+
+/* Define to `unsigned int' if <sys/types.h> does not define. */
+#undef size_t

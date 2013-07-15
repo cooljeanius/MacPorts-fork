@@ -8,7 +8,8 @@ libtool
 *.gz
 *.dylib
 */build/*
-config.h
-src/config.h
+*config.h
 *.sqlext
 *.a
+*(Autosaved)*
+*stamp-h*

@@ -35,7 +35,7 @@ ${SWIG_OBJS}:: ${SWIG_SRCS}
 ${PKG_INDEX}:: ${SWIG_SHLIB}
 	$(SILENT) ../pkg_mkindex.sh $< || ( rm -rf $@ && exit 1 )
 
-clean::
+clean-local::
 	rm -f ${SWIG_OBJS} ${PKG_INDEX}
 	rm -f ${TESTS}
 	rm -rf ${TESTS:%=%.dSYM}

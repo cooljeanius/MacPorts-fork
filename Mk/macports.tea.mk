@@ -1,6 +1,6 @@
 # $Id: macports.tea.mk 66305 2010-04-09 00:13:29Z raimue@macports.org $
 
-.SUFFIXES: .m
+SUFFIXES = .m
 
 .m.o:
 	${CC} -c -DUSE_TCL_STUBS -DTCL_NO_DEPRECATED ${OBJCFLAGS} ${CPPFLAGS} ${SHLIB_CFLAGS} $< -o $@
@@ -16,10 +16,10 @@ $(SHLIB_NAME):: ${OBJS}
 pkgIndex.tcl: $(SHLIB_NAME)
 	$(SILENT) ../pkg_mkindex.sh . || ( rm -rf $@ && exit 1 )
 
-clean::
+clean-local::
 	rm -f ${OBJS} ${SHLIB_NAME} so_locations pkgIndex.tcl
 
-distclean:: clean
+distclean-local:: clean-local
 
 install:: all
 	$(INSTALL) -d -o ${DSTUSR} -g ${DSTGRP} -m ${DSTMODE} ${INSTALLDIR}

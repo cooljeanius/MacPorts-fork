@@ -1,6 +1,7 @@
 # $Id: Makefile.in 90002 2012-02-19 17:25:25Z jmr@macports.org $
 
 ACLOCAL_AMFLAGS = -I m4
+AM_CFLAGS       = -Wall
 
 PATH		= @PATH_CLEANED@
 SUBDIR		= doc src tests
@@ -111,9 +112,9 @@ rmgroup::
 	@echo "deleting macports group..." && sudo dseditgroup -o delete -n . macports && echo "done! use 'make group' to re-create"
 
 
-clean::
+clean-local::
 
-distclean::
+distclean-local::
 	rm -f config.log config.status configure.lineno
 	rm -rf autom4te.cache ${DISTDIR}
 	rm -f Makefile Mk/macports.autoconf.mk portmgr/freebsd/Makefile
