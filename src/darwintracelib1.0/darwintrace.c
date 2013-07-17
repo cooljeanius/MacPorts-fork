@@ -6,20 +6,20 @@
  * $Id: darwintrace.c 80069 2011-07-03 22:06:21Z raimue@macports.org $
  *
  * @APPLE_BSD_LICENSE_HEADER_START@
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  * 1.  Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer. 
+ *     notice, this list of conditions and the following disclaimer.
  * 2.  Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution. 
+ *     documentation and/or other materials provided with the distribution.
  * 3.  Neither the name of Apple Inc. ("Apple") nor the names of
  *     its contributors may be used to endorse or promote products derived
- *     from this software without specific prior written permission. 
- * 
+ *     from this software without specific prior written permission.
+ *
  * THIS SOFTWARE IS PROVIDED BY APPLE AND ITS CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -30,12 +30,17 @@
  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
+ *
  * @APPLE_BSD_LICENSE_HEADER_END@
  */
 
+/* darwintrace: enables trace mode (i.e. the `-t` flag for the `port` command)
+ * cal, a.k.a neverpanic, is the expert on this.
+ */
+
+// Includes
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+	#include <config.h>
 #endif
 
 #if HAVE_SYS_CDEFS_H
@@ -149,9 +154,9 @@ static int __darwintrace_fd = -1;
 /**
  * filemap: path\0whattodo\0path\0whattodo\0\0
  * path: begin of path (for example /opt)
- * whattodo: 
+ * whattodo:
  *   0     -- allow
- *   1PATH -- map 
+ *   1PATH -- map
  *   2     -- ask for allow
 **/
 static char * filemap=0;
@@ -188,9 +193,9 @@ int debug_printf(const char *format, ...) {
  * char wait_for_socket(int sock, char w)
  * Function used for read/write operation to socket...
  * Args:
- *  sock - socket 
+ *  sock - socket
  *  w - what should socket do in next operation. 1 for write, 0 for read
- * Return value: 
+ * Return value:
  *  1 - everything is ok, we can read/write to/from it
  *  0 - something's went wrong
  */
@@ -198,10 +203,10 @@ static int wait_for_socket(int sock, char w)
 {
 	struct timeval tv;
 	fd_set fds;
-	
+
 	if(sock==-1)
 		return 0;
-	
+
 	tv.tv_sec=10;
 	tv.tv_usec=0;
 	FD_ZERO(&fds);
@@ -266,7 +271,7 @@ inline char* __darwintrace_alloc_env(const char* varName, const char* varValue) 
 		    theResult[theSize - 1] = 0;
 		}
 	}
-	
+
 	return theResult;
 }
 
@@ -279,15 +284,15 @@ inline char* const* __darwintrace_restore_env(char* const envp[]) {
 	/* allocate the strings. */
 	/* we don't care about the leak here because we're going to call execve,
      * which, if it succeeds, will get rid of our heap */
-	char* dyld_insert_libraries_ptr =	
+	char* dyld_insert_libraries_ptr =
 		__darwintrace_alloc_env(
 			"DYLD_INSERT_LIBRARIES",
 			__env_dyld_insert_libraries);
-	char* dyld_force_flat_namespace_ptr =	
+	char* dyld_force_flat_namespace_ptr =
 		__darwintrace_alloc_env(
 			"DYLD_FORCE_FLAT_NAMESPACE",
 			__env_dyld_force_flat_namespace);
-	char* darwintrace_log_ptr =	
+	char* darwintrace_log_ptr =
 		__darwintrace_alloc_env(
 			"DARWINTRACE_LOG",
 			__env_darwintrace_log);
@@ -319,14 +324,14 @@ inline char* const* __darwintrace_restore_env(char* const envp[]) {
 			theValue = darwintrace_log_ptr;
 			darwintrace_log_ptr = NULL;
 		}
-		
+
 		if (theValue) {
 			*theCopyIter++ = theValue;
 		}
 
 		theEnvIter++;
 	}
-	
+
 	if (dyld_insert_libraries_ptr) {
 		*theCopyIter++ = dyld_insert_libraries_ptr;
 	}
@@ -338,7 +343,7 @@ inline char* const* __darwintrace_restore_env(char* const envp[]) {
 	}
 
 	*theCopyIter = 0;
-	
+
 	return theCopy;
 }
 
@@ -386,7 +391,7 @@ inline void __darwintrace_log_op(const char* op, const char* path, int fd) {
 	int size;
 	char somepath[MAXPATHLEN];
 	char logbuffer[BUFFER_SIZE];
-	
+
 	do {
 #ifdef __APPLE__ /* Only Darwin has volfs and F_GETPATH */
 		if ((fd > 0) && (DARWINTRACE_LOG_FULL_PATH
@@ -419,7 +424,7 @@ inline void __darwintrace_log_op(const char* op, const char* path, int fd) {
 		op, somepath );
 
 	exchange_with_port(logbuffer, size+1, 0, 0);
-	
+
 	return;
 }
 
@@ -437,7 +442,7 @@ inline void __darwintrace_cleanup_path(char *path) {
   /* if this is a foo/..namedfork/rsrc, strip it off */
   pathlen = strlen(path);
   /* ..namedfork/rsrc is only on OS X */
-#ifdef __APPLE__ 
+#ifdef __APPLE__
   rsrclen = strlen(_PATH_RSRCFORKSPEC);
   if(pathlen > rsrclen
      && 0 == strcmp(path + pathlen - rsrclen,
@@ -483,7 +488,7 @@ static int is_directory(const char * path)
 	if(stat(path, &s)==-1)
 		/* Actually is not directory, but anyway, we shouldn't test a dependency unless file exists */
 		return 1;
-	
+
 	return S_ISDIR(s.st_mode);
 #undef stat
 }
@@ -496,19 +501,19 @@ static int ask_for_dependency(char * path)
 {
 	char buffer[BUFFER_SIZE], *p;
 	int result=0;
-	
+
 	if(is_directory(path))
 		return 1;
-	
+
 	strncpy(buffer, "dep_check\t", sizeof(buffer));
 	strncpy(buffer+10, path, sizeof(buffer)-10);
 	p=exchange_with_port(buffer, strlen(buffer)+1, 1, 0);
 	if(p==(char*)-1||!p)
 		return 0;
-	
+
 	if(*p=='+')
 		result=1;
-	
+
 	free(p);
 	return result;
 }
@@ -543,7 +548,7 @@ static char * exchange_with_port(const char * buf, size_t len, int answer, char 
 	{
 		size_t l=0;
 		char * b;
-		
+
 		wait_for_socket(__darwintrace_fd, 0);
 		recv(__darwintrace_fd, &l, sizeof(l),0);
 		if(!l)
@@ -562,12 +567,12 @@ __attribute__((always_inline))
 inline int __darwintrace_is_in_sandbox(const char* path, char * newpath) {
 	char * t, * p, * _;
 	int result=-1;
-	
+
 	__darwintrace_setup();
-	
+
 	if(!filemap)
 		return 1;
-	
+
 	if(*path=='/')
 		p=strdup(path);
 	else
@@ -582,7 +587,7 @@ inline int __darwintrace_is_in_sandbox(const char* path, char * newpath) {
 		strcat(p, path);
 	}
 	__darwintrace_cleanup_path(p);
-			
+
 	do
 	{
 		for(t=filemap; *t;)
@@ -648,15 +653,15 @@ int open(const char* path, int flags, ...) {
 	va_list args;
 	struct stat sb;
 	char newpath[MAXPATHLEN];
-	int isInSandbox;	
+	int isInSandbox;
 
 	/* Why mode here ? */
 	va_start(args, flags);
 	mode = va_arg(args, int);
 	va_end(args);
-	
+
 	result = 0;
-	
+
 	if((stat(path, &sb)!=-1 && !(sb.st_mode&S_IFDIR)) || flags & O_CREAT )
 	{
 		*newpath=0;
@@ -725,12 +730,12 @@ int execve(const char* path, char* const argv[], char* const envp[]) {
 	      /* for symlinks, print both */
 		  __darwintrace_log_op("execve", path, 0);
 	    }
-		
+
 		fd = open(path, O_RDONLY, 0);
 		if (fd > 0) {
 		  char buffer[MAXPATHLEN+1], newpath[MAXPATHLEN+1];
 		  ssize_t bytes_read;
-		
+
 		  *newpath=0;
 		  if(__darwintrace_is_in_sandbox(path, newpath)==0)
 		  {
@@ -740,7 +745,7 @@ int execve(const char* path, char* const argv[], char* const envp[]) {
 		  }
 		  if(*newpath)
 		    path=newpath;
-	
+
 		  /* once we have an open fd, if a full path was requested, do it */
 		  __darwintrace_log_op("execve", path, fd);
 
@@ -777,7 +782,7 @@ int execve(const char* path, char* const argv[], char* const envp[]) {
 	close(__darwintrace_fd);
 	__darwintrace_fd=-1;
 	}
-	
+
 	/* call the original execve function, but fix the environment if required. */
 	result = __execve(path, argv, __darwintrace_restore_env(envp));
 	return result;
@@ -816,11 +821,11 @@ int unlink(const char* path) {
 		errno = EACCES;
 		result = -1;
 	}
-	
+
 	if (result == 0) {
 		result = __unlink(path);
 	}
-	
+
 	return result;
 }
 
@@ -846,11 +851,11 @@ int mkdir(const char* path, mode_t mode) {
 		} /* otherwise, mkdir will do nothing (directory exists) or fail
 		     (another error) */
 	}
-	
+
 	if (result == 0) {
 		result = __mkdir(path, mode);
 	}
-	
+
 	return result;
 }
 
@@ -868,11 +873,11 @@ int rmdir(const char* path) {
 		errno = EACCES;
 		result = -1;
 	}
-	
+
 	if (result == 0) {
 		result = __rmdir(path);
 	}
-	
+
 	return result;
 }
 
@@ -902,11 +907,11 @@ int rename(const char* from, const char* to) {
 			result = -1;
 		}
 	}
-	
+
 	if (result == 0) {
 		result = __rename(from, to);
 	}
-	
+
 	return result;
 }
 
@@ -915,7 +920,7 @@ int stat(const char * path, struct stat * sb)
 #define stat(path, sb) syscall(SYS_stat, path, sb)
 	int result=0;
 	char newpath[260];
-		
+
 	*newpath=0;
 	if(!is_directory(path)&&__darwintrace_is_in_sandbox(path, newpath)==0)
 	{
@@ -925,10 +930,10 @@ int stat(const char * path, struct stat * sb)
 	{
 		if(*newpath)
 			path=newpath;
-			
+
 		result=stat(path, sb);
 	}
-	
+
 	return result;
 #undef stat
 }
@@ -940,7 +945,7 @@ int stat64(const char * path, struct stat64 * sb)
 #define stat64(path, sb) syscall(SYS_stat64, path, sb)
 	int result=0;
 	char newpath[260];
-		
+
 	*newpath=0;
 	if(!is_directory(path)&&__darwintrace_is_in_sandbox(path, newpath)==0)
 	{
@@ -950,10 +955,10 @@ int stat64(const char * path, struct stat64 * sb)
 	{
 		if(*newpath)
 			path=newpath;
-			
+
 		result=stat64(path, sb);
 	}
-	
+
 	return result;
 #undef stat64
 }
@@ -971,7 +976,7 @@ int lstat(const char * path, struct stat * sb)
 #define lstat(path, sb) syscall(SYS_lstat, path, sb)
 	int result=0;
 	char newpath[260];
-	
+
 	*newpath=0;
 	if(!is_directory(path)&&__darwintrace_is_in_sandbox(path, newpath)==0)
 	{
@@ -981,10 +986,10 @@ int lstat(const char * path, struct stat * sb)
 	{
 		if(*newpath)
 			path=newpath;
-			
+
 		result=lstat(path, sb);
 	}
-	
+
 	return result;
 #undef lstat
 }
@@ -996,7 +1001,7 @@ int lstat64(const char * path, struct stat64 * sb)
 #define lstat64(path, sb) syscall(SYS_lstat64, path, sb)
 	int result=0;
 	char newpath[260];
-	
+
 	*newpath=0;
 	if(!is_directory(path)&&__darwintrace_is_in_sandbox(path, newpath)==0)
 	{
@@ -1006,10 +1011,10 @@ int lstat64(const char * path, struct stat64 * sb)
 	{
 		if(*newpath)
 			path=newpath;
-			
+
 		result=lstat64(path, sb);
 	}
-	
+
 	return result;
 #undef lstat64
 }

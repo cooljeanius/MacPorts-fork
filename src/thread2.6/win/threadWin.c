@@ -41,9 +41,9 @@ ThreadpKill (Tcl_Interp *interp, long id)
 
     if (winOpenThreadProc) {
 	hThread = winOpenThreadProc(THREAD_TERMINATE, FALSE, id);
-	/* 
+	/*
 	 * not to be misunderstood as "devilishly clever",
-	 * but evil in it's pure form.
+	 * but as evil in its pure form. (I'm assuming this is referring to the "666"?)
 	 */
 	TerminateThread(hThread, 666);
     } else {

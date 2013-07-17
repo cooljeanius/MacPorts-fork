@@ -18,8 +18,8 @@
 int Ns_ModuleVersion = 1;
 
 /*
- * Structure to pass to NsThread_Init. This holds the module
- * and virtual server name for proper interp initializations. 
+ * mydata: structure to pass to NsThread_Init. This holds the module
+ * and virtual server name for proper interp initializations.
  */
 
 struct mydata {
@@ -85,7 +85,7 @@ Ns_ModuleInit(char *srv, char *mod)
     md->server  = strcpy(ns_malloc(strlen(srv)+1), srv);
 
     return (Ns_TclInitInterps(srv, NsThread_Init, (void*)md) == TCL_OK)
-        ? NS_OK : NS_ERROR; 
+        ? NS_OK : NS_ERROR;
 }
 
 #endif /* NS_AOLSERVER */

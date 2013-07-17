@@ -17,7 +17,7 @@
  * 3. Neither the name of the copyright owner nor the names of contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -31,8 +31,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#if HAVE_CONFIG_H
-#include <config.h>
+/* macports.c: Basically a C shim for all the Tcl stuff that MacPorts does
+ */
+
+// Includes
+#ifdef HAVE_CONFIG_H
+	#include <config.h>
 #endif
 
 #include <tcl.h>
@@ -40,6 +44,10 @@
 #include "get_systemconfiguration_proxies.h"
 #include "sysctl.h"
 
+/* macports__version: Sends the MacPorts version to Tcl.
+ * Arguments: a lot of them
+ * Return value: Tcl
+ */
 static int
 macports__version(ClientData clientData UNUSED, Tcl_Interp *interp, int objc, Tcl_Obj * CONST objv[])
 {
@@ -51,6 +59,10 @@ macports__version(ClientData clientData UNUSED, Tcl_Interp *interp, int objc, Tc
 	return TCL_OK;
 }
 
+/* Macports_Init: Initializes MacPorts's Tcl
+ * Arguments: Tcl
+ * Return value: Tcl
+ */
 int
 Macports_Init(Tcl_Interp *interp)
 {
@@ -63,3 +75,6 @@ Macports_Init(Tcl_Interp *interp)
 		return TCL_ERROR;
 	return TCL_OK;
 }
+
+/* Aren't all *.c files supposed to have a "main"? */
+
