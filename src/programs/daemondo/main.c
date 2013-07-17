@@ -1,7 +1,7 @@
 /*  -*- mode: cc-mode; coding: utf-8; tab-width: 4; c-basic-offset: 4 -*- vim:fenc=utf-8:filetype=c:et:sw=4:ts=4:sts=4
 
     daemondo - main.c
-    
+
     Copyright (c) 2005-2007 James Berry <jberry@macports.org>
     All rights reserved.
 
@@ -16,7 +16,7 @@
     3. Neither the name of The MacPorts Project nor the names of its contributors
        may be used to endorse or promote products derived from this software
        without specific prior written permission.
-    
+
     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
     AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
     IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -33,23 +33,27 @@
 */
 
 /*
+	This main.c is compiled into daemondo, which is a program that MacPorts
+	uses to help programs run under launchd.
+
     Potentially useful System Configuration regex patterns:
 
         (backslash quoting below is only to protect the C comment)
-        State:/Network/Interface/.*\/Link 
+        State:/Network/Interface/.*\/Link
         State:/Network/Interface/.*\/IPv4
         State:/Network/Interface/.*\/IPv6
-        
+
         State:/Network/Global/DNS
         State:/Network/Global/IPv4
-        
+
     Potentially useful notifications from Darwin Notify Center:
-    
+
         com.apple.system.config.network_change
 */
 
-#if HAVE_CONFIG_H
-#include <config.h>
+// Includes
+#ifdef HAVE_CONFIG_H
+	#include <config.h>
 #endif
 
 #include <stdio.h>
@@ -70,6 +74,9 @@
 
 #include <IOKit/pwr_mgt/IOPMLib.h>
 #include <IOKit/IOMessage.h>
+
+// Defines
+#define DAEMONDO_VERSION 1.1
 
 // Constants
 const CFTimeInterval kChildDeathTimeout = 20.0;
@@ -116,23 +123,27 @@ CFTimeInterval      restartHysteresis   = 5.0;      // Default hysteresis is 5 s
 int				    restartWait		   	= 3;      	// Default wait during restart is 3 seconds
 
 
+/* LogMessage: A function to write a message to the system log.
+ * Arguments: basically the same as printf's arguments
+ * Return value: ???
+ */
 void
 LogMessage(const char* fmt, ...)
 {
     struct tm tm;
     time_t timestamp;
     char datestring[32];
-    
+
     // Format the date-time stamp
     time(&timestamp);
     strftime(datestring, sizeof(datestring), "%F %T", localtime_r(&timestamp, &tm));
-    
+
     // Output the log header
     if (label != NULL)
         printf("%s %s: ", datestring, label);
     else
         printf("%s ", datestring);
-    
+
     // Output the message
     va_list ap;
     va_start(ap, fmt);
@@ -140,7 +151,11 @@ LogMessage(const char* fmt, ...)
     va_end(ap);
 }
 
-
+/* CatArray: Not really sure what this function does, but judging by the
+ * name of it, I guess it concatenates an array?
+ * Arguments: uh...
+ * Return value: "buf"
+ */
 const char*
 CatArray(const char* const* strarray, char* buf, size_t size)
 {
@@ -158,18 +173,25 @@ CatArray(const char* const* strarray, char* buf, size_t size)
 }
 
 
+/* DoVersion: Prints the version of daemondo.
+ * Arguments: None
+ * Return value: None
+ */
 void
 DoVersion(void)
 {
     printf("daemondo, version 1.1\n\n");
 }
 
-
+/* DoHelp: Prints the help message for daemondo.
+ * Arguments: None
+ * Return value: None
+ */
 void
 DoHelp(void)
 {
     DoVersion();
-    
+
     const char* helpText =
         "usage: daemondo [-hv] [--version]\n"
         "                     --start-cmd prog args... ;\n"
@@ -252,11 +274,15 @@ DoHelp(void)
         "monitored has exited.\n"
         "\n"
         ;
-        
+
     printf("%s", helpText);
 }
 
 
+/* CreatePidFile: The pidfile created is needed for the process we use daemondo to run
+ * Arguments: none
+ * Return value: none
+ */
 void
 CreatePidFile(void)
 {
@@ -283,6 +309,10 @@ CreatePidFile(void)
     }
 }
 
+/* DestroyPidFile: Cleans up after CreatePidFile (above)
+ * Arguments: None
+ * Return Value: None
+ */
 void
 DestroyPidFile(void)
 {
@@ -300,7 +330,7 @@ DestroyPidFile(void)
 			if (verbosity >= 5)
 				LogMessage("Attempting to delete pidfile %s\n", pidFile);
             if (unlink(pidFile) && verbosity >= 3)
-				LogMessage("Failed attempt to delete pidfile %s (%d)\n", pidFile, errno);            
+				LogMessage("Failed attempt to delete pidfile %s (%d)\n", pidFile, errno);
             break;
         }
     } else {
@@ -310,6 +340,10 @@ DestroyPidFile(void)
 }
 
 
+/* CheckForValidPidFile: Makes sure pid is good
+ * Arguments: None
+ * Return value: The valid pid file found.
+ */
 pid_t
 CheckForValidPidFile(void)
 {
@@ -324,15 +358,18 @@ CheckForValidPidFile(void)
             pid = -1;
         fclose(f);
     }
-    
+
     // Check whether the pid represents a valid process
     if (pid != -1 && 0 != kill(pid, 0))
         pid = -1;
-    
+
     return pid;
 }
 
-
+/* DeletePreexistingPidFile: If there already is a pidfile, it might need to be deleted
+ * Arguments: none
+ * Return value: The preexisting pidfile that was deleted.
+ */
 pid_t
 DeletePreexistingPidFile(void)
 {
@@ -347,16 +384,16 @@ DeletePreexistingPidFile(void)
             pid = -1;
         fclose(f);
     }
-    
+
     // Check whether the pid represents a valid process
     int valid = (pid != -1 && 0 != kill(pid, 0));
-    
+
     // Log information about the discovered pid file
     if (verbosity >= 3 && pid != -1) {
-    	LogMessage("Discovered preexisting pidfile %s containing pid %d which is a %s process\n", pidFile, pid, 
+    	LogMessage("Discovered preexisting pidfile %s containing pid %d which is a %s process\n", pidFile, pid,
     		(valid) ? "valid" : "invalid");
     }
-    
+
     // Try to delete the pidfile if it's present
     if (pid != -1) {
 	    if (unlink(pidFile)) {
@@ -367,21 +404,26 @@ DeletePreexistingPidFile(void)
 		  		LogMessage("Deleted preexisting pidfile %s\n", pidFile);
 		}
 	}
-    
+
     return pid;
 }
 
-
+/* WaitForValidPidFile: Sometimes a valid pidfile will need to be generated first before anything can be done.
+ * Arguments: None.
+ * Return value: The valid pidfile that was found after waiting for it.
+ * Notes: Requires CoreFoundation.
+ */
 pid_t
 WaitForValidPidFile(void)
 {
     CFAbsoluteTime patience = CFAbsoluteTimeGetCurrent() + kChildStartPidTimeout;
-    
-    // Poll for a child process and pidfile to be generated, until we lose patience.
+
+    // Poll for a child process and pidfile to be generated, until we lose patience (literally: "patience" is a variable name).
+	// TODO: polling is generally considered bad; could there be a better way to do this?
     pid_t pid = -1;
     while ((pid = CheckForValidPidFile()) == -1 && (patience - CFAbsoluteTimeGetCurrent() > 0))
         sleep(1);
-        
+
     if (verbosity >= 3)
         LogMessage("Discovered pid %d from pidfile %s\n", pid, pidFile);
 
@@ -389,16 +431,20 @@ WaitForValidPidFile(void)
 }
 
 
-
+/* MonitorChild: Watches a pidfile of a child process
+ * Arguments: The pidfile of the child process to be monitored
+ * Return value: none
+ * Notes: uses kevent
+ */
 void
 MonitorChild(pid_t childPid)
 {
     runningPid = childPid;
-    
+
     if (runningPid != 0 && runningPid != -1) {
         if (verbosity >=3 )
             LogMessage("Start monitoring of pid %d via kevent\n", runningPid);
-        
+
         // Monitor the process deaths for that pid
         struct kevent ke;
         EV_SET(&ke, childPid, EVFILT_PROC, EV_ADD | EV_ONESHOT, NOTE_EXIT, 0, NULL);
@@ -407,14 +453,20 @@ MonitorChild(pid_t childPid)
     }
 }
 
-
+/* UnmonitorChild: stops the MonitorChild function set up above
+ * Arguments: None
+ * Return value: None
+ */
 void
 UnmonitorChild()
 {
     runningPid = 0;
 }
 
-
+/* MonitoringChild: <description>
+ * Arguments: None
+ * Return value: int value of runningPid
+ */
 int
 MonitoringChild()
 {
@@ -430,10 +482,10 @@ ProcessChildDeath(pid_t childPid)
     {
         if (verbosity >= 1)
             LogMessage("Target process %d has died\n", childPid);
-            
+
         UnmonitorChild();
         DestroyPidFile();
-        
+
         CFRunLoopStop(CFRunLoopGetCurrent());
     }
 }
@@ -445,11 +497,11 @@ WaitChildDeath(pid_t childPid)
     // Wait for the death of a particular child
     int wait_result = 0;
     int wait_stat = 0;
-    
+
     // Set up a timer for how long we'll wait for child death before we
     // kill the child outright with SIGKILL (infanticide)
     CFAbsoluteTime patience = CFAbsoluteTimeGetCurrent() + kChildDeathTimeout;
-    
+
     // Wait for the death of child, calling into our run loop if it's not dead yet.
     // Note that the wait may actually be processed by our runloop callback, in which
     // case the wait here will simply return -1.
@@ -463,7 +515,7 @@ WaitChildDeath(pid_t childPid)
             // We've run out of patience; kill the child with SIGKILL
             if (verbosity >= 3)
                 LogMessage("Child %d didn't die; Killing with SIGKILL.\n", childPid);
-            
+
             if (0 != kill(childPid, SIGKILL))
             {
                 if (verbosity >= 3)
@@ -471,7 +523,7 @@ WaitChildDeath(pid_t childPid)
             }
         }
     }
-    
+
     // The child should be dead and gone by now.
     ProcessChildDeath(childPid);
 }
@@ -493,13 +545,13 @@ Exec(const char* const argv[], int sync)
 {
     if (!argv || !argv[0] || !*argv[0])
         return -1;
-        
+
     pid_t pid = fork();
     switch (pid)
     {
     case 0:
         // In the child process
-        {           
+        {
             // Child process has no stdin, but shares stdout and stderr with us
             // Is that the right behavior?
             int nullfd = 0;
@@ -509,18 +561,18 @@ Exec(const char* const argv[], int sync)
 
             // Launch the child
             execvp(argv[0], (char* const*)argv);
-            
+
             // We get here only if the exec fails.
             LogMessage("Unable to launch process %s.\n", argv[0]);
             _exit(1);
         }
         break;
-    
+
     case -1:
         // error starting child process
         LogMessage("Unable to fork child process %s.\n", argv[0]);
         break;
-    
+
     default:
         // In the original process
         if (sync)
@@ -531,32 +583,32 @@ Exec(const char* const argv[], int sync)
         }
         break;
     }
-    
+
     return pid;
 }
 
 
 int
 Start(void)
-{   
+{
     char buf[1024];
-    
+
     if (!startArgs || !startArgs[0])
     {
         LogMessage("There is nothing to start. No start-cmd was specified\n");
         return 2;
     }
-    
+
     if (verbosity >= 1)
         LogMessage("Starting process\n");
 	if (pidFile != NULL)
 		DeletePreexistingPidFile();
     if (verbosity >= 2)
         LogMessage("Running start-cmd %s\n", CatArray(startArgs, buf, sizeof(buf)));
-        
+
     // Exec the start-cmd
     pid_t pid = Exec(startArgs, pidStyle == kPidStyleNone);
-    
+
     // Process error during Exec
     if (pid == -1)
     {
@@ -566,17 +618,17 @@ Start(void)
             LogMessage("error while starting\n");
         return 2;
     }
-    
+
     // Try to discover the pid of the running process
     switch (pidStyle)
     {
     case kPidStyleNone:         // The command should have completed: we have no pid (should be zero)
         pid = -1;
         break;
-        
+
     case kPidStyleExec:         // The pid comes from the Exec
         break;
-        
+
     case kPidStyleFileAuto:     // Poll pid from the pidfile
     case kPidStyleFileClean:
         pid = WaitForValidPidFile();
@@ -589,11 +641,11 @@ Start(void)
             return 2;
         }
         break;
-        
+
     default:
         break;
     }
-    
+
     // If we have a pid, then begin tracking it
     MonitorChild(pid);
     if (pid != 0 && pid != -1)
@@ -601,10 +653,10 @@ Start(void)
         if (verbosity >= 1)
             LogMessage("Target process id is %d\n", pid);
 
-        // Create a pid file if we need to      
+        // Create a pid file if we need to
         CreatePidFile();
     }
-    
+
     return 0;
 }
 
@@ -623,10 +675,10 @@ Stop(void)
         {
             if (verbosity >= 1)
                 LogMessage("Stopping process %d\n", pid);
-            
+
             // Send the process a SIGTERM to ask it to quit
             kill(pid, SIGTERM);
-            
+
             // Wait for process to quit, killing it after a timeout
             WaitChildDeath(pid);
         }
@@ -658,7 +710,7 @@ Stop(void)
         UnmonitorChild();
         DestroyPidFile();
     }
-    
+
     return 0;
 }
 
@@ -673,28 +725,28 @@ Restart(void)
         // We weren't given a restart command, so just use stop/start
         if (verbosity >= 1)
             LogMessage("Restarting process\n");
-            
+
         // Stop the process
         Stop();
-        
+
         // Delay for a restartWait seconds to allow other process support to stabilize
         // (This gives a chance for other processes that might be monitoring the process,
         // for instance, to detect its death and cleanup).
         sleep(restartWait);
-        
+
         // Start it again
         Start();
     }
     else
     {
     	// Bug: we should recapture the target process id from the pidfile in this case
-    	
+
         // Execute the restart-cmd and trust it to do the job
         if (verbosity >= 1)
             LogMessage("Restarting process\n");
         if (verbosity >= 2)
             LogMessage("Running restart-cmd %s\n", CatArray(restartArgs, buf, sizeof(buf)));
-            
+
         pid_t pid = Exec(restartArgs, TRUE);
         if (pid == -1)
         {
@@ -705,7 +757,7 @@ Restart(void)
             return 2;
         }
     }
-    
+
     return 0;
 }
 
@@ -715,7 +767,7 @@ ScheduledRestartCallback(CFRunLoopTimerRef timer UNUSED, void *info UNUSED)
 {
     if (verbosity >= 3)
         LogMessage("Scheduled restart time has arrived.\n");
-        
+
     // Our scheduled restart fired, so restart now
     Restart();
 }
@@ -740,7 +792,7 @@ ScheduleRestartForTime(CFAbsoluteTime absoluteTime)
 {
     // Cancel any currently scheduled restart
     CancelScheduledRestart();
-    
+
     // Schedule a new restart
     restartTimer = CFRunLoopTimerCreate(NULL, absoluteTime, 0, 0, 0, ScheduledRestartCallback, NULL);
     if (restartTimer)
@@ -772,7 +824,7 @@ DynamicStoreChanged(
     {
         char bigBuf[1024];
         *bigBuf = '\0';
-        
+
         CFIndex cnt = CFArrayGetCount(changedKeys);
         CFIndex i;
         for (i = 0; i < cnt; ++i)
@@ -787,7 +839,7 @@ DynamicStoreChanged(
 
         LogMessage("Restarting daemon because of the following changes in the dynamic store: %s\n", bigBuf);
     }
-    
+
     ScheduleDelayedRestart();
 }
 
@@ -830,7 +882,7 @@ NotificationCenterCallback(
         CFStringGetCString(name, buf, sizeof(buf), kCFStringEncodingUTF8);
         LogMessage("Restarting daemon due to receipt of the notification %s\n", buf);
     }
-        
+
     ScheduleDelayedRestart();
 }
 
@@ -841,7 +893,7 @@ SignalCallback(CFMachPortRef port UNUSED, void *msg, CFIndex size UNUSED, void *
     mach_msg_header_t* hdr = (mach_msg_header_t*)msg;
     switch (hdr->msgh_id)
     {
-    case SIGTERM:       
+    case SIGTERM:
         // On receipt of SIGTERM we set our terminate flag and stop the process
         if (!terminating)
         {
@@ -851,18 +903,18 @@ SignalCallback(CFMachPortRef port UNUSED, void *msg, CFIndex size UNUSED, void *
             Stop();
         }
         break;
-    
+
     case SIGHUP:
         if (verbosity >= 1)
             LogMessage("SIGHUP received\n");
         if (!terminating)
             Restart();
         break;
-        
+
     case SIGCHLD:
         CheckChildren();
         break;
-        
+
     default:
         break;
     }
@@ -873,20 +925,20 @@ void KQueueCallBack (CFSocketRef socketRef, CFSocketCallBackType type UNUSED,
              CFDataRef address UNUSED, const void *data UNUSED, void *context UNUSED)
 {
     int fd = CFSocketGetNative(socketRef);
-    
+
     struct kevent event;
     memset(&event, 0x00, sizeof(struct kevent));
-    
+
     if (kevent(fd, NULL, 0, &event, 1, NULL) == -1) {
         LogMessage("Couldn't get kevent.  Error %d/%s\n", errno, strerror(errno));
     } else {
         if (event.fflags & NOTE_EXIT) {
-        
+
             pid_t pid = event.ident;
-            
+
             if (verbosity >= 3)
                 LogMessage("Received kevent: pid %d has exited\n", pid);
-                
+
             ProcessChildDeath(pid);
         } else
             LogMessage("Unexpected kevent received: %d\n", event.fflags);
@@ -919,7 +971,7 @@ void handle_child_signal(int sig)
     header.msgh_local_port  = MACH_PORT_NULL;
     header.msgh_reserved    = 0;
     header.msgh_id          = sig;
-    
+
     mach_msg_return_t status = mach_msg_send(&header);
     if (status != 0) {
         LogMessage("mach_msg_send failed in handle_child_signal!\n");
@@ -939,7 +991,7 @@ void handle_generic_signal(int sig)
     header.msgh_local_port  = MACH_PORT_NULL;
     header.msgh_reserved    = 0;
     header.msgh_id          = sig;
-    
+
     mach_msg_return_t status = mach_msg_send(&header);
     if (status != 0) {
         LogMessage("mach_msg_send failed in handle_generic_signal!\n");
@@ -951,23 +1003,23 @@ int
 MainLoop(void)
 {
     // *** TODO: This routine needs more error checking
-    
+
     int status = 0;
-    
+
     if (verbosity >= 3)
         LogMessage("Initializing; daemondo pid is %d\n", getpid());
-    
+
     // === Setup Notifications of Changes to System Configuration ===
     // Create a new SCDynamicStore session and an associated runloop source, adding it default mode
     SCDynamicStoreRef   dsRef           = SCDynamicStoreCreate(NULL, kProgramName, DynamicStoreChanged, NULL);
     CFRunLoopSourceRef  dsSrc           = SCDynamicStoreCreateRunLoopSource(NULL, dsRef, 0);
     CFRunLoopAddSource(CFRunLoopGetCurrent(), dsSrc, kCFRunLoopDefaultMode);
-    
+
     // Tell the DynamicStore which keys to notify us on: this is the set of keys on which the
     // daemon will be restarted, at least for now--we may want to give more flexibility at some point.
     (void) SCDynamicStoreSetNotificationKeys(dsRef, NULL, scRestartPatterns);
-    
-    
+
+
     // === Setup Notifications from Notification Centers  ===
     CFArrayApplyFunction(distNotifyNames, CFRangeMake(0, CFArrayGetCount(distNotifyNames)),
         AddNotificationToCenter, CFNotificationCenterGetDistributedCenter());
@@ -982,33 +1034,33 @@ MainLoop(void)
     pwrRootPort = IORegisterForSystemPower(0, &powerRef, PowerCallBack, &pwrNotifier);
     if (pwrRootPort != 0)
         CFRunLoopAddSource(CFRunLoopGetCurrent(), IONotificationPortGetRunLoopSource(powerRef), kCFRunLoopDefaultMode);
-        
-    
+
+
     // === Setup Notifications of Signals ===
     // Add a mach port source to our runloop for handling of the signals
     CFMachPortRef       sigChildPort    = CFMachPortCreate(NULL, SignalCallback, NULL, NULL);
     CFMachPortRef       sigGenericPort  = CFMachPortCreate(NULL, SignalCallback, NULL, NULL);
-    
+
     CFRunLoopSourceRef  sigChildSrc     = CFMachPortCreateRunLoopSource(NULL, sigChildPort, 0);
     CFRunLoopSourceRef  sigGenericSrc   = CFMachPortCreateRunLoopSource(NULL, sigGenericPort, 0);
-    
-    
+
+
     // === Setup kevent notifications of process death
     kqfd = kqueue();
     CFSocketRef kqSocket                = CFSocketCreateWithNative(NULL,  kqfd,
                                             kCFSocketReadCallBack, KQueueCallBack, NULL);
-    CFRunLoopSourceRef  kqueueSrc       = CFSocketCreateRunLoopSource(NULL, kqSocket, 0);   
-    
-    
+    CFRunLoopSourceRef  kqueueSrc       = CFSocketCreateRunLoopSource(NULL, kqSocket, 0);
+
+
     // Add only the child signal sources to the childwatch mode
     CFRunLoopAddSource(CFRunLoopGetCurrent(), sigChildSrc, kChildWatchMode);
     CFRunLoopAddSource(CFRunLoopGetCurrent(), kqueueSrc, kChildWatchMode);
-    
+
     // Add both child and generic signal sources to the default mode
     CFRunLoopAddSource(CFRunLoopGetCurrent(), sigChildSrc, kCFRunLoopDefaultMode);
     CFRunLoopAddSource(CFRunLoopGetCurrent(), kqueueSrc, kCFRunLoopDefaultMode);
     CFRunLoopAddSource(CFRunLoopGetCurrent(), sigGenericSrc, kCFRunLoopDefaultMode);
-    
+
     // Install signal handlers
     sigChild_m_port     = CFMachPortGetPort(sigChildPort);
     sigGeneric_m_port   = CFMachPortGetPort(sigGenericPort);
@@ -1016,49 +1068,49 @@ MainLoop(void)
     signal(SIGCHLD, handle_child_signal);
     signal(SIGTERM, handle_generic_signal);
     signal(SIGHUP, handle_generic_signal);
-    
-    
+
+
     // === Core Loop ===
     // Start the daemon
     status = Start();
-    
+
     if (verbosity >= 3)
         LogMessage("Start event loop\n");
-    
+
     // Run the run loop until we stop it, or until the process we're tracking stops
     while (status == 0 && !terminating && MonitoringChild())
         CFRunLoopRunInMode(kCFRunLoopDefaultMode, 99999999.0, true);
-        
+
     if (verbosity >= 3)
         LogMessage("End event loop\n");
-    
-        
+
+
     // === Tear Down (we don't really need to do all of this) ===
     // The daemon should by now have either been stopped, or stopped of its own accord
-        
+
     // Remove signal handlers
     signal(SIGTERM, SIG_DFL);
     signal(SIGHUP, SIG_DFL);
     signal(SIGCHLD, SIG_DFL);
-    
+
     sigChild_m_port = 0;
     sigGeneric_m_port = 0;
-    
+
     // Remove run loop sources
     CFRunLoopRemoveSource(CFRunLoopGetCurrent(), sigChildSrc, kChildWatchMode);
     CFRunLoopRemoveSource(CFRunLoopGetCurrent(), kqueueSrc, kChildWatchMode);
-    
+
     CFRunLoopRemoveSource(CFRunLoopGetCurrent(), sigChildSrc, kCFRunLoopDefaultMode);
     CFRunLoopRemoveSource(CFRunLoopGetCurrent(), kqueueSrc, kCFRunLoopDefaultMode);
     CFRunLoopRemoveSource(CFRunLoopGetCurrent(), sigGenericSrc, kCFRunLoopDefaultMode);
-    
+
     // Tear down signal handling infrastructure
     CFRelease(sigChildSrc);
     CFRelease(sigGenericSrc);
-    
+
     CFRelease(sigChildPort);
     CFRelease(sigGenericPort);
-    
+
     // Tear down kqueue infrastructure
     CFRelease(kqueueSrc);
     CFRelease(kqSocket);
@@ -1066,10 +1118,10 @@ MainLoop(void)
 
     // Tear down DynamicStore stuff
     CFRunLoopRemoveSource(CFRunLoopGetCurrent(), dsSrc, kCFRunLoopDefaultMode);
-    
+
     CFRelease(dsSrc);
     CFRelease(dsRef);
-    
+
     // Tear down notifications from Notification Center
     CFNotificationCenterRemoveEveryObserver(CFNotificationCenterGetDistributedCenter(), kProgramName);
     CFNotificationCenterRemoveEveryObserver(CFNotificationCenterGetDarwinNotifyCenter(), kProgramName);
@@ -1077,11 +1129,11 @@ MainLoop(void)
     // Tear down power management stuff
     CFRunLoopRemoveSource(CFRunLoopGetCurrent(), IONotificationPortGetRunLoopSource(powerRef), kCFRunLoopDefaultMode);
     IODeregisterForSystemPower(&pwrNotifier);
-    
+
     if (verbosity >= 3)
         LogMessage("Terminating\n");
-    
-    return status;  
+
+    return status;
 }
 
 
@@ -1092,25 +1144,25 @@ CollectCmdArgs(char* arg1, int argc, char* const argv[], const char * const ** a
     int moreArgs = 0;
     for (; moreArgs < argc && 0 != strcmp(";", argv[moreArgs]); ++moreArgs)
         ;
-        
+
     // We were given one argument for free
     int nargs = moreArgs + 1;
-        
+
     // Allocate an array for the arguments
     *args = calloc(sizeof(char**), nargs+1);
     if (!*args)
         return 0;
-        
+
     // Copy the arguments into our new array
     (*(char***)args)[0] = arg1;
-    
+
     int i;
     for (i = 0; i < moreArgs; ++i)
         (*(char***)args)[i+1] = argv[i];
-        
+
     // NULL-terminate the argument array
     (*(char***)args)[nargs] = NULL;
-    
+
     // Return number of args we consumed, accounting for potential trailing ";"
     return (moreArgs == argc) ? moreArgs : moreArgs + 1;
 }
@@ -1131,7 +1183,7 @@ CollectArrayArgs(char* arg1, int argc, char* const argv[], CFMutableArrayRef arr
     // Let CollectCmdArgs do the grunt work
     const char* const* args = NULL;
     int argsUsed = CollectCmdArgs(arg1, argc, argv, &args);
-    
+
     // Add arguments to the mutable array
     if (args != NULL)
     {
@@ -1140,7 +1192,7 @@ CollectArrayArgs(char* arg1, int argc, char* const argv[], CFMutableArrayRef arr
             AddSingleArrayArg(*argp, array);
         free((void*)args);
     }
-    
+
     return argsUsed;
 }
 
@@ -1163,45 +1215,45 @@ int
 main(int argc, char* argv[])
 {
     int status = 0;
-    
+
     // Initialization
     kProgramName        = CFSTR("daemondo");
     kChildWatchMode     = CFSTR("ChildWatch");      // A runloop mode
-    
+
     scRestartPatterns   = CFArrayCreateMutable(NULL, 0, &kCFTypeArrayCallBacks);
     distNotifyNames     = CFArrayCreateMutable(NULL, 0, &kCFTypeArrayCallBacks);
     darwinNotifyNames   = CFArrayCreateMutable(NULL, 0, &kCFTypeArrayCallBacks);
-    
+
     // Make stdout flush after every line
     setvbuf(stdout, (char *)NULL, _IOLBF, 0);
-    
+
     // Process arguments
     static struct option longopts[] = {
             // Start/Stop/Restart the process
         { "start-cmd",      required_argument,      0,              's' },
         { "stop-cmd",       required_argument,      0,              'k' },
         { "restart-cmd",    required_argument,      0,              'r' },
-        
+
             // Dynamic Store Keys to monitor
         { "restart-config", required_argument,      0,              kRestartConfigOpt },
-        
+
             // Notifications to monitor
         { "restart-dist-notify",
                             required_argument,      0,              kRestartDistNotifyOpt },
         { "restart-darwin-notify",
                             required_argument,      0,              kRestartDarwinNotifyOpt },
-        
+
             // Control over behavior on power state
         { "restart-wakeup", no_argument,            0,              kRestartWakeupOpt },
 
             // Short-cuts
         { "restart-netchange",
                             no_argument,            0,              kRestartNetChangeOpt },
-                            
+
             // Pid-files
         { "pid",            required_argument,      0,              kPidOpt },
         { "pidfile",        required_argument,      0,              kPidFileOpt },
-        
+
             // other
         { "help",           no_argument,            0,              'h' },
         { "v",              no_argument,            0,              'v' },
@@ -1212,7 +1264,7 @@ main(int argc, char* argv[])
                             required_argument,      0,              kRestartHysteresisOpt },
         { "restart-wait",
                             required_argument,      0,              kRestartWaitOpt },
-        
+
         { 0,                0,                      0,              0 }
     };
 
@@ -1227,7 +1279,7 @@ main(int argc, char* argv[])
             printf("Option error: missing argument for option %s\n", longopts[optindex].name);
             exit(1);
             break;
-            
+
         case 's':
             if (startArgs)
             {
@@ -1240,7 +1292,7 @@ main(int argc, char* argv[])
                 optreset = 1;
             }
             break;
-            
+
         case 'k':
             if (stopArgs)
             {
@@ -1266,42 +1318,42 @@ main(int argc, char* argv[])
                 optreset = 1;
             }
             break;
-            
+
         case kRestartConfigOpt:
             optind += CollectArrayArgs(optarg, argc - optind, argv + optind, scRestartPatterns);
             optreset = 1;
             break;
-            
+
         case kRestartDistNotifyOpt:
             optind += CollectArrayArgs(optarg, argc - optind, argv + optind, distNotifyNames);
             optreset = 1;
             break;
-            
+
         case kRestartDarwinNotifyOpt:
             optind += CollectArrayArgs(optarg, argc - optind, argv + optind, darwinNotifyNames);
             optreset = 1;
             break;
-            
+
         case kRestartWakeupOpt:
             restartOnWakeup = TRUE;
             break;
-            
+
         case kRestartNetChangeOpt:
             AddSingleArrayArg("com.apple.system.config.network_change", darwinNotifyNames);
             break;
-            
+
         case kRestartHysteresisOpt:
             restartHysteresis = strtof(optarg, NULL);
             if (restartHysteresis < 0)
                 restartHysteresis = 0;
             break;
-            
+
         case kRestartWaitOpt:
             restartWait = strtol(optarg, NULL, 10);
             if (restartWait < 0)
                 restartWait = 0;
             break;
-            
+
         case kPidOpt:
             if      (0 == strcasecmp(optarg, "none"))
                 pidStyle = kPidStyleNone;
@@ -1316,46 +1368,46 @@ main(int argc, char* argv[])
                 LogMessage("Unexpected pid style %s\n", optarg);
             }
             break;
-        
+
         case kPidFileOpt:
             if (pidFile != NULL)
                 free((char*)pidFile);
             pidFile = strdup(optarg);
             break;
-        
+
         case 'h':
             DoHelp();
             exit(0);
             break;
-            
+
         case 'l':
             if (label != NULL)
                 free((char*)label);
             label = strdup(optarg);
             break;
-            
+
         case 'v':
             ++verbosity;
             break;
-        
+
         case kVerbosityOpt:
             if (optarg)
                 verbosity = strtol(optarg, NULL,  10);
             else
                 ++verbosity;
             break;
-    
+
         case 'V':
             DoVersion();
             break;
-            
+
         default:
             LogMessage("unexpected parameter: %s\n", argv[optind]);
             status = 1;
             break;
         }
     }
-    
+
     // Default the pid style if it wasn't given
     if (pidStyle == kPidStyleUnknown)
     {
@@ -1364,12 +1416,12 @@ main(int argc, char* argv[])
         else
             pidStyle = kPidStyleNone;
     }
-    
+
     // Go into our main loop
     if (status == 0 && startArgs)
         status = MainLoop();
     else
         printf("use option --help for help\n");
-        
+
     return status;
 }
