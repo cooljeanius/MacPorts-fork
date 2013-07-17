@@ -876,6 +876,7 @@ DEFAULTS
 SW_VERS
 PATH_CLEANED
 MACPORTS_VERSION
+PREFIX
 MAINT
 MAINTAINER_MODE_FALSE
 MAINTAINER_MODE_TRUE
@@ -5797,6 +5798,10 @@ ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
+if test "x${prefix}" != "x"; then
+  PREFIX=${prefix}
+
+fi
 
 # Read in the MacPorts version from the base/config/macports_version file
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking MacPorts version" >&5
@@ -5837,8 +5842,8 @@ $as_echo "$MACPORTS_VERSION" >&6; }
 echo "adding MacPorts prefix back in to path..."
 PATH=${PATH}:/opt/local/bin
 PATH=$(echo "${PATH}" | tr \: \\n | uniq | tr \\n \: | uniq | sed "s|::|:|g")
-if test "x$PREFIX" != "x"; then
-  if test "x$PREFIX" != "x/opt/local"; then
+if test "x${PREFIX}" != "x"; then
+  if test "x${PREFIX}" != "x/opt/local"; then
     PATH=${PATH}:${PREFIX}/bin
     PATH=$(echo "${PATH}" | tr \: \\n | uniq | tr \\n \: | uniq | sed "s|::|:|g")
     { $as_echo "$as_me:${as_lineno-$LINENO}: checking path" >&5
@@ -18669,7 +18674,7 @@ else
 JAVA_TEST=Test.java
 CLASS_TEST=Test.class
 cat << \EOF > $JAVA_TEST
-/* #line 18672 "configure" */
+/* #line 18677 "configure" */
 public class Test {
 }
 EOF
@@ -29528,8 +29533,8 @@ fi
 done
 
 
-AM_CPPFLAGS="-I.. -I. $AM_CPPFLAGS"
-INCLUDES=$AM_CPPFLAGS
+AM_CPPFLAGS="-I.. -I. ${AM_CPPFLAGS}"
+INCLUDES=${AM_CPPFLAGS}
 
 # Checks for typedefs, structures, and compiler characteristics.
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for stdbool.h that conforms to C99" >&5
@@ -35822,8 +35827,6 @@ $as_echo "$enableval" >&6; }
 ac_config_files="$ac_config_files Doxyfile Makefile Mk/macports.autoconf.mk doc/base.mtree doc/prefix.mtree doc/macosx.mtree doc/macports.conf doc/pubkeys.conf src/Makefile src/machista1.0/Makefile src/macports1.0/macports_autoconf.tcl src/port1.0/port_autoconf.tcl src/registry2.0/registry_autoconf.tcl src/programs/Makefile src/macports1.0/macports_fastload.tcl setupenv.bash"
 
 
-# Things removed from outpur files:
-# portmgr/freebsd/Makefile (not a regular "makefile")
 
 ac_config_files="$ac_config_files src/pkg_mkindex.sh"
 

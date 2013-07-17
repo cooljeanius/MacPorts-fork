@@ -89,3 +89,4 @@ if { "/usr/lib/sqlite3" != "" } {
         source $pkgindex
     }
 }
+

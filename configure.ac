@@ -24,6 +24,10 @@ AC_SEARCH_LIBS([strerror],[cposix]) dnl# This macro used to be AC_ISC_POSIX
 AC_OBJEXT
 AC_EXEEXT
 AC_LANG([C])
+if test "x${prefix}" != "x"; then
+  PREFIX=${prefix}
+  AC_SUBST([PREFIX])
+fi
 
 # Read in the MacPorts version from the base/config/macports_version file
 AC_MSG_CHECKING([MacPorts version])
@@ -38,8 +42,8 @@ MP_PATH_SCAN
 echo "adding MacPorts prefix back in to path..."
 PATH=${PATH}:/opt/local/bin
 PATH=$(echo "${PATH}" | tr \: \\n | uniq | tr \\n \: | uniq | sed "s|::|:|g")
-if test "x$PREFIX" != "x"; then
-  if test "x$PREFIX" != "x/opt/local"; then
+if test "x${PREFIX}" != "x"; then
+  if test "x${PREFIX}" != "x/opt/local"; then
     PATH=${PATH}:${PREFIX}/bin
     PATH=$(echo "${PATH}" | tr \: \\n | uniq | tr \\n \: | uniq | sed "s|::|:|g")
     AC_MSG_CHECKING([path])
@@ -332,10 +336,10 @@ paths.h pwd.h stdio.h sys/cdefs.h sys/file.h sys/fcntl.h \
 sys/mount.h sys/paths.h sys/socket.h sys/sysctl.h \
 readline/readline.h readline/history.h utime.h])
 
-AM_CPPFLAGS="-I.. -I. $AM_CPPFLAGS"
+AM_CPPFLAGS="-I.. -I. ${AM_CPPFLAGS}"
 dnl# This should be permanently converted eventually,
 dnl# but as it is, the build fails without it.
-INCLUDES=$AM_CPPFLAGS
+INCLUDES=${AM_CPPFLAGS}
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_CHECK_HEADER_STDBOOL
@@ -557,8 +561,8 @@ AC_CONFIG_FILES([Doxyfile
 		 src/macports1.0/macports_fastload.tcl
 		 setupenv.bash])
 
-# Things removed from outpur files:
-# portmgr/freebsd/Makefile (not a regular "makefile")
+dnl# Things removed from output files:
+dnl# portmgr/freebsd/Makefile (not a regular "makefile")
 
 AC_CONFIG_FILES([src/pkg_mkindex.sh], [chmod +x src/pkg_mkindex.sh])
 

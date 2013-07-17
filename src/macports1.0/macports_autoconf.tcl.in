@@ -33,7 +33,7 @@
 package provide macports 1.0
 
 namespace eval macports::autoconf {
-	variable awk_path "@AWK@"
+    variable awk "@AWK@"
     variable bzip2_path "@BZIP2@"
     variable chown_path "@CHOWN@"
     variable chgrp_path "@CHGRP@"

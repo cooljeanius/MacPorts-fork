@@ -4,11 +4,13 @@
 *.o
 *~
 *.status
+config.status
 libtool
 *.gz
 *.dylib
 */build/*
 *config.h
+src/config.h
 *.sqlext
 *.a
 *(Autosaved)*

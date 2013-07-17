@@ -25,10 +25,10 @@ OBJC_RUNTIME		= APPLE_RUNTIME
 OBJC_RUNTIME_FLAGS	= -fnext-runtime
 OBJC_LIBS		= -lobjc
 
-OBJC_FOUNDATION		= none
+OBJC_FOUNDATION		= Apple
 OBJC_FOUNDATION_CPPFLAGS	= 
 OBJC_FOUNDATION_LDFLAGS		= 
-OBJC_FOUNDATION_LIBS		= 
+OBJC_FOUNDATION_LIBS		= -framework Foundation
 
 TCL_CC			= gcc
 SHLIB_LD		= ${CC} -dynamiclib ${CFLAGS} ${LDFLAGS} -Wl,-single_module
@@ -47,7 +47,7 @@ INSTALL			= /opt/local/bin/ginstall -c
 MTREE			= /usr/sbin/mtree
 LN_S			= ln -s
 XCODEBUILD		= /usr/bin/xcodebuild
-BZIP2			= /sw2/bin/bzip2
+BZIP2			= /opt/local/bin/bzip2
 
 TCLSH			= /opt/local/bin/tclsh
 TCL_PACKAGE_DIR		= /opt/local/lib/tcl8.6

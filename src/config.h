@@ -2,7 +2,7 @@
 /* src/config.h.in.  Generated from configure.ac by autoheader.  */
 
 /* Define if using the Apple Foundation framework */
-/* #undef APPLE_FOUNDATION */
+#define APPLE_FOUNDATION 1
 
 /* Define if using the Apple Objective-C runtime and compiler. */
 #define APPLE_RUNTIME 1

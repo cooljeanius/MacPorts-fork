@@ -31,5 +31,5 @@
 package provide registry 1.0
 
 namespace eval registry::autoconf {
-    variable bzip2_path "/sw2/bin/bzip2"
+    variable bzip2_path "/opt/local/bin/bzip2"
 }
