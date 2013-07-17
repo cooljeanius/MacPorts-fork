@@ -107,6 +107,7 @@ DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/tclconfig/missing
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/ax_check_gnu_make.m4 \
+	$(top_srcdir)/m4/ax_dll_string.m4 \
 	$(top_srcdir)/m4/ax_prog_tcl.m4 $(top_srcdir)/m4/ax_pthread.m4 \
 	$(top_srcdir)/m4/bakefile-lang.m4 $(top_srcdir)/m4/bakefile.m4 \
 	$(top_srcdir)/m4/libtool.m4 $(top_srcdir)/m4/ltoptions.m4 \
@@ -885,6 +886,7 @@ installdirs:
 	for dir in "$(DESTDIR)$(INSTALLdir)" "$(DESTDIR)$(PKGdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
+install: install-am
 install-exec: install-exec-am
 install-data: install-data-am
 uninstall: uninstall-am
@@ -1020,8 +1022,6 @@ uninstall-am: uninstall-INSTALLDATA uninstall-PKGHEADERS
 
 all: binaries
 
-all-am:
-
 #========================================================================
 # The binaries target builds executable programs, Windows .dll's, unix
 # shared/static libraries, and any other platform-dependent files.
@@ -1035,7 +1035,7 @@ libraries:
 
 doc:
 
-install: all install-binaries install-libraries install-doc
+install-all: all install-binaries install-libraries install-doc
 
 install-binaries: binaries install-lib-binaries install-bin-binaries
 
@@ -1261,7 +1261,9 @@ uninstall-binaries:
 	  rm -f $(DESTDIR)$(bindir)/$$p; \
 	done
 
-.PHONY: all binaries clean-local depend distclean-local doc install libraries test
+# TODO: -c, -m, and 644 should not actually be targets, but sticking them under
+# .PHONY seems to trick make into ignoring them for now...
+.PHONY: -c -m 644 all all-am binaries clean-local depend distclean-local doc install libraries test
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

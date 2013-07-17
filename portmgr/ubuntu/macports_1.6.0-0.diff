@@ -1,0 +1,336 @@
+--- macports-1.6.0.orig/aclocal.m4
++++ macports-1.6.0/aclocal.m4
+@@ -321,6 +321,12 @@
+ 	   darwin*)
+ 		DSTGRP="admin"
+ 		;;
++	   freebsd*)
++		DSTGRP="wheel"
++		;;
++	   linux*)
++		DSTGRP="root"
++		;;
+ 	   *)
+ 		DSTGRP="wheel"
+ 		;;
+--- macports-1.6.0.orig/configure
++++ macports-1.6.0/configure
+@@ -6084,7 +6084,8 @@
+ 	fi
+ 
+ 	if test x"${with_objc_foundation}" == x || test x${with_objc_foundation} == x"GNUstep"; then
+-		if test x"${GNUSTEP_SYSTEM_ROOT}" == x; then
++		GNUSTEP_CONFIG=/usr/bin/gnustep-config
++		if test ! -x "${GNUSTEP_CONFIG}" -a x"${GNUSTEP_SYSTEM_ROOT}" == x; then
+ 			if test x"${with_objc_foundation}" == x"GNUstep"; then
+ 				{ { echo "$as_me:$LINENO: error: GNUSTEP_SYSTEM_ROOT is not defined in your environment, preventing the use of GNUstep's Foundation library" >&5
+ echo "$as_me: error: GNUSTEP_SYSTEM_ROOT is not defined in your environment, preventing the use of GNUstep's Foundation library" >&2;}
+@@ -6099,9 +6100,15 @@
+ echo $ECHO_N "checking for GNUstep Foundation library... $ECHO_C" >&6; }
+ 
+ 			# Set GNUstep LDFLAGS, CPPFLAGS, and LIBS
++			if test -x ${GNUSTEP_CONFIG}; then
++			GNUSTEP_LDFLAGS=`sh -c "MAKELEVEL=0 ${GNUSTEP_CONFIG} --objc-libs"`
++			GNUSTEP_CPPFLAGS=`sh -c "MAKELEVEL=0 ${GNUSTEP_CONFIG} --objc-flags"`
++			GNUSTEP_LIBS=`sh -c "MAKELEVEL=0 ${GNUSTEP_CONFIG} --base-libs"`
++			else
+ 			GNUSTEP_LDFLAGS="-L${GNUSTEP_SYSTEM_ROOT}/Library/Libraries/"
+ 			GNUSTEP_CPPFLAGS="-I${GNUSTEP_SYSTEM_ROOT}/Library/Headers/"
+ 			GNUSTEP_LIBS="-lgnustep-base"
++			fi
+ 
+ 			if test "${ac_cv_objc_foundation_gnustep+set}" = set; then
+   echo $ECHO_N "(cached) $ECHO_C" >&6
+@@ -6705,6 +6712,12 @@
+ 	   darwin*)
+ 		DSTGRP="admin"
+ 		;;
++	   freebsd*)
++		DSTGRP="wheel"
++		;;
++	   linux*)
++		DSTGRP="root"
++		;;
+ 	   *)
+ 		DSTGRP="wheel"
+ 		;;
+--- macports-1.6.0.orig/foundation.m4
++++ macports-1.6.0/foundation.m4
+@@ -341,7 +341,8 @@
+ 	fi
+ 
+ 	if test x"${with_objc_foundation}" == x || test x${with_objc_foundation} == x"GNUstep"; then
+-		if test x"${GNUSTEP_SYSTEM_ROOT}" == x; then
++		GNUSTEP_CONFIG=/usr/bin/gnustep-config
++		if test ! -x "${GNUSTEP_CONFIG}" -a x"${GNUSTEP_SYSTEM_ROOT}" == x; then
+ 			if test x"${with_objc_foundation}" == x"GNUstep"; then
+ 				AC_MSG_ERROR([GNUSTEP_SYSTEM_ROOT is not defined in your environment, preventing the use of GNUstep's Foundation library])
+ 			else
+@@ -352,9 +353,15 @@
+ 			AC_MSG_CHECKING([for GNUstep Foundation library])
+ 
+ 			# Set GNUstep LDFLAGS, CPPFLAGS, and LIBS
++			if test -x ${GNUSTEP_CONFIG}; then
++			GNUSTEP_LDFLAGS=`sh -c "MAKELEVEL=0 ${GNUSTEP_CONFIG} --objc-libs"`
++			GNUSTEP_CPPFLAGS=`sh -c "MAKELEVEL=0 ${GNUSTEP_CONFIG} --objc-flags"`
++			GNUSTEP_LIBS=`sh -c "MAKELEVEL=0 ${GNUSTEP_CONFIG} --base-libs"`
++			else
+ 			GNUSTEP_LDFLAGS="-L${GNUSTEP_SYSTEM_ROOT}/Library/Libraries/"
+ 			GNUSTEP_CPPFLAGS="-I${GNUSTEP_SYSTEM_ROOT}/Library/Headers/"
+ 			GNUSTEP_LIBS="-lgnustep-base"
++			fi
+ 
+ 			AC_CACHE_VAL(ac_cv_objc_foundation_gnustep, [
+ 				# Save old LDFLAGS, CPPFLAGS, and LIBS
+--- macports-1.6.0.orig/Makefile.in
++++ macports-1.6.0/Makefile.in
+@@ -32,11 +32,11 @@
+ 
+ include Mk/macports.upgrade.mk
+ 
+-install:: upgrade
++interactive:: upgrade
+ 
+ include Mk/macports.subdir.mk
+ 
+-install::
++interactive::
+ 	@echo ""; echo "Congratulations, you have successfully installed the MacPorts system. To get the Portfiles and update the system, run:"; echo ""
+ 	@echo "sudo port selfupdate"; echo ""
+ 	@echo "Please read port(1) and the MacPorts Wiki at http://trac.macports.org/ for full documentation."; echo ""
+@@ -47,7 +47,7 @@
+ distclean::
+ 	rm -f config.log config.status configure.lineno
+ 	rm -rf autom4te.cache ${DISTDIR}
+-	rm -f Makefile Mk/macports.autoconf.mk
++	rm -f Makefile Mk/macports.autoconf.mk portmgr/fedora/macports.spec portmgr/freebsd/Makefile
+ 
+ _gettag:
+ 	cd ${DISTDIR}; svn co ${SVNURL}/tags/${SVNTAG} ${PKGNAME}-svn
+--- macports-1.6.0.orig/src/port1.0/portmain.tcl
++++ macports-1.6.0/src/port1.0/portmain.tcl
+@@ -122,6 +122,12 @@
+             variant_undef universal
+         }
+     }
++} else {
++    proc universal_variant {state} {
++        if {${state} != "no"} {
++            ui_error "+universal is only for +macosx"
++        }
++    }
+ }
+ 
+ proc main {args} {
+--- macports-1.6.0.orig/src/tclobjc1.0/Makefile.in
++++ macports-1.6.0/src/tclobjc1.0/Makefile.in
+@@ -10,6 +10,9 @@
+ CPPFLAGS+=	${OBJC_FOUNDATION_CPPFLAGS}
+ LIBS+=	${OBJC_FOUNDATION_LIBS}
+ 
++clean::
++	rm -f *.d
++
+ distclean::
+ 	rm -f Makefile
+ 
+--- macports-1.6.0.orig/debian/changelog
++++ macports-1.6.0/debian/changelog
+@@ -0,0 +1,5 @@
++macports (1.6.0-0) hardy; urgency=low
++
++  * Initial release
++
++ -- Anders F Björklund <afb@macports.org>  Mon, 04 Feb 2008 14:23:18 +0100
+--- macports-1.6.0.orig/debian/compat
++++ macports-1.6.0/debian/compat
+@@ -0,0 +1 @@
++5
+--- macports-1.6.0.orig/debian/conffiles
++++ macports-1.6.0/debian/conffiles
+@@ -0,0 +1,3 @@
++/opt/local/etc/macports/macports.conf
++/opt/local/etc/macports/sources.conf
++/opt/local/etc/macports/variants.conf
+--- macports-1.6.0.orig/debian/dirs
++++ macports-1.6.0/debian/dirs
+@@ -0,0 +1,2 @@
++usr/bin
++usr/sbin
+--- macports-1.6.0.orig/debian/README.Debian
++++ macports-1.6.0/debian/README.Debian
+@@ -0,0 +1,6 @@
++macports for Debian
++-------------------
++
++<possible notes regarding this package - if none, delete this file>
++
++ -- Anders F Björklund <afb@macports.org>  Mon, 04 Feb 2008 14:23:18 +0100
+--- macports-1.6.0.orig/debian/copyright
++++ macports-1.6.0/debian/copyright
+@@ -0,0 +1,37 @@
++This package was debianized by Anders F Björklund <afb@macports.org> on
++Mon, 04 Feb 2008 14:23:18 +0100.
++
++It was downloaded from <http://macports.org>
++
++Copyright: 
++
++    Copyright (c) 2002 - 2003, Apple Computer, Inc.
++    Copyright (c) 2004 - 2007, The MacPorts Project.
++
++License:
++
++    Redistribution and use in source and binary forms, with or without
++    modification, are permitted under the terms of the BSD License.
++
++    THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
++    ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
++    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++    ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
++    FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
++    DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
++    OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
++    HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
++    LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
++    OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
++    SUCH DAMAGE.
++
++On Debian systems, the complete text of the BSD License can be 
++found in `/usr/share/common-licenses/BSD'.
++
++
++The Debian packaging is (C) 2008, Anders F Björklund <afb@macports.org> and
++is licensed under the GPL, see `/usr/share/common-licenses/GPL'.
++
++
++# Please also look if there are files or directories which have a
++# different copyright/license attached and list them here.
+--- macports-1.6.0.orig/debian/control
++++ macports-1.6.0/debian/control
+@@ -0,0 +1,21 @@
++Source: macports
++Section: admin
++Priority: extra
++Maintainer: Anders F Björklund <afb@macports.org>
++Build-Depends: debhelper (>= 5), autotools-dev, libcurl3-dev, tcl-dev, tclthread, libsqlite3-dev, mtree, gobjc, libgnustep-base-dev, libssl-dev
++Standards-Version: 3.7.2
++
++Package: macports
++Architecture: any
++Depends: ${shlibs:Depends}, ${misc:Depends}, curl, tcl, rsync, coreutils, make
++Description: MacPorts is a system for compiling, installing, and 
++ managing free and open source software. A MacPorts "port" is a set of
++ specifications contained in a Portfile that defines an application, its 
++ characteristics, and any files or special instructions required to
++ install it, so MacPorts may automatically fetch, patch, compile, and
++ install ported software.
++ .
++ MacPorts may also be used to pre-compile ported software into binaries
++ that may be installed on remote computers. Binaries of ported software
++ may be installed very quickly since the steps required to install ports
++ from source code have all been performed in advance.
+--- macports-1.6.0.orig/debian/rules
++++ macports-1.6.0/debian/rules
+@@ -0,0 +1,97 @@
++#!/usr/bin/make -f
++# -*- makefile -*-
++# Sample debian/rules that uses debhelper.
++# This file was originally written by Joey Hess and Craig Small.
++# As a special exception, when this file is copied by dh-make into a
++# dh-make output file, you may use that output file without restriction.
++# This special exception was added by Craig Small in version 0.37 of dh-make.
++
++# Uncomment this to turn on verbose mode.
++export DH_VERBOSE=1
++
++# These are used for cross-compiling and for saving the configure script
++# from having to guess our platform (since we know it already)
++DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
++DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
++
++
++config.status: configure
++	dh_testdir
++	# Add here commands to configure the package.
++ifneq "$(wildcard /usr/share/misc/config.sub)" ""
++	cp -f /usr/share/misc/config.sub config.sub
++endif
++ifneq "$(wildcard /usr/share/misc/config.guess)" ""
++	cp -f /usr/share/misc/config.guess config.guess
++endif
++	./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/opt/local --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info --without-included-tclthread --without-included-sqlite3 --with-objc-runtime=GNU --with-objc-foundation=GNUstep CFLAGS="$(CFLAGS)" LDFLAGS="-Wl,-z,defs"
++
++
++build: build-stamp
++
++build-stamp:  config.status
++	dh_testdir
++
++	# Add here commands to compile the package.
++	$(MAKE)
++
++	touch $@
++
++clean:
++	dh_testdir
++	dh_testroot
++	rm -f build-stamp 
++
++	# Add here commands to clean up after the build process.
++	-$(MAKE) distclean
++	rm -f config.sub config.guess
++
++	dh_clean 
++
++install: build
++	dh_testdir
++	dh_testroot
++	dh_clean -k 
++	dh_installdirs
++
++	# Add here commands to install the package into debian/macports.
++	$(MAKE) DESTDIR=$(CURDIR)/debian/macports install
++
++
++# Build architecture-independent files here.
++binary-indep: build install
++# We have nothing to do by default.
++
++# Build architecture-dependent files here.
++binary-arch: build install
++	dh_testdir
++	dh_testroot
++	dh_installchangelogs ChangeLog
++	dh_installdocs
++	dh_installexamples
++#	dh_install
++#	dh_installmenu
++#	dh_installdebconf	
++#	dh_installlogrotate
++#	dh_installemacsen
++#	dh_installpam
++#	dh_installmime
++#	dh_python
++#	dh_installinit
++#	dh_installcron
++#	dh_installinfo
++	dh_installman
++	dh_link
++	dh_strip
++	dh_compress
++	dh_fixperms
++#	dh_perl
++#	dh_makeshlibs
++	dh_installdeb
++	dh_shlibdeps
++	dh_gencontrol
++	dh_md5sums
++	dh_builddeb
++
++binary: binary-indep binary-arch
++.PHONY: build clean binary-indep binary-arch binary install 
+--- macports-1.6.0.orig/debian/docs
++++ macports-1.6.0/debian/docs
+@@ -0,0 +1 @@
++NEWS

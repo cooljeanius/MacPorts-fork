@@ -15,3 +15,6 @@ libtool
 *stamp-h*
 *confdefs*
 *conftest*
+*.tmp
+tcldo*/*
+src/*/*/build/*

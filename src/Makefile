@@ -1,4 +1,4 @@
-TCLPKG=		 \
+TCLPKG=		 thread2.6 \
 			cregistry \
 			macports1.0 \
 			port1.0 \

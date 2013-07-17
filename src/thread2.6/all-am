@@ -1,0 +1,4 @@
+#!/bin/sh
+
+echo "This was (one of) a (few) dirty hack(s) to try to fool \"make\" so it would stop failing."
+echo "Sticking Makefile \"targets\" under \".PHONY\" was what actually worked though."

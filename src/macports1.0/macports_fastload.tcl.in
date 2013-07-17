@@ -89,3 +89,4 @@ if { "@SQLITE3_TCL_DIR@" != "" } {
         source $pkgindex
     }
 }
+

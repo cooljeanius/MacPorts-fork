@@ -78,4 +78,5 @@ AC_CONFIG_FILES([Makefile
                  tests/test/trace/Makefile
                  tests/test/universal-2/Makefile
                  tests/test/universal/Makefile])
+AC_CONFIG_SUBDIRS([src/thread2.6])
 AC_OUTPUT

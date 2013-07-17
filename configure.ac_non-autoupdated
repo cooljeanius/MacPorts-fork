@@ -2,13 +2,8 @@ dnl#                                               -*- Autoconf -*-
 dnl# Process this file with autoconf to produce a configure script.
 dnl# $Id: configure.ac 91520 2012-04-04 00:40:40Z jmr@macports.org $
 
-AC_PREREQ([2.69])
+AC_PREREQ([2.63])
 AC_DEFUN([MACPORTS_VERSION_MACRO], [esyscmd(<config/macports_version tr -d '\n')])
-dnl# Square brackets cannot be put around the middle argument to AC_INIT here.
-dnl# That would be how it is normally done, and it is what autoupdate 
-dnl# wants to do, but this cannot be done because of the following error:
-dnl# configure.ac:7: error: m4_divert_push: cannot change diversion to `GROW' inside m4_expand
-dnl# configure.ac:7: the top level
 AC_INIT([MacPorts],MACPORTS_VERSION_MACRO,[macports-dev@lists.macosforge.org],[macports])
 AC_CONFIG_SRCDIR([src/pextlib1.0/Pextlib.c])
 AC_CONFIG_HEADERS([src/config.h])
@@ -20,7 +15,7 @@ AM_INIT_AUTOMAKE([foreign dejagnu dist-bzip2 dist-lzip dist-xz dist-zip no-insta
 AM_DEP_TRACK
 AM_MAINTAINER_MODE
 AM_SILENT_RULES([no])
-AC_SEARCH_LIBS([strerror],[cposix]) dnl# This macro used to be AC_ISC_POSIX
+AC_ISC_POSIX
 AC_OBJEXT
 AC_EXEEXT
 AC_LANG([C])
@@ -36,20 +31,18 @@ AC_SUBST([MACPORTS_VERSION])
 MP_PATH_SCAN
 # ...so instead I'll just do this:
 echo "adding MacPorts prefix back in to path..."
-PATH=${PATH}:/opt/local/bin
-PATH=$(echo "${PATH}" | tr \: \\n | uniq | tr \\n \: | uniq | sed "s|::|:|g")
+PATH=$PATH:/opt/local/bin
 if test "x$PREFIX" != "x"; then
   if test "x$PREFIX" != "x/opt/local"; then
-    PATH=${PATH}:${PREFIX}/bin
-    PATH=$(echo "${PATH}" | tr \: \\n | uniq | tr \\n \: | uniq | sed "s|::|:|g")
-    AC_MSG_CHECKING([path])
-    AC_MSG_RESULT([$PATH])
+    PATH=$PATH:$PREFIX/bin
   else
     echo "prefix is default, not adding it again"
   fi
 else
   echo "prefix is not defined, only using default"
 fi
+AC_MSG_CHECKING([path])
+AC_MSG_RESULT([$PATH])
 
 AC_PATH_PROG([SW_VERS], [sw_vers])
 AC_PATH_PROG([DEFAULTS], [defaults])
@@ -213,13 +206,9 @@ AC_PATH_PROG([PERL5], [perl], [])
 AC_PATH_PROG([RMDIR], [rmdir], [])
 AC_PATH_PROG([RSYNC], [rsync], [])
 AC_PATH_PROG([SVN], [svn], [])
-AC_PATH_PROG([TCLDOC], [tcldoc], [])
-AC_SUBST([TCLDOC])
-export TCLDOC
 AC_PATH_PROG([UNZIP], [unzip])
 AC_PATH_PROG([XATTR], [xattr], [])
 AC_PATH_PROG([XAR], [xar], [])
-AC_PATH_PROG([XARGS], [xargs], [])
 AC_PATH_PROG([XCODEBUILD], [xcodebuild], [])
 AC_PATH_PROG([XCRUN], [xcrun], [])
 AC_PATH_PROG([XZ], [xz], [])
@@ -265,8 +254,7 @@ MP_COMPILER_ATTRIBUTE_UNUSED
 MP_COMPILER_ATTRIBUTE_LF_PRIVATE
 
 # Foundation checks
-dnl# ACX_PTHREAD has been moved to AX_PTHREAD above
-dnl# (i.e. it has been put with the rest of the autoconf-archive macros)
+ACX_PTHREAD
 MP_OBJC_RUNTIME
 AC_MSG_CHECKING([for GNUStep system root])
 if test "x$GNUSTEP_SYSTEM_ROOT" = "x"; then
@@ -333,18 +321,11 @@ sys/mount.h sys/paths.h sys/socket.h sys/sysctl.h \
 readline/readline.h readline/history.h utime.h])
 
 AM_CPPFLAGS="-I.. -I. $AM_CPPFLAGS"
-dnl# This should be permanently converted eventually,
-dnl# but as it is, the build fails without it.
-INCLUDES=$AM_CPPFLAGS
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_CHECK_HEADER_STDBOOL
 AC_TYPE_UID_T
 AC_C_INLINE
-AC_C_LONG_DOUBLE
-AC_TYPE_INTMAX_T
-AC_TYPE_INTPTR_T
-AC_TYPE_LONG_DOUBLE
 AC_TYPE_MODE_T
 AC_TYPE_OFF_T
 AC_TYPE_PID_T
@@ -352,12 +333,9 @@ AC_TYPE_SIZE_T
 AC_TYPE_SSIZE_T
 AC_TYPE_UINT32_T
 AC_TYPE_UINT8_T
-AC_TYPE_UINTMAX_T
-AC_TYPE_UINTPTR_T
 AC_C_FLEXIBLE_ARRAY_MEMBER
 AC_C_VARARRAYS
 AC_CHECK_MEMBERS([Tcl_Interp.errorLine])
-AC_CHECK_SIZEOF([long])
 
 # Checks for library functions.
 AC_FUNC_CHOWN
@@ -419,14 +397,11 @@ MP_TCL_THREAD_SUPPORT
 
 ## libcurl
 MP_LIBCURL_FLAGS
-LIBCURL_CHECK_CONFIG
-AX_LIB_CURL
-AC_CHECK_HEADERS([curl/curl.h curl/curlrules.h])
 
 ## sqlite3
 MP_SQLITE3_FLAGS
 
-MP_CHECK_SQLITE_VERSION([3003011])
+MP_CHECK_SQLITE_VERSION(3003011)
 if test "x${mp_sqlite_version_ge_3003011}" = "xno"; then
 	AC_DEFINE([sqlite3_prepare_v2], [sqlite3_prepare], [define sqlite3_prepare to sqlite_prepare_v2 if the latter is not available])
 fi
@@ -498,7 +473,6 @@ SHLIB_CFLAGS=${TCL_SHLIB_CFLAGS}
 SHLIB_SUFFIX=${TCL_SHLIB_SUFFIX}
 
 AC_SUBST([AM_CPPFLAGS])
-AC_SUBST([INCLUDES])
 AC_SUBST([PATHCONF])
 AC_SUBST([STLIB_LD])
 AC_SUBST([SHLIB_LD])

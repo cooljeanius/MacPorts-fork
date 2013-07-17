@@ -12,6 +12,7 @@ DISTNAME	= MacPorts-${DISTVER}
 DISTARCTAG	= ${DISTTAG}-archive
 DISTARCNAME	= ${DISTNAME}-archive
 SVNURL		= https://svn.macports.org/repository/macports
+TCLDOC		= @TCLDOC@
 
 
 include Mk/macports.autoconf.mk

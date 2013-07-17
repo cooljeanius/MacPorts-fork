@@ -30,8 +30,8 @@
 # $Id: setupenv.bash.in 101266 2013-01-07 14:04:54Z jmr@macports.org $
 
 function export_path() {
-    local binpath="/Users/egall/macports/bin"
-    local sbinpath="/Users/egall/macports/sbin"
+    local binpath="/opt/local/bin"
+    local sbinpath="/opt/local/sbin"
 
     local IFS=":"
     local p
@@ -56,7 +56,7 @@ function export_path() {
 }
 
 function export_manpath() {
-    local mpath="/Users/egall/macports/share/man"
+    local mpath="/opt/local/share/man"
     local IFS=":"
     local p
 

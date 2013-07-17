@@ -24,6 +24,9 @@ test:: ${SHLIB_NAME}
 	${TCLSH} tests/entry.tcl ./${SHLIB_NAME}
 	${TCLSH} tests/depends.tcl ./${SHLIB_NAME}
 
+clean::
+	rm -f $(OBJS) $(SHLIB_NAME)
+
 distclean:: clean
 	rm -f registry_autoconf.tcl
 

@@ -66,6 +66,7 @@ TEA_PREFIX
 #-----------------------------------------------------------------------
 
 TEA_SETUP_COMPILER
+AC_PROG_INSTALL
 AM_PROG_CC_C_O
 AC_BAKEFILE_METROWERKS_EXTO
 AC_PROG_CXX
@@ -141,6 +142,7 @@ AC_SUBST([CLEANFILES])
 #--------------------------------------------------------------------
 
 AC_CHECK_HEADERS([sys/time.h sys/timeb.h])
+AC_HEADER_RESOLV
 TEA_PUBLIC_TCL_HEADERS
 TEA_BUGGY_STRTOD
 
@@ -196,7 +198,7 @@ TEA_ENABLE_SYMBOLS
 # Checks for libraries.
 # FIXME: Replace `main' with a function in `-ltcl':
 AC_CHECK_LIB([tcl], [main])
-TEA_MAKE_LIB
+AX_DLL_STRING
 
 #--------------------------------------------------------------------
 # Everyone should be linking against the Tcl stub library.  If you
@@ -232,6 +234,8 @@ TEA_PROG_TCLSH
 # which require substituting th AC variables in.  Include these here.
 #--------------------------------------------------------------------
 
+AC_SUBST([OBJEXT])
+AC_SUBST([CYGPATH])
 AC_SUBST([INSTALLdir])
 AC_SUBST([PKGdir])
 AC_CONFIG_FILES([Makefile pkgIndex.tcl])

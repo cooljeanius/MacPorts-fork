@@ -1459,6 +1459,7 @@ AC_SUBST([am__untar])
 ]) # _AM_PROG_TAR
 
 m4_include([m4/ax_check_gnu_make.m4])
+m4_include([m4/ax_dll_string.m4])
 m4_include([m4/ax_prog_tcl.m4])
 m4_include([m4/ax_pthread.m4])
 m4_include([m4/bakefile-lang.m4])

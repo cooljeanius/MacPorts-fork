@@ -1,3 +1,6 @@
+# Makefile.am
+# $Id$
+
 MAN1=		port.1
 MAN5=		macports.conf.5
 MAN7=		portfile.7 portstyle.7 porthier.7 portgroup.7
@@ -20,13 +23,13 @@ distclean: clean
 	rm -f macports.conf base.mtree macosx.mtree prefix.mtree pubkeys.conf
 
 %.1.gz: %.1
-	gzip -c $^ > $@
+	@GZIP@ -c $^ > $@
 
 %.5.gz: %.5
-	gzip -c $^ > $@
+	@GZIP@ -c $^ > $@
 
 %.7.gz: %.7
-	gzip -c $^ > $@
+	@GZIP@ -c $^ > $@
 
 install: all
 	$(INSTALL) -d -o ${DSTUSR} -g ${DSTGRP} -m ${DSTMODE} ${INSTALLDIR}

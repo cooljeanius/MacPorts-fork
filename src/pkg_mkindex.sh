@@ -28,8 +28,8 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-TCLSH=/usr/bin/tclsh
-GREP=/usr/bin/grep
+TCLSH=/opt/local/bin/tclsh
+GREP=/opt/local/bin/grep
 
 if [ $# = 0 ]; then
     echo "Usage: $0 <directory list>"

@@ -19,6 +19,9 @@ test::
 	${TCLSH} tests/macports_dlist.tcl
 	${TCLSH} tests/macports_util.tcl
 
+clean::
+	rm -f $(OBJS) $(SHLIB_NAME)
+
 distclean:: clean
 	rm -f macports_autoconf.tcl macports_fastload.tcl ${SHLIB_NAME}
 

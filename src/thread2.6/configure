@@ -6920,6 +6920,7 @@ done
     fi
 
 
+
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking if the C compiler requires -ext o" >&5
 $as_echo_n "checking if the C compiler requires -ext o... " >&6; }
 if ${bakefile_cv_c_exto+:} false; then :
@@ -8107,6 +8108,32 @@ _ACEOF
 fi
 
 done
+
+for ac_header in sys/types.h netinet/in.h arpa/nameser.h netdb.h resolv.h
+do :
+  as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
+ac_fn_c_check_header_compile "$LINENO" "$ac_header" "$as_ac_Header" "#ifdef HAVE_SYS_TYPES_H
+#  include <sys/types.h>
+#endif
+#ifdef HAVE_NETINET_IN_H
+#  include <netinet/in.h>   /* inet_ functions / structs */
+#endif
+#ifdef HAVE_ARPA_NAMESER_H
+#  include <arpa/nameser.h> /* DNS HEADER struct */
+#endif
+#ifdef HAVE_NETDB_H
+#  include <netdb.h>
+#endif
+"
+if eval test \"x\$"$as_ac_Header"\" = x"yes"; then :
+  cat >>confdefs.h <<_ACEOF
+#define `$as_echo "HAVE_$ac_header" | $as_tr_cpp` 1
+_ACEOF
+
+fi
+
+done
+
 
 
     { $as_echo "$as_me:${as_lineno-$LINENO}: checking for Tcl public headers" >&5
@@ -27088,71 +27115,68 @@ _ACEOF
 fi
 
 
-    if test "${TEA_PLATFORM}" = "windows" -a "$GCC" != "yes"; then
-	MAKE_STATIC_LIB="\${STLIB_LD} -out:\$@ \$(PKG_OBJECTS)"
-	MAKE_SHARED_LIB="\${SHLIB_LD} \${SHLIB_LD_FLAGS} \${SHLIB_LD_LIBS} \${LDFLAGS_DEFAULT} -out:\$@ \$(PKG_OBJECTS)"
-	MAKE_STUB_LIB="\${STLIB_LD} -out:\$@ \$(PKG_STUB_OBJECTS)"
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking if the dll string test can be compiled" >&5
+$as_echo_n "checking if the dll string test can be compiled... " >&6; }
+  cat << EOF > conftest-dll.cc
+
+#include <string>
+using namespace std;
+
+void testit(std::string (*contentGet)()) {
+  contentGet();
+}
+
+EOF
+  cat << EOF > conftest-exe.cc
+
+#include <string>
+#include <cstring>
+using namespace std;
+
+extern void testit(std::string (*contentGet)());
+
+std::string contentGet() {
+  return string(""); // Anything other than empty string works.
+}
+
+int main(int argc, char *argv[]) {
+  if(argc == 2 && strcmp(argv[1], "crash") == 0) {
+    testit(&contentGet);
+  }
+  return 0;
+}
+
+EOF
+  $CXX -shared $CFLAGS $CPPFLAGS conftest-dll.cc -o conftest-dll.dll >&5 && $CXX $CFLAGS $CPPFLAGS conftest-exe.cc conftest-dll.dll -o conftest-exe.exe >& 5
+  if test x"$?" = x"0"; then
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+        { $as_echo "$as_me:${as_lineno-$LINENO}: checking if the dll string test is usable" >&5
+$as_echo_n "checking if the dll string test is usable... " >&6; }
+    if /bin/sh -c "(LD_LIBRARY_PATH=\"$PWD\" ./conftest-exe.exe)" >& 5 2>&1; then
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+            { $as_echo "$as_me:${as_lineno-$LINENO}: checking if the dll string test is affected by gcc bug 24196" >&5
+$as_echo_n "checking if the dll string test is affected by gcc bug 24196... " >&6; }
+      if ! /bin/sh -c "(LD_LIBRARY_PATH=\"$PWD\" ./conftest-exe.exe crash)" >& 5 2>&1; then
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+                as_fn_error $? "*** This toolchain is affected by gcc bug 24196.  For Cygwin as of 4/8/2006, you can downgrade to gcc/g++ 3.3.3 or check if there is a newer compiler available that's fixed." "$LINENO" 5
+      else
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+      fi
     else
-	MAKE_STATIC_LIB="\${STLIB_LD} \$@ \$(PKG_OBJECTS)"
-	MAKE_SHARED_LIB="\${SHLIB_LD} -o \$@ \$(PKG_OBJECTS) \${SHLIB_LD_FLAGS} \${SHLIB_LD_LIBS}"
-	MAKE_STUB_LIB="\${STLIB_LD} \$@ \$(PKG_STUB_OBJECTS)"
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
     fi
-
-    if test "${SHARED_BUILD}" = "1" ; then
-	MAKE_LIB="${MAKE_SHARED_LIB} "
-    else
-	MAKE_LIB="${MAKE_STATIC_LIB} "
-    fi
-
-    #--------------------------------------------------------------------
-    # Shared libraries and static libraries have different names.
-    # Use the double eval to make sure the ${DBGX} in the suffix is
-    # substituted.
-    #--------------------------------------------------------------------
-
-    RANLIB_STUB="${RANLIB}"
-    if test "${TEA_PLATFORM}" = "windows" ; then
-	if test "${SHARED_BUILD}" = "1" ; then
-	    # We force the unresolved linking of symbols that are really in
-	    # the private libraries of Tcl and Tk.
-	    SHLIB_LD_LIBS="${SHLIB_LD_LIBS} \"`${CYGPATH} ${TCL_BIN_DIR}/${TCL_STUB_LIB_FILE}`\""
-	    if test x"${TK_BIN_DIR}" != x ; then
-		SHLIB_LD_LIBS="${SHLIB_LD_LIBS} \"`${CYGPATH} ${TK_BIN_DIR}/${TK_STUB_LIB_FILE}`\""
-	    fi
-	    eval eval "PKG_LIB_FILE=${PACKAGE_NAME}${SHARED_LIB_SUFFIX}"
-	    RANLIB=:
-	else
-	    eval eval "PKG_LIB_FILE=${PACKAGE_NAME}${UNSHARED_LIB_SUFFIX}"
-	fi
-	# Some packages build there own stubs libraries
-	eval eval "PKG_STUB_LIB_FILE=${PACKAGE_NAME}stub${UNSHARED_LIB_SUFFIX}"
-    else
-	if test "${SHARED_BUILD}" = "1" ; then
-	    SHLIB_LD_LIBS="${SHLIB_LD_LIBS} ${TCL_STUB_LIB_SPEC}"
-	    if test x"${TK_BIN_DIR}" != x ; then
-		SHLIB_LD_LIBS="${SHLIB_LD_LIBS} ${TK_STUB_LIB_SPEC}"
-	    fi
-	    eval eval "PKG_LIB_FILE=lib${PACKAGE_NAME}${SHARED_LIB_SUFFIX}"
-	    RANLIB=:
-	else
-	    eval eval "PKG_LIB_FILE=lib${PACKAGE_NAME}${UNSHARED_LIB_SUFFIX}"
-	fi
-	# Some packages build there own stubs libraries
-	eval eval "PKG_STUB_LIB_FILE=lib${PACKAGE_NAME}stub${UNSHARED_LIB_SUFFIX}"
-    fi
-
-    # These are escaped so that only CFLAGS is picked up at configure time.
-    # The other values will be substituted at make time.
-    CFLAGS="${CFLAGS} \${CFLAGS_DEFAULT} \${CFLAGS_WARNING}"
-    if test "${SHARED_BUILD}" = "1" ; then
-	CFLAGS="${CFLAGS} \${SHLIB_CFLAGS}"
-    fi
-
-
-
-
-
-
+  else
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+  fi
 
 
 #--------------------------------------------------------------------
@@ -27294,6 +27318,8 @@ $as_echo "$TCLSH_PROG" >&6; }
 # You may alternatively have a special pkgIndex.tcl.in or other files
 # which require substituting th AC variables in.  Include these here.
 #--------------------------------------------------------------------
+
+
 
 
 

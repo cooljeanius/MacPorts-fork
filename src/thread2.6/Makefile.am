@@ -170,8 +170,6 @@ COMPILE		= $(CC) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(C
 
 all: binaries
 
-all-am:
-
 #========================================================================
 # The binaries target builds executable programs, Windows .dll's, unix
 # shared/static libraries, and any other platform-dependent files.
@@ -185,7 +183,7 @@ libraries:
 
 doc:
 
-install: all install-binaries install-libraries install-doc
+install-all: all install-binaries install-libraries install-doc
 
 install-binaries: binaries install-lib-binaries install-bin-binaries
 
@@ -439,4 +437,6 @@ uninstall-binaries:
 	  rm -f $(DESTDIR)$(bindir)/$$p; \
 	done
 
-.PHONY: all binaries clean-local depend distclean-local doc install libraries test
+# TODO: -c, -m, and 644 should not actually be targets, but sticking them under
+# .PHONY seems to trick make into ignoring them for now...
+.PHONY: -c -m 644 all all-am binaries clean-local depend distclean-local doc install libraries test

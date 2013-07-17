@@ -107,6 +107,7 @@ DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/tclconfig/missing
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/ax_check_gnu_make.m4 \
+	$(top_srcdir)/m4/ax_dll_string.m4 \
 	$(top_srcdir)/m4/ax_prog_tcl.m4 $(top_srcdir)/m4/ax_pthread.m4 \
 	$(top_srcdir)/m4/bakefile-lang.m4 $(top_srcdir)/m4/bakefile.m4 \
 	$(top_srcdir)/m4/libtool.m4 $(top_srcdir)/m4/ltoptions.m4 \
@@ -240,11 +241,11 @@ AUTOCONF = ${SHELL} /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-f
 AUTOHEADER = ${SHELL} /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/tclconfig/missing autoheader
 AUTOMAKE = ${SHELL} /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/tclconfig/missing automake-1.14
 AWK = gawk
-BASE_CFLAGS =  -Wall -Wpointer-arith -Wmissing-declarations -Wformat=2 -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Wbad-function-cast -Wold-style-definition -Wdeclaration-after-statement -Wunused -Wuninitialized -Wshadow -Wcast-qual -Wmissing-noreturn -Wmissing-format-attribute -Wredundant-decls -Werror=implicit -Werror=nonnull -Werror=init-self -Werror=main -Werror=missing-braces -Werror=sequence-point -Werror=return-type -Werror=trigraphs -Werror=array-bounds -Werror=write-strings -Werror=address -Werror=int-to-pointer-cast -Werror=pointer-to-int-cast
+BASE_CFLAGS =  -Wall -Wpointer-arith -Wmissing-declarations -Wformat=2 -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Wbad-function-cast -Wold-style-definition -Wdeclaration-after-statement -Wunused -Wuninitialized -Wshadow -Wcast-qual -Wmissing-noreturn -Wmissing-format-attribute -Wredundant-decls -Werror=implicit -Werror=nonnull -Werror=init-self -Werror=main -Werror=missing-braces -Werror=sequence-point -Werror=return-type -Werror=trigraphs -Werror=write-strings -Werror=address -Werror=int-to-pointer-cast -Werror=pointer-to-int-cast
 CC = gcc -pipe -std=gnu99
 CCDEPMODE = depmode=none
 CELIB_DIR = 
-CFLAGS = -g -O2 ${CFLAGS_DEFAULT} ${CFLAGS_WARNING} ${SHLIB_CFLAGS} ${CFLAGS_DEFAULT} ${CFLAGS_WARNING} ${SHLIB_CFLAGS}
+CFLAGS = -g -O2 ${CFLAGS_DEFAULT} ${CFLAGS_WARNING} ${SHLIB_CFLAGS}
 CFLAGS_DEBUG = -g
 CFLAGS_DEFAULT = -g
 CFLAGS_OPTIMIZE = -Os
@@ -252,7 +253,7 @@ CFLAGS_WARNING = -Wall -Wno-implicit-int
 CLEANFILES = 
 CPP = gcc -E
 CPPFLAGS = 
-CWARNFLAGS =  -Wall -Wpointer-arith -Wmissing-declarations -Wformat=2 -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Wbad-function-cast -Wold-style-definition -Wdeclaration-after-statement -Wunused -Wuninitialized -Wshadow -Wcast-qual -Wmissing-noreturn -Wmissing-format-attribute -Wredundant-decls -Werror=implicit -Werror=nonnull -Werror=init-self -Werror=main -Werror=missing-braces -Werror=sequence-point -Werror=return-type -Werror=trigraphs -Werror=array-bounds -Werror=write-strings -Werror=address -Werror=int-to-pointer-cast -Werror=pointer-to-int-cast -fno-strict-aliasing
+CWARNFLAGS =  -Wall -Wpointer-arith -Wmissing-declarations -Wformat=2 -Wstrict-prototypes -Wmissing-prototypes -Wnested-externs -Wbad-function-cast -Wold-style-definition -Wdeclaration-after-statement -Wunused -Wuninitialized -Wshadow -Wcast-qual -Wmissing-noreturn -Wmissing-format-attribute -Wredundant-decls -Werror=implicit -Werror=nonnull -Werror=init-self -Werror=main -Werror=missing-braces -Werror=sequence-point -Werror=return-type -Werror=trigraphs -Werror=write-strings -Werror=address -Werror=int-to-pointer-cast -Werror=pointer-to-int-cast -fno-strict-aliasing
 CXX = g++
 CXXCPP = g++ -E
 CXXDEPMODE = depmode=none
@@ -268,18 +269,18 @@ DUMPBIN =
 ECHO_C = \c
 ECHO_N = 
 ECHO_T = 
-EGREP = /opt/local/bin/grep -E
+EGREP = /sw2/bin/grep -E
 EXEEXT = 
-FGREP = /opt/local/bin/grep -F
-GREP = /opt/local/bin/grep
+FGREP = /sw2/bin/grep -F
+GREP = /sw2/bin/grep
 IF_GNU_MAKE = 
-INSTALL = /opt/local/bin/ginstall -c
+INSTALL = /sw2/bin/ginstall -c
 INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 INSTALLdir = 
-LD = /opt/local/bin/ld
+LD = /usr/libexec/gcc/i686-apple-darwin10/4.2.1/ld
 LDFLAGS =  -prebind
 LDFLAGS_DEBUG = 
 LDFLAGS_DEFAULT =  -prebind
@@ -300,8 +301,8 @@ MAKE_STUB_LIB = ${STLIB_LD} $@ $(PKG_STUB_OBJECTS)
 MALLOC_ZERO_CFLAGS = 
 MANIFEST_TOOL = :
 MATH_LIBS = 
-MKDIR_P = /opt/local/bin/gmkdir -p
-NM = /opt/local/bin/nm
+MKDIR_P = /sw2/bin/gmkdir -p
+NM = /usr/bin/nm
 NMEDIT = nmedit
 OBJDUMP = objdump
 OBJEXT = o
@@ -316,7 +317,7 @@ PACKAGE_URL =
 PACKAGE_VERSION = 2.6
 PATH_SEPARATOR = :
 PKG_CFLAGS =  
-PKG_CONFIG = /opt/local/bin/pkg-config
+PKG_CONFIG = /sw2/bin/pkg-config
 PKG_CONFIG_LIBDIR = 
 PKG_CONFIG_PATH = 
 
@@ -367,17 +368,17 @@ PTHREAD_CC = gcc -pipe -std=gnu99
 PTHREAD_CFLAGS = -D_THREAD_SAFE -pthread
 PTHREAD_LIBS = 
 RANLIB = :
-RANLIB_STUB = :
-RAWCPP = /opt/local/bin/cpp
-RAWCPPFLAGS =  -traditional
-SED = /opt/local/bin/gsed
+RANLIB_STUB = ranlib
+RAWCPP = /usr/bin/cpp
+RAWCPPFLAGS = 
+SED = /sw2/bin/sed
 SET_MAKE = 
 SHARED_BUILD = 1
 SHELL = /bin/sh
 SHLIB_CFLAGS = -fno-common
 SHLIB_LD = cc -dynamiclib ${LDFLAGS}
 SHLIB_LD_FLAGS = 
-SHLIB_LD_LIBS = ${LIBS} -L/System/Library/Frameworks/Tcl.framework/Versions/8.5 -ltclstub8.5 -L/System/Library/Frameworks/Tcl.framework/Versions/8.5 -ltclstub8.5
+SHLIB_LD_LIBS = ${LIBS} -L/System/Library/Frameworks/Tcl.framework/Versions/8.5 -ltclstub8.5
 STLIB_LD = ${AR} cr
 STRIP = strip
 TCLSH = $(TCLSH_ENV) $(TCLSH_PROG)
@@ -403,7 +404,7 @@ TCL_STUB_LIB_SPEC = -L/System/Library/Frameworks/Tcl.framework/Versions/8.5 -ltc
 TCL_THREADS = 1
 TCL_VERSION = 8.5
 VERSION = 2.6
-WISH = /opt/local/bin/wish
+WISH = /sw2/bin/wish
 XMALLOC_ZERO_CFLAGS = 
 XORG_MALLOC_DEBUG_ENV = MallocPreScribble=1 MallocScribble=1 DYLD_INSERT_LIBRARIES=/usr/lib/libgmalloc.dylib
 XTMALLOC_ZERO_CFLAGS = 
@@ -885,6 +886,7 @@ installdirs:
 	for dir in "$(DESTDIR)$(INSTALLdir)" "$(DESTDIR)$(PKGdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
+install: install-am
 install-exec: install-exec-am
 install-data: install-data-am
 uninstall: uninstall-am
@@ -1020,8 +1022,6 @@ uninstall-am: uninstall-INSTALLDATA uninstall-PKGHEADERS
 
 all: binaries
 
-all-am:
-
 #========================================================================
 # The binaries target builds executable programs, Windows .dll's, unix
 # shared/static libraries, and any other platform-dependent files.
@@ -1035,7 +1035,7 @@ libraries:
 
 doc:
 
-install: all install-binaries install-libraries install-doc
+install-all: all install-binaries install-libraries install-doc
 
 install-binaries: binaries install-lib-binaries install-bin-binaries
 
@@ -1261,7 +1261,9 @@ uninstall-binaries:
 	  rm -f $(DESTDIR)$(bindir)/$$p; \
 	done
 
-.PHONY: all binaries clean-local depend distclean-local doc install libraries test
+# TODO: -c, -m, and 644 should not actually be targets, but sticking them under
+# .PHONY seems to trick make into ignoring them for now...
+.PHONY: -c -m 644 all all-am binaries clean-local depend distclean-local doc install libraries test
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
