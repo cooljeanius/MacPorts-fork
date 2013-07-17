@@ -23,5 +23,13 @@ src/*/*/build/*
 src/port/port
 src/port/portindex
 src/port/portmirror
-src/port1.0/pkgIndex.tcl
-src/package1.0/pkgIndex.tcl
+src/*/pkgIndex.tcl
+Mk/macports.autoconf.mk
+doc/*.mtree
+doc/macports.conf
+doc/pubkeys.conf
+*Makefile
+*Doxyfile
+src/*/*autoconf.tcl
+setupenv.bash
+src/macports1.0/macports_fastload.tcl
