@@ -20,3 +20,8 @@ src/config.h
 *.tmp
 tcldo*/*
 src/*/*/build/*
+src/port/port
+src/port/portindex
+src/port/portmirror
+src/port1.0/pkgIndex.tcl
+src/package1.0/pkgIndex.tcl
