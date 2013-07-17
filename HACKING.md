@@ -2,7 +2,7 @@ MacPorts-fork
 ===================
 (note: I am just using the "Hacking" document as a readme until I write a real one...)
 
-# Project naming and copyright attribution:
+## Project naming and copyright attribution: ##
 
  -  "The MacPorts Project" is the string that shall be used wherever
    there's a need to reference our project name, such as in copyright
@@ -23,7 +23,7 @@ MacPorts-fork
    repository, since as such they are being contributed to the project.
 
 
-# Commits to the "base" component of the repository:
+## Commits to the "base" component of the repository: ##
 
  - Commits with user-visible affect made to the "base" component of the
    repository should be accompanied by a corresponding entry in the
@@ -45,7 +45,7 @@ MacPorts-fork
    by the release engineers.
 
 
-# Whitespace rules as discussed on the development list (macports-dev):
+## Whitespace rules as discussed on the development list (macports-dev): ##
 (note: this fork ignores some of these rules...)
 
  - All source code files MUST use soft tabs at a tabstop of 4. No hard
