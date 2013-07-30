@@ -1,0 +1,69 @@
+--- missing.scan.old	2013-07-30 16:45:30.000000000 -0400
++++ missing.scan	2013-07-30 13:05:44.000000000 -0400
+@@ -1,44 +1,46 @@
+-configure.ac: warning: missing AC_CHECK_FUNCS([dup2]) wanted by: src/machista1.0/tests/libmachista-test.c:76
+-configure.ac: warning: missing AC_CHECK_FUNCS([getcwd]) wanted by: src/darwintracelib1.0/darwintrace.c:403
+-configure.ac: warning: missing AC_CHECK_FUNCS([lchown]) wanted by: src/pextlib1.0/Pextlib.c:464
++configure.ac: warning: missing AC_CHECK_FUNCS([dup2]) wanted by: src/darwintracelib1.0/darwintrace.c:1100
++configure.ac: warning: missing AC_CHECK_FUNCS([getcwd]) wanted by: src/darwintracelib1.0/darwintrace.c:642
++configure.ac: warning: missing AC_CHECK_FUNCS([lchown]) wanted by: src/pextlib1.0/Pextlib.c:465
+ configure.ac: warning: missing AC_CHECK_FUNCS([localtime_r]) wanted by: src/programs/daemondo/main.c:128
+ configure.ac: warning: missing AC_CHECK_FUNCS([memmove]) wanted by: src/pextlib1.0/filemap.c:746
+-configure.ac: warning: missing AC_CHECK_FUNCS([mkdir]) wanted by: src/darwintracelib1.0/darwintrace.c:829
++configure.ac: warning: missing AC_CHECK_FUNCS([mkdir]) wanted by: src/darwintracelib1.0/darwintrace.c:1153
+ configure.ac: warning: missing AC_CHECK_FUNCS([munmap]) wanted by: src/machista1.0/libmachista.c:499
+ configure.ac: warning: missing AC_CHECK_FUNCS([realpath]) wanted by: src/pextlib1.0/realpath.c:67
+ configure.ac: warning: missing AC_CHECK_FUNCS([regcomp]) wanted by: src/pextlib1.0/strsed.c:584
+-configure.ac: warning: missing AC_CHECK_FUNCS([rmdir]) wanted by: src/darwintracelib1.0/darwintrace.c:859
+-configure.ac: warning: missing AC_CHECK_FUNCS([select]) wanted by: src/darwintracelib1.0/darwintrace.c:209
+-configure.ac: warning: missing AC_CHECK_FUNCS([setenv]) wanted by: src/pextlib1.0/Pextlib.c:408
+-configure.ac: warning: missing AC_CHECK_FUNCS([socket]) wanted by: src/darwintracelib1.0/darwintrace.c:359
++configure.ac: warning: missing AC_CHECK_FUNCS([rmdir]) wanted by: src/darwintracelib1.0/darwintrace.c:1183
++configure.ac: warning: missing AC_CHECK_FUNCS([setenv]) wanted by: src/pextlib1.0/Pextlib.c:409
++configure.ac: warning: missing AC_CHECK_FUNCS([socket]) wanted by: src/darwintracelib1.0/darwintrace.c:589
+ configure.ac: warning: missing AC_CHECK_FUNCS([strchr]) wanted by: src/machista1.0/machista_wrap.c:1381
+ configure.ac: warning: missing AC_CHECK_FUNCS([strdup]) wanted by: src/cregistry/entry.c:384
+-configure.ac: warning: missing AC_CHECK_FUNCS([strerror]) wanted by: src/darwintracelib1.0/darwintrace.c:369
+-configure.ac: warning: missing AC_CHECK_FUNCS([strrchr]) wanted by: src/pextlib1.0/xinstall.c:466
++configure.ac: warning: missing AC_CHECK_FUNCS([strerror]) wanted by: src/macports1.0/sysctl.c:72
++configure.ac: warning: missing AC_CHECK_FUNCS([strrchr]) wanted by: src/darwintracelib1.0/darwintrace.c:894
+ configure.ac: warning: missing AC_CHECK_FUNCS([strstr]) wanted by: src/machista1.0/machista_wrap.c:1383
+-configure.ac: warning: missing AC_CHECK_FUNCS([strtol]) wanted by: src/pextlib1.0/Pextlib.c:205
++configure.ac: warning: missing AC_CHECK_FUNCS([strtol]) wanted by: src/pextlib1.0/Pextlib.c:206
+ configure.ac: warning: missing AC_CHECK_FUNCS([strtoul]) wanted by: src/machista1.0/machista_wrap.c:1820
+ configure.ac: warning: missing AC_CHECK_FUNCS([utime]) wanted by: src/pextlib1.0/curl.c:438
+ configure.ac: warning: missing AC_CHECK_HEADERS([mach/mach.h]) wanted by: src/programs/daemondo/main.c:66
++configure.ac: warning: missing AC_CHECK_HEADERS([netdb.h]) wanted by: src/pextlib1.0/Pextlib.c:49
++configure.ac: warning: missing AC_CHECK_HEADERS([stddef.h]) wanted by: src/pextlib1.0/strlcat.c:23
+ configure.ac: warning: missing AC_CHECK_HEADERS([sys/ioctl.h]) wanted by: src/pextlib1.0/tty.c:41
+ configure.ac: warning: missing AC_CHECK_HEADERS([sys/mount.h]) wanted by: src/pextlib1.0/xinstall.c:50
+-configure.ac: warning: missing AC_CHECK_HEADERS([sys/param.h]) wanted by: src/darwintracelib1.0/darwintrace.c:70
++configure.ac: warning: missing AC_CHECK_HEADERS([sys/param.h]) wanted by: src/darwintracelib1.0/darwintrace.c:75
+ configure.ac: warning: missing AC_CHECK_HEADERS([sys/time.h]) wanted by: src/pextlib1.0/sha2.c:38
+ configure.ac: warning: missing AC_CHECK_HEADER_STDBOOL wanted by: src/machista1.0/libmachista.c:247
+-configure.ac: warning: missing AC_C_INLINE wanted by: src/darwintracelib1.0/darwintrace.c:136
++configure.ac: warning: missing AC_C_INLINE wanted by: src/darwintracelib1.0/darwintrace.c:117
++configure.ac: warning: missing AC_C_RESTRICT wanted by: src/darwintracelib1.0/darwintrace.c:774
+ configure.ac: warning: missing AC_FUNC_CHOWN wanted by: src/pextlib1.0/xinstall.c:1077
+ configure.ac: warning: missing AC_FUNC_FORK wanted by: src/machista1.0/tests/libmachista-test.c:25
+-configure.ac: warning: missing AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK wanted by: src/darwintracelib1.0/darwintrace.c:721
++configure.ac: warning: missing AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK wanted by: src/darwintracelib1.0/darwintrace.c:1029
+ configure.ac: warning: missing AC_FUNC_MALLOC wanted by: src/cregistry/entry.c:88
+ configure.ac: warning: missing AC_FUNC_MMAP wanted by: src/machista1.0/libmachista.c:469
+ configure.ac: warning: missing AC_FUNC_REALLOC wanted by: src/cregistry/util.c:56
+ configure.ac: warning: missing AC_PROG_AWK wanted by: portmgr/packaging/buildall.sh:44
+ configure.ac: warning: missing AC_PROG_RANLIB wanted by: src/cregistry/Makefile:5
+-configure.ac: warning: missing AC_TYPE_MODE_T wanted by: src/darwintracelib1.0/darwintrace.c:646
++configure.ac: warning: missing AC_TYPE_MODE_T wanted by: src/darwintracelib1.0/darwintrace.c:963
+ configure.ac: warning: missing AC_TYPE_OFF_T wanted by: src/pextlib1.0/flock.c:57
+-configure.ac: warning: missing AC_TYPE_PID_T wanted by: src/machista1.0/tests/libmachista-test.c:25
++configure.ac: warning: missing AC_TYPE_PID_T wanted by: src/darwintracelib1.0/darwintrace.c:134
+ configure.ac: warning: missing AC_TYPE_SIZE_T wanted by: src/cregistry/entry.c:376
+-configure.ac: warning: missing AC_TYPE_SSIZE_T wanted by: src/darwintracelib1.0/darwintrace.c:687
+-configure.ac: warning: missing AC_TYPE_UID_T wanted by: src/pextlib1.0/Pextlib.c:464
+-configure.ac: warning: missing AC_TYPE_UINT32_T wanted by: src/machista1.0/hashmap.c:52
+-configure.ac: warning: missing AC_TYPE_UINT8_T wanted by: src/machista1.0/libmachista.c:8
++configure.ac: warning: missing AC_TYPE_SSIZE_T wanted by: src/darwintracelib1.0/darwintrace.c:996
++configure.ac: warning: missing AC_TYPE_UID_T wanted by: src/pextlib1.0/Pextlib.c:465
++configure.ac: warning: missing AC_TYPE_UINT32_T wanted by: src/darwintracelib1.0/darwintrace.c:126
++configure.ac: warning: missing AC_TYPE_UINT8_T wanted by: src/machista1.0/libmachista.c:87

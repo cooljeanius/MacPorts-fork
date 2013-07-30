@@ -1,0 +1,47 @@
+||= '''Macro''' =||= '''line of file `autoscan` wants it for''' =||= '''contents of line mentioned in previous column''' =||= '''context (how the line is used)''' =||= '''human explanation for how adding the macro will be useful (i.e. relevant comments)''' =||
+|| `AC_CHECK_FUNCS([dup2])` || `src/darwintracelib1.0/darwintrace.c:1100` || `int dup2(int filedes, int filedes2) {` || new function declaration || `/* if darwintrace has been initialized, trap attempts to dup2 over our file descriptor */` (this function would only be useful if calls are being made to `dup2` in the first place, so check for it) ||
+|| `AC_CHECK_FUNCS([getcwd])` || `src/darwintracelib1.0/darwintrace.c:642` || `if (!getcwd(somepath, sizeof(somepath))) {` || condition for an error message || In a path-sending function. Checking for `getcwd` would ensure that this function works. ||
+|| `AC_CHECK_FUNCS([lchown])` || `src/pextlib1.0/Pextlib.c:465` || ` if (lchown(path, (uid_t) user, (gid_t) group) != 0) {` || condition for a Tcl error || part of an overall Tcl wrapper around `lchown`. Checking for this function would ensure that there's actually something to have a wrapper around in the first place. ||
+|| `AC_CHECK_FUNCS([localtime_r])` || `src/programs/daemondo/main.c:128` || `strftime(datestring, sizeof(datestring), "%F %T", localtime_r(&timestamp, &tm));` || In a log message function || `// Format the date-time stamp` (checking for this function would ensure that the log messages have properly formatted timestamps) ||
+|| `AC_CHECK_FUNCS([memmove])` || `src/pextlib1.0/filemap.c:746` ||
+|| `AC_CHECK_FUNCS([mkdir])` || `src/darwintracelib1.0/darwintrace.c:1153` ||
+|| `AC_CHECK_FUNCS([munmap])` || `src/machista1.0/libmachista.c:499` ||
+|| `AC_CHECK_FUNCS([realpath])` || `src/pextlib1.0/realpath.c:67` ||
+|| `AC_CHECK_FUNCS([regcomp])` || `src/pextlib1.0/strsed.c:584` ||
+|| `AC_CHECK_FUNCS([rmdir])` || `src/darwintracelib1.0/darwintrace.c:1183` ||
+|| `AC_CHECK_FUNCS([setenv])` || `src/pextlib1.0/Pextlib.c:409` ||
+|| `AC_CHECK_FUNCS([socket])` || `src/darwintracelib1.0/darwintrace.c:589` ||
+|| `AC_CHECK_FUNCS([strchr])` || `src/machista1.0/machista_wrap.c:1381` ||
+|| `AC_CHECK_FUNCS([strdup])` || `src/cregistry/entry.c:384` ||
+|| `AC_CHECK_FUNCS([strerror])` || `src/macports1.0/sysctl.c:72` ||
+|| `AC_CHECK_FUNCS([strrchr])` || `src/darwintracelib1.0/darwintrace.c:894` ||
+|| `AC_CHECK_FUNCS([strstr])` || `src/machista1.0/machista_wrap.c:1383` ||
+|| `AC_CHECK_FUNCS([strtol])` || `src/pextlib1.0/Pextlib.c:206` ||
+|| `AC_CHECK_FUNCS([strtoul])` || `src/machista1.0/machista_wrap.c:1820` ||
+|| `AC_CHECK_FUNCS([utime])` || `src/pextlib1.0/curl.c:438` ||
+|| `AC_CHECK_HEADERS([mach/mach.h])` || `src/programs/daemondo/main.c:66` ||
+|| `AC_CHECK_HEADERS([netdb.h])` || `src/pextlib1.0/Pextlib.c:49` ||
+|| `AC_CHECK_HEADERS([stddef.h])` || `src/pextlib1.0/strlcat.c:23` ||
+|| `AC_CHECK_HEADERS([sys/ioctl.h])` || `src/pextlib1.0/tty.c:41` ||
+|| `AC_CHECK_HEADERS([sys/mount.h])` || `src/pextlib1.0/xinstall.c:50` ||
+|| `AC_CHECK_HEADERS([sys/param.h])` || `src/darwintracelib1.0/darwintrace.c:75` ||
+|| `AC_CHECK_HEADERS([sys/time.h])` || `src/pextlib1.0/sha2.c:38` ||
+|| `AC_CHECK_HEADER_STDBOOL` || `src/machista1.0/libmachista.c:247` ||
+|| `AC_C_INLINE` || `src/darwintracelib1.0/darwintrace.c:117` ||
+|| `AC_C_RESTRICT` || `src/darwintracelib1.0/darwintrace.c:774` ||
+|| `AC_FUNC_CHOWN` || `src/pextlib1.0/xinstall.c:1077` ||
+|| `AC_FUNC_FORK` || `src/machista1.0/tests/libmachista-test.c:25` ||
+|| `AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK` || `src/darwintracelib1.0/darwintrace.c:1029` ||
+|| `AC_FUNC_MALLOC` || `src/cregistry/entry.c:88` ||
+|| `AC_FUNC_MMAP` || `src/machista1.0/libmachista.c:469` ||
+|| `AC_FUNC_REALLOC` || `src/cregistry/util.c:56` ||
+|| `AC_PROG_AWK` || `portmgr/packaging/buildall.sh:44` ||
+|| `AC_PROG_RANLIB` || `src/cregistry/Makefile:5` ||
+|| `AC_TYPE_MODE_T` || `src/darwintracelib1.0/darwintrace.c:963` ||
+|| `AC_TYPE_OFF_T` || `src/pextlib1.0/flock.c:57` ||
+|| `AC_TYPE_PID_T` || `src/darwintracelib1.0/darwintrace.c:134` ||
+|| `AC_TYPE_SIZE_T` || `src/cregistry/entry.c:376` ||
+|| `AC_TYPE_SSIZE_T` || `src/darwintracelib1.0/darwintrace.c:996` ||
+|| `AC_TYPE_UID_T` || `src/pextlib1.0/Pextlib.c:465` ||
+|| `AC_TYPE_UINT32_T` || `src/darwintracelib1.0/darwintrace.c:126` ||
+|| `AC_TYPE_UINT8_T` || `src/machista1.0/libmachista.c:87` ||
