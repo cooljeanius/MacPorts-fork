@@ -1,0 +1,1278 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXFileReference section */
+		A58D0C6217A82AC40014D70C /* missing.scan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = missing.scan; path = ../missing.scan; sourceTree = SOURCE_ROOT; };
+		A58D0C6317A82AC40014D70C /* configure.scan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = configure.scan; path = ../configure.scan; sourceTree = SOURCE_ROOT; };
+		A58D0C6417A82AC40014D70C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = SOURCE_ROOT; };
+		A58D0C6617A82AC40014D70C /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		A58D0C6717A82AC40014D70C /* sources.conf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sources.conf; sourceTree = "<group>"; };
+		A58D0C6A17A82AC40014D70C /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		A58D0C6B17A82AC40014D70C /* Portfile.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Portfile.in; sourceTree = "<group>"; };
+		A58D0C6C17A82AC40014D70C /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		A58D0C6E17A82AC40014D70C /* master */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = master; sourceTree = "<group>"; };
+		A58D0C6F17A82AC40014D70C /* Portfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Portfile; sourceTree = "<group>"; };
+		A58D0C7117A82AC40014D70C /* master */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = master; sourceTree = "<group>"; };
+		A58D0C7217A82AC40014D70C /* Portfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Portfile; sourceTree = "<group>"; };
+		A58D0C7417A82AC40014D70C /* master */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = master; sourceTree = "<group>"; };
+		A58D0C7517A82AC40014D70C /* Portfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Portfile; sourceTree = "<group>"; };
+		A58D0C7717A82AC40014D70C /* master */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = master; sourceTree = "<group>"; };
+		A58D0C7817A82AC40014D70C /* Portfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Portfile; sourceTree = "<group>"; };
+		A58D0C7A17A82AC40014D70C /* master */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = master; sourceTree = "<group>"; };
+		A58D0C7B17A82AC40014D70C /* Portfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Portfile; sourceTree = "<group>"; };
+		A58D0C7D17A82AC40014D70C /* error_expected */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = error_expected; sourceTree = "<group>"; };
+		A58D0C7E17A82AC40014D70C /* master */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = master; sourceTree = "<group>"; };
+		A58D0C7F17A82AC40014D70C /* Portfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Portfile; sourceTree = "<group>"; };
+		A58D0C8117A82AC40014D70C /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		A58D0C8217A82AC40014D70C /* master */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = master; sourceTree = "<group>"; };
+		A58D0C8317A82AC40014D70C /* Portfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Portfile; sourceTree = "<group>"; };
+		A58D0C8517A82AC40014D70C /* master */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = master; sourceTree = "<group>"; };
+		A58D0C8617A82AC40014D70C /* Portfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Portfile; sourceTree = "<group>"; };
+		A58D0C8817A82AC40014D70C /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		A58D0C8917A82AC40014D70C /* master */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = master; sourceTree = "<group>"; };
+		A58D0C8A17A82AC40014D70C /* Portfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Portfile; sourceTree = "<group>"; };
+		A58D0C8B17A82AC40014D70C /* statefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = statefile; sourceTree = "<group>"; };
+		A58D0C8D17A82AC40014D70C /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		A58D0C8E17A82AC40014D70C /* master */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = master; sourceTree = "<group>"; };
+		A58D0C8F17A82AC40014D70C /* Portfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Portfile; sourceTree = "<group>"; };
+		A58D0C9017A82AC40014D70C /* statefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = statefile; sourceTree = "<group>"; };
+		A58D0C9217A82AC40014D70C /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		A58D0C9317A82AC40014D70C /* master */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = master; sourceTree = "<group>"; };
+		A58D0C9417A82AC40014D70C /* Portfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Portfile; sourceTree = "<group>"; };
+		A58D0C9517A82AC40014D70C /* statefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = statefile; sourceTree = "<group>"; };
+		A58D0C9717A82AC40014D70C /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		A58D0C9817A82AC40014D70C /* master */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = master; sourceTree = "<group>"; };
+		A58D0C9917A82AC40014D70C /* Portfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Portfile; sourceTree = "<group>"; };
+		A58D0C9A17A82AC40014D70C /* statefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = statefile; sourceTree = "<group>"; };
+		A58D0C9C17A82AC40014D70C /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		A58D0C9D17A82AC40014D70C /* master */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = master; sourceTree = "<group>"; };
+		A58D0C9E17A82AC40014D70C /* Portfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Portfile; sourceTree = "<group>"; };
+		A58D0C9F17A82AC40014D70C /* statefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = statefile; sourceTree = "<group>"; };
+		A58D0CA117A82AC40014D70C /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		A58D0CA217A82AC40014D70C /* master */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = master; sourceTree = "<group>"; };
+		A58D0CA317A82AC40014D70C /* Portfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Portfile; sourceTree = "<group>"; };
+		A58D0CA417A82AC40014D70C /* statefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = statefile; sourceTree = "<group>"; };
+		A58D0CA617A82AC40014D70C /* master */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = master; sourceTree = "<group>"; };
+		A58D0CA717A82AC40014D70C /* Portfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Portfile; sourceTree = "<group>"; };
+		A58D0CA917A82AC40014D70C /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		A58D0CAA17A82AC40014D70C /* master */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = master; sourceTree = "<group>"; };
+		A58D0CAB17A82AC40014D70C /* Portfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Portfile; sourceTree = "<group>"; };
+		A58D0CAD17A82AC40014D70C /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		A58D0CAE17A82AC40014D70C /* master */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = master; sourceTree = "<group>"; };
+		A58D0CAF17A82AC40014D70C /* Portfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Portfile; sourceTree = "<group>"; };
+		A58D0CB117A82AC40014D70C /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		A58D0CB217A82AC40014D70C /* master */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = master; sourceTree = "<group>"; };
+		A58D0CB317A82AC40014D70C /* Portfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Portfile; sourceTree = "<group>"; };
+		A58D0CB517A82AC40014D70C /* master */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = master; sourceTree = "<group>"; };
+		A58D0CB617A82AC40014D70C /* Portfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Portfile; sourceTree = "<group>"; };
+		A58D0CB817A82AC40014D70C /* master */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = master; sourceTree = "<group>"; };
+		A58D0CB917A82AC40014D70C /* Portfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Portfile; sourceTree = "<group>"; };
+		A58D0CBA17A82AC40014D70C /* test-macports.conf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "test-macports.conf"; sourceTree = "<group>"; };
+		A58D0CBD17A82AC40014D70C /* CFLib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = CFLib.c; sourceTree = "<group>"; };
+		A58D0CBE17A82AC40014D70C /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		A58D0CBF17A82AC40014D70C /* config.h.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = config.h.in; sourceTree = "<group>"; };
+		A58D0CC117A82AC40014D70C /* entry.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = entry.c; sourceTree = "<group>"; };
+		A58D0CC217A82AC40014D70C /* entry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = entry.h; sourceTree = "<group>"; };
+		A58D0CC317A82AC40014D70C /* file.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = file.c; sourceTree = "<group>"; };
+		A58D0CC417A82AC40014D70C /* file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = file.h; sourceTree = "<group>"; };
+		A58D0CC517A82AC40014D70C /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		A58D0CC617A82AC40014D70C /* README.sqlext */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.sqlext; sourceTree = "<group>"; };
+		A58D0CC717A82AC40014D70C /* registry.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = registry.c; sourceTree = "<group>"; };
+		A58D0CC817A82AC40014D70C /* registry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = registry.h; sourceTree = "<group>"; };
+		A58D0CC917A82AC40014D70C /* sql.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sql.c; sourceTree = "<group>"; };
+		A58D0CCA17A82AC40014D70C /* sql.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = sql.h; sourceTree = "<group>"; };
+		A58D0CCB17A82AC40014D70C /* sqlext.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sqlext.c; sourceTree = "<group>"; };
+		A58D0CCC17A82AC40014D70C /* util.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = util.c; sourceTree = "<group>"; };
+		A58D0CCD17A82AC40014D70C /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = util.h; sourceTree = "<group>"; };
+		A58D0CCE17A82AC40014D70C /* vercomp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vercomp.c; sourceTree = "<group>"; };
+		A58D0CCF17A82AC40014D70C /* vercomp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = vercomp.h; sourceTree = "<group>"; };
+		A58D0CD117A82AC40014D70C /* darwintrace.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = darwintrace.c; sourceTree = "<group>"; };
+		A58D0CD217A82AC40014D70C /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		A58D0CD317A82AC40014D70C /* images_to_archives.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = images_to_archives.tcl; sourceTree = "<group>"; };
+		A58D0CD517A82AC40014D70C /* hashmap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = hashmap.c; sourceTree = "<group>"; };
+		A58D0CD617A82AC40014D70C /* hashmap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = hashmap.h; sourceTree = "<group>"; };
+		A58D0CD717A82AC40014D70C /* libmachista.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = libmachista.c; sourceTree = "<group>"; };
+		A58D0CD817A82AC40014D70C /* libmachista.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = libmachista.h; sourceTree = "<group>"; };
+		A58D0CD917A82AC40014D70C /* machista.i */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c.preprocessed; path = machista.i; sourceTree = "<group>"; };
+		A58D0CDA17A82AC40014D70C /* machista_wrap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = machista_wrap.c; sourceTree = "<group>"; };
+		A58D0CDB17A82AC40014D70C /* Makefile.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
+		A58D0CDD17A82AC40014D70C /* libmachista-test.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "libmachista-test.c"; sourceTree = "<group>"; };
+		A58D0CDE17A82AC40014D70C /* simple.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = simple.tcl; sourceTree = "<group>"; };
+		A58D0CDF17A82AC40014D70C /* test.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.tcl; sourceTree = "<group>"; };
+		A58D0CE117A82AC40014D70C /* get_systemconfiguration_proxies.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = get_systemconfiguration_proxies.c; sourceTree = "<group>"; };
+		A58D0CE217A82AC40014D70C /* get_systemconfiguration_proxies.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = get_systemconfiguration_proxies.h; sourceTree = "<group>"; };
+		A58D0CE317A82AC40014D70C /* macports.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = macports.c; sourceTree = "<group>"; };
+		A58D0CE417A82AC40014D70C /* macports.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = macports.tcl; sourceTree = "<group>"; };
+		A58D0CE517A82AC40014D70C /* macports_autoconf.tcl.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = macports_autoconf.tcl.in; sourceTree = "<group>"; };
+		A58D0CE617A82AC40014D70C /* macports_dlist.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = macports_dlist.tcl; sourceTree = "<group>"; };
+		A58D0CE717A82AC40014D70C /* macports_fastload.tcl.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = macports_fastload.tcl.in; sourceTree = "<group>"; };
+		A58D0CE817A82AC40014D70C /* macports_index.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = macports_index.tcl; sourceTree = "<group>"; };
+		A58D0CE917A82AC40014D70C /* macports_util.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = macports_util.tcl; sourceTree = "<group>"; };
+		A58D0CEA17A82AC40014D70C /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		A58D0CEB17A82AC40014D70C /* sysctl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sysctl.c; sourceTree = "<group>"; };
+		A58D0CEC17A82AC40014D70C /* sysctl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = sysctl.h; sourceTree = "<group>"; };
+		A58D0CEE17A82AC40014D70C /* macports_dlist.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = macports_dlist.tcl; sourceTree = "<group>"; };
+		A58D0CEF17A82AC40014D70C /* macports_util.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = macports_util.tcl; sourceTree = "<group>"; };
+		A58D0CF017A82AC40014D70C /* Makefile.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
+		A58D0CF217A82AC40014D70C /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		A58D0CF317A82AC40014D70C /* package.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = package.tcl; sourceTree = "<group>"; };
+		A58D0CF417A82AC40014D70C /* portarchivefetch.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portarchivefetch.tcl; sourceTree = "<group>"; };
+		A58D0CF517A82AC40014D70C /* portdmg.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portdmg.tcl; sourceTree = "<group>"; };
+		A58D0CF617A82AC40014D70C /* portdpkg.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portdpkg.tcl; sourceTree = "<group>"; };
+		A58D0CF717A82AC40014D70C /* portmdmg.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portmdmg.tcl; sourceTree = "<group>"; };
+		A58D0CF817A82AC40014D70C /* portmpkg.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portmpkg.tcl; sourceTree = "<group>"; };
+		A58D0CF917A82AC40014D70C /* portpkg.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portpkg.tcl; sourceTree = "<group>"; };
+		A58D0CFA17A82AC40014D70C /* portrpm.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portrpm.tcl; sourceTree = "<group>"; };
+		A58D0CFB17A82AC40014D70C /* portsrpm.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portsrpm.tcl; sourceTree = "<group>"; };
+		A58D0CFC17A82AC40014D70C /* portunarchive.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portunarchive.tcl; sourceTree = "<group>"; };
+		A58D0CFE17A82AC40014D70C /* base32cmd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = base32cmd.c; sourceTree = "<group>"; };
+		A58D0CFF17A82AC40014D70C /* base32cmd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = base32cmd.h; sourceTree = "<group>"; };
+		A58D0D0017A82AC40014D70C /* curl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = curl.c; sourceTree = "<group>"; };
+		A58D0D0117A82AC40014D70C /* curl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = curl.h; sourceTree = "<group>"; };
+		A58D0D0217A82AC40014D70C /* fgetln.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fgetln.c; sourceTree = "<group>"; };
+		A58D0D0317A82AC40014D70C /* filemap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = filemap.c; sourceTree = "<group>"; };
+		A58D0D0417A82AC40014D70C /* filemap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = filemap.h; sourceTree = "<group>"; };
+		A58D0D0517A82AC40014D70C /* flock.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = flock.c; sourceTree = "<group>"; };
+		A58D0D0617A82AC40014D70C /* flock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = flock.h; sourceTree = "<group>"; };
+		A58D0D0717A82AC40014D70C /* fs-traverse.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "fs-traverse.c"; sourceTree = "<group>"; };
+		A58D0D0817A82AC40014D70C /* fs-traverse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = "fs-traverse.h"; sourceTree = "<group>"; };
+		A58D0D0917A82AC40014D70C /* Makefile.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
+		A58D0D0A17A82AC40014D70C /* md5cmd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = md5cmd.c; sourceTree = "<group>"; };
+		A58D0D0B17A82AC40014D70C /* md5cmd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = md5cmd.h; sourceTree = "<group>"; };
+		A58D0D0C17A82AC40014D70C /* md_wrappers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = md_wrappers.h; sourceTree = "<group>"; };
+		A58D0D0D17A82AC40014D70C /* mktemp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mktemp.c; sourceTree = "<group>"; };
+		A58D0D0E17A82AC40014D70C /* mktemp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = mktemp.h; sourceTree = "<group>"; };
+		A58D0D0F17A82AC40014D70C /* Pextlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Pextlib.c; sourceTree = "<group>"; };
+		A58D0D1017A82AC40014D70C /* Pextlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = Pextlib.h; sourceTree = "<group>"; };
+		A58D0D1117A82AC40014D70C /* pipe.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pipe.c; sourceTree = "<group>"; };
+		A58D0D1217A82AC40014D70C /* pipe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = pipe.h; sourceTree = "<group>"; };
+		A58D0D1317A82AC40014D70C /* readdir.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = readdir.c; sourceTree = "<group>"; };
+		A58D0D1417A82AC40014D70C /* readdir.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = readdir.h; sourceTree = "<group>"; };
+		A58D0D1517A82AC40014D70C /* readline.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = readline.c; sourceTree = "<group>"; };
+		A58D0D1617A82AC40014D70C /* readline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = readline.h; sourceTree = "<group>"; };
+		A58D0D1717A82AC40014D70C /* realpath.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = realpath.c; sourceTree = "<group>"; };
+		A58D0D1817A82AC40014D70C /* realpath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = realpath.h; sourceTree = "<group>"; };
+		A58D0D1917A82AC40014D70C /* rmd160.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = rmd160.c; sourceTree = "<group>"; };
+		A58D0D1A17A82AC40014D70C /* rmd160.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = rmd160.h; sourceTree = "<group>"; };
+		A58D0D1B17A82AC40014D70C /* rmd160cmd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = rmd160cmd.c; sourceTree = "<group>"; };
+		A58D0D1C17A82AC40014D70C /* rmd160cmd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = rmd160cmd.h; sourceTree = "<group>"; };
+		A58D0D1D17A82AC40014D70C /* setmode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = setmode.c; sourceTree = "<group>"; };
+		A58D0D1E17A82AC40014D70C /* setmode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = setmode.h; sourceTree = "<group>"; };
+		A58D0D1F17A82AC40014D70C /* sha1cmd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sha1cmd.c; sourceTree = "<group>"; };
+		A58D0D2017A82AC40014D70C /* sha1cmd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = sha1cmd.h; sourceTree = "<group>"; };
+		A58D0D2117A82AC40014D70C /* sha2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sha2.c; sourceTree = "<group>"; };
+		A58D0D2217A82AC40014D70C /* sha2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = sha2.h; sourceTree = "<group>"; };
+		A58D0D2317A82AC40014D70C /* sha256cmd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sha256cmd.c; sourceTree = "<group>"; };
+		A58D0D2417A82AC40014D70C /* sha256cmd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = sha256cmd.h; sourceTree = "<group>"; };
+		A58D0D2517A82AC40014D70C /* strcasecmp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = strcasecmp.c; sourceTree = "<group>"; };
+		A58D0D2617A82AC40014D70C /* strcasecmp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = strcasecmp.h; sourceTree = "<group>"; };
+		A58D0D2717A82AC40014D70C /* strlcat.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = strlcat.c; sourceTree = "<group>"; };
+		A58D0D2817A82AC40014D70C /* strlcat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = strlcat.h; sourceTree = "<group>"; };
+		A58D0D2917A82AC40014D70C /* strsed.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = strsed.c; sourceTree = "<group>"; };
+		A58D0D2A17A82AC40014D70C /* strsed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = strsed.h; sourceTree = "<group>"; };
+		A58D0D2B17A82AC40014D70C /* system.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = system.c; sourceTree = "<group>"; };
+		A58D0D2C17A82AC40014D70C /* system.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = system.h; sourceTree = "<group>"; };
+		A58D0D2E17A82AC40014D70C /* base32.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = base32.tcl; sourceTree = "<group>"; };
+		A58D0D2F17A82AC50014D70C /* checksums.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = checksums.tcl; sourceTree = "<group>"; };
+		A58D0D3017A82AC50014D70C /* curl.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = curl.tcl; sourceTree = "<group>"; };
+		A58D0D3117A82AC50014D70C /* filemap.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = filemap.tcl; sourceTree = "<group>"; };
+		A58D0D3217A82AC50014D70C /* fs-traverse.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "fs-traverse.tcl"; sourceTree = "<group>"; };
+		A58D0D3317A82AC50014D70C /* symlink.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = symlink.tcl; sourceTree = "<group>"; };
+		A58D0D3417A82AC50014D70C /* unsetenv.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = unsetenv.tcl; sourceTree = "<group>"; };
+		A58D0D3517A82AC50014D70C /* vercomp.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = vercomp.tcl; sourceTree = "<group>"; };
+		A58D0D3617A82AC50014D70C /* tracelib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tracelib.c; sourceTree = "<group>"; };
+		A58D0D3717A82AC50014D70C /* tracelib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = tracelib.h; sourceTree = "<group>"; };
+		A58D0D3817A82AC50014D70C /* tty.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tty.c; sourceTree = "<group>"; };
+		A58D0D3917A82AC50014D70C /* tty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = tty.h; sourceTree = "<group>"; };
+		A58D0D3A17A82AC50014D70C /* uid.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = uid.c; sourceTree = "<group>"; };
+		A58D0D3B17A82AC50014D70C /* uid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = uid.h; sourceTree = "<group>"; };
+		A58D0D3C17A82AC50014D70C /* vercomp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vercomp.c; sourceTree = "<group>"; };
+		A58D0D3D17A82AC50014D70C /* vercomp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = vercomp.h; sourceTree = "<group>"; };
+		A58D0D3E17A82AC50014D70C /* xinstall.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = xinstall.c; sourceTree = "<group>"; };
+		A58D0D3F17A82AC50014D70C /* xinstall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = xinstall.h; sourceTree = "<group>"; };
+		A58D0D4017A82AC50014D70C /* pkg_mkindex.sh.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = pkg_mkindex.sh.in; sourceTree = "<group>"; };
+		A58D0D4217A82AC50014D70C /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		A58D0D4317A82AC50014D70C /* port-help.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "port-help.tcl"; sourceTree = "<group>"; };
+		A58D0D4417A82AC50014D70C /* port.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = port.tcl; sourceTree = "<group>"; };
+		A58D0D4517A82AC50014D70C /* portindex.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = portindex.tcl; sourceTree = "<group>"; };
+		A58D0D4617A82AC50014D70C /* portmirror.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = portmirror.tcl; sourceTree = "<group>"; };
+		A58D0D4817A82AC50014D70C /* fetch_common.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fetch_common.tcl; sourceTree = "<group>"; };
+		A58D0D4917A82AC50014D70C /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		A58D0D4A17A82AC50014D70C /* port.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = port.tcl; sourceTree = "<group>"; };
+		A58D0D4B17A82AC50014D70C /* port_autoconf.tcl.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = port_autoconf.tcl.in; sourceTree = "<group>"; };
+		A58D0D4C17A82AC50014D70C /* portactivate.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portactivate.tcl; sourceTree = "<group>"; };
+		A58D0D4D17A82AC50014D70C /* portbuild.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portbuild.tcl; sourceTree = "<group>"; };
+		A58D0D4E17A82AC50014D70C /* portchecksum.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portchecksum.tcl; sourceTree = "<group>"; };
+		A58D0D4F17A82AC50014D70C /* portclean.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portclean.tcl; sourceTree = "<group>"; };
+		A58D0D5017A82AC50014D70C /* portconfigure.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portconfigure.tcl; sourceTree = "<group>"; };
+		A58D0D5117A82AC50014D70C /* portdeactivate.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portdeactivate.tcl; sourceTree = "<group>"; };
+		A58D0D5217A82AC50014D70C /* portdepends.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portdepends.tcl; sourceTree = "<group>"; };
+		A58D0D5317A82AC50014D70C /* portdestroot.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portdestroot.tcl; sourceTree = "<group>"; };
+		A58D0D5417A82AC50014D70C /* portdistcheck.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portdistcheck.tcl; sourceTree = "<group>"; };
+		A58D0D5517A82AC50014D70C /* portdistfiles.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portdistfiles.tcl; sourceTree = "<group>"; };
+		A58D0D5617A82AC50014D70C /* portextract.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portextract.tcl; sourceTree = "<group>"; };
+		A58D0D5717A82AC50014D70C /* portfetch.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portfetch.tcl; sourceTree = "<group>"; };
+		A58D0D5817A82AC50014D70C /* portinstall.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portinstall.tcl; sourceTree = "<group>"; };
+		A58D0D5917A82AC50014D70C /* portlint.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portlint.tcl; sourceTree = "<group>"; };
+		A58D0D5A17A82AC50014D70C /* portlivecheck.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portlivecheck.tcl; sourceTree = "<group>"; };
+		A58D0D5B17A82AC50014D70C /* portload.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portload.tcl; sourceTree = "<group>"; };
+		A58D0D5C17A82AC50014D70C /* portmain.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portmain.tcl; sourceTree = "<group>"; };
+		A58D0D5D17A82AC50014D70C /* portmirror.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portmirror.tcl; sourceTree = "<group>"; };
+		A58D0D5E17A82AC50014D70C /* portpatch.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portpatch.tcl; sourceTree = "<group>"; };
+		A58D0D5F17A82AC50014D70C /* portsandbox.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portsandbox.tcl; sourceTree = "<group>"; };
+		A58D0D6017A82AC50014D70C /* portstartupitem.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portstartupitem.tcl; sourceTree = "<group>"; };
+		A58D0D6117A82AC50014D70C /* porttest.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = porttest.tcl; sourceTree = "<group>"; };
+		A58D0D6217A82AC50014D70C /* porttrace.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = porttrace.tcl; sourceTree = "<group>"; };
+		A58D0D6317A82AC50014D70C /* portuninstall.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portuninstall.tcl; sourceTree = "<group>"; };
+		A58D0D6417A82AC50014D70C /* portunload.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portunload.tcl; sourceTree = "<group>"; };
+		A58D0D6517A82AC50014D70C /* portutil.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portutil.tcl; sourceTree = "<group>"; };
+		A58D0D6717A82AC50014D70C /* common.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = common.tcl; sourceTree = "<group>"; };
+		A58D0D6817A82AC50014D70C /* portdestroot.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portdestroot.tcl; sourceTree = "<group>"; };
+		A58D0D6917A82AC50014D70C /* portfetch.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portfetch.tcl; sourceTree = "<group>"; };
+		A58D0D6A17A82AC50014D70C /* portutil.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portutil.tcl; sourceTree = "<group>"; };
+		A58D0D6D17A82AC50014D70C /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		A58D0D6E17A82AC50014D70C /* Makefile.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
+		A58D0D6F17A82AC50014D70C /* Makefile.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
+		A58D0D7117A82AC50014D70C /* entry.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = entry.c; sourceTree = "<group>"; };
+		A58D0D7217A82AC50014D70C /* entry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = entry.h; sourceTree = "<group>"; };
+		A58D0D7317A82AC50014D70C /* entryobj.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = entryobj.c; sourceTree = "<group>"; };
+		A58D0D7417A82AC50014D70C /* entryobj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = entryobj.h; sourceTree = "<group>"; };
+		A58D0D7517A82AC50014D70C /* file.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = file.c; sourceTree = "<group>"; };
+		A58D0D7617A82AC50014D70C /* file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = file.h; sourceTree = "<group>"; };
+		A58D0D7717A82AC50014D70C /* fileobj.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fileobj.c; sourceTree = "<group>"; };
+		A58D0D7817A82AC50014D70C /* fileobj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = fileobj.h; sourceTree = "<group>"; };
+		A58D0D7917A82AC50014D70C /* graph.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = graph.c; sourceTree = "<group>"; };
+		A58D0D7A17A82AC50014D70C /* graph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = graph.h; sourceTree = "<group>"; };
+		A58D0D7B17A82AC50014D70C /* graphobj.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = graphobj.c; sourceTree = "<group>"; };
+		A58D0D7C17A82AC50014D70C /* graphobj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = graphobj.h; sourceTree = "<group>"; };
+		A58D0D7D17A82AC50014D70C /* item.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = item.c; sourceTree = "<group>"; };
+		A58D0D7E17A82AC50014D70C /* item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = item.h; sourceTree = "<group>"; };
+		A58D0D7F17A82AC50014D70C /* itemobj.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = itemobj.c; sourceTree = "<group>"; };
+		A58D0D8017A82AC50014D70C /* itemobj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = itemobj.h; sourceTree = "<group>"; };
+		A58D0D8117A82AC50014D70C /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		A58D0D8217A82AC50014D70C /* portimage.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portimage.tcl; sourceTree = "<group>"; };
+		A58D0D8317A82AC50014D70C /* portuninstall.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portuninstall.tcl; sourceTree = "<group>"; };
+		A58D0D8417A82AC50014D70C /* receipt_flat.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = receipt_flat.tcl; sourceTree = "<group>"; };
+		A58D0D8517A82AC50014D70C /* receipt_sqlite.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = receipt_sqlite.tcl; sourceTree = "<group>"; };
+		A58D0D8617A82AC50014D70C /* registry.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = registry.c; sourceTree = "<group>"; };
+		A58D0D8717A82AC50014D70C /* registry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = registry.h; sourceTree = "<group>"; };
+		A58D0D8817A82AC50014D70C /* registry.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = registry.tcl; sourceTree = "<group>"; };
+		A58D0D8917A82AC50014D70C /* registry_autoconf.tcl.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = registry_autoconf.tcl.in; sourceTree = "<group>"; };
+		A58D0D8A17A82AC50014D70C /* registry_util.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = registry_util.tcl; sourceTree = "<group>"; };
+		A58D0D8C17A82AC50014D70C /* common.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = common.tcl; sourceTree = "<group>"; };
+		A58D0D8D17A82AC50014D70C /* depends.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = depends.tcl; sourceTree = "<group>"; };
+		A58D0D8E17A82AC50014D70C /* entry.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = entry.tcl; sourceTree = "<group>"; };
+		A58D0D8F17A82AC50014D70C /* item.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = item.tcl; sourceTree = "<group>"; };
+		A58D0D9017A82AC50014D70C /* util.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = util.c; sourceTree = "<group>"; };
+		A58D0D9117A82AC50014D70C /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = util.h; sourceTree = "<group>"; };
+		A58D0D9317A82AC50014D70C /* Makefile.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
+		A58D0D9417A82AC50014D70C /* MPMethodSignatureExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MPMethodSignatureExtensions.h; sourceTree = "<group>"; };
+		A58D0D9517A82AC50014D70C /* MPMethodSignatureExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMethodSignatureExtensions.m; sourceTree = "<group>"; };
+		A58D0D9617A82AC50014D70C /* objc_encoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = objc_encoding.h; sourceTree = "<group>"; };
+		A58D0D9717A82AC50014D70C /* objc_encoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = objc_encoding.m; sourceTree = "<group>"; };
+		A58D0D9817A82AC50014D70C /* tclobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = tclobjc.h; sourceTree = "<group>"; };
+		A58D0D9917A82AC50014D70C /* tclobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = tclobjc.m; sourceTree = "<group>"; };
+		A58D0D9A17A82AC50014D70C /* tclobjc_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = tclobjc_types.h; sourceTree = "<group>"; };
+		A58D0D9B17A82AC50014D70C /* tclobjc_types.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = tclobjc_types.m; sourceTree = "<group>"; };
+		A58D0D9C17A82AC50014D70C /* thread2.6.diff */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = thread2.6.diff; sourceTree = "<group>"; };
+		A58D0D9D17A82AC50014D70C /* thread2.6.tar.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = thread2.6.tar.gz; sourceTree = "<group>"; };
+		A58D0D9E17A82AC50014D70C /* upgrade_sources_conf_default.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = upgrade_sources_conf_default.tcl; sourceTree = "<group>"; };
+		A58D0D9F17A82AC50014D70C /* setupenv.bash.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = setupenv.bash.in; path = ../setupenv.bash.in; sourceTree = SOURCE_ROOT; };
+		A58D0DA017A82AC50014D70C /* regen.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = regen.sh; path = ../regen.sh; sourceTree = SOURCE_ROOT; };
+		A58D0DA217A82AC50014D70C /* autosubmit.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = autosubmit.tcl; sourceTree = "<group>"; };
+		A58D0DA417A82AC50014D70C /* Distribution */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Distribution; sourceTree = "<group>"; };
+		A58D0DA517A82AC50014D70C /* InstallationCheck */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = InstallationCheck; sourceTree = "<group>"; };
+		A58D0DA617A82AC50014D70C /* InstallationCheck.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InstallationCheck.strings; sourceTree = "<group>"; };
+		A58D0DA717A82AC50014D70C /* License.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = License.html; sourceTree = "<group>"; };
+		A58D0DA817A82AC50014D70C /* postflight */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = postflight; sourceTree = "<group>"; };
+		A58D0DA917A82AC50014D70C /* ReadMe.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = ReadMe.rtf; sourceTree = "<group>"; };
+		A58D0DAB17A82AC50014D70C /* macports.spec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = macports.spec; sourceTree = "<group>"; };
+		A58D0DAC17A82AC50014D70C /* REQUIREMENTS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = REQUIREMENTS; sourceTree = "<group>"; };
+		A58D0DAE17A82AC50014D70C /* Makefile.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
+		A58D0DAF17A82AC50014D70C /* pkg-descr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "pkg-descr"; sourceTree = "<group>"; };
+		A58D0DB017A82AC50014D70C /* pkg-plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "pkg-plist"; sourceTree = "<group>"; };
+		A58D0DB217A82AC50014D70C /* GuideRegen.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = GuideRegen.sh; sourceTree = "<group>"; };
+		A58D0DB317A82AC50014D70C /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		A58D0DB417A82AC50014D70C /* mirror_macports.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = mirror_macports.sh; sourceTree = "<group>"; };
+		A58D0DB517A82AC50014D70C /* mprsyncup */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = mprsyncup; sourceTree = "<group>"; };
+		A58D0DB617A82AC50014D70C /* org.macports.mprsyncup.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = org.macports.mprsyncup.plist; sourceTree = "<group>"; };
+		A58D0DB717A82AC50014D70C /* org.macports.PortIndex2MySQL.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = org.macports.PortIndex2MySQL.plist; sourceTree = "<group>"; };
+		A58D0DB817A82AC50014D70C /* port_binary_distributable.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = port_binary_distributable.tcl; sourceTree = "<group>"; };
+		A58D0DB917A82AC50014D70C /* portfile_lint.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = portfile_lint.pl; sourceTree = "<group>"; };
+		A58D0DBA17A82AC50014D70C /* portfile_mirror.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = portfile_mirror.pl; sourceTree = "<group>"; };
+		A58D0DBB17A82AC50014D70C /* PortIndex2MySQL.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PortIndex2MySQL.tcl; sourceTree = "<group>"; };
+		A58D0DBC17A82AC50014D70C /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		A58D0DBE17A82AC50014D70C /* buildall.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = buildall.sh; sourceTree = "<group>"; };
+		A58D0DBF17A82AC50014D70C /* dpkgall.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dpkgall.tcl; sourceTree = "<group>"; };
+		A58D0DC017A82AC50014D70C /* mpkgall.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mpkgall.tcl; sourceTree = "<group>"; };
+		A58D0DC117A82AC50014D70C /* packageall.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = packageall.tcl; sourceTree = "<group>"; };
+		A58D0DC217A82AC50014D70C /* rpmall.tcl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = rpmall.tcl; sourceTree = "<group>"; };
+		A58D0DC317A82AC50014D70C /* SETUP.chroot.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = SETUP.chroot.sh; sourceTree = "<group>"; };
+		A58D0DC417A82AC60014D70C /* ReleaseProcess */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReleaseProcess; sourceTree = "<group>"; };
+		A58D0DC517A82AC60014D70C /* rsync.repos */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = rsync.repos; sourceTree = "<group>"; };
+		A58D0DC717A82AC60014D70C /* macports_1.6.0-0.diff.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = "macports_1.6.0-0.diff.gz"; sourceTree = "<group>"; };
+		A58D0DC817A82AC60014D70C /* macports_1.6.0-0.dsc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "macports_1.6.0-0.dsc"; sourceTree = "<group>"; };
+		A58D0DC917A82AC60014D70C /* REQUIREMENTS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = REQUIREMENTS; sourceTree = "<group>"; };
+		A58D0DCA17A82AC60014D70C /* NEWS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = NEWS; path = ../NEWS; sourceTree = SOURCE_ROOT; };
+		A58D0DCC17A82AC60014D70C /* macports.autoconf.mk.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = macports.autoconf.mk.in; sourceTree = "<group>"; };
+		A58D0DCD17A82AC60014D70C /* macports.subdir.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = macports.subdir.mk; sourceTree = "<group>"; };
+		A58D0DCE17A82AC60014D70C /* macports.tea.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = macports.tea.mk; sourceTree = "<group>"; };
+		A58D0DCF17A82AC60014D70C /* Makefile.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Makefile.in; path = ../Makefile.in; sourceTree = SOURCE_ROOT; };
+		A58D0DD017A82AC60014D70C /* macports-pubkey.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "macports-pubkey.pem"; path = "../macports-pubkey.pem"; sourceTree = SOURCE_ROOT; };
+		A58D0DD217A82AC60014D70C /* foundation.m4 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = foundation.m4; sourceTree = "<group>"; };
+		A58D0DD317A82AC60014D70C /* pthread.m4 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pthread.m4; sourceTree = "<group>"; };
+		A58D0DD417A82AC60014D70C /* tcl.m4 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tcl.m4; sourceTree = "<group>"; };
+		A58D0DD517A82AC60014D70C /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = SOURCE_ROOT; };
+		A58D0DD617A82AC60014D70C /* install.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = install.sh; path = ../install.sh; sourceTree = SOURCE_ROOT; };
+		A58D0DD717A82AC60014D70C /* HACKING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = HACKING; path = ../HACKING; sourceTree = SOURCE_ROOT; };
+		A58D0DD817A82AC60014D70C /* Doxyfile.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Doxyfile.in; path = ../Doxyfile.in; sourceTree = SOURCE_ROOT; };
+		A58D0DDA17A82AC70014D70C /* archive_sites.conf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = archive_sites.conf; sourceTree = "<group>"; };
+		A58D0DDB17A82AC70014D70C /* base.mtree.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = base.mtree.in; sourceTree = "<group>"; };
+		A58D0DDD17A82AC70014D70C /* Portfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Portfile; sourceTree = "<group>"; };
+		A58D0DDE17A82AC70014D70C /* INTERNALS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = INTERNALS; sourceTree = "<group>"; };
+		A58D0DDF17A82AC70014D70C /* macosx.mtree.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = macosx.mtree.in; sourceTree = "<group>"; };
+		A58D0DE017A82AC70014D70C /* macports.conf.5 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = macports.conf.5; sourceTree = "<group>"; };
+		A58D0DE117A82AC70014D70C /* macports.conf.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = macports.conf.in; sourceTree = "<group>"; };
+		A58D0DE217A82AC70014D70C /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		A58D0DE317A82AC70014D70C /* port.1 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.man; path = port.1; sourceTree = "<group>"; };
+		A58D0DE417A82AC70014D70C /* portfile.7 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portfile.7; sourceTree = "<group>"; };
+		A58D0DE517A82AC70014D70C /* portgroup.7 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portgroup.7; sourceTree = "<group>"; };
+		A58D0DE617A82AC70014D70C /* porthier.7 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = porthier.7; sourceTree = "<group>"; };
+		A58D0DE717A82AC70014D70C /* portstyle.7 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portstyle.7; sourceTree = "<group>"; };
+		A58D0DE817A82AC70014D70C /* prefix.mtree.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = prefix.mtree.in; sourceTree = "<group>"; };
+		A58D0DE917A82AC70014D70C /* pubkeys.conf.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pubkeys.conf.in; sourceTree = "<group>"; };
+		A58D0DEA17A82AC70014D70C /* sources.conf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sources.conf; sourceTree = "<group>"; };
+		A58D0DEB17A82AC70014D70C /* variants.conf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = variants.conf; sourceTree = "<group>"; };
+		A58D0DEC17A82AC70014D70C /* configure.ac */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = configure.ac; path = ../configure.ac; sourceTree = SOURCE_ROOT; };
+		A58D0DED17A82AC70014D70C /* configure */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = configure; path = ../configure; sourceTree = SOURCE_ROOT; };
+		A58D0DEE17A82AC70014D70C /* config.sub */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = config.sub; path = ../config.sub; sourceTree = SOURCE_ROOT; };
+		A58D0DEF17A82AC70014D70C /* config.guess */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = config.guess; path = ../config.guess; sourceTree = SOURCE_ROOT; };
+		A58D0DF117A82AC70014D70C /* dp_version */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dp_version; sourceTree = "<group>"; };
+		A58D0DF217A82AC70014D70C /* macports_version */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = macports_version; sourceTree = "<group>"; };
+		A58D0DF317A82AC70014D70C /* mp_version */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mp_version; sourceTree = "<group>"; };
+		A58D0DF417A82AC70014D70C /* README.TXT */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.TXT; sourceTree = "<group>"; };
+		A58D0DF517A82AC70014D70C /* RELEASE_URL */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = RELEASE_URL; sourceTree = "<group>"; };
+		A58D0DF617A82AC70014D70C /* ChangeLog */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ChangeLog; path = ../ChangeLog; sourceTree = SOURCE_ROOT; };
+		A58D0DF717A82AC70014D70C /* aclocal.m4 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = aclocal.m4; path = ../aclocal.m4; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		08FB7794FE84155DC02AAC07 /* MacPorts */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0C6217A82AC40014D70C /* missing.scan */,
+				A58D0C6317A82AC40014D70C /* configure.scan */,
+				A58D0C6417A82AC40014D70C /* README.md */,
+				A58D0C6517A82AC40014D70C /* tests */,
+				A58D0CBB17A82AC40014D70C /* src */,
+				A58D0D9F17A82AC50014D70C /* setupenv.bash.in */,
+				A58D0DA017A82AC50014D70C /* regen.sh */,
+				A58D0DA117A82AC50014D70C /* portmgr */,
+				A58D0DCA17A82AC60014D70C /* NEWS */,
+				A58D0DCB17A82AC60014D70C /* Mk */,
+				A58D0DCF17A82AC60014D70C /* Makefile.in */,
+				A58D0DD017A82AC60014D70C /* macports-pubkey.pem */,
+				A58D0DD117A82AC60014D70C /* m4 */,
+				A58D0DD517A82AC60014D70C /* LICENSE */,
+				A58D0DD617A82AC60014D70C /* install.sh */,
+				A58D0DD717A82AC60014D70C /* HACKING */,
+				A58D0DD817A82AC60014D70C /* Doxyfile.in */,
+				A58D0DD917A82AC60014D70C /* doc */,
+				A58D0DEC17A82AC70014D70C /* configure.ac */,
+				A58D0DED17A82AC70014D70C /* configure */,
+				A58D0DEE17A82AC70014D70C /* config.sub */,
+				A58D0DEF17A82AC70014D70C /* config.guess */,
+				A58D0DF017A82AC70014D70C /* config */,
+				A58D0DF617A82AC70014D70C /* ChangeLog */,
+				A58D0DF717A82AC70014D70C /* aclocal.m4 */,
+			);
+			name = MacPorts;
+			sourceTree = "<group>";
+		};
+		A58D0C6517A82AC40014D70C /* tests */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0C6617A82AC40014D70C /* Makefile */,
+				A58D0C6717A82AC40014D70C /* sources.conf */,
+				A58D0C6817A82AC40014D70C /* test */,
+				A58D0CBA17A82AC40014D70C /* test-macports.conf */,
+			);
+			name = tests;
+			path = ../tests;
+			sourceTree = SOURCE_ROOT;
+		};
+		A58D0C6817A82AC40014D70C /* test */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0C6917A82AC40014D70C /* case-insensitive-deactivate */,
+				A58D0C6D17A82AC40014D70C /* checksums-1 */,
+				A58D0C7017A82AC40014D70C /* dependencies-a */,
+				A58D0C7317A82AC40014D70C /* dependencies-b */,
+				A58D0C7617A82AC40014D70C /* dependencies-c */,
+				A58D0C7917A82AC40014D70C /* dependencies-d */,
+				A58D0C7C17A82AC40014D70C /* dependencies-e */,
+				A58D0C8017A82AC40014D70C /* envvariables */,
+				A58D0C8417A82AC40014D70C /* site-tags */,
+				A58D0C8717A82AC40014D70C /* statefile-unknown-version */,
+				A58D0C8C17A82AC40014D70C /* statefile-version1 */,
+				A58D0C9117A82AC40014D70C /* statefile-version1-outdated */,
+				A58D0C9617A82AC40014D70C /* statefile-version2 */,
+				A58D0C9B17A82AC40014D70C /* statefile-version2-invalid */,
+				A58D0CA017A82AC40014D70C /* statefile-version2-outdated */,
+				A58D0CA517A82AC40014D70C /* svn-and-patchsites */,
+				A58D0CA817A82AC40014D70C /* trace */,
+				A58D0CAC17A82AC40014D70C /* universal */,
+				A58D0CB017A82AC40014D70C /* universal-2 */,
+				A58D0CB417A82AC40014D70C /* variants */,
+				A58D0CB717A82AC40014D70C /* xcodeversion */,
+			);
+			path = test;
+			sourceTree = "<group>";
+		};
+		A58D0C6917A82AC40014D70C /* case-insensitive-deactivate */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0C6A17A82AC40014D70C /* Makefile */,
+				A58D0C6B17A82AC40014D70C /* Portfile.in */,
+				A58D0C6C17A82AC40014D70C /* README */,
+			);
+			path = "case-insensitive-deactivate";
+			sourceTree = "<group>";
+		};
+		A58D0C6D17A82AC40014D70C /* checksums-1 */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0C6E17A82AC40014D70C /* master */,
+				A58D0C6F17A82AC40014D70C /* Portfile */,
+			);
+			path = "checksums-1";
+			sourceTree = "<group>";
+		};
+		A58D0C7017A82AC40014D70C /* dependencies-a */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0C7117A82AC40014D70C /* master */,
+				A58D0C7217A82AC40014D70C /* Portfile */,
+			);
+			path = "dependencies-a";
+			sourceTree = "<group>";
+		};
+		A58D0C7317A82AC40014D70C /* dependencies-b */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0C7417A82AC40014D70C /* master */,
+				A58D0C7517A82AC40014D70C /* Portfile */,
+			);
+			path = "dependencies-b";
+			sourceTree = "<group>";
+		};
+		A58D0C7617A82AC40014D70C /* dependencies-c */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0C7717A82AC40014D70C /* master */,
+				A58D0C7817A82AC40014D70C /* Portfile */,
+			);
+			path = "dependencies-c";
+			sourceTree = "<group>";
+		};
+		A58D0C7917A82AC40014D70C /* dependencies-d */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0C7A17A82AC40014D70C /* master */,
+				A58D0C7B17A82AC40014D70C /* Portfile */,
+			);
+			path = "dependencies-d";
+			sourceTree = "<group>";
+		};
+		A58D0C7C17A82AC40014D70C /* dependencies-e */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0C7D17A82AC40014D70C /* error_expected */,
+				A58D0C7E17A82AC40014D70C /* master */,
+				A58D0C7F17A82AC40014D70C /* Portfile */,
+			);
+			path = "dependencies-e";
+			sourceTree = "<group>";
+		};
+		A58D0C8017A82AC40014D70C /* envvariables */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0C8117A82AC40014D70C /* Makefile */,
+				A58D0C8217A82AC40014D70C /* master */,
+				A58D0C8317A82AC40014D70C /* Portfile */,
+			);
+			path = envvariables;
+			sourceTree = "<group>";
+		};
+		A58D0C8417A82AC40014D70C /* site-tags */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0C8517A82AC40014D70C /* master */,
+				A58D0C8617A82AC40014D70C /* Portfile */,
+			);
+			path = "site-tags";
+			sourceTree = "<group>";
+		};
+		A58D0C8717A82AC40014D70C /* statefile-unknown-version */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0C8817A82AC40014D70C /* Makefile */,
+				A58D0C8917A82AC40014D70C /* master */,
+				A58D0C8A17A82AC40014D70C /* Portfile */,
+				A58D0C8B17A82AC40014D70C /* statefile */,
+			);
+			path = "statefile-unknown-version";
+			sourceTree = "<group>";
+		};
+		A58D0C8C17A82AC40014D70C /* statefile-version1 */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0C8D17A82AC40014D70C /* Makefile */,
+				A58D0C8E17A82AC40014D70C /* master */,
+				A58D0C8F17A82AC40014D70C /* Portfile */,
+				A58D0C9017A82AC40014D70C /* statefile */,
+			);
+			path = "statefile-version1";
+			sourceTree = "<group>";
+		};
+		A58D0C9117A82AC40014D70C /* statefile-version1-outdated */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0C9217A82AC40014D70C /* Makefile */,
+				A58D0C9317A82AC40014D70C /* master */,
+				A58D0C9417A82AC40014D70C /* Portfile */,
+				A58D0C9517A82AC40014D70C /* statefile */,
+			);
+			path = "statefile-version1-outdated";
+			sourceTree = "<group>";
+		};
+		A58D0C9617A82AC40014D70C /* statefile-version2 */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0C9717A82AC40014D70C /* Makefile */,
+				A58D0C9817A82AC40014D70C /* master */,
+				A58D0C9917A82AC40014D70C /* Portfile */,
+				A58D0C9A17A82AC40014D70C /* statefile */,
+			);
+			path = "statefile-version2";
+			sourceTree = "<group>";
+		};
+		A58D0C9B17A82AC40014D70C /* statefile-version2-invalid */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0C9C17A82AC40014D70C /* Makefile */,
+				A58D0C9D17A82AC40014D70C /* master */,
+				A58D0C9E17A82AC40014D70C /* Portfile */,
+				A58D0C9F17A82AC40014D70C /* statefile */,
+			);
+			path = "statefile-version2-invalid";
+			sourceTree = "<group>";
+		};
+		A58D0CA017A82AC40014D70C /* statefile-version2-outdated */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0CA117A82AC40014D70C /* Makefile */,
+				A58D0CA217A82AC40014D70C /* master */,
+				A58D0CA317A82AC40014D70C /* Portfile */,
+				A58D0CA417A82AC40014D70C /* statefile */,
+			);
+			path = "statefile-version2-outdated";
+			sourceTree = "<group>";
+		};
+		A58D0CA517A82AC40014D70C /* svn-and-patchsites */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0CA617A82AC40014D70C /* master */,
+				A58D0CA717A82AC40014D70C /* Portfile */,
+			);
+			path = "svn-and-patchsites";
+			sourceTree = "<group>";
+		};
+		A58D0CA817A82AC40014D70C /* trace */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0CA917A82AC40014D70C /* Makefile */,
+				A58D0CAA17A82AC40014D70C /* master */,
+				A58D0CAB17A82AC40014D70C /* Portfile */,
+			);
+			path = trace;
+			sourceTree = "<group>";
+		};
+		A58D0CAC17A82AC40014D70C /* universal */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0CAD17A82AC40014D70C /* Makefile */,
+				A58D0CAE17A82AC40014D70C /* master */,
+				A58D0CAF17A82AC40014D70C /* Portfile */,
+			);
+			path = universal;
+			sourceTree = "<group>";
+		};
+		A58D0CB017A82AC40014D70C /* universal-2 */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0CB117A82AC40014D70C /* Makefile */,
+				A58D0CB217A82AC40014D70C /* master */,
+				A58D0CB317A82AC40014D70C /* Portfile */,
+			);
+			path = "universal-2";
+			sourceTree = "<group>";
+		};
+		A58D0CB417A82AC40014D70C /* variants */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0CB517A82AC40014D70C /* master */,
+				A58D0CB617A82AC40014D70C /* Portfile */,
+			);
+			path = variants;
+			sourceTree = "<group>";
+		};
+		A58D0CB717A82AC40014D70C /* xcodeversion */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0CB817A82AC40014D70C /* master */,
+				A58D0CB917A82AC40014D70C /* Portfile */,
+			);
+			path = xcodeversion;
+			sourceTree = "<group>";
+		};
+		A58D0CBB17A82AC40014D70C /* src */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0CBC17A82AC40014D70C /* cflib1.0 */,
+				A58D0CBF17A82AC40014D70C /* config.h.in */,
+				A58D0CC017A82AC40014D70C /* cregistry */,
+				A58D0CD017A82AC40014D70C /* darwintracelib1.0 */,
+				A58D0CD317A82AC40014D70C /* images_to_archives.tcl */,
+				A58D0CD417A82AC40014D70C /* machista1.0 */,
+				A58D0CE017A82AC40014D70C /* macports1.0 */,
+				A58D0CF017A82AC40014D70C /* Makefile.in */,
+				A58D0CF117A82AC40014D70C /* package1.0 */,
+				A58D0CFD17A82AC40014D70C /* pextlib1.0 */,
+				A58D0D4017A82AC50014D70C /* pkg_mkindex.sh.in */,
+				A58D0D4117A82AC50014D70C /* port */,
+				A58D0D4717A82AC50014D70C /* port1.0 */,
+				A58D0D6B17A82AC50014D70C /* programs */,
+				A58D0D7017A82AC50014D70C /* registry2.0 */,
+				A58D0D9217A82AC50014D70C /* tclobjc1.0 */,
+				A58D0D9C17A82AC50014D70C /* thread2.6.diff */,
+				A58D0D9D17A82AC50014D70C /* thread2.6.tar.gz */,
+				A58D0D9E17A82AC50014D70C /* upgrade_sources_conf_default.tcl */,
+			);
+			name = src;
+			path = ../src;
+			sourceTree = SOURCE_ROOT;
+		};
+		A58D0CBC17A82AC40014D70C /* cflib1.0 */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0CBD17A82AC40014D70C /* CFLib.c */,
+				A58D0CBE17A82AC40014D70C /* Makefile */,
+			);
+			path = cflib1.0;
+			sourceTree = "<group>";
+		};
+		A58D0CC017A82AC40014D70C /* cregistry */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0CC117A82AC40014D70C /* entry.c */,
+				A58D0CC217A82AC40014D70C /* entry.h */,
+				A58D0CC317A82AC40014D70C /* file.c */,
+				A58D0CC417A82AC40014D70C /* file.h */,
+				A58D0CC517A82AC40014D70C /* Makefile */,
+				A58D0CC617A82AC40014D70C /* README.sqlext */,
+				A58D0CC717A82AC40014D70C /* registry.c */,
+				A58D0CC817A82AC40014D70C /* registry.h */,
+				A58D0CC917A82AC40014D70C /* sql.c */,
+				A58D0CCA17A82AC40014D70C /* sql.h */,
+				A58D0CCB17A82AC40014D70C /* sqlext.c */,
+				A58D0CCC17A82AC40014D70C /* util.c */,
+				A58D0CCD17A82AC40014D70C /* util.h */,
+				A58D0CCE17A82AC40014D70C /* vercomp.c */,
+				A58D0CCF17A82AC40014D70C /* vercomp.h */,
+			);
+			path = cregistry;
+			sourceTree = "<group>";
+		};
+		A58D0CD017A82AC40014D70C /* darwintracelib1.0 */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0CD117A82AC40014D70C /* darwintrace.c */,
+				A58D0CD217A82AC40014D70C /* Makefile */,
+			);
+			path = darwintracelib1.0;
+			sourceTree = "<group>";
+		};
+		A58D0CD417A82AC40014D70C /* machista1.0 */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0CD517A82AC40014D70C /* hashmap.c */,
+				A58D0CD617A82AC40014D70C /* hashmap.h */,
+				A58D0CD717A82AC40014D70C /* libmachista.c */,
+				A58D0CD817A82AC40014D70C /* libmachista.h */,
+				A58D0CD917A82AC40014D70C /* machista.i */,
+				A58D0CDA17A82AC40014D70C /* machista_wrap.c */,
+				A58D0CDB17A82AC40014D70C /* Makefile.in */,
+				A58D0CDC17A82AC40014D70C /* tests */,
+			);
+			path = machista1.0;
+			sourceTree = "<group>";
+		};
+		A58D0CDC17A82AC40014D70C /* tests */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0CDD17A82AC40014D70C /* libmachista-test.c */,
+				A58D0CDE17A82AC40014D70C /* simple.tcl */,
+				A58D0CDF17A82AC40014D70C /* test.tcl */,
+			);
+			path = tests;
+			sourceTree = "<group>";
+		};
+		A58D0CE017A82AC40014D70C /* macports1.0 */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0CE117A82AC40014D70C /* get_systemconfiguration_proxies.c */,
+				A58D0CE217A82AC40014D70C /* get_systemconfiguration_proxies.h */,
+				A58D0CE317A82AC40014D70C /* macports.c */,
+				A58D0CE417A82AC40014D70C /* macports.tcl */,
+				A58D0CE517A82AC40014D70C /* macports_autoconf.tcl.in */,
+				A58D0CE617A82AC40014D70C /* macports_dlist.tcl */,
+				A58D0CE717A82AC40014D70C /* macports_fastload.tcl.in */,
+				A58D0CE817A82AC40014D70C /* macports_index.tcl */,
+				A58D0CE917A82AC40014D70C /* macports_util.tcl */,
+				A58D0CEA17A82AC40014D70C /* Makefile */,
+				A58D0CEB17A82AC40014D70C /* sysctl.c */,
+				A58D0CEC17A82AC40014D70C /* sysctl.h */,
+				A58D0CED17A82AC40014D70C /* tests */,
+			);
+			path = macports1.0;
+			sourceTree = "<group>";
+		};
+		A58D0CED17A82AC40014D70C /* tests */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0CEE17A82AC40014D70C /* macports_dlist.tcl */,
+				A58D0CEF17A82AC40014D70C /* macports_util.tcl */,
+			);
+			path = tests;
+			sourceTree = "<group>";
+		};
+		A58D0CF117A82AC40014D70C /* package1.0 */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0CF217A82AC40014D70C /* Makefile */,
+				A58D0CF317A82AC40014D70C /* package.tcl */,
+				A58D0CF417A82AC40014D70C /* portarchivefetch.tcl */,
+				A58D0CF517A82AC40014D70C /* portdmg.tcl */,
+				A58D0CF617A82AC40014D70C /* portdpkg.tcl */,
+				A58D0CF717A82AC40014D70C /* portmdmg.tcl */,
+				A58D0CF817A82AC40014D70C /* portmpkg.tcl */,
+				A58D0CF917A82AC40014D70C /* portpkg.tcl */,
+				A58D0CFA17A82AC40014D70C /* portrpm.tcl */,
+				A58D0CFB17A82AC40014D70C /* portsrpm.tcl */,
+				A58D0CFC17A82AC40014D70C /* portunarchive.tcl */,
+			);
+			path = package1.0;
+			sourceTree = "<group>";
+		};
+		A58D0CFD17A82AC40014D70C /* pextlib1.0 */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0CFE17A82AC40014D70C /* base32cmd.c */,
+				A58D0CFF17A82AC40014D70C /* base32cmd.h */,
+				A58D0D0017A82AC40014D70C /* curl.c */,
+				A58D0D0117A82AC40014D70C /* curl.h */,
+				A58D0D0217A82AC40014D70C /* fgetln.c */,
+				A58D0D0317A82AC40014D70C /* filemap.c */,
+				A58D0D0417A82AC40014D70C /* filemap.h */,
+				A58D0D0517A82AC40014D70C /* flock.c */,
+				A58D0D0617A82AC40014D70C /* flock.h */,
+				A58D0D0717A82AC40014D70C /* fs-traverse.c */,
+				A58D0D0817A82AC40014D70C /* fs-traverse.h */,
+				A58D0D0917A82AC40014D70C /* Makefile.in */,
+				A58D0D0A17A82AC40014D70C /* md5cmd.c */,
+				A58D0D0B17A82AC40014D70C /* md5cmd.h */,
+				A58D0D0C17A82AC40014D70C /* md_wrappers.h */,
+				A58D0D0D17A82AC40014D70C /* mktemp.c */,
+				A58D0D0E17A82AC40014D70C /* mktemp.h */,
+				A58D0D0F17A82AC40014D70C /* Pextlib.c */,
+				A58D0D1017A82AC40014D70C /* Pextlib.h */,
+				A58D0D1117A82AC40014D70C /* pipe.c */,
+				A58D0D1217A82AC40014D70C /* pipe.h */,
+				A58D0D1317A82AC40014D70C /* readdir.c */,
+				A58D0D1417A82AC40014D70C /* readdir.h */,
+				A58D0D1517A82AC40014D70C /* readline.c */,
+				A58D0D1617A82AC40014D70C /* readline.h */,
+				A58D0D1717A82AC40014D70C /* realpath.c */,
+				A58D0D1817A82AC40014D70C /* realpath.h */,
+				A58D0D1917A82AC40014D70C /* rmd160.c */,
+				A58D0D1A17A82AC40014D70C /* rmd160.h */,
+				A58D0D1B17A82AC40014D70C /* rmd160cmd.c */,
+				A58D0D1C17A82AC40014D70C /* rmd160cmd.h */,
+				A58D0D1D17A82AC40014D70C /* setmode.c */,
+				A58D0D1E17A82AC40014D70C /* setmode.h */,
+				A58D0D1F17A82AC40014D70C /* sha1cmd.c */,
+				A58D0D2017A82AC40014D70C /* sha1cmd.h */,
+				A58D0D2117A82AC40014D70C /* sha2.c */,
+				A58D0D2217A82AC40014D70C /* sha2.h */,
+				A58D0D2317A82AC40014D70C /* sha256cmd.c */,
+				A58D0D2417A82AC40014D70C /* sha256cmd.h */,
+				A58D0D2517A82AC40014D70C /* strcasecmp.c */,
+				A58D0D2617A82AC40014D70C /* strcasecmp.h */,
+				A58D0D2717A82AC40014D70C /* strlcat.c */,
+				A58D0D2817A82AC40014D70C /* strlcat.h */,
+				A58D0D2917A82AC40014D70C /* strsed.c */,
+				A58D0D2A17A82AC40014D70C /* strsed.h */,
+				A58D0D2B17A82AC40014D70C /* system.c */,
+				A58D0D2C17A82AC40014D70C /* system.h */,
+				A58D0D2D17A82AC40014D70C /* tests */,
+				A58D0D3617A82AC50014D70C /* tracelib.c */,
+				A58D0D3717A82AC50014D70C /* tracelib.h */,
+				A58D0D3817A82AC50014D70C /* tty.c */,
+				A58D0D3917A82AC50014D70C /* tty.h */,
+				A58D0D3A17A82AC50014D70C /* uid.c */,
+				A58D0D3B17A82AC50014D70C /* uid.h */,
+				A58D0D3C17A82AC50014D70C /* vercomp.c */,
+				A58D0D3D17A82AC50014D70C /* vercomp.h */,
+				A58D0D3E17A82AC50014D70C /* xinstall.c */,
+				A58D0D3F17A82AC50014D70C /* xinstall.h */,
+			);
+			path = pextlib1.0;
+			sourceTree = "<group>";
+		};
+		A58D0D2D17A82AC40014D70C /* tests */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0D2E17A82AC40014D70C /* base32.tcl */,
+				A58D0D2F17A82AC50014D70C /* checksums.tcl */,
+				A58D0D3017A82AC50014D70C /* curl.tcl */,
+				A58D0D3117A82AC50014D70C /* filemap.tcl */,
+				A58D0D3217A82AC50014D70C /* fs-traverse.tcl */,
+				A58D0D3317A82AC50014D70C /* symlink.tcl */,
+				A58D0D3417A82AC50014D70C /* unsetenv.tcl */,
+				A58D0D3517A82AC50014D70C /* vercomp.tcl */,
+			);
+			path = tests;
+			sourceTree = "<group>";
+		};
+		A58D0D4117A82AC50014D70C /* port */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0D4217A82AC50014D70C /* Makefile */,
+				A58D0D4317A82AC50014D70C /* port-help.tcl */,
+				A58D0D4417A82AC50014D70C /* port.tcl */,
+				A58D0D4517A82AC50014D70C /* portindex.tcl */,
+				A58D0D4617A82AC50014D70C /* portmirror.tcl */,
+			);
+			path = port;
+			sourceTree = "<group>";
+		};
+		A58D0D4717A82AC50014D70C /* port1.0 */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0D4817A82AC50014D70C /* fetch_common.tcl */,
+				A58D0D4917A82AC50014D70C /* Makefile */,
+				A58D0D4A17A82AC50014D70C /* port.tcl */,
+				A58D0D4B17A82AC50014D70C /* port_autoconf.tcl.in */,
+				A58D0D4C17A82AC50014D70C /* portactivate.tcl */,
+				A58D0D4D17A82AC50014D70C /* portbuild.tcl */,
+				A58D0D4E17A82AC50014D70C /* portchecksum.tcl */,
+				A58D0D4F17A82AC50014D70C /* portclean.tcl */,
+				A58D0D5017A82AC50014D70C /* portconfigure.tcl */,
+				A58D0D5117A82AC50014D70C /* portdeactivate.tcl */,
+				A58D0D5217A82AC50014D70C /* portdepends.tcl */,
+				A58D0D5317A82AC50014D70C /* portdestroot.tcl */,
+				A58D0D5417A82AC50014D70C /* portdistcheck.tcl */,
+				A58D0D5517A82AC50014D70C /* portdistfiles.tcl */,
+				A58D0D5617A82AC50014D70C /* portextract.tcl */,
+				A58D0D5717A82AC50014D70C /* portfetch.tcl */,
+				A58D0D5817A82AC50014D70C /* portinstall.tcl */,
+				A58D0D5917A82AC50014D70C /* portlint.tcl */,
+				A58D0D5A17A82AC50014D70C /* portlivecheck.tcl */,
+				A58D0D5B17A82AC50014D70C /* portload.tcl */,
+				A58D0D5C17A82AC50014D70C /* portmain.tcl */,
+				A58D0D5D17A82AC50014D70C /* portmirror.tcl */,
+				A58D0D5E17A82AC50014D70C /* portpatch.tcl */,
+				A58D0D5F17A82AC50014D70C /* portsandbox.tcl */,
+				A58D0D6017A82AC50014D70C /* portstartupitem.tcl */,
+				A58D0D6117A82AC50014D70C /* porttest.tcl */,
+				A58D0D6217A82AC50014D70C /* porttrace.tcl */,
+				A58D0D6317A82AC50014D70C /* portuninstall.tcl */,
+				A58D0D6417A82AC50014D70C /* portunload.tcl */,
+				A58D0D6517A82AC50014D70C /* portutil.tcl */,
+				A58D0D6617A82AC50014D70C /* tests */,
+			);
+			path = port1.0;
+			sourceTree = "<group>";
+		};
+		A58D0D6617A82AC50014D70C /* tests */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0D6717A82AC50014D70C /* common.tcl */,
+				A58D0D6817A82AC50014D70C /* portdestroot.tcl */,
+				A58D0D6917A82AC50014D70C /* portfetch.tcl */,
+				A58D0D6A17A82AC50014D70C /* portutil.tcl */,
+			);
+			path = tests;
+			sourceTree = "<group>";
+		};
+		A58D0D6B17A82AC50014D70C /* programs */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0D6C17A82AC50014D70C /* daemondo */,
+				A58D0D6F17A82AC50014D70C /* Makefile.in */,
+			);
+			path = programs;
+			sourceTree = "<group>";
+		};
+		A58D0D6C17A82AC50014D70C /* daemondo */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0D6D17A82AC50014D70C /* main.c */,
+				A58D0D6E17A82AC50014D70C /* Makefile.in */,
+			);
+			path = daemondo;
+			sourceTree = "<group>";
+		};
+		A58D0D7017A82AC50014D70C /* registry2.0 */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0D7117A82AC50014D70C /* entry.c */,
+				A58D0D7217A82AC50014D70C /* entry.h */,
+				A58D0D7317A82AC50014D70C /* entryobj.c */,
+				A58D0D7417A82AC50014D70C /* entryobj.h */,
+				A58D0D7517A82AC50014D70C /* file.c */,
+				A58D0D7617A82AC50014D70C /* file.h */,
+				A58D0D7717A82AC50014D70C /* fileobj.c */,
+				A58D0D7817A82AC50014D70C /* fileobj.h */,
+				A58D0D7917A82AC50014D70C /* graph.c */,
+				A58D0D7A17A82AC50014D70C /* graph.h */,
+				A58D0D7B17A82AC50014D70C /* graphobj.c */,
+				A58D0D7C17A82AC50014D70C /* graphobj.h */,
+				A58D0D7D17A82AC50014D70C /* item.c */,
+				A58D0D7E17A82AC50014D70C /* item.h */,
+				A58D0D7F17A82AC50014D70C /* itemobj.c */,
+				A58D0D8017A82AC50014D70C /* itemobj.h */,
+				A58D0D8117A82AC50014D70C /* Makefile */,
+				A58D0D8217A82AC50014D70C /* portimage.tcl */,
+				A58D0D8317A82AC50014D70C /* portuninstall.tcl */,
+				A58D0D8417A82AC50014D70C /* receipt_flat.tcl */,
+				A58D0D8517A82AC50014D70C /* receipt_sqlite.tcl */,
+				A58D0D8617A82AC50014D70C /* registry.c */,
+				A58D0D8717A82AC50014D70C /* registry.h */,
+				A58D0D8817A82AC50014D70C /* registry.tcl */,
+				A58D0D8917A82AC50014D70C /* registry_autoconf.tcl.in */,
+				A58D0D8A17A82AC50014D70C /* registry_util.tcl */,
+				A58D0D8B17A82AC50014D70C /* tests */,
+				A58D0D9017A82AC50014D70C /* util.c */,
+				A58D0D9117A82AC50014D70C /* util.h */,
+			);
+			path = registry2.0;
+			sourceTree = "<group>";
+		};
+		A58D0D8B17A82AC50014D70C /* tests */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0D8C17A82AC50014D70C /* common.tcl */,
+				A58D0D8D17A82AC50014D70C /* depends.tcl */,
+				A58D0D8E17A82AC50014D70C /* entry.tcl */,
+				A58D0D8F17A82AC50014D70C /* item.tcl */,
+			);
+			path = tests;
+			sourceTree = "<group>";
+		};
+		A58D0D9217A82AC50014D70C /* tclobjc1.0 */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0D9317A82AC50014D70C /* Makefile.in */,
+				A58D0D9417A82AC50014D70C /* MPMethodSignatureExtensions.h */,
+				A58D0D9517A82AC50014D70C /* MPMethodSignatureExtensions.m */,
+				A58D0D9617A82AC50014D70C /* objc_encoding.h */,
+				A58D0D9717A82AC50014D70C /* objc_encoding.m */,
+				A58D0D9817A82AC50014D70C /* tclobjc.h */,
+				A58D0D9917A82AC50014D70C /* tclobjc.m */,
+				A58D0D9A17A82AC50014D70C /* tclobjc_types.h */,
+				A58D0D9B17A82AC50014D70C /* tclobjc_types.m */,
+			);
+			path = tclobjc1.0;
+			sourceTree = "<group>";
+		};
+		A58D0DA117A82AC50014D70C /* portmgr */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0DA217A82AC50014D70C /* autosubmit.tcl */,
+				A58D0DA317A82AC50014D70C /* dmg */,
+				A58D0DAA17A82AC50014D70C /* fedora */,
+				A58D0DAD17A82AC50014D70C /* freebsd */,
+				A58D0DB117A82AC50014D70C /* jobs */,
+				A58D0DBD17A82AC50014D70C /* packaging */,
+				A58D0DC417A82AC60014D70C /* ReleaseProcess */,
+				A58D0DC517A82AC60014D70C /* rsync.repos */,
+				A58D0DC617A82AC60014D70C /* ubuntu */,
+			);
+			name = portmgr;
+			path = ../portmgr;
+			sourceTree = SOURCE_ROOT;
+		};
+		A58D0DA317A82AC50014D70C /* dmg */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0DA417A82AC50014D70C /* Distribution */,
+				A58D0DA517A82AC50014D70C /* InstallationCheck */,
+				A58D0DA617A82AC50014D70C /* InstallationCheck.strings */,
+				A58D0DA717A82AC50014D70C /* License.html */,
+				A58D0DA817A82AC50014D70C /* postflight */,
+				A58D0DA917A82AC50014D70C /* ReadMe.rtf */,
+			);
+			path = dmg;
+			sourceTree = "<group>";
+		};
+		A58D0DAA17A82AC50014D70C /* fedora */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0DAB17A82AC50014D70C /* macports.spec */,
+				A58D0DAC17A82AC50014D70C /* REQUIREMENTS */,
+			);
+			path = fedora;
+			sourceTree = "<group>";
+		};
+		A58D0DAD17A82AC50014D70C /* freebsd */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0DAE17A82AC50014D70C /* Makefile.in */,
+				A58D0DAF17A82AC50014D70C /* pkg-descr */,
+				A58D0DB017A82AC50014D70C /* pkg-plist */,
+			);
+			path = freebsd;
+			sourceTree = "<group>";
+		};
+		A58D0DB117A82AC50014D70C /* jobs */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0DB217A82AC50014D70C /* GuideRegen.sh */,
+				A58D0DB317A82AC50014D70C /* Makefile */,
+				A58D0DB417A82AC50014D70C /* mirror_macports.sh */,
+				A58D0DB517A82AC50014D70C /* mprsyncup */,
+				A58D0DB617A82AC50014D70C /* org.macports.mprsyncup.plist */,
+				A58D0DB717A82AC50014D70C /* org.macports.PortIndex2MySQL.plist */,
+				A58D0DB817A82AC50014D70C /* port_binary_distributable.tcl */,
+				A58D0DB917A82AC50014D70C /* portfile_lint.pl */,
+				A58D0DBA17A82AC50014D70C /* portfile_mirror.pl */,
+				A58D0DBB17A82AC50014D70C /* PortIndex2MySQL.tcl */,
+				A58D0DBC17A82AC50014D70C /* README */,
+			);
+			path = jobs;
+			sourceTree = "<group>";
+		};
+		A58D0DBD17A82AC50014D70C /* packaging */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0DBE17A82AC50014D70C /* buildall.sh */,
+				A58D0DBF17A82AC50014D70C /* dpkgall.tcl */,
+				A58D0DC017A82AC50014D70C /* mpkgall.tcl */,
+				A58D0DC117A82AC50014D70C /* packageall.tcl */,
+				A58D0DC217A82AC50014D70C /* rpmall.tcl */,
+				A58D0DC317A82AC50014D70C /* SETUP.chroot.sh */,
+			);
+			path = packaging;
+			sourceTree = "<group>";
+		};
+		A58D0DC617A82AC60014D70C /* ubuntu */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0DC717A82AC60014D70C /* macports_1.6.0-0.diff.gz */,
+				A58D0DC817A82AC60014D70C /* macports_1.6.0-0.dsc */,
+				A58D0DC917A82AC60014D70C /* REQUIREMENTS */,
+			);
+			path = ubuntu;
+			sourceTree = "<group>";
+		};
+		A58D0DCB17A82AC60014D70C /* Mk */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0DCC17A82AC60014D70C /* macports.autoconf.mk.in */,
+				A58D0DCD17A82AC60014D70C /* macports.subdir.mk */,
+				A58D0DCE17A82AC60014D70C /* macports.tea.mk */,
+			);
+			name = Mk;
+			path = ../Mk;
+			sourceTree = SOURCE_ROOT;
+		};
+		A58D0DD117A82AC60014D70C /* m4 */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0DD217A82AC60014D70C /* foundation.m4 */,
+				A58D0DD317A82AC60014D70C /* pthread.m4 */,
+				A58D0DD417A82AC60014D70C /* tcl.m4 */,
+			);
+			name = m4;
+			path = ../m4;
+			sourceTree = SOURCE_ROOT;
+		};
+		A58D0DD917A82AC60014D70C /* doc */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0DDA17A82AC70014D70C /* archive_sites.conf */,
+				A58D0DDB17A82AC70014D70C /* base.mtree.in */,
+				A58D0DDC17A82AC70014D70C /* exampleport */,
+				A58D0DDE17A82AC70014D70C /* INTERNALS */,
+				A58D0DDF17A82AC70014D70C /* macosx.mtree.in */,
+				A58D0DE017A82AC70014D70C /* macports.conf.5 */,
+				A58D0DE117A82AC70014D70C /* macports.conf.in */,
+				A58D0DE217A82AC70014D70C /* Makefile */,
+				A58D0DE317A82AC70014D70C /* port.1 */,
+				A58D0DE417A82AC70014D70C /* portfile.7 */,
+				A58D0DE517A82AC70014D70C /* portgroup.7 */,
+				A58D0DE617A82AC70014D70C /* porthier.7 */,
+				A58D0DE717A82AC70014D70C /* portstyle.7 */,
+				A58D0DE817A82AC70014D70C /* prefix.mtree.in */,
+				A58D0DE917A82AC70014D70C /* pubkeys.conf.in */,
+				A58D0DEA17A82AC70014D70C /* sources.conf */,
+				A58D0DEB17A82AC70014D70C /* variants.conf */,
+			);
+			name = doc;
+			path = ../doc;
+			sourceTree = SOURCE_ROOT;
+		};
+		A58D0DDC17A82AC70014D70C /* exampleport */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0DDD17A82AC70014D70C /* Portfile */,
+			);
+			path = exampleport;
+			sourceTree = "<group>";
+		};
+		A58D0DF017A82AC70014D70C /* config */ = {
+			isa = PBXGroup;
+			children = (
+				A58D0DF117A82AC70014D70C /* dp_version */,
+				A58D0DF217A82AC70014D70C /* macports_version */,
+				A58D0DF317A82AC70014D70C /* mp_version */,
+				A58D0DF417A82AC70014D70C /* README.TXT */,
+				A58D0DF517A82AC70014D70C /* RELEASE_URL */,
+			);
+			name = config;
+			path = ../config;
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXLegacyTarget section */
+		D28A88AD04BDD90700651E21 /* MacPorts */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = 1DEB918F08733D9F0010E9CD /* Build configuration list for PBXLegacyTarget "MacPorts" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = "";
+			dependencies = (
+			);
+			name = MacPorts;
+			passBuildSettingsInEnvironment = 1;
+			productName = MacPorts;
+		};
+/* End PBXLegacyTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB919308733D9F0010E9CD /* Build configuration list for PBXProject "MacPorts" */;
+			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 08FB7794FE84155DC02AAC07 /* MacPorts */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D28A88AD04BDD90700651E21 /* MacPorts */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB919008733D9F0010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUGGING_SYMBOLS = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = MacPorts;
+			};
+			name = Debug;
+		};
+		1DEB919108733D9F0010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = MacPorts;
+			};
+			name = Release;
+		};
+		1DEB919408733D9F0010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = Debug;
+		};
+		1DEB919508733D9F0010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB918F08733D9F0010E9CD /* Build configuration list for PBXLegacyTarget "MacPorts" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB919008733D9F0010E9CD /* Debug */,
+				1DEB919108733D9F0010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB919308733D9F0010E9CD /* Build configuration list for PBXProject "MacPorts" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB919408733D9F0010E9CD /* Debug */,
+				1DEB919508733D9F0010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}
