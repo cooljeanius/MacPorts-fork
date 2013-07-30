@@ -1,0 +1,79 @@
+#                                               -*- Autoconf -*-
+# Process this file with autoconf to produce a configure script.
+
+AC_PREREQ([2.69])
+AC_INIT([FULL-PACKAGE-NAME], [VERSION], [BUG-REPORT-ADDRESS])
+AC_CONFIG_SRCDIR([src/config.h.in])
+AC_CONFIG_HEADERS([config.h])
+
+# Checks for programs.
+AC_PROG_AWK
+AC_PROG_CC
+AC_PROG_INSTALL
+AC_PROG_LN_S
+AC_PROG_MAKE_SET
+AC_PROG_RANLIB
+AC_PROG_OBJC
+
+# Checks for libraries.
+# FIXME: Replace `main' with a function in `-list':
+AC_CHECK_LIB([ist], [main])
+# FIXME: Replace `main' with a function in `-ltcl':
+AC_CHECK_LIB([tcl], [main])
+
+# Checks for header files.
+AC_CHECK_HEADERS([fcntl.h inttypes.h limits.h mach/mach.h netdb.h paths.h stddef.h stdint.h stdlib.h string.h strings.h sys/file.h sys/ioctl.h sys/mount.h sys/param.h sys/socket.h sys/time.h unistd.h utime.h])
+
+# Checks for typedefs, structures, and compiler characteristics.
+AC_CHECK_HEADER_STDBOOL
+AC_TYPE_UID_T
+AC_C_INLINE
+AC_TYPE_MODE_T
+AC_TYPE_OFF_T
+AC_TYPE_PID_T
+AC_C_RESTRICT
+AC_TYPE_SIZE_T
+AC_TYPE_SSIZE_T
+AC_TYPE_UINT32_T
+AC_TYPE_UINT8_T
+
+# Checks for library functions.
+AC_FUNC_CHOWN
+AC_FUNC_FORK
+AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK
+AC_FUNC_MALLOC
+AC_FUNC_MMAP
+AC_FUNC_REALLOC
+AC_CHECK_FUNCS([bzero dup2 getcwd lchown localtime_r memmove memset mkdir munmap realpath regcomp rmdir setenv socket strcasecmp strchr strdup strerror strncasecmp strrchr strstr strtol strtoul utime])
+
+AC_CONFIG_FILES([Makefile
+                 doc/Makefile
+                 portmgr/freebsd/Makefile
+                 portmgr/jobs/Makefile
+                 src/Makefile
+                 src/cflib1.0/Makefile
+                 src/cregistry/Makefile
+                 src/darwintracelib1.0/Makefile
+                 src/machista1.0/Makefile
+                 src/macports1.0/Makefile
+                 src/package1.0/Makefile
+                 src/pextlib1.0/Makefile
+                 src/port/Makefile
+                 src/port1.0/Makefile
+                 src/programs/Makefile
+                 src/programs/daemondo/Makefile
+                 src/registry2.0/Makefile
+                 src/tclobjc1.0/Makefile
+                 tests/Makefile
+                 tests/test/case-insensitive-deactivate/Makefile
+                 tests/test/envvariables/Makefile
+                 tests/test/statefile-unknown-version/Makefile
+                 tests/test/statefile-version1-outdated/Makefile
+                 tests/test/statefile-version1/Makefile
+                 tests/test/statefile-version2-invalid/Makefile
+                 tests/test/statefile-version2-outdated/Makefile
+                 tests/test/statefile-version2/Makefile
+                 tests/test/trace/Makefile
+                 tests/test/universal-2/Makefile
+                 tests/test/universal/Makefile])
+AC_OUTPUT
