@@ -23,6 +23,7 @@ src/*/*/build/*
 src/port/port
 src/port/portindex
 src/port/portmirror
+src/pkg_mkindex.sh
 src/*/pkgIndex.tcl
 Mk/macports.autoconf.mk
 doc/*.mtree
