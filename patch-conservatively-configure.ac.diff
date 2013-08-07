@@ -1,0 +1,58 @@
+--- configure.ac.bak	2013-08-06 21:08:26.000000000 -0400
++++ configure.ac	2013-08-06 21:28:42.000000000 -0400
+@@ -94,10 +94,12 @@
+ esac
+ 
+ # Checks for programs.
++AC_PROG_AWK
+ AC_PROG_CC
+ AC_PROG_INSTALL
+ AC_PROG_LN_S
+ AC_PROG_MAKE_SET
++AC_PROG_RANLIB
+ AC_PROG_OBJC
+ 
+ AC_PATH_PROGS(BSDMAKE, [bsdmake pmake], [])
+@@ -237,13 +239,39 @@
+ AC_HEADER_STDC
+ AC_HEADER_DIRENT
+ AC_HEADER_SYS_WAIT
+-AC_CHECK_HEADERS([limits.h paths.h sys/file.h crt_externs.h fcntl.h sys/fcntl.h sys/cdefs.h err.h sys/socket.h \
+-	sys/event.h sys/sysctl.h readline/readline.h readline/history.h pwd.h sys/paths.h utime.h])
++AC_CHECK_HEADERS([crt_externs.h err.h fcntl.h limits.h mach/mach.h \
++	netdb.h paths.h pwd.h readline/history.h readline/readline.h \
++	stddef.h stdio.h sys/cdefs.h sys/event.h sys/fcntl.h sys/file.h \
++	sys/ioctl.h sys/mount.h sys/param.h sys/paths.h sys/socket.h \
++	sys/sysctl.h sys/time.h utime.h])
+ 
+ INCLUDES="-I.. -I. $INCLUDES"
+ 
++# Checks for typedefs, structures, and compiler characteristics.
++AC_CHECK_HEADER_STDBOOL
++AC_TYPE_UID_T
++AC_C_INLINE
++AC_TYPE_MODE_T
++AC_TYPE_OFF_T
++AC_TYPE_PID_T
++AC_C_RESTRICT
++AC_TYPE_SIZE_T
++AC_TYPE_SSIZE_T
++AC_TYPE_UINT32_T
++AC_TYPE_UINT8_T
++
+ # Checks for library functions.
+-AC_CHECK_FUNCS([bzero memset fgetln lockf flock setmode strcasecmp strncasecmp strlcpy strlcat copyfile clearenv sysctlbyname kqueue])
++AC_FUNC_CHOWN
++AC_FUNC_FORK
++AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK
++AC_FUNC_MALLOC
++AC_FUNC_MMAP
++AC_FUNC_REALLOC
++AC_CHECK_FUNCS([bzero clearenv copyfile dup2 fgetln flock getcwd lchown \
++localtime_r lockf kqueue memmove memset mkdir munmap realpath regcomp \
++rmdir select setenv setmode socket strcasecmp strchr strdup strerror \
++strlcat strlcpy strncasecmp strrchr strstr strtol strtoul sysctlbyname \
++utime])
+ AC_SUBST(ac_cv_func_strlcat)
+ 
+ MP_CHECK_READLINK_IS_P1003_1A
