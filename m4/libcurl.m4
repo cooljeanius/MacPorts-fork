@@ -35,6 +35,7 @@
 # Without curl-config, we can only guess what protocols are available,
 # or use curl_version_info to figure it out at runtime.
 
+
 AC_DEFUN([LIBCURL_CHECK_CONFIG],
 [
   AH_TEMPLATE([LIBCURL_FEATURE_SSL],[Defined if libcurl supports SSL])
@@ -60,13 +61,13 @@ AC_DEFUN([LIBCURL_CHECK_CONFIG],
   AH_TEMPLATE([LIBCURL_PROTOCOL_IMAP],[Defined if libcurl supports IMAP])
   AH_TEMPLATE([LIBCURL_PROTOCOL_SMTP],[Defined if libcurl supports SMTP])
 
-  AC_ARG_WITH(libcurl,
-     AC_HELP_STRING([--with-libcurl=PREFIX],[look for the curl library in PREFIX/lib and headers in PREFIX/include]),
-     [_libcurl_with=$withval],[_libcurl_with=ifelse([$1],,[yes],[$1])])
+  AC_ARG_WITH([libcurl],
+     [AS_HELP_STRING([--with-libcurl=PREFIX],[look for the curl library in PREFIX/lib and headers in PREFIX/include])],
+     [_libcurl_with=$withval],[_libcurl_with=ifelse([$1],[],[yes],[$1])])
 
   if test "$_libcurl_with" != "no" ; then
 
-     AC_PROG_AWK
+     AC_REQUIRE([AC_PROG_AWK])
 
      _libcurl_version_parse="eval $AWK '{split(\$NF,A,\".\"); X=256*256*A[[1]]+256*A[[2]]+A[[3]]; print X;}'"
 
@@ -87,7 +88,7 @@ AC_DEFUN([LIBCURL_CHECK_CONFIG],
            [libcurl_cv_lib_curl_version=`$_libcurl_config --version | $AWK '{print $[]2}'`])
 
         _libcurl_version=`echo $libcurl_cv_lib_curl_version | $_libcurl_version_parse`
-        _libcurl_wanted=`echo ifelse([$2],,[0],[$2]) | $_libcurl_version_parse`
+        _libcurl_wanted=`echo ifelse([$2],[],[0],[$2]) | $_libcurl_version_parse`
 
         if test $_libcurl_wanted -gt 0 ; then
            AC_CACHE_CHECK([for libcurl >= version $2],
@@ -158,7 +159,7 @@ x=CURLOPT_ERRORBUFFER;
 x=CURLOPT_STDERR;
 x=CURLOPT_VERBOSE;
 if (x) ;
-]])],libcurl_cv_lib_curl_usable=yes,libcurl_cv_lib_curl_usable=no)
+]])],[libcurl_cv_lib_curl_usable=yes],[libcurl_cv_lib_curl_usable=no])
 
            CPPFLAGS=$_libcurl_save_cppflags
            LIBS=$_libcurl_save_libs
@@ -176,23 +177,25 @@ if (x) ;
            _libcurl_save_libs=$LIBS
            LIBS="$LIBS $LIBCURL"
 
-           AC_CHECK_FUNC(curl_free,,
-              AC_DEFINE(curl_free,free,
-                [Define curl_free() as free() if our version of curl lacks curl_free.]))
+           AC_CHECK_FUNC([curl_free],[],
+              [AC_DEFINE([curl_free],[free],
+                [Define curl_free() as free() if our version of curl lacks curl_free.])])
 
            CPPFLAGS=$_libcurl_save_cppflags
            LIBS=$_libcurl_save_libs
            unset _libcurl_save_cppflags
            unset _libcurl_save_libs
 
-           AC_DEFINE(HAVE_LIBCURL,1,
+           AC_DEFINE([HAVE_LIBCURL],[1],
              [Define to 1 if you have a functional curl library.])
-           AC_SUBST(LIBCURL_CPPFLAGS)
-           AC_SUBST(LIBCURL)
+           AC_SUBST([LIBCURL_CPPFLAGS])
+           AC_SUBST([LIBCURL])
+
+	   AC_REQUIRE([AC_PROG_CPP])
 
            for _libcurl_feature in $_libcurl_features ; do
-              AC_DEFINE_UNQUOTED(AS_TR_CPP(libcurl_feature_$_libcurl_feature),[1])
-              eval AS_TR_SH(libcurl_feature_$_libcurl_feature)=yes
+              AC_DEFINE_UNQUOTED(AS_TR_CPP(libcurl_feature_$_libcurl_feature),[1],[Define to 1 for if libcurl has this feature])
+              eval AS_TR_SH([libcurl_feature_$_libcurl_feature])=yes
            done
 
            if test "x$_libcurl_protocols" = "x" ; then
@@ -219,8 +222,8 @@ if (x) ;
            fi
 
            for _libcurl_protocol in $_libcurl_protocols ; do
-              AC_DEFINE_UNQUOTED(AS_TR_CPP(libcurl_protocol_$_libcurl_protocol),[1])
-              eval AS_TR_SH(libcurl_protocol_$_libcurl_protocol)=yes
+              AC_DEFINE_UNQUOTED(AS_TR_CPP(libcurl_protocol_$_libcurl_protocol),[1],[Define to 1 if libcurl supports this protocol])
+              eval AS_TR_SH([libcurl_protocol_$_libcurl_protocol])=yes
            done
         else
            unset LIBCURL
@@ -241,11 +244,11 @@ if (x) ;
 
   if test x$_libcurl_with = xno || test x$libcurl_cv_lib_curl_usable != xyes ; then
      # This is the IF-NO path
-     ifelse([$4],,:,[$4])
+     ifelse([$4],[],[:],[$4])
   else
      # This is the IF-YES path
-     ifelse([$3],,:,[$3])
+     ifelse([$3],[],[:],[$3])
   fi
 
   unset _libcurl_with
-])dnl
+])dnl# EOF

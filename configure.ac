@@ -17,9 +17,7 @@ AC_CONFIG_MACRO_DIR([m4])
 AC_CANONICAL_TARGET
 AC_USE_SYSTEM_EXTENSIONS
 AM_INIT_AUTOMAKE([foreign dejagnu dist-bzip2 dist-lzip dist-xz dist-zip no-installinfo tar-pax -Wall])
-AM_DEP_TRACK
 AM_MAINTAINER_MODE
-AM_SILENT_RULES([no])
 AC_SEARCH_LIBS([strerror],[cposix]) dnl# This macro used to be AC_ISC_POSIX
 AC_OBJEXT
 AC_EXEEXT
@@ -55,9 +53,9 @@ else
   echo "prefix is not defined, only using default"
 fi
 
-AC_PATH_PROG([SW_VERS], [sw_vers])
-AC_PATH_PROG([DEFAULTS], [defaults])
-AC_PATH_PROG([XCODE_SELECT], [xcode-select])
+AC_PATH_PROG([SW_VERS],[sw_vers])
+AC_PATH_PROG([DEFAULTS],[defaults])
+AC_PATH_PROG([XCODE_SELECT],[xcode-select])
 
 if test "x$SW_VERS" != "x"; then
   AC_MSG_CHECKING([Mac OS X version])
@@ -70,11 +68,11 @@ case "$MACOSX_VERSION" in
     AC_MSG_ERROR([This version of Mac OS X is not supported any more.
                   Please upgrade at http://store.apple.com/])
     ;;
-  10.4.[[0-9]]|10.4.10|10.5.[[0-7]]|10.6.[[0-7]]|10.7.[[0-2]])
+  10.4.[[0-9]]|10.4.10|10.5.[[0-7]]|10.6.[[0-7]]|10.7.[[0-4]]|10.8.[[0-3]])
     AC_MSG_WARN([This version of Mac OS X is out of date.])
     AC_MSG_WARN([Please run Software Update to update it.])
     ;;
-  10.4*|10.5*|10.6*|10.7*)
+  10.4*|10.5*|10.6*|10.7*|10.8*)
     dnl# Supported version
     ;;
   *)
@@ -82,8 +80,8 @@ case "$MACOSX_VERSION" in
 esac
 
 # locate currently selected Xcode path
+AC_MSG_CHECKING([Xcode location])
 if test "x$XCODE_SELECT" != "x"; then
-  AC_MSG_CHECKING([Xcode location])
   DEVELOPER_DIR=`$XCODE_SELECT -print-path`
 fi
 if test -z "$DEVELOPER_DIR" -o ! -d "$DEVELOPER_DIR" ; then
@@ -125,7 +123,7 @@ case "$XCODE_VERSION" in
     AC_MSG_WARN([Please consider upgrading as some ports fail compiling])
     ;;
   2.*|3.*|4.*)
-    dnl Supported version
+    dnl# Supported version
     ;;
   *)
     ;;
@@ -134,8 +132,16 @@ esac
 # Checks for programs.
 AM_PROG_AS
 AM_PROG_AR
-AM_PROG_CC_C_O
-AC_PROG_CPP
+if test "x$CC" = "x"; then
+  AC_PROG_CC
+  test -x compile
+  AM_PROG_CC_C_O
+else
+  # The "test" is just a dummy to make sure that this "else" condition
+  # is not empty, as sometimes `autoconf` removes the AC_SUBSTs...
+  test ! -z "$CC"
+  AC_SUBST([CC])
+fi
 AC_PROG_CXX
 AM_WITH_DMALLOC
 AC_PROG_GCC_TRADITIONAL
@@ -147,6 +153,12 @@ AM_PATH_PYTHON
 AC_PROG_YACC
 LT_INIT
 LT_LANG([C])
+if test "x$RANLIB" = "x"; then
+  AC_PROG_RANLIB
+else
+  test ! -z "$RANLIB"
+  AC_SUBST([RANLIB])
+fi
 PKG_PROG_PKG_CONFIG
 
 # AX_* macros are from the autoconf-archive package
@@ -161,12 +173,21 @@ AX_C___ATTRIBUTE__
 AX_LIB_READLINE
 
 # XORG_* macros are from the xorg-util-macros package
-XORG_PROG_RAWCPP
+if test "x$CPP" = "x"; then
+  AC_PROG_CPP
+else
+  XORG_PROG_RAWCPP
+fi
 XORG_MEMORY_CHECK_FLAGS
 XORG_CHECK_MALLOC_ZERO
 XORG_CWARNFLAGS
 XORG_WITH_DOXYGEN
-XORG_WITH_PERL
+if test "x$PERL" = "x"; then
+  XORG_WITH_PERL
+else
+  test ! -z "$PERL"
+  AC_SUBST([PERL])
+fi
 XORG_ENABLE_UNIT_TESTS
 XORG_ENABLE_INTEGRATION_TESTS
 XORG_LD_WRAP
@@ -177,6 +198,7 @@ AC_BAKEFILE_PROG_MWCXX
 AC_BAKEFILE_METROWERKS_EXTO
 AC_BAKEFILE_GNUMAKE
 
+# programs without specifically-crafted AC_* macros
 AC_PATH_PROGS([BSDMAKE], [bsdmake pmake], [])
 AC_PATH_PROG([BZIP2], [bzip2], [])
 AC_PATH_PROG([BZR], [bzr], [])
@@ -188,7 +210,12 @@ AC_PATH_PROG([CP], [cp], [])
 AC_PATH_PROG([CPIO], [cpio], [])
 AC_PATH_PROG([CVS], [cvs], [])
 AC_PATH_PROG([DIFF], [diff], [])
-AC_PATH_PROG([DOXYGEN], [doxygen], [])
+if test "x$DOXYGEN" = "x"; then
+  AC_PATH_PROG([DOXYGEN], [doxygen], [])
+else
+  test ! -z "$DOXYGEN"
+  AC_SUBST([DOXYGEN])
+fi
 AC_PATH_PROG([DSCL], [dscl], [])
 AC_PATH_PROG([DSEDITGROUP], [dseditgroup], [])
 AC_PATH_PROG([DYLIBBUNDLER], [dylibbundler], [])
@@ -216,6 +243,14 @@ AC_PATH_PROG([PAX], [pax], [])
 AC_PATH_PROG([PERL5], [perl], [])
 AC_PATH_PROG([RMDIR], [rmdir], [])
 AC_PATH_PROG([RSYNC], [rsync], [])
+AC_PATH_PROG([SANDBOX_EXEC], [sandbox-exec], [], [/usr/bin])
+if test "x$SED" = "x"; then
+  AC_PATH_PROG([SED], [sed], [])
+  AC_ARG_VAR([SED], [path to sed command])
+else
+  test ! -z "$SED"
+  AC_SUBST([SED])
+fi
 AC_PATH_PROG([SVN], [svn], [])
 AC_PATH_PROG([TCLDOC], [tcldoc], [])
 AC_SUBST([TCLDOC])
@@ -244,6 +279,9 @@ AC_ARG_VAR([OPEN], [path to open command])
 AC_ARG_VAR([OPENSSL], [path to openssl command])
 AC_ARG_VAR([RSYNC], [path to rsync command])
 AC_ARG_VAR([SVN], [path to svn command])
+AC_ARG_VAR([SWIG], [path to swig command])
+AC_ARG_VAR([TCLSH], [path to tclsh command])
+AC_ARG_VAR([TAR], [path to tar command])
 AC_ARG_VAR([XAR], [path to xar command])
 AC_ARG_VAR([XZ], [path to xz command])
 
@@ -274,14 +312,20 @@ dnl# (i.e. it has been put with the rest of the autoconf-archive macros)
 MP_OBJC_RUNTIME
 AC_MSG_CHECKING([for GNUStep system root])
 if test "x$GNUSTEP_SYSTEM_ROOT" = "x"; then
+  # TODO: move prefix-checking code above this step so that configured prefix
+  # can be used instead of hardwiring /opt/local
   if test -d /opt/local/GNUStep/System; then
     export GNUSTEP_SYSTEM_ROOT=/opt/local/GNUSTEP/System
     AC_MSG_RESULT([using MacPorts GNUStep system root: $GNUSTEP_SYSTEM_ROOT])
+    AC_SUBST([GNUSTEP_SYSTEM_ROOT])
   else
-    AC_MSG_RESULT([using user GNUStep system root: $GNUSTEP_SYSTEM_ROOT])
+    # This had previously been in the other "else" condition, but I think
+    # that was the wrong order...
+    AC_MSG_RESULT([not found])
   fi
 else
-  AC_MSG_RESULT([not found])
+  AC_MSG_RESULT([using user-set GNUStep system root: $GNUSTEP_SYSTEM_ROOT])
+  AC_SUBST([GNUSTEP_SYSTEM_ROOT])
 fi
 MP_OBJC_FOUNDATION
 
@@ -329,12 +373,20 @@ MP_UNIVERSAL_OPTIONS
 AC_CHECK_LIB([tcl], [main])
 
 # Check for standard header files.
+# AC_HEADER_STDC is no longer needed by itself, as it automatically gets
+# pulled in by other macros
 AC_HEADER_DIRENT
 AC_HEADER_SYS_WAIT
+# sys/ioctl.h sys/param.h and sys/time.h are not checked here
+# because they are checked later
+# limits.h gets to stay in because autoscan will still warn about
+# it when removed
 AC_CHECK_HEADERS([crt_externs.h err.h fcntl.h limits.h mach/mach.h \
-paths.h pwd.h stdio.h sys/cdefs.h sys/file.h sys/fcntl.h \
-sys/mount.h sys/paths.h sys/socket.h sys/sysctl.h \
-readline/readline.h readline/history.h utime.h])
+netdb.h paths.h pwd.h stddef.h stdio.h sys/cdefs.h sys/event.h \
+sys/fcntl.h sys/file.h sys/mount.h sys/paths.h sys/socket.h \
+sys/sysctl.h utime.h])
+# readline/history.h and readline/readline.h are checked for by 
+# the AX_LIB_READLINE macro above
 
 AM_CPPFLAGS="-I.. -I. ${AM_CPPFLAGS}"
 dnl# This should be permanently converted eventually,
@@ -344,24 +396,28 @@ INCLUDES=${AM_CPPFLAGS}
 # Checks for typedefs, structures, and compiler characteristics.
 AC_CHECK_HEADER_STDBOOL
 AC_TYPE_UID_T
+AC_C_BIGENDIAN
 AC_C_INLINE
-AC_C_LONG_DOUBLE
 AC_TYPE_INTMAX_T
 AC_TYPE_INTPTR_T
-AC_TYPE_LONG_DOUBLE
+AC_TYPE_LONG_DOUBLE_WIDER
 AC_TYPE_MODE_T
 AC_TYPE_OFF_T
 AC_TYPE_PID_T
+AC_C_PROTOTYPES
+AC_C_RESTRICT
 AC_TYPE_SIZE_T
 AC_TYPE_SSIZE_T
-AC_TYPE_UINT32_T
 AC_TYPE_UINT8_T
+AC_TYPE_UINT32_T
 AC_TYPE_UINTMAX_T
 AC_TYPE_UINTPTR_T
 AC_C_FLEXIBLE_ARRAY_MEMBER
 AC_C_VARARRAYS
 AC_CHECK_MEMBERS([Tcl_Interp.errorLine])
 AC_CHECK_SIZEOF([long])
+AC_CHECK_SIZEOF([uint8_t])
+AC_CHECK_SIZEOF([uint32_t])
 
 # Checks for library functions.
 AC_FUNC_CHOWN
@@ -370,10 +426,12 @@ AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK
 AC_FUNC_MALLOC
 AC_FUNC_MMAP
 AC_FUNC_REALLOC
+# localtime_r is checked for elsewhere
 AC_CHECK_FUNCS([bzero clearenv copyfile dup2 fgetln flock getcwd lchown \
-lockf memmove memset mkdir munmap realpath regcomp rmdir select \
-setenv setmode socket strcasecmp strchr strdup strerror strncasecmp \
-strlcpy strrchr strstr strtol strtoul sysctlbyname utime])
+lockf kqueue memmove memset mkdir munmap realpath regcomp rmdir select \
+setenv setmode socket strcasecmp strchr strdup strerror strlcat strlcpy \
+strncasecmp strrchr strstr strtol strtoul sysctlbyname utime])
+AC_SUBST([ac_cv_func_strlcat])
 
 MP_CHECK_READLINK_IS_P1003_1A
 
@@ -553,6 +611,7 @@ AC_CONFIG_FILES([Doxyfile
 		 doc/macports.conf
 		 doc/pubkeys.conf
 		 src/Makefile
+		 src/cregistry/Makefile
 		 src/machista1.0/Makefile
 	 	 src/macports1.0/macports_autoconf.tcl
 	 	 src/port1.0/port_autoconf.tcl

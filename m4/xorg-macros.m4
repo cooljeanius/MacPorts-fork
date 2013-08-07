@@ -1437,7 +1437,7 @@ AM_CONDITIONAL(LINT, [test "x$LINT" != x])
 
 AC_DEFUN([XORG_LINT_LIBRARY],[
 AC_REQUIRE([XORG_WITH_LINT])
-AC_ARG_ENABLE(lint-library, [AS_HELP_STRING([--enable-lint-library],
+AC_ARG_ENABLE([lint-library], [AS_HELP_STRING([--enable-lint-library],
 	[Create lint library (default: disabled)])],
 	[make_lint_lib=$enableval], [make_lint_lib=no])
 
@@ -1451,7 +1451,7 @@ elif test "x$make_lint_lib" != x"no" ; then
 fi
 
 AC_SUBST(LINTLIB)
-AM_CONDITIONAL(MAKE_LINT_LIB, [test x$make_lint_lib != xno])
+AM_CONDITIONAL([MAKE_LINT_LIB], [test x$make_lint_lib != xno])
 
 ]) # XORG_LINT_LIBRARY
 
@@ -1467,14 +1467,13 @@ AM_CONDITIONAL(MAKE_LINT_LIB, [test x$make_lint_lib != xno])
 #   Sun/Oracle Solaris Studio cc - sets SUNCC to "yes"
 #
 AC_DEFUN([XORG_COMPILER_BRAND], [
-AC_LANG_CASE(
-	[C], [
+AC_LANG_CASE([C],
+	[
 		AC_REQUIRE([AC_PROG_CC_C99])
 	],
 	[C++], [
 		AC_REQUIRE([AC_PROG_CXX])
-	]
-)
+	])
 AC_CHECK_DECL([__clang__], [CLANGCC="yes"], [CLANGCC="no"])
 AC_CHECK_DECL([__INTEL_COMPILER], [INTELCC="yes"], [INTELCC="no"])
 AC_CHECK_DECL([__SUNPRO_C], [SUNCC="yes"], [SUNCC="no"])
@@ -1499,19 +1498,18 @@ m4_if([$#], 1, [m4_fatal([XORG_TESTSET_CFLAG was given with an unsupported numbe
 
 AC_LANG_COMPILER_REQUIRE
 
-AC_LANG_CASE(
-	[C], [
+AC_LANG_CASE([C],
+	[
 		AC_REQUIRE([AC_PROG_CC_C99])
 		define([PREFIX], [C])
 		define([CACHE_PREFIX], [cc])
 		define([COMPILER], [$CC])
-	],
-	[C++], [
+	], [C++],
+	[
 		define([PREFIX], [CXX])
 		define([CACHE_PREFIX], [cxx])
 		define([COMPILER], [$CXX])
-	]
-)
+	])
 
 [xorg_testset_save_]PREFIX[FLAGS]="$PREFIX[FLAGS]"
 
@@ -1553,10 +1551,10 @@ m4_foreach([flag], m4_cdr($@), [
 
 		PREFIX[FLAGS]="$PREFIX[FLAGS] ]flag["
 
-dnl Some hackery here since AC_CACHE_VAL can't handle a non-literal varname
-		AC_MSG_CHECKING([if ]COMPILER[ supports]flag[])
+dnl# Some hackery here since AC_CACHE_VAL can't handle a non-literal varname
+		AC_MSG_CHECKING([if ]COMPILER[ supports ]flag[])
 		cacheid=AS_TR_SH([xorg_cv_]CACHE_PREFIX[_flag_]flag[])
-		AC_CACHE_VAL($cacheid,
+		AC_CACHE_VAL([$cacheid],
 			     [AC_LINK_IFELSE([AC_LANG_PROGRAM([int i;])],
 					     [eval $cacheid=yes],
 					     [eval $cacheid=no])])
@@ -1588,7 +1586,7 @@ dnl Some hackery here since AC_CACHE_VAL can't handle a non-literal varname
 AC_DEFUN([XORG_COMPILER_FLAGS], [
 AC_REQUIRE([XORG_COMPILER_BRAND])
 
-AC_ARG_ENABLE(selective-werror,
+AC_ARG_ENABLE([selective-werror],
               AS_HELP_STRING([--disable-selective-werror],
                              [Turn off selective compiler errors. (default: enabled)]),
               [SELECTIVE_WERROR=$enableval],
@@ -1600,8 +1598,7 @@ AC_LANG_CASE(
         ],
         [C++], [
                 define([PREFIX], [CXX])
-        ]
-)
+        ])
 # -v is too short to test reliably with XORG_TESTSET_CFLAG
 if test "x$SUNCC" = "xyes"; then
     [BASE_]PREFIX[FLAGS]="-v"
@@ -1615,16 +1612,15 @@ XORG_TESTSET_CFLAG([[BASE_]PREFIX[FLAGS]], [-Wpointer-arith])
 XORG_TESTSET_CFLAG([[BASE_]PREFIX[FLAGS]], [-Wmissing-declarations])
 XORG_TESTSET_CFLAG([[BASE_]PREFIX[FLAGS]], [-Wformat=2], [-Wformat])
 
-AC_LANG_CASE(
-	[C], [
+AC_LANG_CASE([C],
+	[
 		XORG_TESTSET_CFLAG([[BASE_]PREFIX[FLAGS]], [-Wstrict-prototypes])
 		XORG_TESTSET_CFLAG([[BASE_]PREFIX[FLAGS]], [-Wmissing-prototypes])
 		XORG_TESTSET_CFLAG([[BASE_]PREFIX[FLAGS]], [-Wnested-externs])
 		XORG_TESTSET_CFLAG([[BASE_]PREFIX[FLAGS]], [-Wbad-function-cast])
 		XORG_TESTSET_CFLAG([[BASE_]PREFIX[FLAGS]], [-Wold-style-definition])
 		XORG_TESTSET_CFLAG([[BASE_]PREFIX[FLAGS]], [-Wdeclaration-after-statement])
-	]
-)
+	])
 
 # This chunk adds additional warnings that could catch undesired effects.
 XORG_TESTSET_CFLAG([[BASE_]PREFIX[FLAGS]], [-Wunused])
@@ -1694,15 +1690,14 @@ AC_SUBST([BASE_]PREFIX[FLAGS])
 AC_DEFUN([XORG_CWARNFLAGS], [
 AC_REQUIRE([XORG_COMPILER_FLAGS])
 AC_REQUIRE([XORG_COMPILER_BRAND])
-AC_LANG_CASE(
-	[C], [
+AC_LANG_CASE([C],
+	[
 		CWARNFLAGS="$BASE_CFLAGS"
 		if  test "x$GCC" = xyes ; then
 		    CWARNFLAGS="$CWARNFLAGS -fno-strict-aliasing"
 		fi
-		AC_SUBST(CWARNFLAGS)
-	]
-)
+		AC_SUBST([CWARNFLAGS])
+	])
 ]) # XORG_CWARNFLAGS
 
 # XORG_STRICT_OPTION

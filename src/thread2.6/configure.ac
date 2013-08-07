@@ -29,7 +29,7 @@ AC_CONFIG_AUX_DIR([tclconfig])
 AC_CANONICAL_TARGET
 AM_INIT_AUTOMAKE([foreign dejagnu no-installinfo -Wall])
 AM_MAINTAINER_MODE
-AC_ISC_POSIX
+AC_SEARCH_LIBS([strerror],[cposix]) dnl# This macro used to be AC_ISC_POSIX
 AC_EXEEXT
 AC_OBJEXT
 AX_CHECK_GNU_MAKE
@@ -67,10 +67,21 @@ TEA_PREFIX
 
 TEA_SETUP_COMPILER
 AC_PROG_INSTALL
-AM_PROG_CC_C_O
+if test "x$CC" = "x"; then
+  AC_PROG_CC
+  test -x compile
+  AM_PROG_CC_C_O
+else
+  test ! -z "$CC"
+  AC_SUBST([CC])
+fi
 AC_BAKEFILE_METROWERKS_EXTO
 AC_PROG_CXX
-XORG_PROG_RAWCPP
+if test "x$CPP" = "x"; then
+  AC_PROG_CPP
+else
+  XORG_PROG_RAWCPP
+fi
 AM_PROG_AR
 XORG_LD_WRAP
 PKG_PROG_PKG_CONFIG
