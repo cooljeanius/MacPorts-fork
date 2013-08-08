@@ -1553,8 +1553,8 @@ m4_foreach([flag], m4_cdr($@), [
 
 		PREFIX[FLAGS]="$PREFIX[FLAGS] ]flag["
 
-dnl Some hackery here since AC_CACHE_VAL can't handle a non-literal varname
-		AC_MSG_CHECKING([if ]COMPILER[ supports]flag[])
+dnl# Some hackery here since AC_CACHE_VAL can't handle a non-literal varname
+		AC_MSG_CHECKING([if ]COMPILER[ supports ]flag[])
 		cacheid=AS_TR_SH([xorg_cv_]CACHE_PREFIX[_flag_]flag[])
 		AC_CACHE_VAL($cacheid,
 			     [AC_LINK_IFELSE([AC_LANG_PROGRAM([int i;])],

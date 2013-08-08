@@ -891,9 +891,12 @@ AC_DEFUN([MP_TAR_FAST_READ],[
 	AC_SUBST([am__tar])
 	if test "x$TAR" = "x"; then
 		if test "x$am__tar" = "x"; then
+			test -z "$am__tar"
 			AC_PATH_PROG([TAR],[tar])
 		else
 			export TAR=$am__tar
+			test ! -z "$TAR" && unset TAR
+			AC_PATH_PROG([TAR],[tar])
 		fi
 	fi
 	

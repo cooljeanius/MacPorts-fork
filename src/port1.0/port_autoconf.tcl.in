@@ -32,6 +32,7 @@
 package provide port 1.0
 
 namespace eval portutil::autoconf {
+	variable which_awk "@AWK@"
 	variable bzip2_path "@BZIP2@"
 	variable lzma_path "@LZMA@"
 	variable xz_path "@XZ@"

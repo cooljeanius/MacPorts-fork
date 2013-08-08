@@ -1998,7 +1998,7 @@ closedir(d);
 
     # OS/390 lacks sys/param.h (and doesn't need it, by chance).
 
-    AC_HAVE_HEADERS([unistd.h sys/param.h])
+    AC_CHECK_HEADERS([unistd.h sys/param.h])
 ])
 
 #--------------------------------------------------------------------

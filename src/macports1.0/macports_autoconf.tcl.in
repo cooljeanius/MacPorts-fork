@@ -39,7 +39,7 @@ namespace eval macports::autoconf {
     variable chgrp_path "@CHGRP@"
     variable chmod_path "@CHMOD@"
     variable codesign_path "@CODESIGN@"
-    variable doxygen_path "@DOXYGEN"
+    variable doxygen_path "@DOXYGEN@"
     variable dylibbundler_path "@DYLIBBUNDLER@"
     variable ed_path "@ED@"
     variable gzip_path "@GZIP@"

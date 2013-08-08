@@ -33,3 +33,4 @@ doc/pubkeys.conf
 src/*/*autoconf.tcl
 setupenv.bash
 src/macports1.0/macports_fastload.tcl
+conf*/*.awk
