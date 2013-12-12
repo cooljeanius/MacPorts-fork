@@ -435,19 +435,19 @@ AC_DEFUN([TEA_ENABLE_THREADS], [
 
 	if test "${TEA_PLATFORM}" != "windows" ; then
 	    # We are always OK on Windows, so check what this platform wants.
-	    AC_DEFINE([USE_THREAD_ALLOC], [1], [Defined to 1 if using thread alloc])
-	    AC_DEFINE([_REENTRANT], [1], [Not sure what this define means...])
-	    AC_DEFINE([_THREAD_SAFE], [1], [Not sure what this define means...])
+	    AC_DEFINE([USE_THREAD_ALLOC],[1],[Defined to 1 if using thread alloc])
+	    AC_DEFINE([_REENTRANT],[1],[Not sure what this define means...])
+	    AC_DEFINE([_THREAD_SAFE],[1],[Not sure what this define means...])
 	    AC_CHECK_LIB([pthread],[pthread_mutex_init],[tcl_ok=yes],[tcl_ok=no])
 	    if test "$tcl_ok" = "no"; then
 		# Check a little harder for __pthread_mutex_init in the
 		# same library, as some systems hide it there until
 		# pthread.h is defined.	 We could alternatively do an
-		# AC_TRY_COMPILE with pthread.h, but that will work with
-		# libpthread really doesn't exist, like AIX 4.2.
+		# AC_COMPILE_IFELSE with pthread.h, but that will work with
+		# libpthread really does not exist, like AIX 4.2.
 		# [Bug: 4359]
-		AC_CHECK_LIB([pthread], [__pthread_mutex_init],
-		    [tcl_ok=yes], [tcl_ok=no])
+		AC_CHECK_LIB([pthread],[__pthread_mutex_init],
+		    [tcl_ok=yes],[tcl_ok=no])
 	    fi
 	    
 	    if test "$tcl_ok" = "yes"; then
@@ -628,13 +628,13 @@ AC_DEFUN([TEA_ENABLE_LANGINFO],[
     fi
     AC_MSG_CHECKING([whether to use nl_langinfo])
     if test "$langinfo_ok" = "yes"; then
-	AC_TRY_COMPILE([#include <langinfo.h>],
-		[nl_langinfo(CODESET);],[langinfo_ok=yes],[langinfo_ok=no])
+	AC_COMPILE_IFELSE([AC_LANG_SOURCE([[#include <langinfo.h>]],
+		[[nl_langinfo(CODESET);]])],[langinfo_ok=yes],[langinfo_ok=no])
 	if test "$langinfo_ok" = "no"; then
 	    langinfo_ok="no (could not compile with nl_langinfo)";
 	fi
 	if test "$langinfo_ok" = "yes"; then
-	    AC_DEFINE([HAVE_LANGINFO], [1], [Defined to 1 if we have langinfo])
+	    AC_DEFINE([HAVE_LANGINFO],[1],[Defined to 1 if we have langinfo])
 	fi
     fi
     AC_MSG_RESULT([$langinfo_ok])
@@ -1632,7 +1632,7 @@ AC_DEFUN([TEA_CONFIG_CFLAGS],[
 	    hold_ldflags=$LDFLAGS
 	    AC_MSG_CHECKING(for ld accepts -Bexport flag)
 	    LDFLAGS="$LDFLAGS -Wl,-Bexport"
-	    AC_TRY_LINK(, [int i;], [found=yes],
+	    AC_LINK_IFELSE([AC_LANG_SOURCE([[]],[[int i;]])],[found=yes],
 			[LDFLAGS=$hold_ldflags found=no])
 	    AC_MSG_RESULT([$found])
 	    LD_SEARCH_FLAGS=""
@@ -1640,31 +1640,31 @@ AC_DEFUN([TEA_CONFIG_CFLAGS],[
     esac
 
     if test "$do64bit" = "yes" -a "$do64bit_ok" = "no" ; then
-    	AC_MSG_WARN(["64bit support being disabled -- don\'t know magic for this platform"])
+    	AC_MSG_WARN(["64bit support being disabled -- do not know magic for this platform"])
     fi
 
     # Step 4: If pseudo-static linking is in use (see K. B. Kenny, "Dynamic
     # Loading for Tcl -- What Became of It?".  Proc. 2nd Tcl/Tk Workshop,
-    # New Orleans, LA, Computerized Processes Unlimited, 1994), then we need
-    # to determine which of several header files defines the a.out file
-    # format (a.out.h, sys/exec.h, or sys/exec_aout.h).  At present, we
-    # support only a file format that is more or less version-7-compatible. 
-    # In particular,
+    # New Orleans, LA, Computerized Processes Unlimited, 1994), then we
+    # need to determine which of several header files defines the a.out
+    # file format (a.out.h, sys/exec.h, or sys/exec_aout.h). At present,
+    # we support only a file format that is more-or-less
+    # version-7-compatible. In particular,
     #	- a.out files must begin with `struct exec'.
     #	- the N_TXTOFF on the `struct exec' must compute the seek address
     #	  of the text segment
     #	- The `struct exec' must contain a_magic, a_text, a_data, a_bss
     #	  and a_entry fields.
-    # The following compilation should succeed if and only if either sys/exec.h
-    # or a.out.h is usable for the purpose.
+    # The following compilation should succeed if and only if either
+    # sys/exec.h or a.out.h is usable for the purpose.
     #
-    # Note that the modified COFF format used on MIPS Ultrix 4.x is usable; the
-    # `struct exec' includes a second header that contains information that
-    # duplicates the v7 fields that are needed.
+    # Note that the modified COFF format used on MIPS Ultrix 4.x is usable;
+    # the `struct exec' includes a second header that contains information
+    # that duplicates the v7 fields that are needed.
 
     if test "x$DL_OBJS" = "xtclLoadAout.o" ; then
 	AC_MSG_CHECKING([sys/exec.h])
-	AC_TRY_COMPILE([#include <sys/exec.h>],[
+	AC_COMPILE_IFELSE([AC_LANG_SOURCE([[#include <sys/exec.h>]],[[
 	    struct exec foo;
 	    unsigned long seek;
 	    int flag;
@@ -1675,13 +1675,13 @@ AC_DEFUN([TEA_CONFIG_CFLAGS],[
 #endif
 	    flag = (foo.a_magic == OMAGIC);
 	    return foo.a_text + foo.a_data + foo.a_bss + foo.a_entry;
-    ], [tcl_ok=usable], [tcl_ok=unusable])
+    ]])],[tcl_ok=usable],[tcl_ok=unusable])
 	AC_MSG_RESULT([$tcl_ok])
 	if test $tcl_ok = usable; then
-	    AC_DEFINE([USE_SYS_EXEC_H], [1], [Defined to 1 if using sys/exec.h])
+	    AC_DEFINE([USE_SYS_EXEC_H],[1],[Defined to 1 if using sys/exec.h])
 	else
 	    AC_MSG_CHECKING([a.out.h])
-	    AC_TRY_COMPILE([#include <a.out.h>],[
+	    AC_COMPILE_IFELSE([AC_LANG_SOURCE([[#include <a.out.h>]],[[
 		struct exec foo;
 		unsigned long seek;
 		int flag;
@@ -1692,13 +1692,13 @@ AC_DEFUN([TEA_CONFIG_CFLAGS],[
 #endif
 		flag = (foo.a_magic == OMAGIC);
 		return foo.a_text + foo.a_data + foo.a_bss + foo.a_entry;
-	    ], [tcl_ok=usable], [tcl_ok=unusable])
+	    ]])],[tcl_ok=usable],[tcl_ok=unusable])
 	    AC_MSG_RESULT([$tcl_ok])
 	    if test $tcl_ok = usable; then
-		AC_DEFINE([USE_A_OUT_H], [1], [Defined to 1 if using a.out.h])
+		AC_DEFINE([USE_A_OUT_H],[1],[Defined to 1 if using a.out.h])
 	    else
 		AC_MSG_CHECKING([sys/exec_aout.h])
-		AC_TRY_COMPILE([#include <sys/exec_aout.h>],[
+		AC_COMPILE_IFELSE([AC_LANG_SOURCE([[#include <sys/exec_aout.h>]],[[
 		    struct exec foo;
 		    unsigned long seek;
 		    int flag;
@@ -1709,10 +1709,10 @@ AC_DEFUN([TEA_CONFIG_CFLAGS],[
 #endif
 		    flag = (foo.a_midmag == OMAGIC);
 		    return foo.a_text + foo.a_data + foo.a_bss + foo.a_entry;
-		], [tcl_ok=usable], [tcl_ok=unusable])
+		]])],[tcl_ok=usable],[tcl_ok=unusable])
 		AC_MSG_RESULT([$tcl_ok])
 		if test $tcl_ok = usable; then
-		    AC_DEFINE([USE_SYS_EXEC_AOUT_H], [1], [Defined to 1 if using sys/exec_aout.h])
+		    AC_DEFINE([USE_SYS_EXEC_AOUT_H],[1],[Defined to 1 if using sys/exec_aout.h])
 		else
 		    DL_OBJS=""
 		fi
@@ -1720,10 +1720,11 @@ AC_DEFUN([TEA_CONFIG_CFLAGS],[
 	fi
     fi
 
-    # Step 5: disable dynamic loading if requested via a command-line switch.
+    # Step 5: disable dynamic loading if requested via a command-line
+    # switch.
 
-    AC_ARG_ENABLE([load], [AS_HELP_STRING([--disable-load],[disallow dynamic loading and "load" command])],
-	[tcl_ok=$enableval], [tcl_ok=yes])
+    AC_ARG_ENABLE([load],[AS_HELP_STRING([--disable-load],[disallow dynamic loading and "load" command])],
+	[tcl_ok=$enableval],[tcl_ok=yes])
     if test "$tcl_ok" = "no"; then
 	DL_OBJS=""
     fi
@@ -1731,8 +1732,8 @@ AC_DEFUN([TEA_CONFIG_CFLAGS],[
     if test "x$DL_OBJS" != "x" ; then
 	BUILD_DLTEST="\$(DLTEST_TARGETS)"
     else
-	echo "Can't figure out how to do dynamic loading or shared libraries"
-	echo "on this system."
+	echo "Cannot figure out how to do dynamic loading or shared" 
+	echo "libraries on this system."
 	SHLIB_CFLAGS=""
 	SHLIB_LD=""
 	SHLIB_SUFFIX=""
@@ -1825,10 +1826,10 @@ AC_DEFUN([TEA_CONFIG_CFLAGS],[
 #--------------------------------------------------------------------
 
 AC_DEFUN([TEA_SERIAL_PORT],[
-    AC_CHECK_HEADERS([sys/modem.h])
+    AC_CHECK_HEADERS_ONCE([sys/modem.h])
     AC_MSG_CHECKING([termios vs. termio vs. sgtty])
     AC_CACHE_VAL([tcl_cv_api_serial],[
-    AC_TRY_RUN([
+    AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <termios.h>
 
 int main() {
@@ -1839,9 +1840,9 @@ int main() {
 	return 0;
     }
     return 1;
-}], [tcl_cv_api_serial=termios], [tcl_cv_api_serial=no], [tcl_cv_api_serial=no])
+}]])],[tcl_cv_api_serial=termios],[tcl_cv_api_serial=no], [tcl_cv_api_serial=no])
     if test $tcl_cv_api_serial = no ; then
-	AC_TRY_RUN([
+	AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <termio.h>
 
 int main() {
@@ -1851,10 +1852,10 @@ int main() {
 	return 0;
     }
     return 1;
-}], [tcl_cv_api_serial=termio], [tcl_cv_api_serial=no], [tcl_cv_api_serial=no])
+}]])],[tcl_cv_api_serial=termio],[tcl_cv_api_serial=no], [tcl_cv_api_serial=no])
     fi
     if test $tcl_cv_api_serial = no ; then
-	AC_TRY_RUN([
+	AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <sgtty.h>
 
 int main() {
@@ -1865,10 +1866,10 @@ int main() {
 	return 0;
     }
     return 1;
-}], [tcl_cv_api_serial=sgtty], [tcl_cv_api_serial=none], [tcl_cv_api_serial=none])
+}]])],[tcl_cv_api_serial=sgtty],[tcl_cv_api_serial=none], [tcl_cv_api_serial=none])
     fi
     if test $tcl_cv_api_serial = no ; then
-	AC_TRY_RUN([
+	AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <termios.h>
 #include <errno.h>
 
@@ -1881,10 +1882,10 @@ int main() {
 	return 0;
     }
     return 1;
-}], [tcl_cv_api_serial=termios], [tcl_cv_api_serial=no], [tcl_cv_api_serial=no])
+}]])],[tcl_cv_api_serial=termios],[tcl_cv_api_serial=no], [tcl_cv_api_serial=no])
     fi
     if test $tcl_cv_api_serial = no; then
-	AC_TRY_RUN([
+	AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <termio.h>
 #include <errno.h>
 
@@ -1896,10 +1897,10 @@ int main() {
 	return 0;
     }
     return 1;
-    }], [tcl_cv_api_serial=termio], [tcl_cv_api_serial=no], [tcl_cv_api_serial=no])
+    }]])],[tcl_cv_api_serial=termio],[tcl_cv_api_serial=no], [tcl_cv_api_serial=no])
     fi
     if test $tcl_cv_api_serial = no; then
-	AC_TRY_RUN([
+	AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <sgtty.h>
 #include <errno.h>
 
@@ -1912,12 +1913,12 @@ int main() {
 	return 0;
     }
     return 1;
-}], [tcl_cv_api_serial=sgtty], [tcl_cv_api_serial=none], [tcl_cv_api_serial=none])
+}]])],[tcl_cv_api_serial=sgtty],[tcl_cv_api_serial=none], [tcl_cv_api_serial=none])
     fi])
     case $tcl_cv_api_serial in
-	termios) AC_DEFINE([USE_TERMIOS], [1], [Defined to 1 if using termios]);;
-	termio)  AC_DEFINE([USE_TERMIO], [1], [Defined to 1 if using termio]);;
-	sgtty)   AC_DEFINE([USE_SGTTY], [1], [Defined to 1 if using sgtty]);;
+	termios) AC_DEFINE([USE_TERMIOS],[1],[Defined to 1 if using termios]);;
+	termio)  AC_DEFINE([USE_TERMIO],[1],[Defined to 1 if using termio]);;
+	sgtty)   AC_DEFINE([USE_SGTTY],[1],[Defined to 1 if using sgtty]);;
     esac
     AC_MSG_RESULT([$tcl_cv_api_serial])
 ])
@@ -1957,8 +1958,8 @@ int main() {
 AC_DEFUN([TEA_MISSING_POSIX_HEADERS],[
     AC_REQUIRE([AC_HEADER_STDC])
     AC_MSG_CHECKING([dirent.h])
-    AC_TRY_LINK([#include <sys/types.h>
-#include <dirent.h>], [
+    AC_LINK_IFELSE([AC_LANG_SOURCE([[#include <sys/types.h>
+#include <dirent.h>],[
 #ifndef _POSIX_SOURCE
 #   ifdef __Lynx__
 	/*
@@ -1976,41 +1977,42 @@ d = opendir("foobar");
 entryPtr = readdir(d);
 p = entryPtr->d_name;
 closedir(d);
-], [tcl_ok=yes], [tcl_ok=no])
+]])],[tcl_ok=yes],[tcl_ok=no])
 
     if test $tcl_ok = no; then
-	AC_DEFINE([NO_DIRENT_H], [1], [Defined to 1 if there is no dirent.h])
+	AC_DEFINE([NO_DIRENT_H],[1],[Defined to 1 if there is no dirent.h])
     fi
 
     AC_MSG_RESULT([$tcl_ok])
-    AC_CHECK_HEADER([errno.h], [], [AC_DEFINE([NO_ERRNO_H], [1], [Defined to 1 if there is no errno.h])])
-    AC_CHECK_HEADER([float.h], [], [AC_DEFINE([NO_FLOAT_H], [1], [Defined to 1 if there is no float.h])])
-    AC_CHECK_HEADER([values.h], [], [AC_DEFINE([NO_VALUES_H], [1], [Defined to 1 if there is no values.h])])
+    AC_CHECK_HEADER([errno.h],[],[AC_DEFINE([NO_ERRNO_H],[1],[Defined to 1 if there is no errno.h])])
+    AC_CHECK_HEADER([float.h],[],[AC_DEFINE([NO_FLOAT_H],[1],[Defined to 1 if there is no float.h])])
+    AC_CHECK_HEADER([values.h],[],[AC_DEFINE([NO_VALUES_H],[1],[Defined to 1 if there is no values.h])])
     AC_CHECK_HEADER([limits.h],
-	[AC_DEFINE([HAVE_LIMITS_H], [1], [Defined to 1 if we have limits.h])], [AC_DEFINE([NO_LIMITS_H], [1], [Defined to 1 if there is no limits.h])])
-    AC_CHECK_HEADER([stdlib.h], [tcl_ok=1], [tcl_ok=0])
-    AC_EGREP_HEADER([strtol], [stdlib.h], [], [tcl_ok=0])
-    AC_EGREP_HEADER([strtoul], [stdlib.h], [], [tcl_ok=0])
-    AC_EGREP_HEADER([strtod], [stdlib.h], [], [tcl_ok=0])
+	[AC_DEFINE([HAVE_LIMITS_H],[1],[Defined to 1 if we have limits.h])], [AC_DEFINE([NO_LIMITS_H],[1],[Defined to 1 if there is no limits.h])])
+    AC_CHECK_HEADER([stdlib.h],[tcl_ok=1],[tcl_ok=0])
+    AC_REQUIRE([AC_PROG_EGREP])
+    AC_EGREP_HEADER([strtol],[stdlib.h],[],[tcl_ok=0])
+    AC_EGREP_HEADER([strtoul],[stdlib.h],[],[tcl_ok=0])
+    AC_EGREP_HEADER([strtod],[stdlib.h],[],[tcl_ok=0])
     if test $tcl_ok = 0; then
-	AC_DEFINE([NO_STDLIB_H], [1], [Defined to 1 if there is no stdlib.h])
+	AC_DEFINE([NO_STDLIB_H],[1],[Defined to 1 if there is no stdlib.h])
     fi
-    AC_CHECK_HEADER([string.h], [tcl_ok=1], [tcl_ok=0])
-    AC_EGREP_HEADER([strstr], [string.h], [], [tcl_ok=0])
-    AC_EGREP_HEADER([strerror], [string.h], [], [tcl_ok=0])
+    AC_CHECK_HEADER([string.h],[tcl_ok=1],[tcl_ok=0])
+    AC_EGREP_HEADER([strstr],[string.h],[],[tcl_ok=0])
+    AC_EGREP_HEADER([strerror],[string.h],[],[tcl_ok=0])
 
     # See also memmove check below for a place where NO_STRING_H can be
     # set and why.
 
     if test $tcl_ok = 0; then
-	AC_DEFINE([NO_STRING_H], [1], [Defined to 1 if there is no string.h])
+	AC_DEFINE([NO_STRING_H],[1],[Defined to 1 if there is no string.h])
     fi
 
-    AC_CHECK_HEADER([sys/wait.h], [], [AC_DEFINE([NO_SYS_WAIT_H], [1], [Defined to 1 if there is no sys/wait.h])])
-    AC_CHECK_HEADER([dlfcn.h], [], [AC_DEFINE([NO_DLFCN_H], [1], [Defined to 1 if there is no dirent.h])])
+    AC_CHECK_HEADER([sys/wait.h],[],[AC_DEFINE([NO_SYS_WAIT_H],[1],[Defined to 1 if there is no sys/wait.h])])
+    AC_CHECK_HEADER([dlfcn.h],[],[AC_DEFINE([NO_DLFCN_H],[1],[Defined to 1 if there is no dirent.h])])
 
-    # OS/390 lacks sys/param.h (and doesn't need it, by chance).
-    AC_CHECK_HEADERS([sys/param.h])
+    # OS/390 lacks sys/param.h (and does not need it, by chance).
+    AC_CHECK_HEADERS_ONCE([sys/param.h])
 ])
 
 #--------------------------------------------------------------------
@@ -2149,8 +2151,8 @@ AC_DEFUN([TEA_PATH_UNIX_X],[
 #--------------------------------------------------------------------
 
 AC_DEFUN([TEA_BLOCKING_STYLE],[
-    AC_CHECK_HEADERS([sys/ioctl.h])
-    AC_CHECK_HEADERS([sys/filio.h])
+    AC_CHECK_HEADERS_ONCE([sys/ioctl.h])
+    AC_CHECK_HEADERS_ONCE([sys/filio.h])
     AC_MSG_CHECKING([FIONBIO vs. O_NONBLOCK for nonblocking I/O])
     if test -f /usr/lib/NextStep/software_version; then
 	system=NEXTSTEP-`awk '/3/,/3/' /usr/lib/NextStep/software_version`
@@ -2214,7 +2216,7 @@ AC_DEFUN([TEA_BLOCKING_STYLE],[
 #--------------------------------------------------------------------
 
 AC_DEFUN([TEA_TIME_HANDLER],[
-    AC_CHECK_HEADERS([sys/time.h])
+    AC_CHECK_HEADERS_ONCE([sys/time.h])
     AC_REQUIRE([AC_HEADER_TIME])
     AC_REQUIRE([AC_STRUCT_TIMEZONE])
 
@@ -2222,7 +2224,7 @@ AC_DEFUN([TEA_TIME_HANDLER],[
 
     AC_MSG_CHECKING([tm_tzadj in struct tm])
     AC_CACHE_VAL([tcl_cv_member_tm_tzadj],
-	[AC_TRY_COMPILE([#include <time.h>], [struct tm tm; tm.tm_tzadj;],
+	[AC_COMPILE_IFELSE([AC_LANG_SOURCE([[#include <time.h>]],[[struct tm tm; tm.tm_tzadj;]])],
 	    [tcl_cv_member_tm_tzadj=yes], [tcl_cv_member_tm_tzadj=no])])
     AC_MSG_RESULT([$tcl_cv_member_tm_tzadj])
     if test $tcl_cv_member_tm_tzadj = yes ; then
@@ -2231,7 +2233,7 @@ AC_DEFUN([TEA_TIME_HANDLER],[
 
     AC_MSG_CHECKING([tm_gmtoff in struct tm])
     AC_CACHE_VAL([tcl_cv_member_tm_gmtoff],
-	[AC_TRY_COMPILE([#include <time.h>], [struct tm tm; tm.tm_gmtoff;],
+	[AC_COMPILE_IFELSE([AC_LANG_SOURCE([[#include <time.h>]],[[struct tm tm; tm.tm_gmtoff;]])],
 	    [tcl_cv_member_tm_gmtoff=yes], [tcl_cv_member_tm_gmtoff=no])])
     AC_MSG_RESULT([$tcl_cv_member_tm_gmtoff])
     if test $tcl_cv_member_tm_gmtoff = yes ; then
@@ -2244,25 +2246,26 @@ AC_DEFUN([TEA_TIME_HANDLER],[
     #
     AC_MSG_CHECKING([long timezone variable])
     AC_CACHE_VAL([tcl_cv_var_timezone],
-	[AC_TRY_COMPILE([#include <time.h>],
-	    [extern long timezone;
+	[AC_COMPILE_IFELSE([AC_LANG_SOURCE([[#include <time.h>]],[[
+	    extern long timezone;
 	    timezone += 1;
-	    exit (0);],
+	    exit (0);]])],
 	    [tcl_cv_timezone_long=yes], [tcl_cv_timezone_long=no])])
     AC_MSG_RESULT([$tcl_cv_timezone_long])
     if test $tcl_cv_timezone_long = yes ; then
 	AC_DEFINE([HAVE_TIMEZONE_VAR], [long], [Defined to long if we have long timezone variable])
     else
 	#
-	# On some systems (eg IRIX 6.2), timezone is a time_t and not a long.
+	# On some systems (eg IRIX 6.2), timezone is a time_t and not a
+        # long.
 	#
 	AC_MSG_CHECKING([time_t timezone variable])
 	AC_CACHE_VAL([tcl_cv_timezone_time],
-	    AC_TRY_COMPILE([#include <time.h>],
-		[extern time_t timezone;
+	    [AC_COMPILE_IFELSE([AC_LANG_SOURCE([[#include <time.h>]],[[
+		extern time_t timezone;
 		timezone += 1;
-		exit (0);],
-		tcl_cv_timezone_time=yes, tcl_cv_timezone_time=no))
+		exit (0);]])],
+		[tcl_cv_timezone_time=yes],[tcl_cv_timezone_time=no])])
 	AC_MSG_RESULT([$tcl_cv_timezone_time])
 	if test $tcl_cv_timezone_time = yes ; then
 	    AC_DEFINE([HAVE_TIMEZONE_VAR], [time_t], [Defined to time_t if we have time_t timezone variable])
@@ -2291,10 +2294,10 @@ AC_DEFUN([TEA_TIME_HANDLER],[
 #--------------------------------------------------------------------
 
 AC_DEFUN([TEA_BUGGY_STRTOD],[
-    AC_CHECK_FUNC([strtod], [tcl_strtod=1], [tcl_strtod=0])
+    AC_CHECK_FUNC([strtod],[tcl_strtod=1],[tcl_strtod=0])
     if test "$tcl_strtod" = 1; then
 	AC_MSG_CHECKING([for Solaris2.4/Tru64 strtod bugs])
-	AC_TRY_RUN([
+	AC_RUN_IFELSE([AC_LANG_SOURCE([[
 	    extern double strtod();
 	    int main()
 	    {
@@ -2310,15 +2313,14 @@ AC_DEFUN([TEA_BUGGY_STRTOD],[
 		    exit(1);
 		}
 		exit(0);
-	    }], [tcl_ok=1], [tcl_ok=0], [tcl_ok=0])
+	    }]])],[tcl_ok=1],[tcl_ok=0],[tcl_ok=0])
 	if test "$tcl_ok" = 1; then
 	    AC_MSG_RESULT([ok])
 	else
 	    AC_MSG_RESULT([buggy])
-	    #LIBOBJS="$LIBOBJS fixstrtod.o"
 	    AC_LIBOBJ([fixstrtod])
 	    USE_COMPAT=1
-	    AC_DEFINE([strtod], [fixstrtod], [Defined to fixstrtod if the original strtod was buggy])
+	    AC_DEFINE([strtod],[fixstrtod],[Defined to fixstrtod if the original strtod was buggy])
 	fi
     fi
 ])
@@ -2477,16 +2479,16 @@ AC_DEFUN([TEA_TCL_64BIT_FLAGS],[
     AC_CACHE_VAL([tcl_cv_type_64bit],[
 	tcl_cv_type_64bit=none
 	# See if the compiler knows natively about __int64
-	AC_TRY_COMPILE([],[__int64 value = (__int64) 0;],
-	    [tcl_type_64bit=__int64], [tcl_type_64bit="long long"])
-	# See if we should use long anyway  Note that we substitute in the
-	# type that is our current guess for a 64-bit type inside this check
-	# program, so it should be modified only carefully...
-        AC_TRY_COMPILE([],[switch (0) { 
+	AC_COMPILE_IFELSE([AC_LANG_SOURCE([[]],[[__int64 value = (__int64) 0;]])],
+	    [tcl_type_64bit=__int64],[tcl_type_64bit="long long"])
+	# See if we should use long anyway. Note that we substitute in the
+	# type that is our current guess for a 64-bit type inside this
+        # check program, so it should be modified only carefully...
+        AC_COMPILE_IFELSE([AC_LANG_SOURCE([],[switch (0) { 
             case 1: case (sizeof(]${tcl_type_64bit}[)==sizeof(long)): ; 
-        }],[tcl_cv_type_64bit=${tcl_type_64bit}])])
+        }])],[tcl_cv_type_64bit=${tcl_type_64bit}])])
     if test "${tcl_cv_type_64bit}" = none ; then
-	AC_DEFINE([TCL_WIDE_INT_IS_LONG], [1], [Defined to 1 if wide int is long])
+	AC_DEFINE([TCL_WIDE_INT_IS_LONG],[1],[Defined to 1 if wide int is long])
 	AC_MSG_RESULT([using long])
     elif test "${tcl_cv_type_64bit}" = "__int64" ; then
 	# We actually want to use the default tcl.h checks in this
@@ -2499,29 +2501,29 @@ AC_DEFUN([TEA_TCL_64BIT_FLAGS],[
 	# Now check for auxiliary declarations
 	AC_MSG_CHECKING([for struct dirent64])
 	AC_CACHE_VAL([tcl_cv_struct_dirent64],[
-	    AC_TRY_COMPILE([#include <sys/types.h>
-#include <sys/dirent.h>],[struct dirent64 p;],
+	    AC_COMPILE_IFELSE([AC_LANG_SOURCE([[#include <sys/types.h>
+#include <sys/dirent.h>]],[[struct dirent64 p;]])],
 		[tcl_cv_struct_dirent64=yes],[tcl_cv_struct_dirent64=no])])
 	if test "x${tcl_cv_struct_dirent64}" = "xyes" ; then
-	    AC_DEFINE([HAVE_STRUCT_DIRENT64], [1], [Defined to 1 if we have the struct dirent64])
+	    AC_DEFINE([HAVE_STRUCT_DIRENT64],[1],[Defined to 1 if we have the struct dirent64])
 	fi
 	AC_MSG_RESULT([${tcl_cv_struct_dirent64}])
 
 	AC_MSG_CHECKING([for struct stat64])
 	AC_CACHE_VAL([tcl_cv_struct_stat64],[
-	    AC_TRY_COMPILE([#include <sys/stat.h>],[struct stat64 p;],
-		tcl_cv_struct_stat64=yes,tcl_cv_struct_stat64=no)])
+	    AC_COMPILE_IFELSE([AC_LANG_SOURCE([[#include <sys/stat.h>]],[[struct stat64 p;]])],
+		[tcl_cv_struct_stat64=yes],[tcl_cv_struct_stat64=no])])
 	if test "x${tcl_cv_struct_stat64}" = "xyes" ; then
-	    AC_DEFINE([HAVE_STRUCT_STAT64], [1], [Defined to 1 if we have the struct stat64])
+	    AC_DEFINE([HAVE_STRUCT_STAT64],[1],[Defined to 1 if we have the struct stat64])
 	fi
 	AC_MSG_RESULT([${tcl_cv_struct_stat64}])
 
 	AC_MSG_CHECKING([for off64_t])
 	AC_CACHE_VAL([tcl_cv_type_off64_t],[
-	    AC_TRY_COMPILE([#include <sys/types.h>],[off64_t offset;],
+	    AC_COMPILE_IFELSE([AC_LANG_SOURCE([[#include <sys/types.h>]],[[off64_t offset;]])],
 		[tcl_cv_type_off64_t=yes],[tcl_cv_type_off64_t=no])])
 	if test "x${tcl_cv_type_off64_t}" = "xyes" ; then
-	    AC_DEFINE([HAVE_TYPE_OFF64_T], [1], [Defined to 1 if we have the type off64_t])
+	    AC_DEFINE([HAVE_TYPE_OFF64_T],[1],[Defined to 1 if we have the type off64_t])
 	fi
 	AC_MSG_RESULT([${tcl_cv_type_off64_t}])
     fi
@@ -2875,7 +2877,7 @@ AC_DEFUN([TEA_PREFIX],[
 #	Sets up CC var and other standard bits we need to make executables.
 #------------------------------------------------------------------------
 AC_DEFUN([TEA_SETUP_COMPILER_CC],[
-    # Don't put any macros that use the compiler (e.g. AC_TRY_COMPILE)
+    # Do NOT put any macros that use the compiler (e.g. AC_COMPILE_IFELSE)
     # in this macro, they need to go into TEA_SETUP_COMPILER instead.
 
     # If the user did not set CFLAGS, set it now to keep
@@ -2923,19 +2925,21 @@ AC_DEFUN([TEA_SETUP_COMPILER_CC],[
 #	Sets up CC var and other standard bits we need to make executables.
 #------------------------------------------------------------------------
 AC_DEFUN([TEA_SETUP_COMPILER],[
-    # Any macros that use the compiler (e.g. AC_TRY_COMPILE) have to go here.
+    # Any macros that use the compiler (e.g. AC_COMPILE_IFELSE) have to
+    # go here.
     AC_REQUIRE([TEA_SETUP_COMPILER_CC])
 
     #------------------------------------------------------------------------
-    # If we're using GCC, see if the compiler understands -pipe. If so, use it.
-    # It makes compiling go faster.  (This is only a performance feature.)
-    #------------------------------------------------------------------------
+# If we are using GCC, see if the compiler understands -pipe. If so,
+# use it. It makes the compiling go faster. 
+# (This is only a performance feature.)
+#------------------------------------------------------------------------
 
     if test -z "$no_pipe" -a -n "$GCC"; then
 	AC_MSG_CHECKING([if the compiler understands -pipe])
 	OLDCC="$CC"
 	CC="$CC -pipe"
-	AC_TRY_COMPILE([],[], [AC_MSG_RESULT([yes])], [CC="$OLDCC"
+	AC_COMPILE_IFELSE([AC_LANG_SOURCE[[]],[[]])],[AC_MSG_RESULT([yes])],[CC="$OLDCC"
 	    AC_MSG_RESULT([no])])
     fi
 

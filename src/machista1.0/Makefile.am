@@ -39,6 +39,7 @@ clean-local::
 	rm -f ${SWIG_OBJS} ${PKG_INDEX}
 	rm -f ${TESTS}
 	rm -rf ${TESTS:%=%.dSYM}
+distclean-local: clean-local
 
 test:: ${TESTS}
 	${TESTS}

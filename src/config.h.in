@@ -3,6 +3,15 @@
 /* Define if building universal (internal helper macro) */
 #undef AC_APPLE_UNIVERSAL_BUILD
 
+/* The normal alignment of `long', in bytes. */
+#undef ALIGNOF_LONG
+
+/* The normal alignment of `uint32_t', in bytes. */
+#undef ALIGNOF_UINT32_T
+
+/* The normal alignment of `uint8_t', in bytes. */
+#undef ALIGNOF_UINT8_T
+
 /* Define if using the Apple Foundation framework */
 #undef APPLE_FOUNDATION
 
@@ -39,8 +48,15 @@
 /* Define to 1 if you have the `copyfile' function. */
 #undef HAVE_COPYFILE
 
+/* Define to 1 if you have the <CoreFoundation/CoreFoundation.h> header file.
+   */
+#undef HAVE_COREFOUNDATION_COREFOUNDATION_H
+
 /* Define to 1 if you have the <crt_externs.h> header file. */
 #undef HAVE_CRT_EXTERNS_H
+
+/* Define to 1 if you have the <ctype.h> header file. */
+#undef HAVE_CTYPE_H
 
 /* Define to 1 if you have the <curl/curlrules.h> header file. */
 #undef HAVE_CURL_CURLRULES_H
@@ -138,6 +154,9 @@
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
 
+/* Define to 1 if you have the <IOKit/IOKitLib.h> header file. */
+#undef HAVE_IOKIT_IOKITLIB_H
+
 /* Define to 1 if you have the `kqueue' function. */
 #undef HAVE_KQUEUE
 
@@ -152,6 +171,9 @@
 
 /* Define to 1 if you have a functional curl library. */
 #undef HAVE_LIBCURL
+
+/* Define to 1 if you have the <libkern/OSAtomic.h> header file. */
+#undef HAVE_LIBKERN_OSATOMIC_H
 
 /* Defined to 1 if you have the `md' library (-lmd). */
 #undef HAVE_LIBMD
@@ -177,6 +199,10 @@
 
 /* Define to 1 if the system has the type `long long int'. */
 #undef HAVE_LONG_LONG_INT
+
+/* Define to 1 if `lstat' has the bug that it succeeds when given the
+   zero-length file name argument. */
+#undef HAVE_LSTAT_EMPTY_STRING_BUG
 
 /* Define to 1 if you have the <mach/mach.h> header file. */
 #undef HAVE_MACH_MACH_H
@@ -227,8 +253,23 @@
 /* Define to 1 if you have the <openssl/sha.h> header file. */
 #undef HAVE_OPENSSL_SHA_H
 
+/* Define to 1 if you have the `OSAtomicCompareAndSwap32' function. */
+#undef HAVE_OSATOMICCOMPAREANDSWAP32
+
+/* Define to 1 if you have the `OSAtomicCompareAndSwap64' function. */
+#undef HAVE_OSATOMICCOMPAREANDSWAP64
+
+/* Define to 1 if you have the `OSAtomicCompareAndSwapPtr' function. */
+#undef HAVE_OSATOMICCOMPAREANDSWAPPTR
+
 /* Define to 1 if you have the <paths.h> header file. */
 #undef HAVE_PATHS_H
+
+/* Define to 1 if you have the `posix_spawn' function. */
+#undef HAVE_POSIX_SPAWN
+
+/* Define to 1 if you have the `printf' function. */
+#undef HAVE_PRINTF
 
 /* Define if you have POSIX threads libraries and header files. */
 #undef HAVE_PTHREAD
@@ -291,8 +332,17 @@
 /* Define to 1 if you have the `socket' function. */
 #undef HAVE_SOCKET
 
+/* Define to 1 if you have the <spawn.h> header file. */
+#undef HAVE_SPAWN_H
+
 /* Define to 1 if you have the <sqlite3ext.h> header file. */
 #undef HAVE_SQLITE3EXT_H
+
+/* Define to 1 if you have the <sqlite3.h> header file. */
+#undef HAVE_SQLITE3_H
+
+/* Define to 1 if stdbool.h conforms to C99. */
+#undef HAVE_STDBOOL_H
 
 /* Define to 1 if you have the <stddef.h> header file. */
 #undef HAVE_STDDEF_H
@@ -351,11 +401,21 @@
 /* Defined to 1 if we have the stat64 struct */
 #undef HAVE_STRUCT_STAT64
 
+/* Define to 1 if `errorLine' is a member of `struct Tcl_Interp'. */
+#undef HAVE_STRUCT_TCL_INTERP_ERRORLINE
+
 /* Define to 1 if `tm_zone' is a member of `struct tm'. */
 #undef HAVE_STRUCT_TM_TM_ZONE
 
 /* Define to 1 if you have the `sysctlbyname' function. */
 #undef HAVE_SYSCTLBYNAME
+
+/* Define to 1 if you have the `system' function. */
+#undef HAVE_SYSTEM
+
+/* Define to 1 if you have the <SystemConfiguration/SystemConfiguration.h>
+   header file. */
+#undef HAVE_SYSTEMCONFIGURATION_SYSTEMCONFIGURATION_H
 
 /* Define to 1 if you have the <sys/cdefs.h> header file. */
 #undef HAVE_SYS_CDEFS_H

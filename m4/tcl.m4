@@ -74,7 +74,7 @@ AC_DEFUN([SC_PATH_TCLCONFIG],[
     if test x"${no_tcl}" = x ; then
 	# we reset no_tcl in case something fails here
 	no_tcl=true
-	AC_ARG_WITH([tcl], [AS_HELP_STRING([--with-tcl],[directory containing tcl configuration (tclConfig.sh)])], [with_tclconfig=${withval}])
+	AC_ARG_WITH([tcl],[AS_HELP_STRING([--with-tcl],[directory containing tcl configuration (tclConfig.sh)])], [with_tclconfig=${withval}])
 	AC_MSG_CHECKING([for Tcl configuration])
 	AC_CACHE_VAL([ac_cv_c_tclconfig],[
 
@@ -1813,7 +1813,7 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 #--------------------------------------------------------------------
 
 AC_DEFUN([SC_SERIAL_PORT],[
-    AC_CHECK_HEADERS([sys/modem.h])
+    AC_CHECK_HEADERS_ONCE([sys/modem.h])
     AC_MSG_CHECKING([termios vs. termio vs. sgtty])
     AC_CACHE_VAL([tcl_cv_api_serial],[
     AC_RUN_IFELSE([AC_LANG_SOURCE([[
@@ -1963,42 +1963,42 @@ d = opendir("foobar");
 entryPtr = readdir(d);
 p = entryPtr->d_name;
 closedir(d);
-]])], [tcl_ok=yes], [tcl_ok=no])
+]])],[tcl_ok=yes],[tcl_ok=no])
 
     if test $tcl_ok = no; then
-	AC_DEFINE([NO_DIRENT_H], [1], [Defined to 1 if there is no dirent.h])
+	AC_DEFINE([NO_DIRENT_H],[1],[Defined to 1 if there is no dirent.h])
     fi
 
     AC_MSG_RESULT([$tcl_ok])
-    AC_CHECK_HEADER([errno.h], [], [AC_DEFINE([NO_ERRNO_H], [1], [Defined to 1 if there is no errno.h])])
-    AC_CHECK_HEADER([float.h], [], [AC_DEFINE([NO_FLOAT_H], [1], [Defined to 1 if there is no float.h])])
-    AC_CHECK_HEADER([values.h], [], [AC_DEFINE([NO_VALUES_H], [1], [Defined to 1 if there is no values.h])])
-    AC_CHECK_HEADER([limits.h], [], [AC_DEFINE([NO_LIMITS_H], [1], [Defined to 1 if there is no limits.h])])
-    AC_CHECK_HEADER([stdlib.h], [tcl_ok=1], [tcl_ok=0])
-    AC_EGREP_HEADER([strtol], [stdlib.h], [], [tcl_ok=0])
-    AC_EGREP_HEADER([strtoul], [stdlib.h], [], [tcl_ok=0])
-    AC_EGREP_HEADER([strtod], [stdlib.h], [], [tcl_ok=0])
+    AC_CHECK_HEADER([errno.h],[],[AC_DEFINE([NO_ERRNO_H], [1], [Defined to 1 if there is no errno.h])])
+    AC_CHECK_HEADER([float.h],[],[AC_DEFINE([NO_FLOAT_H], [1], [Defined to 1 if there is no float.h])])
+    AC_CHECK_HEADER([values.h],[],[AC_DEFINE([NO_VALUES_H], [1], [Defined to 1 if there is no values.h])])
+    AC_CHECK_HEADER([limits.h],[],[AC_DEFINE([NO_LIMITS_H], [1], [Defined to 1 if there is no limits.h])])
+    AC_CHECK_HEADER([stdlib.h],[tcl_ok=1],[tcl_ok=0])
+    AC_EGREP_HEADER([strtol],[stdlib.h],[],[tcl_ok=0])
+    AC_EGREP_HEADER([strtoul],[stdlib.h],[],[tcl_ok=0])
+    AC_EGREP_HEADER([strtod],[stdlib.h],[],[tcl_ok=0])
     if test $tcl_ok = 0; then
-	AC_DEFINE([NO_STDLIB_H], [1], [Defined to 1 if there is no stdlib.h])
+	AC_DEFINE([NO_STDLIB_H],[1],[Defined to 1 if there is no stdlib.h])
     fi
-    AC_CHECK_HEADER([string.h], [tcl_ok=1], [tcl_ok=0])
+    AC_CHECK_HEADER([string.h],[tcl_ok=1],[tcl_ok=0])
     AC_REQUIRE([AC_PROG_EGREP])
-    AC_EGREP_HEADER([strstr], [string.h], [], [tcl_ok=0])
-    AC_EGREP_HEADER([strerror], [string.h], [], [tcl_ok=0])
+    AC_EGREP_HEADER([strstr],[string.h],[],[tcl_ok=0])
+    AC_EGREP_HEADER([strerror],[string.h],[],[tcl_ok=0])
 
     # See also memmove check below for a place where NO_STRING_H can be
     # set and why.
 
     if test $tcl_ok = 0; then
-	AC_DEFINE([NO_STRING_H], [1], [Defined to 1 if there is no string.h])
+	AC_DEFINE([NO_STRING_H],[1],[Defined to 1 if there is no string.h])
     fi
 
-    AC_CHECK_HEADER([sys/wait.h], [], [AC_DEFINE([NO_SYS_WAIT_H], [1], [Defined to 1 if there is no sys/wait.h])])
-    AC_CHECK_HEADER([dlfcn.h], [], [AC_DEFINE([NO_DLFCN_H], [1], [Defined to 1 if there is no dlfcn.h])])
+    AC_CHECK_HEADER([sys/wait.h],[],[AC_DEFINE([NO_SYS_WAIT_H],[1],[Defined to 1 if there is no sys/wait.h])])
+    AC_CHECK_HEADER([dlfcn.h],[],[AC_DEFINE([NO_DLFCN_H],[1],[Defined to 1 if there is no dlfcn.h])])
 
     # OS/390 lacks sys/param.h (and doesn't need it, by chance).
 
-    AC_CHECK_HEADERS([unistd.h sys/param.h])
+    AC_CHECK_HEADERS_ONCE([unistd.h sys/param.h])
 ])
 
 #--------------------------------------------------------------------
@@ -2110,8 +2110,8 @@ AC_DEFUN([SC_PATH_X],[
 #--------------------------------------------------------------------
 
 AC_DEFUN([SC_BLOCKING_STYLE],[
-    AC_CHECK_HEADERS([sys/ioctl.h])
-    AC_CHECK_HEADERS([sys/filio.h])
+    AC_CHECK_HEADERS_ONCE([sys/ioctl.h])
+    AC_CHECK_HEADERS_ONCE([sys/filio.h])
     AC_MSG_CHECKING([FIONBIO vs. O_NONBLOCK for nonblocking I/O])
     if test -f /usr/lib/NextStep/software_version; then
 	system=NEXTSTEP-`awk '/3/,/3/' /usr/lib/NextStep/software_version`
@@ -2175,7 +2175,7 @@ AC_DEFUN([SC_BLOCKING_STYLE],[
 #--------------------------------------------------------------------
 
 AC_DEFUN([SC_TIME_HANDLER],[
-    AC_CHECK_HEADERS([sys/time.h])
+    AC_CHECK_HEADERS_ONCE([sys/time.h])
     AC_REQUIRE([AC_HEADER_TIME])
     AC_REQUIRE([AC_STRUCT_TIMEZONE])
 

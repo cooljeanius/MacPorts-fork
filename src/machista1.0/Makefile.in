@@ -39,6 +39,7 @@ clean::
 	rm -f ${SWIG_OBJS} ${PKG_INDEX}
 	rm -f ${TESTS}
 	rm -rf ${TESTS:%=%.dSYM}
+distclean: clean
 
 test:: ${TESTS}
 	${TESTS}

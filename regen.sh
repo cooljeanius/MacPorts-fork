@@ -5,5 +5,5 @@ echo "You would probably be better off just running \"autoreconf\" with your fav
 
 set -ex
 
-autoconf --warnings=all
-autoheader --warnings=all
+autoconf --warnings=all --force
+autoheader --warnings=all --force

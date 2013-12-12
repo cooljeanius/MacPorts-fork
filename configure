@@ -632,8 +632,8 @@ ac_includes_default="\
 # include <unistd.h>
 #endif"
 
-ac_default_prefix=/opt/local
 ac_header_list=
+ac_default_prefix=/opt/local
 enable_option_checking=no
 ac_subst_vars='am__EXEEXT_FALSE
 am__EXEEXT_TRUE
@@ -3296,9 +3296,21 @@ $as_echo "$as_me: creating cache $cache_file" >&6;}
   >$cache_file
 fi
 
+as_fn_append ac_header_list " CoreFoundation/CoreFoundation.h"
+as_fn_append ac_header_list " SystemConfiguration/SystemConfiguration.h"
+as_fn_append ac_header_list " IOKit/IOKitLib.h"
 as_fn_append ac_header_list " stdlib.h"
 as_fn_append ac_header_list " unistd.h"
 as_fn_append ac_header_list " sys/param.h"
+as_fn_append ac_header_list " ripemd.h"
+as_fn_append ac_header_list " sha256.h"
+as_fn_append ac_header_list " openssl/ripemd.h"
+as_fn_append ac_header_list " sys/time.h"
+as_fn_append ac_header_list " sqlite3ext.h"
+as_fn_append ac_header_list " sqlite3.h"
+as_fn_append ac_header_list " sys/modem.h"
+as_fn_append ac_header_list " sys/ioctl.h"
+as_fn_append ac_header_list " sys/filio.h"
 # Check that the precious variables saved in the cache have kept the same
 # value.
 ac_cache_corrupted=false
@@ -5767,12 +5779,11 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking MacPorts version" >&5
 $as_echo_n "checking MacPorts version... " >&6; }
 MACPORTS_VERSION=2.1.3
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $MACPORTS_VERSION" >&5
-$as_echo "$MACPORTS_VERSION" >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: ${MACPORTS_VERSION}" >&5
+$as_echo "${MACPORTS_VERSION}" >&6; }
 
 
 # Check user PATH for MP paths, and remove as necessary.
-# I'd like to remove this macro, but removing it breaks the build...
 
 	oldprefix=$prefix
 	if test "x$prefix" = "xNONE" ; then
@@ -5798,7 +5809,6 @@ $as_echo "$MACPORTS_VERSION" >&6; }
 
 	prefix=$oldprefix
 
-# ...so instead I'll just do this:
 echo "adding MacPorts prefix back in to path..."
 PATH=${PATH}:/opt/local/bin
 PATH=$(echo "${PATH}" | tr \: \\n | uniq | tr \\n \: | uniq | sed "s|::|:|g")
@@ -5957,7 +5967,7 @@ $as_echo "$as_me: WARNING: This version of Mac OS X is out of date." >&2;}
     { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: Please run Software Update to update it." >&5
 $as_echo "$as_me: WARNING: Please run Software Update to update it." >&2;}
     ;;
-  10.4*|10.5*|10.6*|10.7*|10.8*)
+  10.4*|10.5*|10.6*|10.7*|10.8*|10.9*)
         ;;
   *)
     ;;
@@ -5966,23 +5976,23 @@ esac
 # locate currently selected Xcode path
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking Xcode location" >&5
 $as_echo_n "checking Xcode location... " >&6; }
-if test "x$XCODE_SELECT" != "x"; then
-  DEVELOPER_DIR=`$XCODE_SELECT -print-path`
+if test "x${XCODE_SELECT}" != "x"; then
+  DEVELOPER_DIR=`${XCODE_SELECT} -print-path`
 fi
-if test -z "$DEVELOPER_DIR" -o ! -d "$DEVELOPER_DIR" ; then
+if test -z "${DEVELOPER_DIR}" -o ! -d "${DEVELOPER_DIR}" ; then
     if test -d /Applications/Xcode.app/Contents/Developer ; then
         DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer
     else
         DEVELOPER_DIR=/Developer
     fi
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $DEVELOPER_DIR" >&5
-$as_echo "$DEVELOPER_DIR" >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: ${DEVELOPER_DIR}" >&5
+$as_echo "${DEVELOPER_DIR}" >&6; }
 
 
 case "$DEVELOPER_DIR" in
   *Xcode.app/Contents/Developer)
-    XCODEPLIST_BASE=`dirname $DEVELOPER_DIR`/version
+    XCODEPLIST_BASE=`dirname ${DEVELOPER_DIR}`/version
     ;;
   *)
     XCODEPLIST_BASE=$DEVELOPER_DIR/Applications/Xcode.app/Contents/version
@@ -6014,7 +6024,7 @@ $as_echo "$as_me: WARNING: This version of Xcode Tools is out of date" >&2;}
     { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: Please consider upgrading as some ports fail compiling" >&5
 $as_echo "$as_me: WARNING: Please consider upgrading as some ports fail compiling" >&2;}
     ;;
-  2.*|3.*|4.*)
+  2.*|3.*|4.*|5.*)
         ;;
   *)
     ;;
@@ -6325,7 +6335,7 @@ unknown)
   ;;
 esac
 
-if test "x$CC" = "x"; then
+if test "x${CC}" = "x"; then
   ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'
 ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
@@ -6929,7 +6939,8 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 else
   # The "test" is just a dummy to make sure that this "else" condition
   # is not empty, as sometimes `autoconf` removes the AC_SUBSTs...
-  test ! -z "$CC"
+  # (I do this elsewhere, too)
+  test ! -z "${CC}"
 
 fi
 ac_ext=cpp
@@ -11293,10 +11304,9 @@ func_stripname_cnf ()
 
 
 # Set options
+enable_dlopen=yes
 
 
-
-        enable_dlopen=no
 
 
   enable_win32_dll=no
@@ -18485,7 +18495,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
-if test "x$RANLIB" = "x"; then
+if test "x${RANLIB}" = "x"; then
   if test -n "$ac_tool_prefix"; then
   # Extract the first word of "${ac_tool_prefix}ranlib", so it can be a program name with args.
 set dummy ${ac_tool_prefix}ranlib; ac_word=$2
@@ -18579,7 +18589,7 @@ else
 fi
 
 else
-  test ! -z "$RANLIB"
+  test ! -z "${RANLIB}"
 
 fi
 
@@ -18703,7 +18713,6 @@ $as_echo "no" >&6; }
 	fi
 fi
 
-# AX_* macros are from the autoconf-archive package
 
 
 ac_ext=c
@@ -19027,9 +19036,20 @@ fi
         LIBS="$save_LIBS"
         CFLAGS="$save_CFLAGS"
 
-        # More AIX lossage: must compile with xlc_r or cc_r
-        if test x"$GCC" != xyes; then
-          for ac_prog in xlc_r cc_r
+        # More AIX lossage: compile with *_r variant
+        if test "x$GCC" != xyes; then
+            case $host_os in
+                aix*)
+                case "x/$CC" in #(
+  x*/c89|x*/c89_128|x*/c99|x*/c99_128|x*/cc|x*/cc128|x*/xlc|x*/xlc_v6|x*/xlc128|x*/xlc128_v6) :
+    #handle absolute path differently from PATH based program lookup
+                   case "x$CC" in #(
+  x/*) :
+    if as_fn_executable_p ${CC}_r; then :
+  PTHREAD_CC="${CC}_r"
+fi ;; #(
+  *) :
+    for ac_prog in ${CC}_r
 do
   # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
@@ -19070,14 +19090,18 @@ fi
 
   test -n "$PTHREAD_CC" && break
 done
-test -n "$PTHREAD_CC" || PTHREAD_CC="${CC}"
-
-        else
-          PTHREAD_CC=$CC
+test -n "$PTHREAD_CC" || PTHREAD_CC="$CC"
+ ;;
+esac ;; #(
+  *) :
+     ;;
+esac
+                ;;
+            esac
         fi
-else
-        PTHREAD_CC="$CC"
 fi
+
+test -n "$PTHREAD_CC" || PTHREAD_CC="$CC"
 
 
 
@@ -19200,7 +19224,7 @@ else
 JAVA_TEST=Test.java
 CLASS_TEST=Test.class
 cat << \EOF > $JAVA_TEST
-/* #line 19203 "configure" */
+/* #line 19227 "configure" */
 public class Test {
 }
 EOF
@@ -19713,8 +19737,8 @@ done
   fi
 
 
-# XORG_* macros are from the xorg-util-macros package
-if test "x$CPP" = "x"; then
+if test "x${CPP}" = "x"; then
+  test -z "${CPP}"
   ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'
 ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
@@ -25739,7 +25763,7 @@ else
 fi
 
 
-if test "x$PERL" = "x"; then
+if test "x${PERL}" = "x"; then
 
 
 # Preserves the interface, should it be implemented later
@@ -25868,7 +25892,8 @@ fi
 
 
 else
-  test ! -z "$PERL"
+  test ! -z "${PERL}"
+  export PERL
 
 fi
 
@@ -25978,7 +26003,6 @@ fi
 #
 
 
-# AC_BAKEFILE_* macros are from the bakefile package
 
 
     ac_ext=c
@@ -26137,7 +26161,6 @@ $as_echo "$bakefile_cv_prog_makeisgnu" >&6; }
 
 
 
-# programs without specifically-crafted AC_* macros
 for ac_prog in bsdmake pmake
 do
   # Extract the first word of "$ac_prog", so it can be a program name with args.
@@ -27854,6 +27877,7 @@ fi
 
 else
   test ! -z "$SED"
+  export SED
 
 fi
 # Extract the first word of "svn", so it can be a program name with args.
@@ -28297,7 +28321,8 @@ fi
 
 
 
-# Define some precious variables allowing user to override PATH for some programs
+# Define some precious variables allowing user to override PATH for
+# some programs
 
 
 
@@ -28630,7 +28655,7 @@ $as_echo "$PATCH_CMD" >&6; }
 
 
 # Quiche eaters options.
-if test x$GCC = xyes; then
+if test x${GCC} = xyes; then
 	CFLAGS_QUICHEEATERS='-Wextra -Wall'
 	CFLAGS_PEDANTIC='-pedantic'
 fi
@@ -29171,8 +29196,8 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for GNUStep system root" >&5
 $as_echo_n "checking for GNUStep system root... " >&6; }
 if test "x$GNUSTEP_SYSTEM_ROOT" = "x"; then
-  # TODO: move prefix-checking code above this step so that configured prefix
-  # can be used instead of hardwiring /opt/local
+  # TODO: move prefix-checking code above this step so that configured
+  # prefix can be used instead of hardwiring /opt/local
   if test -d /opt/local/GNUStep/System; then
     export GNUSTEP_SYSTEM_ROOT=/opt/local/GNUSTEP/System
     { $as_echo "$as_me:${as_lineno-$LINENO}: result: using MacPorts GNUStep system root: $GNUSTEP_SYSTEM_ROOT" >&5
@@ -29414,6 +29439,26 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
+
+
+  for ac_header in $ac_header_list
+do :
+  as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
+ac_fn_c_check_header_compile "$LINENO" "$ac_header" "$as_ac_Header" "$ac_includes_default
+"
+if eval test \"x\$"$as_ac_Header"\" = x"yes"; then :
+  cat >>confdefs.h <<_ACEOF
+#define `$as_echo "HAVE_$ac_header" | $as_tr_cpp` 1
+_ACEOF
+
+fi
+
+done
+
+
+
+
+
 	FRAMEWORK_LIBS="-framework CoreFoundation"
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for CoreFoundation framework" >&5
 $as_echo_n "checking for CoreFoundation framework... " >&6; }
@@ -29423,6 +29468,12 @@ else
 
 		ac_save_LIBS="$LIBS"
 		LIBS="$FRAMEWORK_LIBS $LIBS"
+		ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
+
 		cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -29452,6 +29503,12 @@ else
 fi
 rm -f core conftest.err conftest.$ac_objext \
     conftest$ac_exeext conftest.$ac_ext
+		ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
+
 		LIBS="$ac_save_LIBS"
 
 fi
@@ -29466,6 +29523,9 @@ $as_echo "#define HAVE_FRAMEWORK_COREFOUNDATION 1" >>confdefs.h
 
 
 
+
+
+
 	FRAMEWORK_LIBS="-framework SystemConfiguration"
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for SystemConfiguration framework" >&5
 $as_echo_n "checking for SystemConfiguration framework... " >&6; }
@@ -29475,6 +29535,12 @@ else
 
 		ac_save_LIBS="$LIBS"
 		LIBS="$FRAMEWORK_LIBS $LIBS"
+		ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
+
 		cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -29504,6 +29570,12 @@ else
 fi
 rm -f core conftest.err conftest.$ac_objext \
     conftest$ac_exeext conftest.$ac_ext
+		ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
+
 		LIBS="$ac_save_LIBS"
 
 fi
@@ -29518,6 +29590,9 @@ $as_echo "#define HAVE_FRAMEWORK_SYSTEMCONFIGURATION 1" >>confdefs.h
 
 
 
+
+
+
 	FRAMEWORK_LIBS="-framework IOKit"
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for IOKit framework" >&5
 $as_echo_n "checking for IOKit framework... " >&6; }
@@ -29527,6 +29602,11 @@ else
 
 		ac_save_LIBS="$LIBS"
 		LIBS="$FRAMEWORK_LIBS $LIBS"
+		ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 		cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
@@ -29557,6 +29637,12 @@ else
 fi
 rm -f core conftest.err conftest.$ac_objext \
     conftest$ac_exeext conftest.$ac_ext
+		ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
+
 		LIBS="$ac_save_LIBS"
 
 fi
@@ -29571,6 +29657,7 @@ $as_echo "#define HAVE_FRAMEWORK_IOKIT 1" >>confdefs.h
 
 
 
+
 	FRAMEWORK_LIBS="-framework CoreFoundation"
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for CFNotificationCenterGetDarwinNotifyCenter" >&5
 $as_echo_n "checking for CFNotificationCenterGetDarwinNotifyCenter... " >&6; }
@@ -29580,6 +29667,12 @@ else
 
 		ac_save_LIBS="$LIBS"
 		LIBS="$FRAMEWORK_LIBS $LIBS"
+		ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
+
 		cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -29608,6 +29701,12 @@ else
 fi
 rm -f core conftest.err conftest.$ac_objext \
     conftest$ac_exeext conftest.$ac_ext
+		ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
+
 		LIBS="$ac_save_LIBS"
 
 fi
@@ -29665,8 +29764,8 @@ fi
 
 if test x$prefix = x/usr/local -o x$prefix = x/usr && test x$with_unsupported_prefix != xyes; then
     as_fn_error $? "Installing MacPorts into $prefix is not supported. If \
-you understand this and wish to do so anyway, pass --with-unsupported-prefix \
-to configure." "$LINENO" 5
+you understand this and wish to do so anyway, pass \
+--with-unsupported-prefix to configure." "$LINENO" 5
 fi
 
 
@@ -29674,7 +29773,7 @@ fi
 
 # Check whether --with-ports-dir was given.
 if test "${with_ports_dir+set}" = set; then :
-  withval=$with_ports_dir;  portsdir="$withval"
+  withval=$with_ports_dir; portsdir="$withval"
 fi
 
 
@@ -29780,7 +29879,7 @@ $as_echo "${ac_cv_c_tclpkgd}" >&6; }
 
 # Check whether --with-install-user was given.
 if test "${with_install_user+set}" = set; then :
-  withval=$with_install_user;  DSTUSR=$withval
+  withval=$with_install_user; DSTUSR=$withval
 fi
 
 
@@ -29800,7 +29899,7 @@ $as_echo "$DSTUSR" >&6; }
 
 # Check whether --with-install-group was given.
 if test "${with_install_group+set}" = set; then :
-  withval=$with_install_group;  DSTGRP=$withval
+  withval=$with_install_group; DSTGRP=$withval
 fi
 
 
@@ -29871,7 +29970,7 @@ $as_echo "$DSTMODE" >&6; }
 
 # Check whether --with-shared-directory was given.
 if test "${with_shared_directory+set}" = set; then :
-  withval=$with_shared_directory;  SHAREDIR=$withval
+  withval=$with_shared_directory; SHAREDIR=$withval
 fi
 
 
@@ -29977,12 +30076,237 @@ $as_echo "$MPFRAMEWORKSDIR" >&6; }
 
 
 # Check for universal options
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether byte ordering is bigendian" >&5
+$as_echo_n "checking whether byte ordering is bigendian... " >&6; }
+if ${ac_cv_c_bigendian+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_cv_c_bigendian=unknown
+    # See if we're dealing with a universal compiler.
+    cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+#ifndef __APPLE_CC__
+	       not a universal capable compiler
+	     #endif
+	     typedef int dummy;
+
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+
+	# Check for potential -arch flags.  It is not universal unless
+	# there are at least two -arch flags with different values.
+	ac_arch=
+	ac_prev=
+	for ac_word in $CC $CFLAGS $CPPFLAGS $LDFLAGS; do
+	 if test -n "$ac_prev"; then
+	   case $ac_word in
+	     i?86 | x86_64 | ppc | ppc64)
+	       if test -z "$ac_arch" || test "$ac_arch" = "$ac_word"; then
+		 ac_arch=$ac_word
+	       else
+		 ac_cv_c_bigendian=universal
+		 break
+	       fi
+	       ;;
+	   esac
+	   ac_prev=
+	 elif test "x$ac_word" = "x-arch"; then
+	   ac_prev=arch
+	 fi
+       done
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+    if test $ac_cv_c_bigendian = unknown; then
+      # See if sys/param.h defines the BYTE_ORDER macro.
+      cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+#include <sys/types.h>
+	     #include <sys/param.h>
+
+int
+main ()
+{
+#if ! (defined BYTE_ORDER && defined BIG_ENDIAN \
+		     && defined LITTLE_ENDIAN && BYTE_ORDER && BIG_ENDIAN \
+		     && LITTLE_ENDIAN)
+	      bogus endian macros
+	     #endif
+
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+  # It does; now see whether it defined to BIG_ENDIAN or not.
+	 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+#include <sys/types.h>
+		#include <sys/param.h>
+
+int
+main ()
+{
+#if BYTE_ORDER != BIG_ENDIAN
+		 not big endian
+		#endif
+
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+  ac_cv_c_bigendian=yes
+else
+  ac_cv_c_bigendian=no
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+    fi
+    if test $ac_cv_c_bigendian = unknown; then
+      # See if <limits.h> defines _LITTLE_ENDIAN or _BIG_ENDIAN (e.g., Solaris).
+      cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+#include <limits.h>
+
+int
+main ()
+{
+#if ! (defined _LITTLE_ENDIAN || defined _BIG_ENDIAN)
+	      bogus endian macros
+	     #endif
+
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+  # It does; now see whether it defined to _BIG_ENDIAN or not.
+	 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+#include <limits.h>
+
+int
+main ()
+{
+#ifndef _BIG_ENDIAN
+		 not big endian
+		#endif
+
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+  ac_cv_c_bigendian=yes
+else
+  ac_cv_c_bigendian=no
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+    fi
+    if test $ac_cv_c_bigendian = unknown; then
+      # Compile a test program.
+      if test "$cross_compiling" = yes; then :
+  # Try to guess by grepping values from an object file.
+	 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+short int ascii_mm[] =
+		  { 0x4249, 0x4765, 0x6E44, 0x6961, 0x6E53, 0x7953, 0 };
+		short int ascii_ii[] =
+		  { 0x694C, 0x5454, 0x656C, 0x6E45, 0x6944, 0x6E61, 0 };
+		int use_ascii (int i) {
+		  return ascii_mm[i] + ascii_ii[i];
+		}
+		short int ebcdic_ii[] =
+		  { 0x89D3, 0xE3E3, 0x8593, 0x95C5, 0x89C4, 0x9581, 0 };
+		short int ebcdic_mm[] =
+		  { 0xC2C9, 0xC785, 0x95C4, 0x8981, 0x95E2, 0xA8E2, 0 };
+		int use_ebcdic (int i) {
+		  return ebcdic_mm[i] + ebcdic_ii[i];
+		}
+		extern int foo;
+
+int
+main ()
+{
+return use_ascii (foo) == use_ebcdic (foo);
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+  if grep BIGenDianSyS conftest.$ac_objext >/dev/null; then
+	      ac_cv_c_bigendian=yes
+	    fi
+	    if grep LiTTleEnDian conftest.$ac_objext >/dev/null ; then
+	      if test "$ac_cv_c_bigendian" = unknown; then
+		ac_cv_c_bigendian=no
+	      else
+		# finding both strings is unlikely to happen, but who knows?
+		ac_cv_c_bigendian=unknown
+	      fi
+	    fi
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+else
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+$ac_includes_default
+int
+main ()
+{
+
+	     /* Are we little or big endian?  From Harbison&Steele.  */
+	     union
+	     {
+	       long int l;
+	       char c[sizeof (long int)];
+	     } u;
+	     u.l = 1;
+	     return u.c[sizeof (long int) - 1] == 1;
+
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_run "$LINENO"; then :
+  ac_cv_c_bigendian=no
+else
+  ac_cv_c_bigendian=yes
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+  conftest.$ac_objext conftest.beam conftest.$ac_ext
+fi
+
+    fi
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_c_bigendian" >&5
+$as_echo "$ac_cv_c_bigendian" >&6; }
+ case $ac_cv_c_bigendian in #(
+   yes)
+     $as_echo "#define WORDS_BIGENDIAN 1" >>confdefs.h
+;; #(
+   no)
+      ;; #(
+   universal)
+
+$as_echo "#define AC_APPLE_UNIVERSAL_BUILD 1" >>confdefs.h
+
+     ;; #(
+   *)
+     as_fn_error $? "unknown endianness
+ presetting ac_cv_c_bigendian=no (or yes) will help" "$LINENO" 5 ;;
+ esac
+
 
 
 # Check whether --with-universal-archs was given.
 if test "${with_universal_archs+set}" = set; then :
   withval=$with_universal_archs; UNIVERSAL_ARCHS=${withval}
 fi
+
 
 
   if test "x$UNIVERSAL_ARCHS" = "x"; then
@@ -30045,8 +30369,6 @@ fi
 
 
 # Check for standard header files.
-# AC_HEADER_STDC is no longer needed by itself, as it automatically gets
-# pulled in by other macros
 ac_header_dirent=no
 for ac_hdr in dirent.h sys/ndir.h sys/dir.h ndir.h; do
   as_ac_Header=`$as_echo "ac_cv_header_dirent_$ac_hdr" | $as_tr_sh`
@@ -30205,74 +30527,6 @@ fi
 
 fi
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for sys/wait.h that is POSIX.1 compatible" >&5
-$as_echo_n "checking for sys/wait.h that is POSIX.1 compatible... " >&6; }
-if ${ac_cv_header_sys_wait_h+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-#include <sys/types.h>
-#include <sys/wait.h>
-#ifndef WEXITSTATUS
-# define WEXITSTATUS(stat_val) ((unsigned int) (stat_val) >> 8)
-#endif
-#ifndef WIFEXITED
-# define WIFEXITED(stat_val) (((stat_val) & 255) == 0)
-#endif
-
-int
-main ()
-{
-  int s;
-  wait (&s);
-  s = WIFEXITED (s) ? WEXITSTATUS (s) : 1;
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_compile "$LINENO"; then :
-  ac_cv_header_sys_wait_h=yes
-else
-  ac_cv_header_sys_wait_h=no
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_header_sys_wait_h" >&5
-$as_echo "$ac_cv_header_sys_wait_h" >&6; }
-if test $ac_cv_header_sys_wait_h = yes; then
-
-$as_echo "#define HAVE_SYS_WAIT_H 1" >>confdefs.h
-
-fi
-
-# sys/ioctl.h sys/param.h and sys/time.h are not checked here
-# because they are checked later
-# limits.h gets to stay in because autoscan will still warn about
-# it when removed
-for ac_header in crt_externs.h err.h fcntl.h limits.h mach/mach.h \
-netdb.h paths.h pwd.h stddef.h stdio.h sys/cdefs.h sys/event.h \
-sys/fcntl.h sys/file.h sys/mount.h sys/paths.h sys/socket.h \
-sys/sysctl.h utime.h
-do :
-  as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
-ac_fn_c_check_header_mongrel "$LINENO" "$ac_header" "$as_ac_Header" "$ac_includes_default"
-if eval test \"x\$"$as_ac_Header"\" = x"yes"; then :
-  cat >>confdefs.h <<_ACEOF
-#define `$as_echo "HAVE_$ac_header" | $as_tr_cpp` 1
-_ACEOF
-
-fi
-
-done
-
-# readline/history.h and readline/readline.h are checked for by
-# the AX_LIB_READLINE macro above
-
-AM_CPPFLAGS="-I.. -I. ${AM_CPPFLAGS}"
-INCLUDES=${AM_CPPFLAGS}
-
-# Checks for typedefs, structures, and compiler characteristics.
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for stdbool.h that conforms to C99" >&5
 $as_echo_n "checking for stdbool.h that conforms to C99... " >&6; }
 if ${ac_cv_header_stdbool_h+:} false; then :
@@ -30360,6 +30614,74 @@ _ACEOF
 fi
 
 
+if test $ac_cv_header_stdbool_h = yes; then
+
+$as_echo "#define HAVE_STDBOOL_H 1" >>confdefs.h
+
+fi
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for sys/wait.h that is POSIX.1 compatible" >&5
+$as_echo_n "checking for sys/wait.h that is POSIX.1 compatible... " >&6; }
+if ${ac_cv_header_sys_wait_h+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+#include <sys/types.h>
+#include <sys/wait.h>
+#ifndef WEXITSTATUS
+# define WEXITSTATUS(stat_val) ((unsigned int) (stat_val) >> 8)
+#endif
+#ifndef WIFEXITED
+# define WIFEXITED(stat_val) (((stat_val) & 255) == 0)
+#endif
+
+int
+main ()
+{
+  int s;
+  wait (&s);
+  s = WIFEXITED (s) ? WEXITSTATUS (s) : 1;
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+  ac_cv_header_sys_wait_h=yes
+else
+  ac_cv_header_sys_wait_h=no
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_header_sys_wait_h" >&5
+$as_echo "$ac_cv_header_sys_wait_h" >&6; }
+if test $ac_cv_header_sys_wait_h = yes; then
+
+$as_echo "#define HAVE_SYS_WAIT_H 1" >>confdefs.h
+
+fi
+
+for ac_header in crt_externs.h ctype.h err.h fcntl.h libkern/OSAtomic.h \
+                  limits.h mach/mach.h netdb.h paths.h pwd.h spawn.h \
+                  stddef.h stdio.h sys/cdefs.h sys/event.h sys/fcntl.h \
+                  sys/file.h sys/mount.h sys/paths.h sys/socket.h \
+                  sys/sysctl.h utime.h
+do :
+  as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
+ac_fn_c_check_header_mongrel "$LINENO" "$ac_header" "$as_ac_Header" "$ac_includes_default"
+if eval test \"x\$"$as_ac_Header"\" = x"yes"; then :
+  cat >>confdefs.h <<_ACEOF
+#define `$as_echo "HAVE_$ac_header" | $as_tr_cpp` 1
+_ACEOF
+
+fi
+
+done
+
+
+AM_CPPFLAGS="-I.. -I. ${AM_CPPFLAGS}"
+INCLUDES=${AM_CPPFLAGS}
+
+# Checks for typedefs, structures, and compiler characteristics.
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for uid_t in sys/types.h" >&5
 $as_echo_n "checking for uid_t in sys/types.h... " >&6; }
 if ${ac_cv_type_uid_t+:} false; then :
@@ -31165,6 +31487,16 @@ _ACEOF
 
 fi
 
+ac_fn_c_check_member "$LINENO" "struct Tcl_Interp" "errorLine" "ac_cv_member_struct_Tcl_Interp_errorLine" "$ac_includes_default"
+if test "x$ac_cv_member_struct_Tcl_Interp_errorLine" = xyes; then :
+
+cat >>confdefs.h <<_ACEOF
+#define HAVE_STRUCT_TCL_INTERP_ERRORLINE 1
+_ACEOF
+
+
+fi
+
 # The cast to long int works around a bug in the HP C Compiler
 # version HP92453-01 B.11.11.23709.GP, which incorrectly rejects
 # declarations like `int a3[[(sizeof (unsigned char)) >= 0]];'.
@@ -31195,6 +31527,41 @@ $as_echo "$ac_cv_sizeof_long" >&6; }
 
 cat >>confdefs.h <<_ACEOF
 #define SIZEOF_LONG $ac_cv_sizeof_long
+_ACEOF
+
+
+# The cast to long int works around a bug in the HP C Compiler,
+# see AC_CHECK_SIZEOF for more information.
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking alignment of long" >&5
+$as_echo_n "checking alignment of long... " >&6; }
+if ${ac_cv_alignof_long+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  if ac_fn_c_compute_int "$LINENO" "(long int) offsetof (ac__type_alignof_, y)" "ac_cv_alignof_long"        "$ac_includes_default
+#ifndef offsetof
+# define offsetof(type, member) ((char *) &((type *) 0)->member - (char *) 0)
+#endif
+typedef struct { char x; long y; } ac__type_alignof_;"; then :
+
+else
+  if test "$ac_cv_type_long" = yes; then
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
+$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
+as_fn_error 77 "cannot compute alignment of long
+See \`config.log' for more details" "$LINENO" 5; }
+   else
+     ac_cv_alignof_long=0
+   fi
+fi
+
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_alignof_long" >&5
+$as_echo "$ac_cv_alignof_long" >&6; }
+
+
+
+cat >>confdefs.h <<_ACEOF
+#define ALIGNOF_LONG $ac_cv_alignof_long
 _ACEOF
 
 
@@ -31231,6 +31598,41 @@ cat >>confdefs.h <<_ACEOF
 _ACEOF
 
 
+# The cast to long int works around a bug in the HP C Compiler,
+# see AC_CHECK_SIZEOF for more information.
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking alignment of uint8_t" >&5
+$as_echo_n "checking alignment of uint8_t... " >&6; }
+if ${ac_cv_alignof_uint8_t+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  if ac_fn_c_compute_int "$LINENO" "(long int) offsetof (ac__type_alignof_, y)" "ac_cv_alignof_uint8_t"        "$ac_includes_default
+#ifndef offsetof
+# define offsetof(type, member) ((char *) &((type *) 0)->member - (char *) 0)
+#endif
+typedef struct { char x; uint8_t y; } ac__type_alignof_;"; then :
+
+else
+  if test "$ac_cv_type_uint8_t" = yes; then
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
+$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
+as_fn_error 77 "cannot compute alignment of uint8_t
+See \`config.log' for more details" "$LINENO" 5; }
+   else
+     ac_cv_alignof_uint8_t=0
+   fi
+fi
+
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_alignof_uint8_t" >&5
+$as_echo "$ac_cv_alignof_uint8_t" >&6; }
+
+
+
+cat >>confdefs.h <<_ACEOF
+#define ALIGNOF_UINT8_T $ac_cv_alignof_uint8_t
+_ACEOF
+
+
 # The cast to long int works around a bug in the HP C Compiler
 # version HP92453-01 B.11.11.23709.GP, which incorrectly rejects
 # declarations like `int a3[[(sizeof (unsigned char)) >= 0]];'.
@@ -31261,6 +31663,41 @@ $as_echo "$ac_cv_sizeof_uint32_t" >&6; }
 
 cat >>confdefs.h <<_ACEOF
 #define SIZEOF_UINT32_T $ac_cv_sizeof_uint32_t
+_ACEOF
+
+
+# The cast to long int works around a bug in the HP C Compiler,
+# see AC_CHECK_SIZEOF for more information.
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking alignment of uint32_t" >&5
+$as_echo_n "checking alignment of uint32_t... " >&6; }
+if ${ac_cv_alignof_uint32_t+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  if ac_fn_c_compute_int "$LINENO" "(long int) offsetof (ac__type_alignof_, y)" "ac_cv_alignof_uint32_t"        "$ac_includes_default
+#ifndef offsetof
+# define offsetof(type, member) ((char *) &((type *) 0)->member - (char *) 0)
+#endif
+typedef struct { char x; uint32_t y; } ac__type_alignof_;"; then :
+
+else
+  if test "$ac_cv_type_uint32_t" = yes; then
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
+$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
+as_fn_error 77 "cannot compute alignment of uint32_t
+See \`config.log' for more details" "$LINENO" 5; }
+   else
+     ac_cv_alignof_uint32_t=0
+   fi
+fi
+
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_alignof_uint32_t" >&5
+$as_echo "$ac_cv_alignof_uint32_t" >&6; }
+
+
+
+cat >>confdefs.h <<_ACEOF
+#define ALIGNOF_UINT32_T $ac_cv_alignof_uint32_t
 _ACEOF
 
 
@@ -31606,7 +32043,52 @@ esac
 
 fi
 
-for ac_header in stdlib.h
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether lstat accepts an empty string" >&5
+$as_echo_n "checking whether lstat accepts an empty string... " >&6; }
+if ${ac_cv_func_lstat_empty_string_bug+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  if test "$cross_compiling" = yes; then :
+  ac_cv_func_lstat_empty_string_bug=yes
+else
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+$ac_includes_default
+int
+main ()
+{
+struct stat sbuf;
+  return lstat ("", &sbuf) == 0;
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_run "$LINENO"; then :
+  ac_cv_func_lstat_empty_string_bug=no
+else
+  ac_cv_func_lstat_empty_string_bug=yes
+fi
+rm -f core *.core core.conftest.* gmon.out bb.out conftest$ac_exeext \
+  conftest.$ac_objext conftest.beam conftest.$ac_ext
+fi
+
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_func_lstat_empty_string_bug" >&5
+$as_echo "$ac_cv_func_lstat_empty_string_bug" >&6; }
+if test $ac_cv_func_lstat_empty_string_bug = yes; then
+  case " $LIBOBJS " in
+  *" lstat.$ac_objext "* ) ;;
+  *) LIBOBJS="$LIBOBJS lstat.$ac_objext"
+ ;;
+esac
+
+
+cat >>confdefs.h <<_ACEOF
+#define HAVE_LSTAT_EMPTY_STRING_BUG 1
+_ACEOF
+
+fi
+ for ac_header in stdlib.h
 do :
   ac_fn_c_check_header_mongrel "$LINENO" "stdlib.h" "ac_cv_header_stdlib_h" "$ac_includes_default"
 if test "x$ac_cv_header_stdlib_h" = xyes; then :
@@ -31672,23 +32154,6 @@ $as_echo "#define malloc rpl_malloc" >>confdefs.h
 
 fi
 
-
-
-
-
-  for ac_header in $ac_header_list
-do :
-  as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
-ac_fn_c_check_header_compile "$LINENO" "$ac_header" "$as_ac_Header" "$ac_includes_default
-"
-if eval test \"x\$"$as_ac_Header"\" = x"yes"; then :
-  cat >>confdefs.h <<_ACEOF
-#define `$as_echo "HAVE_$ac_header" | $as_tr_cpp` 1
-_ACEOF
-
-fi
-
-done
 
 
 
@@ -31941,11 +32406,14 @@ $as_echo "#define realloc rpl_realloc" >>confdefs.h
 fi
 
 
-# localtime_r is checked for elsewhere
-for ac_func in bzero clearenv copyfile dup2 fgetln flock getcwd lchown \
-lockf kqueue memmove memset mkdir munmap realpath regcomp rmdir select \
-setenv setmode socket strcasecmp strchr strdup strerror strlcat strlcpy \
-strncasecmp strrchr strstr strtol strtoul sysctlbyname utime
+# the localtime_r function is checked for elsewhere
+for ac_func in OSAtomicCompareAndSwap32 OSAtomicCompareAndSwap64 \
+                OSAtomicCompareAndSwapPtr bzero clearenv copyfile dup2 \
+                fgetln flock getcwd kqueue lchown lockf memmove memset \
+                mkdir munmap posix_spawn printf realpath regcomp rmdir \
+                select setenv setmode socket strcasecmp strchr strdup \
+                strerror strlcat strlcpy strncasecmp strrchr strstr \
+                strtol strtoul sysctlbyname system utime
 do :
   as_ac_var=`$as_echo "ac_cv_func_$ac_func" | $as_tr_sh`
 ac_fn_c_check_func "$LINENO" "$ac_func" "$as_ac_var"
@@ -31962,12 +32430,19 @@ done
 
 
 
+
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking if readlink conforms to POSIX 1003.1a" >&5
 $as_echo_n "checking if readlink conforms to POSIX 1003.1a... " >&6; }
 
 	if ${mp_cv_readlink_is_posix_1003_1a+:} false; then :
   $as_echo_n "(cached) " >&6
 else
+
+		ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 		cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
@@ -31996,6 +32471,12 @@ else
 
 fi
 rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+		ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
+
 
 fi
 
@@ -32012,6 +32493,12 @@ $as_echo "#define READLINK_IS_NOT_P1003_1A /**/" >>confdefs.h
 
 
 # Check for md5 implementation
+
+
+
+
+
+
 ac_fn_c_check_header_mongrel "$LINENO" "CommonCrypto/CommonDigest.h" "ac_cv_header_CommonCrypto_CommonDigest_h" "$ac_includes_default"
 if test "x$ac_cv_header_CommonCrypto_CommonDigest_h" = xyes; then :
 
@@ -32089,18 +32576,6 @@ fi
 done
 
 		LIBS="$ac_save_LIBS"
-		for ac_header in ripemd.h sha256.h
-do :
-  as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
-ac_fn_c_check_header_mongrel "$LINENO" "$ac_header" "$as_ac_Header" "$ac_includes_default"
-if eval test \"x\$"$as_ac_Header"\" = x"yes"; then :
-  cat >>confdefs.h <<_ACEOF
-#define `$as_echo "HAVE_$ac_header" | $as_tr_cpp` 1
-_ACEOF
-
-fi
-
-done
 
 
 $as_echo "#define HAVE_LIBMD 1" >>confdefs.h
@@ -32165,17 +32640,6 @@ fi
 
 done
 
-			for ac_header in openssl/ripemd.h
-do :
-  ac_fn_c_check_header_mongrel "$LINENO" "openssl/ripemd.h" "ac_cv_header_openssl_ripemd_h" "$ac_includes_default"
-if test "x$ac_cv_header_openssl_ripemd_h" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_OPENSSL_RIPEMD_H 1
-_ACEOF
-
-fi
-
-done
 
 			ac_save_LIBS="$LIBS"
 			LIBS="-lcrypto $LIBS"
@@ -32249,7 +32713,7 @@ fi
 $as_echo "$ac_cv_lib_readline_readline" >&6; }
 if test "x$ac_cv_lib_readline_readline" = xyes; then :
 
-				  READLINE_LIBS=-lreadline
+				 READLINE_LIBS=-lreadline
 
 $as_echo "#define HAVE_LIBREADLINE 1" >>confdefs.h
 
@@ -32577,6 +33041,8 @@ $as_echo "${ac_cv_c_tclh}" >&6; }
 
 
 
+
+
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether time.h and sys/time.h may both be included" >&5
 $as_echo_n "checking whether time.h and sys/time.h may both be included... " >&6; }
 if ${ac_cv_header_time+:} false; then :
@@ -32715,17 +33181,6 @@ $as_echo "#define HAVE_TZNAME 1" >>confdefs.h
 fi
 
 
-    for ac_header in sys/time.h
-do :
-  ac_fn_c_check_header_mongrel "$LINENO" "sys/time.h" "ac_cv_header_sys_time_h" "$ac_includes_default"
-if test "x$ac_cv_header_sys_time_h" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_SYS_TIME_H 1
-_ACEOF
-
-fi
-
-done
 
 
 
@@ -33035,18 +33490,6 @@ fi
 
     # OS/390 lacks sys/param.h (and doesn't need it, by chance).
 
-    for ac_header in unistd.h sys/param.h
-do :
-  as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
-ac_fn_c_check_header_mongrel "$LINENO" "$ac_header" "$as_ac_Header" "$ac_includes_default"
-if eval test \"x\$"$as_ac_Header"\" = x"yes"; then :
-  cat >>confdefs.h <<_ACEOF
-#define `$as_echo "HAVE_$ac_header" | $as_tr_cpp` 1
-_ACEOF
-
-fi
-
-done
 
 
 
@@ -33237,7 +33680,8 @@ $as_echo "yes" >&6; }
 	else
 		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-		as_fn_error $? "tcl wasn't compiled with threads enabled" "$LINENO" 5
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: tcl was not compiled with threads enabled (this should be an error, but it has been turned into a warning to facilitate work on this configure script)" >&5
+$as_echo "$as_me: WARNING: tcl was not compiled with threads enabled (this should be an error, but it has been turned into a warning to facilitate work on this configure script)" >&2;}
 	fi
 
 
@@ -33926,6 +34370,9 @@ done
 
 
 
+
+
+
     # first sqlite3 itself
 
 # Check whether --with-sqlite3prefix was given.
@@ -33966,17 +34413,6 @@ fi
     # check if we have sqlite3ext.h, using the appropriate cppflags
     CPPFLAGS_OLD="${CPPFLAGS}"
     CPPFLAGS="${CPPFLAGS} ${CFLAGS_SQLITE3}"
-    for ac_header in sqlite3ext.h
-do :
-  ac_fn_c_check_header_mongrel "$LINENO" "sqlite3ext.h" "ac_cv_header_sqlite3ext_h" "$ac_includes_default"
-if test "x$ac_cv_header_sqlite3ext_h" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_SQLITE3EXT_H 1
-_ACEOF
-
-fi
-
-done
 
     CPPFLAGS="${CPPFLAGS_OLD}"
 
@@ -34023,6 +34459,9 @@ $as_echo "$mp_cv_sqlite3_dir" >&6; }
 
 
 
+
+
+
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for SQLite >= 3003011" >&5
 $as_echo_n "checking for SQLite >= 3003011... " >&6; }
 
@@ -34032,6 +34471,12 @@ $as_echo_n "checking for SQLite >= 3003011... " >&6; }
 	if ${mp_cv_sqlite_version_defined+:} false; then :
   $as_echo_n "(cached) " >&6
 else
+
+		ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 		cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
@@ -34048,6 +34493,12 @@ else
   as_fn_error $? "\"SQLITE_VERSION_NUMBER undefined or sqlite3.h not found\"" "$LINENO" 5
 fi
 rm -f conftest.err conftest.i conftest.$ac_ext
+		ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
+
 
 fi
 
@@ -34059,6 +34510,12 @@ $as_echo "SQLite version not found" >&6; }
 		if ${mp_cv_sqlite_version_ge_3003011+:} false; then :
   $as_echo_n "(cached) " >&6
 else
+
+			ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 			cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
@@ -34077,6 +34534,12 @@ else
   mp_cv_sqlite_version_ge_3003011="no"
 fi
 rm -f conftest.err conftest.i conftest.$ac_ext
+			ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
+
 
 fi
 
@@ -34121,17 +34584,19 @@ fi
 
 fi
 
-# If thread package isn't installed, configure and install thread package.
-if test "$with_included_tclthread" = "yes"; then
-	OUR_INCLUDED_PACKAGES="$OUR_INCLUDED_PACKAGES thread2.6"
+# If thread package is not installed, configure and install thread package.
+if test "${with_included_tclthread}" = "yes"; then
+	OUR_INCLUDED_PACKAGES="${OUR_INCLUDED_PACKAGES} thread2.6"
 
 
 subdirs="$subdirs src/thread2.6"
 
-	# Extract thread package (only if it has not already been extracted)
+	# Extract thread package
+	# (only if it has not already been extracted)
 	if test ! -d src/thread2.6 ; then
 		(cd src/; gzip -d < thread2.6.tar.gz | tar xf -)
-		# If extracting a fresh copy, we have to patch the thread package
+		# If extracting a fresh copy, we have to patch the thread
+		# package directory
 		# (so that thread2.6 is the vanilla distribution directory)
 		patch -p0 < src/thread2.6.diff
 	fi
@@ -34141,7 +34606,7 @@ fi
 
 # Check whether --with-trace-sdk was given.
 if test "${with_trace_sdk+set}" = set; then :
-  withval=$with_trace_sdk; test -d ${DEVELOPER_DIR}/SDKs/$withval && cat >>confdefs.h <<_ACEOF
+  withval=$with_trace_sdk; test -d ${DEVELOPER_DIR}/SDKs/${withval} && cat >>confdefs.h <<_ACEOF
 #define TRACE_SDK "${withval}"
 _ACEOF
 
@@ -34297,17 +34762,8 @@ $as_echo "$langinfo_ok" >&6; }
 # (yes, serial ports are still used)
 # (afaik, xnu can still only be debugged over a serial port)
 
-    for ac_header in sys/modem.h
-do :
-  ac_fn_c_check_header_mongrel "$LINENO" "sys/modem.h" "ac_cv_header_sys_modem_h" "$ac_includes_default"
-if test "x$ac_cv_header_sys_modem_h" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_SYS_MODEM_H 1
-_ACEOF
 
-fi
 
-done
 
     { $as_echo "$as_me:${as_lineno-$LINENO}: checking termios vs. termio vs. sgtty" >&5
 $as_echo_n "checking termios vs. termio vs. sgtty... " >&6; }
@@ -34510,29 +34966,11 @@ $as_echo "$tcl_cv_api_serial" >&6; }
 
 # Check blocking style
 
-    for ac_header in sys/ioctl.h
-do :
-  ac_fn_c_check_header_mongrel "$LINENO" "sys/ioctl.h" "ac_cv_header_sys_ioctl_h" "$ac_includes_default"
-if test "x$ac_cv_header_sys_ioctl_h" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_SYS_IOCTL_H 1
-_ACEOF
 
-fi
 
-done
 
-    for ac_header in sys/filio.h
-do :
-  ac_fn_c_check_header_mongrel "$LINENO" "sys/filio.h" "ac_cv_header_sys_filio_h" "$ac_includes_default"
-if test "x$ac_cv_header_sys_filio_h" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_SYS_FILIO_H 1
-_ACEOF
 
-fi
 
-done
 
     { $as_echo "$as_me:${as_lineno-$LINENO}: checking FIONBIO vs. O_NONBLOCK for nonblocking I/O" >&5
 $as_echo_n "checking FIONBIO vs. O_NONBLOCK for nonblocking I/O... " >&6; }
@@ -36486,12 +36924,12 @@ SHLIB_SUFFIX=${TCL_SHLIB_SUFFIX}
 
 # misc variables that need to be expanded for substitution into tcl
 
-oldprefix=$prefix
-if test "x$prefix" = "xNONE" ; then
-   prefix=$ac_default_prefix
+oldprefix=${prefix}
+if test "x${prefix}" = "xNONE" ; then
+   prefix=${ac_default_prefix}
 fi
 
-# Check if there's an existing DP/MP install too old to upgrade
+# Check if there is an existing DP/MP install too old to upgrade
 
 
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking that any existing MacPorts install can be upgraded" >&5
@@ -36506,20 +36944,20 @@ $as_echo "yes" >&6; }
 	fi
 
 
-eval "prefix_expanded=$prefix"
+eval "prefix_expanded=${prefix}"
 
 # do this twice, since there is a nested variable of
 # ${prefix} inside of ${sysconfdir}
-eval "MPCONFIGDIR_EXPANDED=$MPCONFIGDIR"
-eval "MPCONFIGDIR_EXPANDED=$MPCONFIGDIR_EXPANDED"
+eval "MPCONFIGDIR_EXPANDED=${MPCONFIGDIR}"
+eval "MPCONFIGDIR_EXPANDED=${MPCONFIGDIR_EXPANDED}"
 
-eval "localstatedir_expanded=$localstatedir"
+eval "localstatedir_expanded=${localstatedir}"
 
 eval "macports_tcl_dir=${datadir}/macports/Tcl"
-eval "macports_tcl_dir=$macports_tcl_dir"
+eval "macports_tcl_dir=${macports_tcl_dir}"
 
 
-prefix=$oldprefix
+prefix=${oldprefix}
 
 
 
@@ -36728,6 +37166,7 @@ if test -z "${HAVE_LD_WRAP_TRUE}" && test -z "${HAVE_LD_WRAP_FALSE}"; then
   as_fn_error $? "conditional \"HAVE_LD_WRAP\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
+
 
 
 : "${CONFIG_STATUS=./config.status}"

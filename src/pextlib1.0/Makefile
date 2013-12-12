@@ -15,6 +15,7 @@ LIBS+= ${CURL_LIBS} ${MD5_LIBS} ${READLINE_LIBS}
 
 clean::
 	rm -f $(OBJS) $(SHLIB_NAME)
+distclean: clean
 
 .PHONY: test
 

@@ -1,7 +1,8 @@
 #!/bin/bash -norc
-dnl	This file is an input file used by the GNU "autoconf" program to
-dnl	generate the file "configure", which is run during Tcl installation
-dnl	to configure the system for the local environment.
+dnl#                                               -*- Autoconf -*-
+dnl# This file is an input file used by the GNU "autoconf" program to
+dnl# generate the file "configure", which is run during Tcl installation
+dnl# to configure the system for the local environment.
 #
 # RCS: @(#) $Id: configure.in,v 1.20 2004/12/18 13:26:02 vasiljevic Exp $
 
@@ -20,18 +21,19 @@ dnl	to configure the system for the local environment.
 #-----------------------------------------------------------------------
 
 AC_PREREQ([2.69])
-AC_INIT([thread], [2.6])
+AC_INIT([thread],[2.6])
 AC_SUBST([PACKAGE_VERSION])
 AC_CONFIG_SRCDIR([generic/aolstub.cpp])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_AUX_DIR([tclconfig])
 AC_CANONICAL_TARGET
-AM_INIT_AUTOMAKE([foreign dejagnu no-installinfo -Wall])
-AM_MAINTAINER_MODE
-AC_SEARCH_LIBS([strerror],[cposix]) dnl# This macro used to be AC_ISC_POSIX
 AC_EXEEXT
 AC_OBJEXT
+AC_USE_SYSTEM_EXTENSIONS
+AM_INIT_AUTOMAKE([foreign dejagnu no-installinfo -Wall])
+AM_MAINTAINER_MODE
+AC_SEARCH_LIBS([strerror],[cposix]) dnl# This used to be AC\_ISC\_POSIX
 AX_CHECK_GNU_MAKE
 AC_BAKEFILE_GNUMAKE
 
@@ -67,17 +69,18 @@ TEA_PREFIX
 
 TEA_SETUP_COMPILER
 AC_PROG_INSTALL
-if test "x$CC" = "x"; then
+if test "x${CC}" = "x"; then
   AC_PROG_CC
   test -x compile
   AM_PROG_CC_C_O
 else
-  test ! -z "$CC"
+  test ! -z "${CC}"
   AC_SUBST([CC])
 fi
 AC_BAKEFILE_METROWERKS_EXTO
 AC_PROG_CXX
-if test "x$CPP" = "x"; then
+if test "x${CPP}" = "x"; then
+  test -z "${CPP}"
   AC_PROG_CPP
 else
   XORG_PROG_RAWCPP
@@ -133,7 +136,7 @@ TEA_ADD_TCL_SOURCES([lib/ttrace.tcl])
 #--------------------------------------------------------------------
 
 if test "${TEA_PLATFORM}" = "windows" ; then
-    AC_DEFINE([BUILD_sample], [1], [Defined to 1 if building sample])
+    AC_DEFINE([BUILD_sample],[1],[Defined to 1 if building sample])
     CLEANFILES="*.lib *.dll *.exp *.ilk *.pdb vc*.pch"
     TEA_ADD_SOURCES([win/threadWin.c])
     TEA_ADD_INCLUDES([-I\"$(${CYGPATH} ${srcdir}/win)\"])
@@ -159,9 +162,12 @@ TEA_BUGGY_STRTOD
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_TYPE_SIZE_T
+AC_C_BIGENDIAN
 AC_C_FLEXIBLE_ARRAY_MEMBER
+AC_C_PROTOTYPES
 AC_C_VARARRAYS
 AC_CHECK_MEMBERS([Tcl_Interp.errorLine])
+AC_CHECK_MEMBERS([struct Tcl_Interp.errorLine])
 XORG_MEMORY_CHECK_FLAGS
 XORG_CHECK_MALLOC_ZERO
 XORG_CWARNFLAGS
@@ -183,6 +189,7 @@ TEA_BLOCKING_STYLE
 
 AX_PTHREAD
 TEA_ENABLE_THREADS
+gl_THREADLIB
 
 #--------------------------------------------------------------------
 # The statement below defines a collection of symbols related to
@@ -190,11 +197,12 @@ TEA_ENABLE_THREADS
 #--------------------------------------------------------------------
 
 TEA_ENABLE_SHARED
-LT_INIT
+LT_INIT([shared dlopen])
+LT_LANG([C])
 
 #--------------------------------------------------------------------
 # This macro figures out what flags to use with the compiler/linker
-# when building shared/static debug/optimized objects.  This information
+# when building shared/static debug/optimized objects. This information
 # can be taken from the tclConfig.sh file, but this figures it all out.
 #--------------------------------------------------------------------
 
@@ -208,20 +216,21 @@ TEA_ENABLE_SYMBOLS
 
 # Checks for libraries.
 # FIXME: Replace `main' with a function in `-ltcl':
-AC_CHECK_LIB([tcl], [main])
+AC_CHECK_LIB([tcl],[main])
 AX_DLL_STRING
 
 #--------------------------------------------------------------------
-# Everyone should be linking against the Tcl stub library.  If you
-# can't for some reason, remove this definition.  If you aren't using
-# stubs, you also need to modify the SHLIB_LD_LIBS setting below to
-# link against the non-stubbed Tcl library.  Add Tk too if necessary.
+# Everyone should be linking against the Tcl stub library. If you
+# cannot do so for some reason, remove this definition. If you are
+# not using stubs, you also need to modify the SHLIB_LD_LIBS setting
+# below to link against the non-stubbed Tcl library. Add Tk too if
+# necessary.
 #--------------------------------------------------------------------
 
-AC_DEFINE([USE_TCL_STUBS], [1], [Defined to 1 if using Tcl stubs])
+AC_DEFINE([USE_TCL_STUBS],[1],[Defined to 1 if using Tcl stubs])
 
 #--------------------------------------------------------------------
-# This macro generates a line to use when building a library.  It
+# This macro generates a line to use when building a library. It
 # depends on values set by the TEA_ENABLE_SHARED, TEA_ENABLE_SYMBOLS,
 # and TEA_LOAD_TCLCONFIG macros above.
 #--------------------------------------------------------------------
@@ -230,8 +239,8 @@ TEA_MAKE_LIB
 
 #--------------------------------------------------------------------
 # Find tclsh so that we can run pkg_mkIndex to generate the pkgIndex.tcl
-# file during the install process.  Don't run the TCLSH_PROG through
-# ${CYGPATH} because it's being used directly by make.
+# file during the install process. Do NOT run the TCLSH_PROG through
+# ${CYGPATH} because it is being used directly by make.
 # Require that we use a tclsh shell version 8.2 or later since earlier
 # versions have bugs in the pkg_mkIndex routine.
 # Add WISH as well if this is a Tk extension.

@@ -3,8 +3,8 @@ dnl# Process this file with autoconf to produce a configure script.
 dnl# $Id: configure.ac 91520 2012-04-04 00:40:40Z jmr@macports.org $
 
 AC_PREREQ([2.69])
-AC_DEFUN([MACPORTS_VERSION_MACRO], [esyscmd(<config/macports_version tr -d '\n')])
-dnl# Square brackets cannot be put around the middle argument to AC_INIT here.
+AC_DEFUN([MACPORTS_VERSION_MACRO],[esyscmd(<config/macports_version tr -d '\n')])
+dnl# Square brackets cannot be put around the middle arg to AC_INIT here.
 dnl# That would be how it is normally done, and it is what autoupdate 
 dnl# wants to do, but this cannot be done because of the following error:
 dnl# configure.ac:7: error: m4_divert_push: cannot change diversion to `GROW' inside m4_expand
@@ -16,9 +16,9 @@ AC_CONFIG_MACRO_DIR([m4])
 
 AC_CANONICAL_TARGET
 AC_USE_SYSTEM_EXTENSIONS
-AM_INIT_AUTOMAKE([foreign dejagnu dist-bzip2 dist-lzip dist-xz dist-zip no-installinfo tar-pax -Wall])
+AM_INIT_AUTOMAKE([1.11 foreign dejagnu dist-bzip2 dist-lzip dist-xz dist-zip no-installinfo tar-pax -Wall])
 AM_MAINTAINER_MODE
-AC_SEARCH_LIBS([strerror],[cposix]) dnl# This macro used to be AC_ISC_POSIX
+AC_SEARCH_LIBS([strerror],[cposix]) dnl# This used to be AC\_ISC\_POSIX
 AC_OBJEXT
 AC_EXEEXT
 AC_LANG([C])
@@ -30,13 +30,13 @@ fi
 # Read in the MacPorts version from the base/config/macports_version file
 AC_MSG_CHECKING([MacPorts version])
 MACPORTS_VERSION=MACPORTS_VERSION_MACRO
-AC_MSG_RESULT([$MACPORTS_VERSION])
+AC_MSG_RESULT([${MACPORTS_VERSION}])
 AC_SUBST([MACPORTS_VERSION])
 
 # Check user PATH for MP paths, and remove as necessary.
-# I'd like to remove this macro, but removing it breaks the build...
+dnl# I would like to remove this macro, but removing it breaks the build...
 MP_PATH_SCAN
-# ...so instead I'll just do this:
+dnl# ...so instead I will just do this:
 echo "adding MacPorts prefix back in to path..."
 PATH=${PATH}:/opt/local/bin
 PATH=$(echo "${PATH}" | tr \: \\n | uniq | tr \\n \: | uniq | sed "s|::|:|g")
@@ -72,7 +72,7 @@ case "$MACOSX_VERSION" in
     AC_MSG_WARN([This version of Mac OS X is out of date.])
     AC_MSG_WARN([Please run Software Update to update it.])
     ;;
-  10.4*|10.5*|10.6*|10.7*|10.8*)
+  10.4*|10.5*|10.6*|10.7*|10.8*|10.9*)
     dnl# Supported version
     ;;
   *)
@@ -81,22 +81,22 @@ esac
 
 # locate currently selected Xcode path
 AC_MSG_CHECKING([Xcode location])
-if test "x$XCODE_SELECT" != "x"; then
-  DEVELOPER_DIR=`$XCODE_SELECT -print-path`
+if test "x${XCODE_SELECT}" != "x"; then
+  DEVELOPER_DIR=`${XCODE_SELECT} -print-path`
 fi
-if test -z "$DEVELOPER_DIR" -o ! -d "$DEVELOPER_DIR" ; then
+if test -z "${DEVELOPER_DIR}" -o ! -d "${DEVELOPER_DIR}" ; then
     if test -d /Applications/Xcode.app/Contents/Developer ; then
         DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer
     else
         DEVELOPER_DIR=/Developer
     fi
 fi
-AC_MSG_RESULT([$DEVELOPER_DIR])
+AC_MSG_RESULT([${DEVELOPER_DIR}])
 AC_SUBST([DEVELOPER_DIR])
 
 case "$DEVELOPER_DIR" in
   *Xcode.app/Contents/Developer)
-    XCODEPLIST_BASE=`dirname $DEVELOPER_DIR`/version
+    XCODEPLIST_BASE=`dirname ${DEVELOPER_DIR}`/version
     ;;
   *)
     XCODEPLIST_BASE=$DEVELOPER_DIR/Applications/Xcode.app/Contents/version
@@ -122,7 +122,7 @@ case "$XCODE_VERSION" in
     AC_MSG_WARN([This version of Xcode Tools is out of date])
     AC_MSG_WARN([Please consider upgrading as some ports fail compiling])
     ;;
-  2.*|3.*|4.*)
+  2.*|3.*|4.*|5.*)
     dnl# Supported version
     ;;
   *)
@@ -132,14 +132,15 @@ esac
 # Checks for programs.
 AM_PROG_AS
 AM_PROG_AR
-if test "x$CC" = "x"; then
+if test "x${CC}" = "x"; then
   AC_PROG_CC
   test -x compile
   AM_PROG_CC_C_O
 else
   # The "test" is just a dummy to make sure that this "else" condition
   # is not empty, as sometimes `autoconf` removes the AC_SUBSTs...
-  test ! -z "$CC"
+  # (I do this elsewhere, too)
+  test ! -z "${CC}"
   AC_SUBST([CC])
 fi
 AC_PROG_CXX
@@ -151,17 +152,17 @@ AC_PROG_LN_S
 AC_PROG_OBJC
 AM_PATH_PYTHON
 AC_PROG_YACC
-LT_INIT
+LT_INIT([dlopen])
 LT_LANG([C])
-if test "x$RANLIB" = "x"; then
+if test "x${RANLIB}" = "x"; then
   AC_PROG_RANLIB
 else
-  test ! -z "$RANLIB"
+  test ! -z "${RANLIB}"
   AC_SUBST([RANLIB])
 fi
 PKG_PROG_PKG_CONFIG
 
-# AX_* macros are from the autoconf-archive package
+dnl# AX_* macros are from the autoconf-archive package
 AX_PTHREAD
 AX_PROG_JAVAC
 AX_PROG_PERL_VERSION([5.12])
@@ -172,8 +173,9 @@ AX_SWIG_MULTI_MODULE_SUPPORT
 AX_C___ATTRIBUTE__
 AX_LIB_READLINE
 
-# XORG_* macros are from the xorg-util-macros package
-if test "x$CPP" = "x"; then
+dnl# XORG_* macros are from the xorg-util-macros package
+if test "x${CPP}" = "x"; then
+  test -z "${CPP}"
   AC_PROG_CPP
 else
   XORG_PROG_RAWCPP
@@ -182,23 +184,24 @@ XORG_MEMORY_CHECK_FLAGS
 XORG_CHECK_MALLOC_ZERO
 XORG_CWARNFLAGS
 XORG_WITH_DOXYGEN
-if test "x$PERL" = "x"; then
+if test "x${PERL}" = "x"; then
   XORG_WITH_PERL
 else
-  test ! -z "$PERL"
+  test ! -z "${PERL}"
+  export PERL
   AC_SUBST([PERL])
 fi
 XORG_ENABLE_UNIT_TESTS
 XORG_ENABLE_INTEGRATION_TESTS
 XORG_LD_WRAP
 
-# AC_BAKEFILE_* macros are from the bakefile package
+dnl# AC_BAKEFILE_* macros are from the bakefile package
 AC_BAKEFILE_PROG_MWCC
 AC_BAKEFILE_PROG_MWCXX
 AC_BAKEFILE_METROWERKS_EXTO
 AC_BAKEFILE_GNUMAKE
 
-# programs without specifically-crafted AC_* macros
+dnl# checks for programs without specifically-crafted AC_* macros
 AC_PATH_PROGS([BSDMAKE], [bsdmake pmake], [])
 AC_PATH_PROG([BZIP2], [bzip2], [])
 AC_PATH_PROG([BZR], [bzr], [])
@@ -250,6 +253,7 @@ if test "x$SED" = "x"; then
   AC_ARG_VAR([SED], [path to sed command])
 else
   test ! -z "$SED"
+  export SED
   AC_SUBST([SED])
 fi
 AC_PATH_PROG([SVN], [svn], [])
@@ -267,7 +271,8 @@ AC_PATH_PROG([ZIP], [zip])
 
 AC_CHECK_PROG([HAVE_LAUNCHD], [launchd], [yes], [])
 
-# Define some precious variables allowing user to override PATH for some programs
+# Define some precious variables allowing user to override PATH for
+# some programs
 AC_ARG_VAR([BSDMAKE], [path to bsdmake/pmake command])
 AC_ARG_VAR([BZIP2], [path to bzip2 command])
 AC_ARG_VAR([CVS], [path to cvs command])
@@ -296,7 +301,7 @@ MP_TAR_NO_SAME_OWNER
 MP_PATCH_GNU_VERSION
 
 # Quiche eaters options.
-if test x$GCC = xyes; then
+if test x${GCC} = xyes; then
 	CFLAGS_QUICHEEATERS='-Wextra -Wall'
 	CFLAGS_PEDANTIC='-pedantic'
 fi
@@ -308,13 +313,13 @@ MP_COMPILER_ATTRIBUTE_UNUSED
 MP_COMPILER_ATTRIBUTE_LF_PRIVATE
 
 # Foundation checks
-dnl# ACX_PTHREAD has been moved to AX_PTHREAD above
+dnl# ACX\_PTHREAD has been moved to AX_PTHREAD above
 dnl# (i.e. it has been put with the rest of the autoconf-archive macros)
 MP_OBJC_RUNTIME
 AC_MSG_CHECKING([for GNUStep system root])
 if test "x$GNUSTEP_SYSTEM_ROOT" = "x"; then
-  # TODO: move prefix-checking code above this step so that configured prefix
-  # can be used instead of hardwiring /opt/local
+  # TODO: move prefix-checking code above this step so that configured
+  # prefix can be used instead of hardwiring /opt/local
   if test -d /opt/local/GNUStep/System; then
     export GNUSTEP_SYSTEM_ROOT=/opt/local/GNUSTEP/System
     AC_MSG_RESULT([using MacPorts GNUStep system root: $GNUSTEP_SYSTEM_ROOT])
@@ -346,8 +351,8 @@ AC_ARG_WITH([unsupported-prefix],
 		[with_unsupported_prefix=no])
 if test x$prefix = x/usr/local -o x$prefix = x/usr && test x$with_unsupported_prefix != xyes; then
     AC_MSG_ERROR([Installing MacPorts into $prefix is not supported. If \
-you understand this and wish to do so anyway, pass --with-unsupported-prefix \
-to configure.])
+you understand this and wish to do so anyway, pass \
+--with-unsupported-prefix to configure.])
 fi
 MP_PATH_PORTSDIR([$PORTS_DIR_DEFAULT])
 MP_PATH_MPCONFIGDIR
@@ -371,23 +376,25 @@ MP_UNIVERSAL_OPTIONS
 
 # Checks for libraries.
 # FIXME: Replace `main' with a function in `-ltcl':
-AC_CHECK_LIB([tcl], [main])
+AC_CHECK_LIB([tcl],[main])
 
 # Check for standard header files.
-# AC_HEADER_STDC is no longer needed by itself, as it automatically gets
-# pulled in by other macros
+dnl# AC_HEADER_STDC is no longer needed by itself, as it automatically gets
+dnl# pulled in by other macros
 AC_HEADER_DIRENT
+AC_HEADER_STDBOOL dnl# calls "AC_CHECK_HEADER_STDBOOL"
 AC_HEADER_SYS_WAIT
-# sys/ioctl.h sys/param.h and sys/time.h are not checked here
-# because they are checked later
-# limits.h gets to stay in because autoscan will still warn about
-# it when removed
-AC_CHECK_HEADERS([crt_externs.h err.h fcntl.h limits.h mach/mach.h \
-netdb.h paths.h pwd.h stddef.h stdio.h sys/cdefs.h sys/event.h \
-sys/fcntl.h sys/file.h sys/mount.h sys/paths.h sys/socket.h \
-sys/sysctl.h utime.h])
-# readline/history.h and readline/readline.h are checked for by 
-# the AX_LIB_READLINE macro above
+dnl# sys/ioctl.h sys/param.h and sys/time.h are NOT checked here
+dnl# because they are checked later.
+dnl# limits.h gets to stay in because autoscan will still warn about
+dnl# it when removed (even though it is checked elsewhere)
+AC_CHECK_HEADERS([crt_externs.h ctype.h err.h fcntl.h libkern/OSAtomic.h \
+                  limits.h mach/mach.h netdb.h paths.h pwd.h spawn.h \
+                  stddef.h stdio.h sys/cdefs.h sys/event.h sys/fcntl.h \
+                  sys/file.h sys/mount.h sys/paths.h sys/socket.h \
+                  sys/sysctl.h utime.h])
+dnl# readline/history.h and readline/readline.h are checked for by 
+dnl# the AX_LIB_READLINE macro above
 
 AM_CPPFLAGS="-I.. -I. ${AM_CPPFLAGS}"
 dnl# This should be permanently converted eventually,
@@ -395,7 +402,6 @@ dnl# but as it is, the build fails without it.
 INCLUDES=${AM_CPPFLAGS}
 
 # Checks for typedefs, structures, and compiler characteristics.
-AC_CHECK_HEADER_STDBOOL
 AC_TYPE_UID_T
 AC_C_BIGENDIAN
 AC_C_INLINE
@@ -416,37 +422,44 @@ AC_TYPE_UINTPTR_T
 AC_C_FLEXIBLE_ARRAY_MEMBER
 AC_C_VARARRAYS
 AC_CHECK_MEMBERS([Tcl_Interp.errorLine])
+AC_CHECK_MEMBERS([struct Tcl_Interp.errorLine])
 AC_CHECK_SIZEOF([long])
+AC_CHECK_ALIGNOF([long])
 AC_CHECK_SIZEOF([uint8_t])
+AC_CHECK_ALIGNOF([uint8_t])
 AC_CHECK_SIZEOF([uint32_t])
+AC_CHECK_ALIGNOF([uint32_t])
 
 # Checks for library functions.
 AC_FUNC_CHOWN
 AC_FUNC_FORK
-AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK
+AC_FUNC_LSTAT dnl# calls "AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK"
 AC_FUNC_MALLOC
 AC_FUNC_MMAP
 AC_FUNC_REALLOC
-# localtime_r is checked for elsewhere
-AC_CHECK_FUNCS([bzero clearenv copyfile dup2 fgetln flock getcwd lchown \
-lockf kqueue memmove memset mkdir munmap realpath regcomp rmdir select \
-setenv setmode socket strcasecmp strchr strdup strerror strlcat strlcpy \
-strncasecmp strrchr strstr strtol strtoul sysctlbyname utime])
+# the localtime_r function is checked for elsewhere
+AC_CHECK_FUNCS([OSAtomicCompareAndSwap32 OSAtomicCompareAndSwap64 \
+                OSAtomicCompareAndSwapPtr bzero clearenv copyfile dup2 \
+                fgetln flock getcwd kqueue lchown lockf memmove memset \
+                mkdir munmap posix_spawn printf realpath regcomp rmdir \
+                select setenv setmode socket strcasecmp strchr strdup \
+                strerror strlcat strlcpy strncasecmp strrchr strstr \
+                strtol strtoul sysctlbyname system utime])
 AC_SUBST([ac_cv_func_strlcat])
 
 MP_CHECK_READLINK_IS_P1003_1A
 
 # Check for md5 implementation
-AC_CHECK_HEADER([CommonCrypto/CommonDigest.h], [AC_DEFINE([HAVE_COMMONCRYPTO_COMMONDIGEST_H], [1], [Define if CommonCrypto is available.])], [MP_LIB_MD5])
+AC_CHECK_HEADER([CommonCrypto/CommonDigest.h],[AC_DEFINE([HAVE_COMMONCRYPTO_COMMONDIGEST_H],[1],[Define if CommonCrypto is available.])],[MP_LIB_MD5])
 
 # Check for readline
-AC_ARG_ENABLE([readline], [AS_HELP_STRING([--enable-readline],[Enable addition of readline support, if readline present.])],
+AC_ARG_ENABLE([readline],[AS_HELP_STRING([--enable-readline],[Enable addition of readline support, if readline present.])],
 [
-	AC_CHECK_LIB([readline], [readline], [
-				  READLINE_LIBS=-lreadline
-				  AC_DEFINE([HAVE_LIBREADLINE], [1], [Define to 1 if you have the 'readline' library (-lreadline).])
-				  ])
-	AC_CHECK_DECLS([rl_username_completion_function,rl_filename_completion_function,rl_completion_matches,username_completion_function,filename_completion_function,completion_matches], [], [],
+	AC_CHECK_LIB([readline],[readline],[
+				 READLINE_LIBS=-lreadline
+				 AC_DEFINE([HAVE_LIBREADLINE],[1],[Define to 1 if you have the 'readline' library (-lreadline).])
+				 ])
+	AC_CHECK_DECLS([rl_username_completion_function,rl_filename_completion_function,rl_completion_matches,username_completion_function,filename_completion_function,completion_matches],[],[],
 	[
 	#include <stdio.h>
 	#if HAVE_READLINE_READLINE_H
@@ -457,8 +470,8 @@ AC_ARG_ENABLE([readline], [AS_HELP_STRING([--enable-readline],[Enable addition o
 AC_SUBST([READLINE_LIBS])
 
 # Lowest non-system-reserved uid and gid (Apple claims <500)
-AC_DEFINE([MIN_USABLE_UID], [500], [Lowest non-system-reserved UID.])
-AC_DEFINE([MIN_USABLE_GID], [500], [Lowest non-system-reserved GID.])
+AC_DEFINE([MIN_USABLE_UID],[500],[Lowest non-system-reserved UID.])
+AC_DEFINE([MIN_USABLE_GID],[500],[Lowest non-system-reserved GID.])
 
 # Load tclConfig.sh
 SC_PATH_TCLCONFIG
@@ -491,7 +504,7 @@ MP_SQLITE3_FLAGS
 
 MP_CHECK_SQLITE_VERSION([3003011])
 if test "x${mp_sqlite_version_ge_3003011}" = "xno"; then
-	AC_DEFINE([sqlite3_prepare_v2], [sqlite3_prepare], [define sqlite3_prepare to sqlite_prepare_v2 if the latter is not available])
+	AC_DEFINE([sqlite3_prepare_v2],[sqlite3_prepare],[define sqlite3_prepare to sqlite_prepare_v2 if the latter is not available])
 fi
 
 # Determine if we need to install some bundled packages
@@ -511,24 +524,26 @@ if test "x$with_included_tclthread" = "xunspecified" ; then
 		[AC_MSG_RESULT([no]); with_included_tclthread=yes])
 fi
 
-# If thread package isn't installed, configure and install thread package.
-if test "$with_included_tclthread" = "yes"; then
-	OUR_INCLUDED_PACKAGES="$OUR_INCLUDED_PACKAGES thread2.6"
+# If thread package is not installed, configure and install thread package.
+if test "${with_included_tclthread}" = "yes"; then
+	OUR_INCLUDED_PACKAGES="${OUR_INCLUDED_PACKAGES} thread2.6"
 	AC_CONFIG_SUBDIRS([src/thread2.6])
-	# Extract thread package (only if it has not already been extracted)
+	# Extract thread package
+	# (only if it has not already been extracted)
 	if test ! -d src/thread2.6 ; then
 		(cd src/; gzip -d < thread2.6.tar.gz | tar xf -)
-		# If extracting a fresh copy, we have to patch the thread package 
+		# If extracting a fresh copy, we have to patch the thread
+		# package directory
 		# (so that thread2.6 is the vanilla distribution directory)
 		patch -p0 < src/thread2.6.diff
 	fi
 fi
 
-AH_TEMPLATE([TRACE_SDK], [SDK for SDK redirect in tracelib])
+AH_TEMPLATE([TRACE_SDK],[SDK for SDK redirect in tracelib])
 AC_ARG_WITH([trace-sdk],
 	[AS_HELP_STRING([--with-trace-sdk=SDK],
 		[SDK for redirection in trace lib (for example MacOSX10.4u.sdk)])],
-	[test -d ${DEVELOPER_DIR}/SDKs/$withval && AC_DEFINE_UNQUOTED([TRACE_SDK], ["${withval}"])], [])
+	[test -d ${DEVELOPER_DIR}/SDKs/${withval} && AC_DEFINE_UNQUOTED([TRACE_SDK],["${withval}"])],[])
 
 # Allows building of shared libraries
 SC_ENABLE_SHARED
@@ -575,28 +590,28 @@ AC_SUBST([OUR_INCLUDED_PACKAGES])
 
 # misc variables that need to be expanded for substitution into tcl
 
-oldprefix=$prefix
-if test "x$prefix" = "xNONE" ; then
-   prefix=$ac_default_prefix
+oldprefix=${prefix}
+if test "x${prefix}" = "xNONE" ; then
+   prefix=${ac_default_prefix}
 fi
 
-# Check if there's an existing DP/MP install too old to upgrade
+# Check if there is an existing DP/MP install too old to upgrade
 MP_CHECK_OLDLAYOUT
 
-eval "prefix_expanded=$prefix"
+eval "prefix_expanded=${prefix}"
 AC_SUBST([prefix_expanded])
 # do this twice, since there is a nested variable of
 # ${prefix} inside of ${sysconfdir}
-eval "MPCONFIGDIR_EXPANDED=$MPCONFIGDIR"
-eval "MPCONFIGDIR_EXPANDED=$MPCONFIGDIR_EXPANDED"
+eval "MPCONFIGDIR_EXPANDED=${MPCONFIGDIR}"
+eval "MPCONFIGDIR_EXPANDED=${MPCONFIGDIR_EXPANDED}"
 AC_SUBST([MPCONFIGDIR_EXPANDED])
-eval "localstatedir_expanded=$localstatedir"
+eval "localstatedir_expanded=${localstatedir}"
 AC_SUBST([localstatedir_expanded])
 eval "macports_tcl_dir=${datadir}/macports/Tcl"
-eval "macports_tcl_dir=$macports_tcl_dir"
+eval "macports_tcl_dir=${macports_tcl_dir}"
 AC_SUBST([macports_tcl_dir])
 
-prefix=$oldprefix
+prefix=${oldprefix}
 
 dnl# man page settings (compressed, links, etc)
 dnl#
@@ -624,6 +639,6 @@ AC_CONFIG_FILES([Doxyfile
 dnl# Things removed from output files:
 dnl# portmgr/freebsd/Makefile (not a regular "makefile")
 
-AC_CONFIG_FILES([src/pkg_mkindex.sh], [chmod +x src/pkg_mkindex.sh])
+AC_CONFIG_FILES([src/pkg_mkindex.sh],[chmod +x src/pkg_mkindex.sh])
 
 AC_OUTPUT

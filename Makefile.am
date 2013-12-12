@@ -1,6 +1,6 @@
 # $Id: Makefile.in 90002 2012-02-19 17:25:25Z jmr@macports.org $
 
-ACLOCAL_AMFLAGS = -I m4
+ACLOCAL_AMFLAGS = -I m4 --install
 AM_CFLAGS       = -Wall
 
 PATH		= @PATH_CLEANED@
@@ -41,7 +41,7 @@ install::
 	$(INSTALL) -o ${DSTUSR} -g ${DSTGRP} -m 444 macports-pubkey.pem  $(DESTDIR)${datadir}/macports/
 # Only run these scripts when not building in a destroot
 ifeq ($(DESTDIR),)
-# create run user if it doesn't exist
+# create run user if it does not exist
 	@if test -n "${DSCL}" -a -n "${DSEDITGROUP}" ; then \
         if ! ${DSCL} -q . -read /Groups/${RUNUSR} > /dev/null 2>&1 ; then \
             if test `id -u` -eq 0; then \
@@ -91,9 +91,10 @@ ifeq ($(DESTDIR),)
             fi ; \
         fi ; \
     else \
-        echo "Can't find ${DSCL} / ${DSEDITGROUP}, not creating user \"${RUNUSR}\"" ; \
+        echo "Cannot find ${DSCL} / ${DSEDITGROUP}, not creating user \"${RUNUSR}\"" ; \
     fi
-# Add [default] tag to the central MacPorts repository, if it isn't already
+# Add [default] tag to the central MacPorts repository, if it has not
+# already been added
 	$(TCLSH) src/upgrade_sources_conf_default.tcl "${prefix}"
 # Convert image directories (and direct mode installs) to image archives
 	$(TCLSH) src/images_to_archives.tcl "${macports_tcl_dir}"
@@ -107,7 +108,7 @@ else
 endif
 
 group::
-	@echo "creating a macports group..." && sudo dseditgroup -o create -n . macports && echo "done! use './configure --with-install-group=macports --with-shared-directory' if you haven't already"
+	@echo "creating a macports group..." && sudo dseditgroup -o create -n . macports && echo "done! use './configure --with-install-group=macports --with-shared-directory' if you have not done so already"
 
 rmgroup::
 	@echo "deleting macports group..." && sudo dseditgroup -o delete -n . macports && echo "done! use 'make group' to re-create"
@@ -138,15 +139,15 @@ _pkgdist:
 
 _dopkg: _gettag _pkgdist
 
-# This target fetches a tagged distribution from svn, and generates tarballs and checksums for it
+# This target fetches a tagged distribution from svn, and generates
+# tarballs and checksums for it
 distfromsvn:
 	@[ -n "${DISTVER}" ] || { echo Must specify DISTVER, like: make DISTVER=1.4.0 distfromsvn; exit 1; }
 	[ -d ${DISTDIR} ] || mkdir ${DISTDIR}
 	rm -f ${DISTDIR}/${DISTNAME}.chk.txt
 	${MAKE} SVNTAG=${DISTTAG}/base/ PKGNAME=${DISTNAME} _dopkg
-ifeq ($(ARC),yes) 
+	test "$(ARC)" = "yes" && \
 	${MAKE} SVNTAG=${DISTARCTAG} PKGNAME=${DISTARCNAME} _dopkg
-endif
 
 tcldoc:
 	@[ -e "${prefix}/bin/tcldoc" ] \

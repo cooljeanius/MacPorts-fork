@@ -1,0 +1,328 @@
+GNU Make 3.82+dbg0.9
+Built for x86_64-apple-darwin10.8.0
+Copyright (C) 2010  Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Reading makefiles...
+Updating makefiles....
+-> (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/Makefile:19)
+Mk/macports.autoconf.mk: Mk/macports.autoconf.mk.in src/config.h.in Makefile.in config.status
+remake<0> 
+-> (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/Makefile:23)
+config.status: configure
+remake<1> 
+Updating goal targets....
+  /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/Makefile:17	File `all' does not exist.
+  /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/Makefile:17	Must remake target `all'.
+  /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/Makefile:17	Successfully remade target file `all'.
+<- (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/Makefile:17)
+all
+remake<2> 
+-> (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/Mk/macports.subdir.mk:7)
+all: Mk/macports.autoconf.mk
+remake<3> 
+  /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/Mk/macports.subdir.mk:7	File `all' does not exist.
+  /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/Mk/macports.subdir.mk:7	Target `all' is double-colon and has no prerequisites.
+  /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/Mk/macports.subdir.mk:7	Must remake target `all'.
+Invoking recipe from Mk/macports.subdir.mk:8 to update target `all'.
+##>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+for subdir in doc src tests; do\
+	echo ===\> making all in $subdir; \
+	( cd $subdir && remake DIRPRFX=$subdir/ all) || exit 1; \
+done
+##<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+++ (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/Mk/macports.subdir.mk:7)
+all
+remake<4> 
+===> making all in doc
+GNU Make 3.82+dbg0.9
+Built for x86_64-apple-darwin10.8.0
+Copyright (C) 2010  Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Reading makefiles...
+Updating makefiles....
+Updating goal targets....
+  /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/doc/Makefile:12	File `all' does not exist.
+  /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/doc/Makefile:12	Must remake target `all'.
+  /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/doc/Makefile:12	Successfully remade target file `all'.
+<- (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/doc/Makefile:12)
+all
+remake<<0>> 
+remake[1]: Entering directory `/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/doc'
+remake[1]: Nothing to be done for `all'.
+remake[1]: Leaving directory `/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/doc'
+===> making all in src
+GNU Make 3.82+dbg0.9
+Built for x86_64-apple-darwin10.8.0
+Copyright (C) 2010  Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Reading makefiles...
+Updating makefiles....
+Updating goal targets....
+  /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/Makefile:12	File `all' does not exist.
+  /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/Makefile:12	Target `all' is double-colon and has no prerequisites.
+  /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/Makefile:12	Must remake target `all'.
+  /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/Makefile:12	Successfully remade target file `all'.
+<- (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/Makefile:12)
+all
+remake<<0>> 
+-> (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/../Mk/macports.subdir.mk:7)
+all: 
+remake<<1>> 
+  /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/../Mk/macports.subdir.mk:7	File `all' does not exist.
+  /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/../Mk/macports.subdir.mk:7	Target `all' is double-colon and has no prerequisites.
+  /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/../Mk/macports.subdir.mk:7	Must remake target `all'.
+Invoking recipe from ../Mk/macports.subdir.mk:8 to update target `all'.
+remake[1]: Entering directory `/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src'
+##>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+for subdir in thread2.6 cregistry macports1.0 port1.0 package1.0 pextlib1.0 registry2.0 darwintracelib1.0 machista1.0 port programs; do\
+	echo ===\> making all in src/$subdir; \
+	( cd $subdir && remake DIRPRFX=src/$subdir/ all) || exit 1; \
+done
+##<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+++ (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/../Mk/macports.subdir.mk:7)
+all
+remake<<2>> 
+===> making all in src/thread2.6
+GNU Make 3.82+dbg0.9
+Built for x86_64-apple-darwin10.8.0
+Copyright (C) 2010  Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Reading makefiles...
+Updating makefiles....
+-> (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:540)
+Makefile: Makefile.in config.status
+remake<<<0>>> 
+-> (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:526)
+Makefile.in: 
+remake<<<1>>> 
+-> (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:550)
+config.status: configure
+remake<<<2>>> 
+-> (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:553)
+configure: 
+remake<<<3>>> 
+Updating goal targets....
+-> (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:519)
+all: config.h binaries
+remake<<<4>>> 
+  /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:519	File `all' does not exist.
+-> (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:559)
+config.h: stamp-h1
+remake<<<5>>> 
+-> (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:563)
+stamp-h1: config.h.in config.status
+remake<<<6>>> 
+-> (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:566)
+config.h.in: 
+remake<<<7>>> 
+    /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:1043	File `binaries' does not exist.
+-> (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:1101)
+libthread2.6.dylib: threadCmd.o threadSvCmd.o threadSpCmd.o threadPoolCmd.o psGdbm.o threadSvListCmd.o threadSvKeylistCmd.o tclXkeylist.o threadUnix.o
+remake<<<8>>> 
+-> (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:1122)
+pkgIndex.tcl-local: 
+remake<<<9>>> 
+      /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:1122	File `pkgIndex.tcl-local' does not exist.
+      /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:1122	Must remake target `pkgIndex.tcl-local'.
+Invoking recipe from Makefile:1123 to update target `pkgIndex.tcl-local'.
+remake[2]: Entering directory `/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6'
+##>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+( echo pkg_mkIndex . libthread2.6.dylib \; exit; ) | TCL_LIBRARY=`echo /SourceCache/tcl/tcl-87/tcl/tcl/library` DYLD_LIBRARY_PATH=".:/System/Library/Frameworks/Tcl.framework:" PATH=".:/System/Library/Frameworks/Tcl.framework" TCLLIBPATH=". ./../lib" /usr/bin/tclsh8.5
+##<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+++ (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:1122)
+pkgIndex.tcl-local
+remake<<<10>>> 
+      /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:1122	Successfully remade target file `pkgIndex.tcl-local'.
+<- (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:1122)
+pkgIndex.tcl-local
+remake<<<11>>> 
+    /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:1043	Must remake target `binaries'.
+    /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:1043	Successfully remade target file `binaries'.
+<- (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:1043)
+binaries
+remake<<<12>>> 
+  /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:519	Must remake target `all'.
+Invoking recipe from Makefile:520 to update target `all'.
+##>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+remake  all-am
+##<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+++ (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:519)
+all
+remake<<<13>>> 
+GNU Make 3.82+dbg0.9
+Built for x86_64-apple-darwin10.8.0
+Copyright (C) 2010  Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Reading makefiles...
+Updating makefiles....
+-> (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:540)
+Makefile: Makefile.in config.status
+remake<<<<0>>>> 
+-> (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:526)
+Makefile.in: 
+remake<<<<1>>>> 
+-> (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:550)
+config.status: configure
+remake<<<<2>>>> 
+-> (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:553)
+configure: 
+remake<<<<3>>>> 
+Updating goal targets....
+  /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:895	File `all-am' does not exist.
+    File `-c' does not exist.
+    Must remake target `-c'.
+    Successfully remade target file `-c'.
+<- (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/??:0)
+-c
+remake<<<<4>>>> 
+    File `-m' does not exist.
+    Must remake target `-m'.
+    Successfully remade target file `-m'.
+<- (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/??:0)
+-m
+remake<<<<5>>>> 
+    File `644' does not exist.
+    Must remake target `644'.
+    Successfully remade target file `644'.
+<- (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/??:0)
+644
+remake<<<<6>>>> 
+-> (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:559)
+config.h: stamp-h1
+remake<<<<7>>>> 
+-> (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:563)
+stamp-h1: config.h.in config.status
+remake<<<<8>>>> 
+-> (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:566)
+config.h.in: 
+remake<<<<9>>>> 
+  /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:895	Must remake target `all-am'.
+  /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:895	Successfully remade target file `all-am'.
+<- (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:895)
+all-am
+remake<<<<10>>>> 
+remake[3]: Entering directory `/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6'
+remake[3]: Nothing to be done for `all-am'.
+remake[3]: Leaving directory `/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6'
+  /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:519	Successfully remade target file `all'.
+<- (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6/Makefile:519)
+all
+remake<<<14>>> 
+remake[2]: Leaving directory `/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/thread2.6'
+===> making all in src/cregistry
+GNU Make 3.82+dbg0.9
+Built for x86_64-apple-darwin10.8.0
+Copyright (C) 2010  Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Reading makefiles...
+Updating makefiles....
+Updating goal targets....
+  /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/cregistry/Makefile:12	File `all' does not exist.
+-> (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/cregistry/Makefile:17)
+cregistry.a: registry.o entry.o sql.o vercomp.o util.o file.o
+remake<<<0>>> 
+-> (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/cregistry/Makefile:21)
+macports.sqlext: sqlext.o vercomp.o
+remake<<<1>>> 
+  /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/cregistry/Makefile:12	Must remake target `all'.
+  /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/cregistry/Makefile:12	Successfully remade target file `all'.
+<- (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/cregistry/Makefile:12)
+all
+remake<<<2>>> 
+remake[2]: Entering directory `/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/cregistry'
+remake[2]: Nothing to be done for `all'.
+remake[2]: Leaving directory `/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/cregistry'
+===> making all in src/macports1.0
+GNU Make 3.82+dbg0.9
+Built for x86_64-apple-darwin10.8.0
+Copyright (C) 2010  Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Reading makefiles...
+Updating makefiles....
+Updating goal targets....
+  /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/macports1.0/../../Mk/macports.tea.mk:11	File `all' does not exist.
+-> (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/macports1.0/../../Mk/macports.tea.mk:13)
+MacPorts.dylib: macports.o get_systemconfiguration_proxies.o sysctl.o
+remake<<<0>>> 
+-> (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/macports1.0/../../Mk/macports.tea.mk:16)
+pkgIndex.tcl: MacPorts.dylib macports.tcl macports_dlist.tcl macports_util.tcl macports_autoconf.tcl macports_index.tcl macports_fastload.tcl
+remake<<<1>>> 
+    /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/macports1.0/../../Mk/macports.tea.mk:16	File `pkgIndex.tcl' does not exist.
+    /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/macports1.0/../../Mk/macports.tea.mk:16	Must remake target `pkgIndex.tcl'.
+Invoking recipe from ../../Mk/macports.tea.mk:17 to update target `pkgIndex.tcl'.
+remake[2]: Entering directory `/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/macports1.0'
+##>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+../pkg_mkindex.sh . || ( rm -rf pkgIndex.tcl && exit 1 )
+##<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+++ (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/macports1.0/../../Mk/macports.tea.mk:16)
+pkgIndex.tcl
+remake<<<2>>> 
+warning: error while loading MacPorts.dylib: dlopen(./MacPorts.dylib, 6): no suitable image found.  Did find:
+../../Mk/macports.tea.mk:16: *** [pkgIndex.tcl] Error 1
+
+#0  pkgIndex.tcl at /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/macports1.0/../../Mk/macports.tea.mk:16
+#1  all at /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/macports1.0/../../Mk/macports.tea.mk:11
+
+***Entering debugger because we encountered a fatal error.
+** Exiting the debugger will exit make with exit code 1.
+!! (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/macports1.0/../../Mk/macports.tea.mk:16)
+pkgIndex.tcl
+remake<<<3>>> 
+
+***Entering debugger because we encountered a fatal error.
+** Exiting the debugger will exit make with exit code 2.
+!! (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/macports1.0/../../Mk/macports.tea.mk:16)
+pkgIndex.tcl
+remake<<<4>>> 
+remake[2]: Leaving directory `/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/macports1.0'
+Command-line invocation:
+	"remake DIRPRFX=src/macports1.0/ all"
+../Mk/macports.subdir.mk:7: *** [all] Error 1
+
+#0  all at /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/../Mk/macports.subdir.mk:7
+
+***Entering debugger because we encountered a fatal error.
+** Exiting the debugger will exit make with exit code 1.
+!! (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/../Mk/macports.subdir.mk:7)
+all
+remake<<3>> 
+
+***Entering debugger because we encountered a fatal error.
+** Exiting the debugger will exit make with exit code 2.
+!! (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src/../Mk/macports.subdir.mk:7)
+all
+remake<<4>> 
+remake[1]: Leaving directory `/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/src'
+Command-line invocation:
+	"remake DIRPRFX=src/ all"
+Mk/macports.subdir.mk:7: *** [all] Error 1
+
+#0  all at /Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/Mk/macports.subdir.mk:7
+
+***Entering debugger because we encountered a fatal error.
+** Exiting the debugger will exit make with exit code 1.
+!! (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/Mk/macports.subdir.mk:7)
+all
+remake<5> 
+
+***Entering debugger because we encountered a fatal error.
+** Exiting the debugger will exit make with exit code 2.
+!! (/Users/ericgallager/GitHubReposFromOtherComputers/MacPorts-fork/Mk/macports.subdir.mk:7)
+all
+remake<6> 
+Command-line invocation:
+	"remake --debugger"

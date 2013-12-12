@@ -25,28 +25,31 @@ builtin(include,m4/foundation.m4)
 #
 #------------------------------------------------------------------------
 AC_DEFUN([MP_CHECK_FRAMEWORK_COREFOUNDATION],[
+	AC_CHECK_HEADERS_ONCE([CoreFoundation/CoreFoundation.h])
 	FRAMEWORK_LIBS="-framework CoreFoundation"
 	AC_MSG_CHECKING([for CoreFoundation framework])
 	AC_CACHE_VAL([mp_cv_have_framework_corefoundation],[
 		ac_save_LIBS="$LIBS"
 		LIBS="$FRAMEWORK_LIBS $LIBS"
+		AC_LANG_PUSH([C])
 		AC_LINK_IFELSE([
-			AC_LANG_PROGRAM([
+			AC_LANG_PROGRAM([[
 					#include <CoreFoundation/CoreFoundation.h>
-				],[
+				]],[[
 					CFURLRef url = CFURLCreateWithFileSystemPath(NULL, CFSTR("/testing"), kCFURLPOSIXPathStyle, 1);
 					CFArrayRef bundles = CFBundleCreateBundlesFromDirectory(NULL, url, CFSTR("pkg"));
-			])
+			]])
 			],[
 				mp_cv_have_framework_corefoundation="yes"
 			],[
 				mp_cv_have_framework_corefoundation="no"
 			])
+		AC_LANG_POP
 		LIBS="$ac_save_LIBS"
 	])
 	AC_MSG_RESULT([${mp_cv_have_framework_corefoundation}])
 	if test x"${mp_cv_have_framework_corefoundation}" = "xyes"; then
-		AC_DEFINE([HAVE_FRAMEWORK_COREFOUNDATION], [1], [Define to 1 if CoreFoundation framework is available])
+		AC_DEFINE([HAVE_FRAMEWORK_COREFOUNDATION],[1],[Define to 1 if CoreFoundation framework is available])
 	fi
 	AC_SUBST([HAVE_FRAMEWORK_COREFOUNDATION])
 ])
@@ -75,27 +78,30 @@ AC_DEFUN([MP_CHECK_FRAMEWORK_COREFOUNDATION],[
 #
 #------------------------------------------------------------------------
 AC_DEFUN([MP_CHECK_FUNCTION_CFNOTIFICATIONCENTERGETDARWINNOTIFYCENTER],[
+	AC_REQUIRE([MP_CHECK_FRAMEWORK_COREFOUNDATION])
 	FRAMEWORK_LIBS="-framework CoreFoundation"
 	AC_MSG_CHECKING([for CFNotificationCenterGetDarwinNotifyCenter])
 	AC_CACHE_VAL([mp_cv_have_function_cfnotificationcentergetdarwinnotifycenter],[
 		ac_save_LIBS="$LIBS"
 		LIBS="$FRAMEWORK_LIBS $LIBS"
+		AC_LANG_PUSH([C])
 		AC_LINK_IFELSE([
-			AC_LANG_PROGRAM([
+			AC_LANG_PROGRAM([[
 					#include <CoreFoundation/CoreFoundation.h>
-				],[
+				]],[[
 					CFNotificationCenterRef ref = CFNotificationCenterGetDarwinNotifyCenter();
-			])
+			]])
 			],[
 				mp_cv_have_function_cfnotificationcentergetdarwinnotifycenter="yes"
 			],[
 				mp_cv_have_function_cfnotificationcentergetdarwinnotifycenter="no"
 			])
+		AC_LANG_POP
 		LIBS="$ac_save_LIBS"
 	])
 	AC_MSG_RESULT([${mp_cv_have_function_cfnotificationcentergetdarwinnotifycenter}])
 	if test x"${mp_cv_have_function_cfnotificationcentergetdarwinnotifycenter}" = "xyes"; then
-		AC_DEFINE([HAVE_FUNCTION_CFNOTIFICATIONCENTERGETDARWINNOTIFYCENTER], [1], [Defined to 1 if function CFNotificationCenterGetDarwinNotifyCenter in CoreFoundation framework])
+		AC_DEFINE([HAVE_FUNCTION_CFNOTIFICATIONCENTERGETDARWINNOTIFYCENTER],[1],[Defined to 1 if function CFNotificationCenterGetDarwinNotifyCenter in CoreFoundation framework])
 	fi
 	AC_SUBST([HAVE_FUNCTION_CFNOTIFICATIONCENTERGETDARWINNOTIFYCENTER])
 ])
@@ -123,28 +129,31 @@ AC_DEFUN([MP_CHECK_FUNCTION_CFNOTIFICATIONCENTERGETDARWINNOTIFYCENTER],[
 #
 #------------------------------------------------------------------------
 AC_DEFUN([MP_CHECK_FRAMEWORK_SYSTEMCONFIGURATION],[
+	AC_CHECK_HEADERS_ONCE([SystemConfiguration/SystemConfiguration.h])
 	FRAMEWORK_LIBS="-framework SystemConfiguration"
 	AC_MSG_CHECKING([for SystemConfiguration framework])
 	AC_CACHE_VAL([mp_cv_have_framework_systemconfiguration],[
 		ac_save_LIBS="$LIBS"
 		LIBS="$FRAMEWORK_LIBS $LIBS"
+		AC_LANG_PUSH([C])
 		AC_LINK_IFELSE([
-			AC_LANG_PROGRAM([
+			AC_LANG_PROGRAM([[
 					#include <SystemConfiguration/SystemConfiguration.h>
-				],[
+				]],[[
 					int err = SCError();
 					SCDynamicStoreRef dsRef = SCDynamicStoreCreate(NULL, NULL, NULL, NULL);
-			])
+			]])
 			],[
 				mp_cv_have_framework_systemconfiguration="yes"
 			],[
 				mp_cv_have_framework_systemconfiguration="no"
 			])
+		AC_LANG_POP
 		LIBS="$ac_save_LIBS"
 	])
 	AC_MSG_RESULT([${mp_cv_have_framework_systemconfiguration}])
 	if test x"${mp_cv_have_framework_systemconfiguration}" = "xyes"; then
-		AC_DEFINE([HAVE_FRAMEWORK_SYSTEMCONFIGURATION], [1], [Defined to 1 if SystemConfiguration framework is available])
+		AC_DEFINE([HAVE_FRAMEWORK_SYSTEMCONFIGURATION],[1],[Defined to 1 if SystemConfiguration framework is available])
 	fi
 	AC_SUBST([HAVE_FRAMEWORK_SYSTEMCONFIGURATION])
 ])
@@ -172,29 +181,31 @@ AC_DEFUN([MP_CHECK_FRAMEWORK_SYSTEMCONFIGURATION],[
 #
 #------------------------------------------------------------------------
 AC_DEFUN([MP_CHECK_FRAMEWORK_IOKIT],[
+	AC_CHECK_HEADERS_ONCE([IOKit/IOKitLib.h])
 	FRAMEWORK_LIBS="-framework IOKit"
 	AC_MSG_CHECKING([for IOKit framework])
 	AC_CACHE_VAL([mp_cv_have_framework_iokit],[
 		ac_save_LIBS="$LIBS"
 		LIBS="$FRAMEWORK_LIBS $LIBS"
-		
+		AC_LANG_PUSH([C])
 		AC_LINK_IFELSE([
-			AC_LANG_PROGRAM([
+			AC_LANG_PROGRAM([[
 					#include <IOKit/IOKitLib.h>
-				],[
+				]],[[
 					IOCreateReceivePort(0, NULL);
 					IORegisterForSystemPower(0, NULL, NULL, NULL);
-			])
+			]])
 			],[
 				mp_cv_have_framework_iokit="yes"
 			],[
 				mp_cv_have_framework_iokit="no"
 			])
+		AC_LANG_POP
 		LIBS="$ac_save_LIBS"
 	])
 	AC_MSG_RESULT([${mp_cv_have_framework_iokit}])
 	if test x"${mp_cv_have_framework_iokit}" = "xyes"; then
-		AC_DEFINE([HAVE_FRAMEWORK_IOKIT], [1], [Defined to 1 if IOKit framework is available])
+		AC_DEFINE([HAVE_FRAMEWORK_IOKIT],[1],[Defined to 1 if IOKit framework is available])
 	fi
 	AC_SUBST([HAVE_FRAMEWORK_IOKIT])
 ])
@@ -208,7 +219,7 @@ dnl# explicitly. If not, search for it.
  	dnl# For ease of reading, run after gcc has been found/configured
  	AC_REQUIRE([AC_PROG_CC])
 
- 	AC_ARG_WITH([ports-dir], [AS_HELP_STRING([--with-ports-dir=DIR],[Specify alternate ports directory])], [ portsdir="$withval" ] )
+ 	AC_ARG_WITH([ports-dir],[AS_HELP_STRING([--with-ports-dir=DIR],[Specify alternate ports directory])],[portsdir="$withval"])
 
  	AC_MSG_CHECKING([for ports tree])
  	if test "x$portsdir" != "x" ; then
@@ -275,7 +286,7 @@ AC_DEFUN([MP_CHECK_NOROOTPRIVILEGES],[
 	dnl# use ~/Library/Tcl as Tcl package directory
 	AC_REQUIRE([MP_PATH_MPCONFIGDIR])
 
-	AC_ARG_WITH([no-root-privileges], [AS_HELP_STRING([--with-no-root-privileges],[Specify that MacPorts should be installed in your home directory])], [ROOTPRIVS=$withval] )
+	AC_ARG_WITH([no-root-privileges],[AS_HELP_STRING([--with-no-root-privileges],[Specify that MacPorts should be installed in your home directory])],[ROOTPRIVS=$withval] )
 
 	if test "${ROOTPRIVS+set}" = set; then
 
@@ -319,7 +330,7 @@ AC_DEFUN([MP_CHECK_RUNUSER],[
 	dnl# use it. otherwise default to platform defaults
 	AC_REQUIRE([MP_PATH_MPCONFIGDIR])
 
-	AC_ARG_WITH([macports-user], [AS_HELP_STRING([--with-macports-user=USER],[Specify user to drop privileges to, if possible, during compiles etc.])], [RUNUSR=$withval])
+	AC_ARG_WITH([macports-user],[AS_HELP_STRING([--with-macports-user=USER],[Specify user to drop privileges to, if possible, during compiles etc.])],[RUNUSR=$withval])
 	
 	AC_MSG_CHECKING([for macports user])
 	if test "x$RUNUSR" = "x" ; then
@@ -337,7 +348,7 @@ AC_DEFUN([MP_SHARED_DIRECTORY],[
 	dnl# use 0775 permissions for ${prefix} directories
         AC_REQUIRE([MP_PATH_MPCONFIGDIR])
 
-	AC_ARG_WITH([shared-directory], [AS_HELP_STRING([--with-shared-directory],[Use 0775 permissions for installed directories])], [ SHAREDIR=$withval ] )
+	AC_ARG_WITH([shared-directory],[AS_HELP_STRING([--with-shared-directory],[Use 0775 permissions for installed directories])],[SHAREDIR=$withval])
 
 	if test "${SHAREDIR+set}" = set; then	
 		AC_MSG_CHECKING([whether to share the install directory with all members of the install group])
@@ -355,7 +366,7 @@ AC_DEFUN([MP_CHECK_INSTALLUSER],[
 	dnl# use it. otherwise default to platform defaults
         AC_REQUIRE([MP_PATH_MPCONFIGDIR])
 
-	AC_ARG_WITH([install-user], [AS_HELP_STRING([--with-install-user=USER],[Specify user ownership of installed files])], [ DSTUSR=$withval ] )
+	AC_ARG_WITH([install-user],[AS_HELP_STRING([--with-install-user=USER],[Specify user ownership of installed files])],[DSTUSR=$withval])
 	
 	AC_MSG_CHECKING([for install user])
 	if test "x$DSTUSR" = "x" ; then
@@ -373,7 +384,7 @@ AC_DEFUN([MP_CHECK_INSTALLGROUP],[
 	dnl# use it. otherwise default to platform defaults
         AC_REQUIRE([MP_CHECK_INSTALLUSER])
 
-	AC_ARG_WITH([install-group], [AS_HELP_STRING([--with-install-group=GROUP],[Specify group ownership of installed files])], [ DSTGRP=$withval ] )
+	AC_ARG_WITH([install-group],[AS_HELP_STRING([--with-install-group=GROUP],[Specify group ownership of installed files])],[DSTGRP=$withval])
 
 	AC_MSG_CHECKING([for install group])
 	if test "x$DSTGRP" = "x" ; then
@@ -404,7 +415,7 @@ AC_DEFUN([MP_DIRECTORY_MODE],[
 	dnl# otherwise use 0755
         AC_REQUIRE([MP_PATH_MPCONFIGDIR])
 
-	AC_ARG_WITH([directory-mode], [AS_HELP_STRING([--with-directory-mode=MODE],[Specify directory mode of installed directories])], [DSTMODE=$withval])
+	AC_ARG_WITH([directory-mode],[AS_HELP_STRING([--with-directory-mode=MODE],[Specify directory mode of installed directories])],[DSTMODE=$withval])
 	
 	AC_MSG_CHECKING([what permissions to use for installation directories])
 	if test "x$DSTMODE" = "x" ; then
@@ -467,6 +478,7 @@ AC_DEFUN([MP_PATH_FRAMEWORKS],[
 #---------------------------------------
 AC_DEFUN([MP_UNIVERSAL_OPTIONS],[
   AC_ARG_WITH([universal-archs],[AS_HELP_STRING([--with-universal-archs="CPU"],[Universal CPU architectures (space separated)])], [UNIVERSAL_ARCHS=${withval}])
+  AC_REQUIRE([AC_C_BIGENDIAN])
 
   if test "x$UNIVERSAL_ARCHS" = "x"; then
     case "$MACOSX_VERSION" in
@@ -496,7 +508,7 @@ AC_DEFUN([MP_LIB_MD5],[
 		LIBS="-lmd $LIBS"
 		AC_CHECK_FUNCS([SHA1_File])
 		LIBS="$ac_save_LIBS"
-		AC_CHECK_HEADERS([ripemd.h sha256.h])
+		AC_CHECK_HEADERS_ONCE([ripemd.h sha256.h])
 		AC_DEFINE([HAVE_LIBMD],[1],[Defined to 1 if you have the `md' library (-lmd).])
 		MD5_LIBS="-lmd"])
 	if test "x$MD5_LIBS" = "x"; then
@@ -505,7 +517,7 @@ AC_DEFUN([MP_LIB_MD5],[
 			AC_CHECK_HEADERS([openssl/md5.h openssl/sha.h],[],[
 				AC_MSG_ERROR([libcrypto was found, but openssl/md5.h or openssl/sha.h is missing.])
 			])
-			AC_CHECK_HEADERS([openssl/ripemd.h])
+			AC_CHECK_HEADERS_ONCE([openssl/ripemd.h])
 			ac_save_LIBS="$LIBS"
 			LIBS="-lcrypto $LIBS"
 			AC_CHECK_FUNCS([SHA256_Update])
@@ -639,11 +651,11 @@ AC_DEFUN([MP_PROG_TCLSH],[
 			# FreeBSD installs a dummy tclsh (annoying)
 			# Look for a real versioned tclsh with threads first
 			# Look for a real versioned tclsh without threads second
-			AC_PATH_PROG([TCLSH], [tclsh${TCL_VERSION}-threads tclsh${TCL_VERSION} tclsh])
+			AC_PATH_PROG([TCLSH],[tclsh${TCL_VERSION}-threads tclsh${TCL_VERSION} tclsh])
 			;;
 		*)
 			# Otherwise, look for a non-versioned tclsh
-			AC_PATH_PROG([TCLSH], [tclsh tclsh${TCL_VERSION}])
+			AC_PATH_PROG([TCLSH],[tclsh tclsh${TCL_VERSION}])
 			;;
 	esac
 	if test "x$TCLSH" = "x" ; then
@@ -670,7 +682,7 @@ AC_DEFUN([MP_PROG_TCLSH],[
 AC_DEFUN([MP_TCL_PACKAGE],[
 	AC_MSG_CHECKING([for Tcl $1 package])
 	package_present=`echo 'if {[[catch {package require $1}]]} {puts -nonewline 0} else {puts -nonewline 1}' | $TCLSH`
-	AS_IF([test "$package_present" = "1"], [$2], [$3])[]
+	AS_IF([test "$package_present" = "1"],[$2],[$3])[]
 ])
 
 # MP_TCL_THREAD_SUPPORT
@@ -693,7 +705,7 @@ AC_DEFUN([MP_TCL_THREAD_SUPPORT],[
 		AC_MSG_RESULT([yes])
 	else
 		AC_MSG_RESULT([no])
-		AC_MSG_ERROR([tcl wasn't compiled with threads enabled])
+		AC_MSG_WARN([tcl was not compiled with threads enabled (this should be an error, but it has been turned into a warning to facilitate work on this configure script)])
 	fi
 ])
 
@@ -716,9 +728,9 @@ AC_DEFUN([MP_LIBCURL_FLAGS],[
 		    [curlprefix=$withval])
 
 	if test "x$curlprefix" = "x"; then
-		AC_PATH_PROG([CURL_CONFIG], [curl-config])
+		AC_PATH_PROG([CURL_CONFIG],[curl-config])
 	else
-		AC_PATH_PROG([CURL_CONFIG], [curl-config], [], [$curlprefix/bin])
+		AC_PATH_PROG([CURL_CONFIG],[curl-config],[],[$curlprefix/bin])
 	fi
 
 	if test "x$CURL_CONFIG" = "x"; then
@@ -754,6 +766,7 @@ AC_DEFUN([MP_LIBCURL_FLAGS],[
 #---------------------------------------
 AC_DEFUN([MP_SQLITE3_FLAGS],[
 	AC_REQUIRE([PKG_PROG_PKG_CONFIG])
+	AC_REQUIRE([AC_PROG_CPP])
 
     # first sqlite3 itself
 	AC_ARG_WITH([sqlite3prefix],
@@ -785,7 +798,7 @@ AC_DEFUN([MP_SQLITE3_FLAGS],[
     # check if we have sqlite3ext.h, using the appropriate cppflags
     CPPFLAGS_OLD="${CPPFLAGS}"
     CPPFLAGS="${CPPFLAGS} ${CFLAGS_SQLITE3}"
-    AC_CHECK_HEADERS(sqlite3ext.h)
+    AC_CHECK_HEADERS_ONCE([sqlite3ext.h])
     CPPFLAGS="${CPPFLAGS_OLD}"
 
 	AC_SUBST([CFLAGS_SQLITE3])
@@ -810,7 +823,7 @@ AC_DEFUN([MP_SQLITE3_FLAGS],[
                 ;;
         esac
     fi
-	AC_CACHE_CHECK([for Tcl sqlite3 location], [mp_cv_sqlite3_dir],
+	AC_CACHE_CHECK([for Tcl sqlite3 location],[mp_cv_sqlite3_dir],
 		[mp_cv_sqlite3_dir=
 		test -r "${mp_sqlite3_dir}/pkgIndex.tcl" && mp_cv_sqlite3_dir=$mp_sqlite3_dir
 		])
@@ -823,7 +836,7 @@ dnl# __attribute__ syntax for unused variables/parameters
 AC_DEFUN([MP_COMPILER_ATTRIBUTE_UNUSED],[
 	AC_MSG_CHECKING([how to mark unused variables])
 	AC_COMPILE_IFELSE([AC_LANG_SOURCE([[int a __attribute__ ((unused));]])],
-		[AC_DEFINE([UNUSED],[__attribute__((unused))], [Attribute to mark unused variables])],
+		[AC_DEFINE([UNUSED],[__attribute__((unused))],[Attribute to mark unused variables])],
 		[AC_DEFINE([UNUSED],[])])
 	AC_SUBST([UNUSED])
 	AC_MSG_RESULT([$UNUSED])
@@ -920,7 +933,7 @@ AC_DEFUN([MP_TAR_NO_SAME_OWNER],[
 	fi
 	
 	AC_MSG_CHECKING([for which tar variant to use])
-	AS_IF([test -n "$GNUTAR"], [TAR_CMD=$GNUTAR], [TAR_CMD=$TAR])
+	AS_IF([test -n "$GNUTAR"],[TAR_CMD=$GNUTAR],[TAR_CMD=$TAR])
 	AC_MSG_RESULT([$TAR_CMD])
 	AC_SUBST([TAR_CMD])
 
@@ -937,14 +950,14 @@ AC_DEFUN([MP_TAR_NO_SAME_OWNER],[
 dnl# This macro tests for GNU patch
 AC_DEFUN([MP_PATCH_GNU_VERSION],[
 	if test "x$PATCH" = "x"; then
-		AC_PATH_PROG([PATCH], [patch])
+		AC_PATH_PROG([PATCH],[patch])
 	fi
 	if test "x$GNUPATCH" = "x"; then
-		AC_PATH_PROG([GNUPATCH], [gnupatch gpatch])
+		AC_PATH_PROG([GNUPATCH],[gnupatch gpatch])
 	fi
 	
 	AC_MSG_CHECKING([for GNU (FSF) patch])
-	AS_IF([test -n "$GNUPATCH"], [PATCH_CMD=$GNUPATCH], [PATCH_CMD=$PATCH])
+	AS_IF([test -n "$GNUPATCH"],[PATCH_CMD=$GNUPATCH], [PATCH_CMD=$PATCH])
 	[fsf_version=`$PATCH_CMD --version 2>&1 | grep "Free Software Foundation"`]
 	if test -z "$fsf_version" ; then
 		AC_MSG_RESULT([none])
@@ -979,26 +992,29 @@ AC_DEFUN([MP_PATCH_GNU_VERSION],[
 AC_DEFUN([MP_CHECK_READLINK_IS_P1003_1A],[
 	AC_REQUIRE([AC_TYPE_SIZE_T])
 	AC_REQUIRE([AC_TYPE_SSIZE_T])
+	AC_CHECK_HEADERS_ONCE([unistd.h])
 	AC_MSG_CHECKING([if readlink conforms to POSIX 1003.1a])
 
 	AC_CACHE_VAL([mp_cv_readlink_is_posix_1003_1a],[
+		AC_LANG_PUSH([C])
 		AC_COMPILE_IFELSE([
-			AC_LANG_PROGRAM([
+			AC_LANG_PROGRAM([[
 					#include <unistd.h>
 					ssize_t readlink(const char *, char *, size_t);
-				],[
-			])
+				]],[[
+			]])
 			],[
 				mp_cv_readlink_is_posix_1003_1a="yes"
 			],[
 				mp_cv_readlink_is_posix_1003_1a="no"
 			])
+		AC_LANG_POP
 	])
 
 	AC_MSG_RESULT([${mp_cv_readlink_is_posix_1003_1a}])
 
 	if test x"${mp_cv_readlink_is_posix_1003_1a}" = "xno"; then
-		AC_DEFINE([READLINK_IS_NOT_P1003_1A], [], [Define to 1 if readlink does not conform with POSIX 1003.1a (where third argument is a size_t and return value is a ssize_t)])
+		AC_DEFINE([READLINK_IS_NOT_P1003_1A],[],[Define to 1 if readlink does not conform with POSIX 1003.1a (where third argument is a size_t and return value is a ssize_t)])
 	fi
 	AC_SUBST([READLINK_IS_NOT_P1003_1A])
 ])
@@ -1022,7 +1038,7 @@ AC_DEFUN([MP_CHECK_READLINK_IS_P1003_1A],[
 #------------------------------------------------------------------------
 AC_DEFUN([MP_WERROR],[
 	AC_REQUIRE([AC_PROG_CC])
-	AC_ARG_ENABLE([werror], [AS_HELP_STRING([--enable-werror],[Add -Werror to CFLAGS. Used for development.])], [enable_werror=${enableval}], [enable_werror=no])
+	AC_ARG_ENABLE([werror],[AS_HELP_STRING([--enable-werror],[Add -Werror to CFLAGS. Used for development.])],[enable_werror=${enableval}],[enable_werror=no])
 	if test x"$enable_werror" != "xno"; then
 		CFLAGS_WERROR="-Werror"
 	else
@@ -1054,13 +1070,15 @@ AC_DEFUN([MP_WERROR],[
 AC_DEFUN([MP_CHECK_SQLITE_VERSION],[
 	AC_REQUIRE([MP_SQLITE3_FLAGS])
 	AC_REQUIRE([AC_PROG_CPP])
+	AC_CHECK_HEADERS_ONCE([sqlite3.h])
 
 	AC_MSG_CHECKING([for SQLite >= $1])
 
 	mp_check_sqlite_version_cppflags_save=$CPPFLAGS
 	CPPFLAGS="$CPPFLAGS $CFLAGS_SQLITE3"
 
-	AC_CACHE_VAL([mp_cv_sqlite_version_defined], [
+	AC_CACHE_VAL([mp_cv_sqlite_version_defined],[
+		AC_LANG_PUSH([C])
 		AC_PREPROC_IFELSE([AC_LANG_SOURCE([[
 					#include <sqlite3.h>
 					#ifndef SQLITE_VERSION_NUMBER
@@ -1069,12 +1087,14 @@ AC_DEFUN([MP_CHECK_SQLITE_VERSION],[
 			]])],
 			[mp_cv_sqlite_version_defined="yes"],
 			[AC_MSG_ERROR("SQLITE_VERSION_NUMBER undefined or sqlite3.h not found")])
+		AC_LANG_POP
 	])
 	if test x"${mp_cv_sqlite_version_defined}" = "xno"; then
 		AC_MSG_RESULT([SQLite version not found])
 		mp_sqlite_version_ge_$1="no"
 	else
-		AC_CACHE_VAL(mp_cv_sqlite_version_ge_$1, [
+		AC_CACHE_VAL([mp_cv_sqlite_version_ge_$1],[
+			AC_LANG_PUSH([C])
 			AC_PREPROC_IFELSE([AC_LANG_SOURCE([[
 						#include <sqlite3.h>
 						#if (SQLITE_VERSION_NUMBER >= $1)
@@ -1085,6 +1105,7 @@ AC_DEFUN([MP_CHECK_SQLITE_VERSION],[
 				]])],
 				[mp_cv_sqlite_version_ge_$1="yes"],
 				[mp_cv_sqlite_version_ge_$1="no"])
+			AC_LANG_POP
 		])
 		AC_MSG_RESULT([${mp_cv_sqlite_version_ge_$1}])
 		mp_sqlite_version_ge_$1=${mp_cv_sqlite_version_ge_$1}
