@@ -1082,6 +1082,7 @@ TAR
 XAR
 XZ
 OBJCPP
+GNUSTEP_SYSTEM_ROOT
 CURL_CONFIG
 CURL_CFLAGS
 CURL_LIBS'
@@ -1850,6 +1851,8 @@ Some influential environment variables:
   XAR         path to xar command
   XZ          path to xz command
   OBJCPP      Objective C preprocessor
+  GNUSTEP_SYSTEM_ROOT
+              path to GNUStep installation
   CURL_CONFIG config script used for curl
   CURL_CFLAGS CFLAGS used for curl
   CURL_LIBS   LIBS used for curl
@@ -5809,22 +5812,24 @@ $as_echo "${MACPORTS_VERSION}" >&6; }
 
 	prefix=$oldprefix
 
-echo "adding MacPorts prefix back in to path..."
-PATH=${PATH}:/opt/local/bin
-PATH=$(echo "${PATH}" | tr \: \\n | uniq | tr \\n \: | uniq | sed "s|::|:|g")
-if test "x${PREFIX}" != "x"; then
-  if test "x${PREFIX}" != "x/opt/local"; then
-    PATH=${PATH}:${PREFIX}/bin
-    PATH=$(echo "${PATH}" | tr \: \\n | uniq | tr \\n \: | uniq | sed "s|::|:|g")
-    { $as_echo "$as_me:${as_lineno-$LINENO}: checking path" >&5
+if test -d /opt/local/bin; then
+  echo "adding MacPorts prefix back in to path..."
+  PATH=${PATH}:/opt/local/bin
+  PATH=$(echo "${PATH}" | tr \: \\n | uniq | tr \\n \: | uniq | sed "s|::|:|g")
+  if test "x${PREFIX}" != "x"; then
+    if test "x${PREFIX}" != "x/opt/local"; then
+      PATH=${PATH}:${PREFIX}/bin
+      PATH=$(echo "${PATH}" | tr \: \\n | uniq | tr \\n \: | uniq | sed "s|::|:|g")
+      { $as_echo "$as_me:${as_lineno-$LINENO}: checking path" >&5
 $as_echo_n "checking path... " >&6; }
-    { $as_echo "$as_me:${as_lineno-$LINENO}: result: $PATH" >&5
-$as_echo "$PATH" >&6; }
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: ${PATH}" >&5
+$as_echo "${PATH}" >&6; }
+    else
+      echo "prefix is default, not adding it again"
+    fi
   else
-    echo "prefix is default, not adding it again"
+    echo "prefix is not defined, only using default"
   fi
-else
-  echo "prefix is not defined, only using default"
 fi
 
 # Extract the first word of "sw_vers", so it can be a program name with args.
@@ -5948,15 +5953,15 @@ fi
 
 
 
-if test "x$SW_VERS" != "x"; then
+if test "x${SW_VERS}" != "x"; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: checking Mac OS X version" >&5
 $as_echo_n "checking Mac OS X version... " >&6; }
-  MACOSX_VERSION=`$SW_VERS -productVersion`
+  MACOSX_VERSION=`${SW_VERS} -productVersion`
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: $MACOSX_VERSION" >&5
 $as_echo "$MACOSX_VERSION" >&6; }
 fi
 
-case "$MACOSX_VERSION" in
+case "${MACOSX_VERSION}" in
   10.0*|10.1*|10.2*|10.3*)
     as_fn_error $? "This version of Mac OS X is not supported any more.
                   Please upgrade at http://store.apple.com/" "$LINENO" 5
@@ -5990,28 +5995,28 @@ fi
 $as_echo "${DEVELOPER_DIR}" >&6; }
 
 
-case "$DEVELOPER_DIR" in
+case "${DEVELOPER_DIR}" in
   *Xcode.app/Contents/Developer)
     XCODEPLIST_BASE=`dirname ${DEVELOPER_DIR}`/version
     ;;
   *)
-    XCODEPLIST_BASE=$DEVELOPER_DIR/Applications/Xcode.app/Contents/version
+    XCODEPLIST_BASE=${DEVELOPER_DIR}/Applications/Xcode.app/Contents/version
     ;;
 esac
 XCODEPLIST=${XCODEPLIST_BASE}.plist
-if test -r "$XCODEPLIST"; then
+if test -r "${XCODEPLIST}"; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: checking Xcode version" >&5
 $as_echo_n "checking Xcode version... " >&6; }
-  if test "x$DEFAULTS" != "x"; then
-    XCODE_VERSION=`$DEFAULTS read $XCODEPLIST_BASE CFBundleShortVersionString`
+  if test "x${DEFAULTS}" != "x"; then
+    XCODE_VERSION=`${DEFAULTS} read ${XCODEPLIST_BASE} CFBundleShortVersionString`
   else
-    XCODE_VERSION=`tr -d '\r\n' < $XCODEPLIST | sed -e 's/.*<key>CFBundleShortVersionString<\/key>.<string>\([0-9.]*\)<\/string>.*/\1/'`
+    XCODE_VERSION=`tr -d '\r\n' < ${XCODEPLIST} | sed -e 's/.*<key>CFBundleShortVersionString<\/key>.<string>\([0-9.]*\)<\/string>.*/\1/'`
   fi
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $XCODE_VERSION" >&5
-$as_echo "$XCODE_VERSION" >&6; }
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: ${XCODE_VERSION}" >&5
+$as_echo "${XCODE_VERSION}" >&6; }
 fi
 
-case "$XCODE_VERSION" in
+case "${XCODE_VERSION}" in
   1.*|2.[0-1]*)
     { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: This version of Xcode Tools is not supported" >&5
 $as_echo "$as_me: WARNING: This version of Xcode Tools is not supported" >&2;}
@@ -8765,7 +8770,7 @@ else
   if $GREP 'External.*some_variable' conftest.out > /dev/null; then
     lt_cv_nm_interface="MS dumpbin"
   fi
-  rm -f conftest*
+  rm -rf conftest*
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $lt_cv_nm_interface" >&5
 $as_echo "$lt_cv_nm_interface" >&6; }
@@ -10120,7 +10125,7 @@ for ac_symprfx in "" "_"; do
   # Check to see that the pipe works correctly.
   pipe_works=no
 
-  rm -f conftest*
+  rm -rf conftest*
   cat > conftest.$ac_ext <<_LT_EOF
 #ifdef __cplusplus
 extern "C" {
@@ -10636,7 +10641,7 @@ else
   if $GREP 'Manifest Tool' conftest.out > /dev/null; then
     lt_cv_path_mainfest_tool=yes
   fi
-  rm -f conftest*
+  rm -rf conftest*
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $lt_cv_path_mainfest_tool" >&5
 $as_echo "$lt_cv_path_mainfest_tool" >&6; }
@@ -11754,7 +11759,7 @@ ac_outfile=conftest.$ac_objext
 echo "$lt_simple_compile_test_code" >conftest.$ac_ext
 eval "$ac_compile" 2>&1 >/dev/null | $SED '/^$/d; /^ *+/d' >conftest.err
 _lt_compiler_boilerplate=`cat conftest.err`
-$RM conftest*
+$RM -r conftest*
 
 ac_outfile=conftest.$ac_objext
 echo "$lt_simple_link_test_code" >conftest.$ac_ext
@@ -11811,7 +11816,7 @@ else
        lt_cv_prog_compiler_rtti_exceptions=yes
      fi
    fi
-   $RM conftest*
+   $RM -r conftest*
 
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $lt_cv_prog_compiler_rtti_exceptions" >&5
@@ -12188,7 +12193,7 @@ else
        lt_cv_prog_compiler_pic_works=yes
      fi
    fi
-   $RM conftest*
+   $RM -r conftest*
 
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $lt_cv_prog_compiler_pic_works" >&5
@@ -12300,14 +12305,14 @@ else
      fi
    fi
    chmod u+w . 2>&5
-   $RM conftest*
+   $RM -r conftest*
    # SGI C++ compiler will create directory out/ii_files/ for
    # template instantiation
    test -d out/ii_files && $RM out/ii_files/* && rmdir out/ii_files
    $RM out/* && rmdir out
    cd ..
    $RM -r conftest
-   $RM conftest*
+   $RM -r conftest*
 
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $lt_cv_prog_compiler_c_o" >&5
@@ -12355,14 +12360,14 @@ else
      fi
    fi
    chmod u+w . 2>&5
-   $RM conftest*
+   $RM -r conftest*
    # SGI C++ compiler will create directory out/ii_files/ for
    # template instantiation
    test -d out/ii_files && $RM out/ii_files/* && rmdir out/ii_files
    $RM out/* && rmdir out
    cd ..
    $RM -r conftest
-   $RM conftest*
+   $RM -r conftest*
 
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $lt_cv_prog_compiler_c_o" >&5
@@ -12377,7 +12382,7 @@ if test "$lt_cv_prog_compiler_c_o" = no && test "$need_locks" != no; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: checking if we can lock with hard links" >&5
 $as_echo_n "checking if we can lock with hard links... " >&6; }
   hard_links=yes
-  $RM conftest*
+  $RM -r conftest*
   ln conftest.a conftest.b 2>/dev/null && hard_links=no
   touch conftest.a
   ln conftest.a conftest.b 2>&5 || hard_links=no
@@ -13593,7 +13598,7 @@ $as_echo_n "checking whether -lc should be explicitly linked in... " >&6; }
 if ${lt_cv_archive_cmds_need_lc+:} false; then :
   $as_echo_n "(cached) " >&6
 else
-  $RM conftest*
+  $RM -r conftest*
 	echo "$lt_simple_compile_test_code" > conftest.$ac_ext
 
 	if { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$ac_compile\""; } >&5
@@ -13628,7 +13633,7 @@ else
 	else
 	  cat conftest.err 1>&5
 	fi
-	$RM conftest*
+	$RM -r conftest*
 
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $lt_cv_archive_cmds_need_lc" >&5
@@ -15494,7 +15499,7 @@ compiler=$CC
 echo "$lt_simple_compile_test_code" >conftest.$ac_ext
 eval "$ac_compile" 2>&1 >/dev/null | $SED '/^$/d; /^ *+/d' >conftest.err
 _lt_compiler_boilerplate=`cat conftest.err`
-$RM conftest*
+$RM -r conftest*
 
   ac_outfile=conftest.$ac_objext
 echo "$lt_simple_link_test_code" >conftest.$ac_ext
@@ -17316,7 +17321,7 @@ else
        lt_cv_prog_compiler_pic_works_CXX=yes
      fi
    fi
-   $RM conftest*
+   $RM -r conftest*
 
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $lt_cv_prog_compiler_pic_works_CXX" >&5
@@ -17419,14 +17424,14 @@ else
      fi
    fi
    chmod u+w . 2>&5
-   $RM conftest*
+   $RM -r conftest*
    # SGI C++ compiler will create directory out/ii_files/ for
    # template instantiation
    test -d out/ii_files && $RM out/ii_files/* && rmdir out/ii_files
    $RM out/* && rmdir out
    cd ..
    $RM -r conftest
-   $RM conftest*
+   $RM -r conftest*
 
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $lt_cv_prog_compiler_c_o_CXX" >&5
@@ -17471,14 +17476,14 @@ else
      fi
    fi
    chmod u+w . 2>&5
-   $RM conftest*
+   $RM -r conftest*
    # SGI C++ compiler will create directory out/ii_files/ for
    # template instantiation
    test -d out/ii_files && $RM out/ii_files/* && rmdir out/ii_files
    $RM out/* && rmdir out
    cd ..
    $RM -r conftest
-   $RM conftest*
+   $RM -r conftest*
 
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $lt_cv_prog_compiler_c_o_CXX" >&5
@@ -17493,7 +17498,7 @@ if test "$lt_cv_prog_compiler_c_o_CXX" = no && test "$need_locks" != no; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: checking if we can lock with hard links" >&5
 $as_echo_n "checking if we can lock with hard links... " >&6; }
   hard_links=yes
-  $RM conftest*
+  $RM -r conftest*
   ln conftest.a conftest.b 2>/dev/null && hard_links=no
   touch conftest.a
   ln conftest.a conftest.b 2>&5 || hard_links=no
@@ -17580,7 +17585,7 @@ $as_echo_n "checking whether -lc should be explicitly linked in... " >&6; }
 if ${lt_cv_archive_cmds_need_lc_CXX+:} false; then :
   $as_echo_n "(cached) " >&6
 else
-  $RM conftest*
+  $RM -r conftest*
 	echo "$lt_simple_compile_test_code" > conftest.$ac_ext
 
 	if { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$ac_compile\""; } >&5
@@ -17615,7 +17620,7 @@ else
 	else
 	  cat conftest.err 1>&5
 	fi
-	$RM conftest*
+	$RM -r conftest*
 
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $lt_cv_archive_cmds_need_lc_CXX" >&5
@@ -19224,7 +19229,7 @@ else
 JAVA_TEST=Test.java
 CLASS_TEST=Test.class
 cat << \EOF > $JAVA_TEST
-/* #line 19227 "configure" */
+/* #line 19232 "configure" */
 public class Test {
 }
 EOF
@@ -26299,7 +26304,7 @@ else
   ;;
   *)
   as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-as_dummy="$PATH:/usr/sbin"
+as_dummy="${PATH}:/usr/sbin"
 for as_dir in $as_dummy
 do
   IFS=$as_save_IFS
@@ -26340,7 +26345,7 @@ else
   ;;
   *)
   as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-as_dummy="$PATH:/usr/sbin"
+as_dummy="${PATH}:/usr/sbin"
 for as_dir in $as_dummy
 do
   IFS=$as_save_IFS
@@ -26381,7 +26386,7 @@ else
   ;;
   *)
   as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-as_dummy="$PATH:/usr/sbin"
+as_dummy="${PATH}:/usr/sbin"
 for as_dir in $as_dummy
 do
   IFS=$as_save_IFS
@@ -26609,7 +26614,7 @@ $as_echo "no" >&6; }
 fi
 
 
-if test "x$DOXYGEN" = "x"; then
+if test "x${DOXYGEN}" = "x"; then
   # Extract the first word of "doxygen", so it can be a program name with args.
 set dummy doxygen; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
@@ -26651,7 +26656,7 @@ fi
 
 
 else
-  test ! -z "$DOXYGEN"
+  test ! -z "${DOXYGEN}"
 
 fi
 # Extract the first word of "dscl", so it can be a program name with args.
@@ -26909,7 +26914,7 @@ else
   ;;
   *)
   as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-as_dummy="$PATH:/usr/local/bin"
+as_dummy="${PATH}:/usr/local/bin"
 for as_dir in $as_dummy
 do
   IFS=$as_save_IFS
@@ -26955,7 +26960,7 @@ else
   ;;
   *)
   as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-as_dummy="$PATH:/usr/local/bin"
+as_dummy="${PATH}:/usr/local/bin"
 for as_dir in $as_dummy
 do
   IFS=$as_save_IFS
@@ -27001,7 +27006,7 @@ else
   ;;
   *)
   as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-as_dummy="$PATH:/usr/local/bin"
+as_dummy="${PATH}:/usr/local/bin"
 for as_dir in $as_dummy
 do
   IFS=$as_save_IFS
@@ -27485,7 +27490,7 @@ else
   ;;
   *)
   as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-as_dummy="$PATH:/usr/sbin"
+as_dummy="${PATH}:/usr/sbin"
 for as_dir in $as_dummy
 do
   IFS=$as_save_IFS
@@ -27833,7 +27838,7 @@ $as_echo "no" >&6; }
 fi
 
 
-if test "x$SED" = "x"; then
+if test "x${SED}" = "x"; then
   # Extract the first word of "sed", so it can be a program name with args.
 set dummy sed; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
@@ -27876,8 +27881,7 @@ fi
 
 
 else
-  test ! -z "$SED"
-  export SED
+  test ! -z "${SED}" && export SED
 
 fi
 # Extract the first word of "svn", so it can be a program name with args.
@@ -28341,7 +28345,7 @@ fi
 
 
 
-if test "x$MTREE" = "x"; then
+if test "x${MTREE}" = "x"; then
     as_fn_error $? "mtree not found; you can get a copy from http://opensource.apple.com/source/file_cmds/file_cmds-220.7/" "$LINENO" 5
 fi
 
@@ -29195,13 +29199,14 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for GNUStep system root" >&5
 $as_echo_n "checking for GNUStep system root... " >&6; }
-if test "x$GNUSTEP_SYSTEM_ROOT" = "x"; then
+
+if test "x${GNUSTEP_SYSTEM_ROOT}" = "x"; then
   # TODO: move prefix-checking code above this step so that configured
   # prefix can be used instead of hardwiring /opt/local
   if test -d /opt/local/GNUStep/System; then
     export GNUSTEP_SYSTEM_ROOT=/opt/local/GNUSTEP/System
-    { $as_echo "$as_me:${as_lineno-$LINENO}: result: using MacPorts GNUStep system root: $GNUSTEP_SYSTEM_ROOT" >&5
-$as_echo "using MacPorts GNUStep system root: $GNUSTEP_SYSTEM_ROOT" >&6; }
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: using MacPorts GNUStep system root: ${GNUSTEP_SYSTEM_ROOT}" >&5
+$as_echo "using MacPorts GNUStep system root: ${GNUSTEP_SYSTEM_ROOT}" >&6; }
 
   else
     # This had previously been in the other "else" condition, but I think
@@ -29210,8 +29215,8 @@ $as_echo "using MacPorts GNUStep system root: $GNUSTEP_SYSTEM_ROOT" >&6; }
 $as_echo "not found" >&6; }
   fi
 else
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: using user-set GNUStep system root: $GNUSTEP_SYSTEM_ROOT" >&5
-$as_echo "using user-set GNUStep system root: $GNUSTEP_SYSTEM_ROOT" >&6; }
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: using user-set GNUStep system root: ${GNUSTEP_SYSTEM_ROOT}" >&5
+$as_echo "using user-set GNUStep system root: ${GNUSTEP_SYSTEM_ROOT}" >&6; }
 
 fi
 
@@ -29757,13 +29762,13 @@ PORTS_DIR_DEFAULT=`pwd | sed -e "s/base/ports/"`
 
 # Check whether --with-unsupported-prefix was given.
 if test "${with_unsupported_prefix+set}" = set; then :
-  withval=$with_unsupported_prefix; with_unsupported_prefix=$withval
+  withval=$with_unsupported_prefix; with_unsupported_prefix=${withval}
 else
   with_unsupported_prefix=no
 fi
 
-if test x$prefix = x/usr/local -o x$prefix = x/usr && test x$with_unsupported_prefix != xyes; then
-    as_fn_error $? "Installing MacPorts into $prefix is not supported. If \
+if test x${prefix} = x/usr/local -o x${prefix} = x/usr && test x${with_unsupported_prefix} != xyes; then
+    as_fn_error $? "Installing MacPorts into ${prefix} is not supported. If \
 you understand this and wish to do so anyway, pass \
 --with-unsupported-prefix to configure." "$LINENO" 5
 fi
@@ -29786,9 +29791,9 @@ $as_echo_n "checking for ports tree... " >&6; }
  		as_fn_error $? "$portsdir not a valid ports tree" "$LINENO" 5
  	  fi
  	else
- 		 		if test "x$PORTS_DIR_DEFAULT" != "x" ; then
- 		  if test -d "$PORTS_DIR_DEFAULT" -a -e "$PORTS_DIR_DEFAULT/PortIndex" ; then
- 			portsdir=$PORTS_DIR_DEFAULT
+ 		 		if test "x${PORTS_DIR_DEFAULT}" != "x" ; then
+ 		  if test -d "${PORTS_DIR_DEFAULT}" -a -e "${PORTS_DIR_DEFAULT}/PortIndex" ; then
+ 			portsdir=${PORTS_DIR_DEFAULT}
  		  fi
  		fi
  	fi
@@ -30660,11 +30665,47 @@ $as_echo "#define HAVE_SYS_WAIT_H 1" >>confdefs.h
 
 fi
 
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether time.h and sys/time.h may both be included" >&5
+$as_echo_n "checking whether time.h and sys/time.h may both be included... " >&6; }
+if ${ac_cv_header_time+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+#include <sys/types.h>
+#include <sys/time.h>
+#include <time.h>
+
+int
+main ()
+{
+if ((struct tm *) 0)
+return 0;
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+  ac_cv_header_time=yes
+else
+  ac_cv_header_time=no
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_header_time" >&5
+$as_echo "$ac_cv_header_time" >&6; }
+if test $ac_cv_header_time = yes; then
+
+$as_echo "#define TIME_WITH_SYS_TIME 1" >>confdefs.h
+
+fi
+
 for ac_header in crt_externs.h ctype.h err.h fcntl.h libkern/OSAtomic.h \
                   limits.h mach/mach.h netdb.h paths.h pwd.h spawn.h \
                   stddef.h stdio.h sys/cdefs.h sys/event.h sys/fcntl.h \
-                  sys/file.h sys/mount.h sys/paths.h sys/socket.h \
-                  sys/sysctl.h utime.h
+                  sys/file.h sys/ioctl.h sys/mount.h sys/param.h \
+                  sys/paths.h sys/socket.h sys/sysctl.h sys/time.h \
+                  time.h utime.h
 do :
   as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
 ac_fn_c_check_header_mongrel "$LINENO" "$ac_header" "$as_ac_Header" "$ac_includes_default"
@@ -32724,7 +32765,9 @@ fi
 	#include <stdio.h>
 	#if HAVE_READLINE_READLINE_H
 	# include <readline/readline.h>
-	#endif
+	#else
+	# waring this conftest expects <readline/readline.h> to be included
+	#endif /* HAVE_READLINE_READLINE_H */
 
 "
 if test "x$ac_cv_have_decl_rl_username_completion_function" = xyes; then :
@@ -32740,7 +32783,9 @@ ac_fn_c_check_decl "$LINENO" "rl_filename_completion_function" "ac_cv_have_decl_
 	#include <stdio.h>
 	#if HAVE_READLINE_READLINE_H
 	# include <readline/readline.h>
-	#endif
+	#else
+	# waring this conftest expects <readline/readline.h> to be included
+	#endif /* HAVE_READLINE_READLINE_H */
 
 "
 if test "x$ac_cv_have_decl_rl_filename_completion_function" = xyes; then :
@@ -32756,7 +32801,9 @@ ac_fn_c_check_decl "$LINENO" "rl_completion_matches" "ac_cv_have_decl_rl_complet
 	#include <stdio.h>
 	#if HAVE_READLINE_READLINE_H
 	# include <readline/readline.h>
-	#endif
+	#else
+	# waring this conftest expects <readline/readline.h> to be included
+	#endif /* HAVE_READLINE_READLINE_H */
 
 "
 if test "x$ac_cv_have_decl_rl_completion_matches" = xyes; then :
@@ -32772,7 +32819,9 @@ ac_fn_c_check_decl "$LINENO" "username_completion_function" "ac_cv_have_decl_use
 	#include <stdio.h>
 	#if HAVE_READLINE_READLINE_H
 	# include <readline/readline.h>
-	#endif
+	#else
+	# waring this conftest expects <readline/readline.h> to be included
+	#endif /* HAVE_READLINE_READLINE_H */
 
 "
 if test "x$ac_cv_have_decl_username_completion_function" = xyes; then :
@@ -32788,7 +32837,9 @@ ac_fn_c_check_decl "$LINENO" "filename_completion_function" "ac_cv_have_decl_fil
 	#include <stdio.h>
 	#if HAVE_READLINE_READLINE_H
 	# include <readline/readline.h>
-	#endif
+	#else
+	# waring this conftest expects <readline/readline.h> to be included
+	#endif /* HAVE_READLINE_READLINE_H */
 
 "
 if test "x$ac_cv_have_decl_filename_completion_function" = xyes; then :
@@ -32804,7 +32855,9 @@ ac_fn_c_check_decl "$LINENO" "completion_matches" "ac_cv_have_decl_completion_ma
 	#include <stdio.h>
 	#if HAVE_READLINE_READLINE_H
 	# include <readline/readline.h>
-	#endif
+	#else
+	# waring this conftest expects <readline/readline.h> to be included
+	#endif /* HAVE_READLINE_READLINE_H */
 
 "
 if test "x$ac_cv_have_decl_completion_matches" = xyes; then :
@@ -33042,41 +33095,6 @@ $as_echo "${ac_cv_c_tclh}" >&6; }
 
 
 
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether time.h and sys/time.h may both be included" >&5
-$as_echo_n "checking whether time.h and sys/time.h may both be included... " >&6; }
-if ${ac_cv_header_time+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-#include <sys/types.h>
-#include <sys/time.h>
-#include <time.h>
-
-int
-main ()
-{
-if ((struct tm *) 0)
-return 0;
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_compile "$LINENO"; then :
-  ac_cv_header_time=yes
-else
-  ac_cv_header_time=no
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_header_time" >&5
-$as_echo "$ac_cv_header_time" >&6; }
-if test $ac_cv_header_time = yes; then
-
-$as_echo "#define TIME_WITH_SYS_TIME 1" >>confdefs.h
-
-fi
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether struct tm is in sys/time.h or time.h" >&5
 $as_echo_n "checking whether struct tm is in sys/time.h or time.h... " >&6; }
@@ -34556,20 +34574,20 @@ $as_echo "#define sqlite3_prepare_v2 sqlite3_prepare" >>confdefs.h
 fi
 
 # Determine if we need to install some bundled packages
-OUR_INCLUDED_PACKAGES=
+OUR_INCLUDED_PACKAGES=""
 
 ## Thread package.
 
 # Check whether --with-included-tclthread was given.
 if test "${with_included_tclthread+set}" = set; then :
-  withval=$with_included_tclthread; with_included_tclthread=$withval
+  withval=$with_included_tclthread; with_included_tclthread=${withval}
 else
   with_included_tclthread="unspecified"
 fi
 
 
 # Check if thread package is already installed.
-if test "x$with_included_tclthread" = "xunspecified" ; then
+if test "x${with_included_tclthread}" = "xunspecified" ; then
 
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for Tcl Thread package" >&5
 $as_echo_n "checking for Tcl Thread package... " >&6; }

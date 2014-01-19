@@ -1,4 +1,4 @@
-# $Id: Makefile.in 90002 2012-02-19 17:25:25Z jmr@macports.org $
+# $Id: Makefile.am 90002 2012-02-19 17:25:25Z jmr@macports.org $
 
 ACLOCAL_AMFLAGS = -I m4 --install
 AM_CFLAGS       = -Wall
@@ -15,7 +15,7 @@ SVNURL		= https://svn.macports.org/repository/macports
 TCLDOC		= @TCLDOC@
 
 
-include Mk/macports.autoconf.mk
+include Mk/macports.autoconf.mk.am
 
 
 all:: Mk/macports.autoconf.mk

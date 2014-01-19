@@ -37,33 +37,35 @@ AC_SUBST([MACPORTS_VERSION])
 dnl# I would like to remove this macro, but removing it breaks the build...
 MP_PATH_SCAN
 dnl# ...so instead I will just do this:
-echo "adding MacPorts prefix back in to path..."
-PATH=${PATH}:/opt/local/bin
-PATH=$(echo "${PATH}" | tr \: \\n | uniq | tr \\n \: | uniq | sed "s|::|:|g")
-if test "x${PREFIX}" != "x"; then
-  if test "x${PREFIX}" != "x/opt/local"; then
-    PATH=${PATH}:${PREFIX}/bin
-    PATH=$(echo "${PATH}" | tr \: \\n | uniq | tr \\n \: | uniq | sed "s|::|:|g")
-    AC_MSG_CHECKING([path])
-    AC_MSG_RESULT([$PATH])
+if test -d /opt/local/bin; then
+  echo "adding MacPorts prefix back in to path..."
+  PATH=${PATH}:/opt/local/bin
+  PATH=$(echo "${PATH}" | tr \: \\n | uniq | tr \\n \: | uniq | sed "s|::|:|g")
+  if test "x${PREFIX}" != "x"; then
+    if test "x${PREFIX}" != "x/opt/local"; then
+      PATH=${PATH}:${PREFIX}/bin
+      PATH=$(echo "${PATH}" | tr \: \\n | uniq | tr \\n \: | uniq | sed "s|::|:|g")
+      AC_MSG_CHECKING([path])
+      AC_MSG_RESULT([${PATH}])
+    else
+      echo "prefix is default, not adding it again"
+    fi
   else
-    echo "prefix is default, not adding it again"
+    echo "prefix is not defined, only using default"
   fi
-else
-  echo "prefix is not defined, only using default"
 fi
 
 AC_PATH_PROG([SW_VERS],[sw_vers])
 AC_PATH_PROG([DEFAULTS],[defaults])
 AC_PATH_PROG([XCODE_SELECT],[xcode-select])
 
-if test "x$SW_VERS" != "x"; then
+if test "x${SW_VERS}" != "x"; then
   AC_MSG_CHECKING([Mac OS X version])
-  MACOSX_VERSION=`$SW_VERS -productVersion`
+  MACOSX_VERSION=`${SW_VERS} -productVersion`
   AC_MSG_RESULT([$MACOSX_VERSION])
 fi
 
-case "$MACOSX_VERSION" in
+case "${MACOSX_VERSION}" in
   10.0*|10.1*|10.2*|10.3*)
     AC_MSG_ERROR([This version of Mac OS X is not supported any more.
                   Please upgrade at http://store.apple.com/])
@@ -94,26 +96,26 @@ fi
 AC_MSG_RESULT([${DEVELOPER_DIR}])
 AC_SUBST([DEVELOPER_DIR])
 
-case "$DEVELOPER_DIR" in
+case "${DEVELOPER_DIR}" in
   *Xcode.app/Contents/Developer)
     XCODEPLIST_BASE=`dirname ${DEVELOPER_DIR}`/version
     ;;
   *)
-    XCODEPLIST_BASE=$DEVELOPER_DIR/Applications/Xcode.app/Contents/version
+    XCODEPLIST_BASE=${DEVELOPER_DIR}/Applications/Xcode.app/Contents/version
     ;;
 esac
 XCODEPLIST=${XCODEPLIST_BASE}.plist
-if test -r "$XCODEPLIST"; then
-  AC_MSG_CHECKING(Xcode version)
-  if test "x$DEFAULTS" != "x"; then
-    XCODE_VERSION=`$DEFAULTS read $XCODEPLIST_BASE CFBundleShortVersionString`
+if test -r "${XCODEPLIST}"; then
+  AC_MSG_CHECKING([Xcode version])
+  if test "x${DEFAULTS}" != "x"; then
+    XCODE_VERSION=`${DEFAULTS} read ${XCODEPLIST_BASE} CFBundleShortVersionString`
   else
-    XCODE_VERSION=`tr -d '\r\n' < $XCODEPLIST | sed -e 's/.*<key>CFBundleShortVersionString<\/key>.<string>\([[0-9.]]*\)<\/string>.*/\1/'`
+    XCODE_VERSION=`tr -d '\r\n' < ${XCODEPLIST} | sed -e 's/.*<key>CFBundleShortVersionString<\/key>.<string>\([[0-9.]]*\)<\/string>.*/\1/'`
   fi
-  AC_MSG_RESULT([$XCODE_VERSION])
+  AC_MSG_RESULT([${XCODE_VERSION}])
 fi
 
-case "$XCODE_VERSION" in
+case "${XCODE_VERSION}" in
   1.*|2.[[0-1]]*)
     AC_MSG_WARN([This version of Xcode Tools is not supported])
     AC_MSG_WARN([Please upgrade at http://connect.apple.com/])
@@ -202,96 +204,95 @@ AC_BAKEFILE_METROWERKS_EXTO
 AC_BAKEFILE_GNUMAKE
 
 dnl# checks for programs without specifically-crafted AC_* macros
-AC_PATH_PROGS([BSDMAKE], [bsdmake pmake], [])
-AC_PATH_PROG([BZIP2], [bzip2], [])
-AC_PATH_PROG([BZR], [bzr], [])
-AC_PATH_PROG([CHOWN], [chown], [], [$PATH:/usr/sbin])
-AC_PATH_PROG([CHGRP], [chgrp], [], [$PATH:/usr/sbin])
-AC_PATH_PROG([CHMOD], [chmod], [], [$PATH:/usr/sbin])
-AC_PATH_PROG([CODESIGN], [codesign], [])
-AC_PATH_PROG([CP], [cp], [])
-AC_PATH_PROG([CPIO], [cpio], [])
-AC_PATH_PROG([CVS], [cvs], [])
-AC_PATH_PROG([DIFF], [diff], [])
-if test "x$DOXYGEN" = "x"; then
-  AC_PATH_PROG([DOXYGEN], [doxygen], [])
+AC_PATH_PROGS([BSDMAKE],[bsdmake pmake],[])
+AC_PATH_PROG([BZIP2],[bzip2],[])
+AC_PATH_PROG([BZR],[bzr],[])
+AC_PATH_PROG([CHOWN],[chown],[],[${PATH}:/usr/sbin])
+AC_PATH_PROG([CHGRP],[chgrp],[],[${PATH}:/usr/sbin])
+AC_PATH_PROG([CHMOD],[chmod],[],[${PATH}:/usr/sbin])
+AC_PATH_PROG([CODESIGN],[codesign],[])
+AC_PATH_PROG([CP],[cp],[])
+AC_PATH_PROG([CPIO],[cpio],[])
+AC_PATH_PROG([CVS],[cvs],[])
+AC_PATH_PROG([DIFF],[diff],[])
+if test "x${DOXYGEN}" = "x"; then
+  AC_PATH_PROG([DOXYGEN],[doxygen],[])
 else
-  test ! -z "$DOXYGEN"
+  test ! -z "${DOXYGEN}"
   AC_SUBST([DOXYGEN])
 fi
-AC_PATH_PROG([DSCL], [dscl], [])
-AC_PATH_PROG([DSEDITGROUP], [dseditgroup], [])
-AC_PATH_PROG([DYLIBBUNDLER], [dylibbundler], [])
-AC_PATH_PROG([ED], [ed])
-AC_PATH_PROG([FILE], [file], [])
-AC_PATH_PROG([GIT], [git], [])
-AC_PATH_PROGS([GNUMAKE], [gnumake gmake], [], [$PATH:/usr/local/bin])
-AC_PATH_PROGS([GNUPATCH], [gnupatch], [], [$PATH:/usr/local/bin])
-AC_PATH_PROGS([GNUTAR], [gnutar gtar], [], [$PATH:/usr/local/bin])
-AC_PATH_PROG([GZIP], [gzip], [])
-AC_PATH_PROG([HDIUTIL], [hdiutil], [])
-AC_PATH_PROG([HG], [hg], [])
-AC_PATH_PROG([LAUNCHCTL], [launchctl], [])
-AC_PATH_PROG([LIPO], [lipo], [])
-AC_PATH_PROG([LSBOM], [lsbom], [])
-AC_PATH_PROG([LZMA], [lzma], [])
-AC_PATH_PROG([MAKE], [make])
-AC_PATH_PROG([MDFIND], [mdfind], [])
-AC_PATH_PROG([MDLS], [mdls], [])
-AC_PATH_PROG([MKBOM], [mkbom], [])
-AC_PATH_PROG([MTREE], [mtree], [], [$PATH:/usr/sbin])
-AC_PATH_PROG([OPEN], [open], [])
-AC_PATH_PROG([OPENSSL], [openssl], [])
-AC_PATH_PROG([PAX], [pax], [])
-AC_PATH_PROG([PERL5], [perl], [])
-AC_PATH_PROG([RLWRAP], [rlwrap], [])
-AC_PATH_PROG([RMDIR], [rmdir], [])
-AC_PATH_PROG([RSYNC], [rsync], [])
-AC_PATH_PROG([SANDBOX_EXEC], [sandbox-exec], [], [/usr/bin])
-if test "x$SED" = "x"; then
-  AC_PATH_PROG([SED], [sed], [])
-  AC_ARG_VAR([SED], [path to sed command])
+AC_PATH_PROG([DSCL],[dscl],[])
+AC_PATH_PROG([DSEDITGROUP],[dseditgroup],[])
+AC_PATH_PROG([DYLIBBUNDLER],[dylibbundler],[])
+AC_PATH_PROG([ED],[ed])
+AC_PATH_PROG([FILE],[file],[])
+AC_PATH_PROG([GIT],[git],[])
+AC_PATH_PROGS([GNUMAKE],[gnumake gmake],[],[${PATH}:/usr/local/bin])
+AC_PATH_PROGS([GNUPATCH],[gnupatch],[],[${PATH}:/usr/local/bin])
+AC_PATH_PROGS([GNUTAR],[gnutar gtar],[],[${PATH}:/usr/local/bin])
+AC_PATH_PROG([GZIP],[gzip],[])
+AC_PATH_PROG([HDIUTIL],[hdiutil],[])
+AC_PATH_PROG([HG],[hg],[])
+AC_PATH_PROG([LAUNCHCTL],[launchctl],[])
+AC_PATH_PROG([LIPO],[lipo],[])
+AC_PATH_PROG([LSBOM],[lsbom],[])
+AC_PATH_PROG([LZMA],[lzma],[])
+AC_PATH_PROG([MAKE],[make])
+AC_PATH_PROG([MDFIND],[mdfind],[])
+AC_PATH_PROG([MDLS],[mdls],[])
+AC_PATH_PROG([MKBOM],[mkbom],[])
+AC_PATH_PROG([MTREE],[mtree],[],[${PATH}:/usr/sbin])
+AC_PATH_PROG([OPEN],[open],[])
+AC_PATH_PROG([OPENSSL],[openssl],[])
+AC_PATH_PROG([PAX],[pax],[])
+AC_PATH_PROG([PERL5],[perl],[])
+AC_PATH_PROG([RLWRAP],[rlwrap],[])
+AC_PATH_PROG([RMDIR],[rmdir],[])
+AC_PATH_PROG([RSYNC],[rsync],[])
+AC_PATH_PROG([SANDBOX_EXEC],[sandbox-exec],[],[/usr/bin])
+if test "x${SED}" = "x"; then
+  AC_PATH_PROG([SED],[sed],[])
+  AC_ARG_VAR([SED],[path to sed command])
 else
-  test ! -z "$SED"
-  export SED
+  test ! -z "${SED}" && export SED
   AC_SUBST([SED])
 fi
-AC_PATH_PROG([SVN], [svn], [])
-AC_PATH_PROG([TCLDOC], [tcldoc], [])
+AC_PATH_PROG([SVN],[svn],[])
+AC_PATH_PROG([TCLDOC],[tcldoc],[])
 AC_SUBST([TCLDOC])
 export TCLDOC
-AC_PATH_PROG([UNZIP], [unzip])
-AC_PATH_PROG([XATTR], [xattr], [])
-AC_PATH_PROG([XAR], [xar], [])
-AC_PATH_PROG([XARGS], [xargs], [])
-AC_PATH_PROG([XCODEBUILD], [xcodebuild], [])
-AC_PATH_PROG([XCRUN], [xcrun], [])
-AC_PATH_PROG([XZ], [xz], [])
-AC_PATH_PROG([ZIP], [zip])
+AC_PATH_PROG([UNZIP],[unzip])
+AC_PATH_PROG([XATTR],[xattr],[])
+AC_PATH_PROG([XAR],[xar],[])
+AC_PATH_PROG([XARGS],[xargs],[])
+AC_PATH_PROG([XCODEBUILD],[xcodebuild],[])
+AC_PATH_PROG([XCRUN],[xcrun],[])
+AC_PATH_PROG([XZ],[xz],[])
+AC_PATH_PROG([ZIP],[zip])
 
-AC_CHECK_PROG([HAVE_LAUNCHD], [launchd], [yes], [])
+AC_CHECK_PROG([HAVE_LAUNCHD],[launchd],[yes],[])
 
 # Define some precious variables allowing user to override PATH for
 # some programs
-AC_ARG_VAR([BSDMAKE], [path to bsdmake/pmake command])
-AC_ARG_VAR([BZIP2], [path to bzip2 command])
-AC_ARG_VAR([CVS], [path to cvs command])
-AC_ARG_VAR([GNUMAKE], [path to gnumake command])
-AC_ARG_VAR([GNUTAR], [path to gnutar command])
-AC_ARG_VAR([LZMA], [path to lzma command])
-AC_ARG_VAR([MAKE], [path to make command])
-AC_ARG_VAR([MTREE], [path to mtree command])
-AC_ARG_VAR([OPEN], [path to open command])
-AC_ARG_VAR([OPENSSL], [path to openssl command])
-AC_ARG_VAR([RSYNC], [path to rsync command])
-AC_ARG_VAR([SVN], [path to svn command])
-AC_ARG_VAR([SWIG], [path to swig command])
-AC_ARG_VAR([TCLSH], [path to tclsh command])
-AC_ARG_VAR([TAR], [path to tar command])
-AC_ARG_VAR([XAR], [path to xar command])
-AC_ARG_VAR([XZ], [path to xz command])
+AC_ARG_VAR([BSDMAKE],[path to bsdmake/pmake command])
+AC_ARG_VAR([BZIP2],[path to bzip2 command])
+AC_ARG_VAR([CVS],[path to cvs command])
+AC_ARG_VAR([GNUMAKE],[path to gnumake command])
+AC_ARG_VAR([GNUTAR],[path to gnutar command])
+AC_ARG_VAR([LZMA],[path to lzma command])
+AC_ARG_VAR([MAKE],[path to make command])
+AC_ARG_VAR([MTREE],[path to mtree command])
+AC_ARG_VAR([OPEN],[path to open command])
+AC_ARG_VAR([OPENSSL],[path to openssl command])
+AC_ARG_VAR([RSYNC],[path to rsync command])
+AC_ARG_VAR([SVN],[path to svn command])
+AC_ARG_VAR([SWIG],[path to swig command])
+AC_ARG_VAR([TCLSH],[path to tclsh command])
+AC_ARG_VAR([TAR],[path to tar command])
+AC_ARG_VAR([XAR],[path to xar command])
+AC_ARG_VAR([XZ],[path to xz command])
 
-if test "x$MTREE" = "x"; then
+if test "x${MTREE}" = "x"; then
     AC_MSG_ERROR([mtree not found; you can get a copy from http://opensource.apple.com/source/file_cmds/file_cmds-220.7/])
 fi
 
@@ -317,12 +318,13 @@ dnl# ACX\_PTHREAD has been moved to AX_PTHREAD above
 dnl# (i.e. it has been put with the rest of the autoconf-archive macros)
 MP_OBJC_RUNTIME
 AC_MSG_CHECKING([for GNUStep system root])
-if test "x$GNUSTEP_SYSTEM_ROOT" = "x"; then
+AC_ARG_VAR([GNUSTEP_SYSTEM_ROOT],[path to GNUStep installation])
+if test "x${GNUSTEP_SYSTEM_ROOT}" = "x"; then
   # TODO: move prefix-checking code above this step so that configured
   # prefix can be used instead of hardwiring /opt/local
   if test -d /opt/local/GNUStep/System; then
     export GNUSTEP_SYSTEM_ROOT=/opt/local/GNUSTEP/System
-    AC_MSG_RESULT([using MacPorts GNUStep system root: $GNUSTEP_SYSTEM_ROOT])
+    AC_MSG_RESULT([using MacPorts GNUStep system root: ${GNUSTEP_SYSTEM_ROOT}])
     AC_SUBST([GNUSTEP_SYSTEM_ROOT])
   else
     # This had previously been in the other "else" condition, but I think
@@ -330,7 +332,7 @@ if test "x$GNUSTEP_SYSTEM_ROOT" = "x"; then
     AC_MSG_RESULT([not found])
   fi
 else
-  AC_MSG_RESULT([using user-set GNUStep system root: $GNUSTEP_SYSTEM_ROOT])
+  AC_MSG_RESULT([using user-set GNUStep system root: ${GNUSTEP_SYSTEM_ROOT}])
   AC_SUBST([GNUSTEP_SYSTEM_ROOT])
 fi
 MP_OBJC_FOUNDATION
@@ -347,14 +349,14 @@ AC_PREFIX_DEFAULT([/opt/local])
 AC_ARG_WITH([unsupported-prefix],
 		[AS_HELP_STRING([--with-unsupported-prefix],
 		[Acknowledge that you accept the consequences of using an unsupported prefix.])],
-		[with_unsupported_prefix=$withval],
+		[with_unsupported_prefix=${withval}],
 		[with_unsupported_prefix=no])
-if test x$prefix = x/usr/local -o x$prefix = x/usr && test x$with_unsupported_prefix != xyes; then
-    AC_MSG_ERROR([Installing MacPorts into $prefix is not supported. If \
+if test x${prefix} = x/usr/local -o x${prefix} = x/usr && test x${with_unsupported_prefix} != xyes; then
+    AC_MSG_ERROR([Installing MacPorts into ${prefix} is not supported. If \
 you understand this and wish to do so anyway, pass \
 --with-unsupported-prefix to configure.])
 fi
-MP_PATH_PORTSDIR([$PORTS_DIR_DEFAULT])
+MP_PATH_PORTSDIR([${PORTS_DIR_DEFAULT}])
 MP_PATH_MPCONFIGDIR
 
 # Check whether to install without root privileges
@@ -384,15 +386,16 @@ dnl# pulled in by other macros
 AC_HEADER_DIRENT
 AC_HEADER_STDBOOL dnl# calls "AC_CHECK_HEADER_STDBOOL"
 AC_HEADER_SYS_WAIT
-dnl# sys/ioctl.h sys/param.h and sys/time.h are NOT checked here
-dnl# because they are checked later.
-dnl# limits.h gets to stay in because autoscan will still warn about
-dnl# it when removed (even though it is checked elsewhere)
+AC_HEADER_TIME
+dnl# sys/ioctl.h sys/param.h sys/time.h and limits.h get to stay in
+dnl# because autoscan will still warn about them when removed
+dnl# (even though they are checked elsewhere)
 AC_CHECK_HEADERS([crt_externs.h ctype.h err.h fcntl.h libkern/OSAtomic.h \
                   limits.h mach/mach.h netdb.h paths.h pwd.h spawn.h \
                   stddef.h stdio.h sys/cdefs.h sys/event.h sys/fcntl.h \
-                  sys/file.h sys/mount.h sys/paths.h sys/socket.h \
-                  sys/sysctl.h utime.h])
+                  sys/file.h sys/ioctl.h sys/mount.h sys/param.h \
+                  sys/paths.h sys/socket.h sys/sysctl.h sys/time.h \
+                  time.h utime.h])
 dnl# readline/history.h and readline/readline.h are checked for by 
 dnl# the AX_LIB_READLINE macro above
 
@@ -464,7 +467,9 @@ AC_ARG_ENABLE([readline],[AS_HELP_STRING([--enable-readline],[Enable addition of
 	#include <stdio.h>
 	#if HAVE_READLINE_READLINE_H
 	# include <readline/readline.h>
-	#endif
+	#else
+	# waring this conftest expects <readline/readline.h> to be included
+	#endif /* HAVE_READLINE_READLINE_H */
 	])
 ])
 AC_SUBST([READLINE_LIBS])
@@ -508,17 +513,17 @@ if test "x${mp_sqlite_version_ge_3003011}" = "xno"; then
 fi
 
 # Determine if we need to install some bundled packages
-OUR_INCLUDED_PACKAGES=
+OUR_INCLUDED_PACKAGES=""
 
 ## Thread package.
 AC_ARG_WITH([included-tclthread],
 		[AS_HELP_STRING([--with-included-tclthread],
 			[install included Thread package.])],
-		[with_included_tclthread=$withval],
+		[with_included_tclthread=${withval}],
 		[with_included_tclthread="unspecified"])
 
 # Check if thread package is already installed.
-if test "x$with_included_tclthread" = "xunspecified" ; then
+if test "x${with_included_tclthread}" = "xunspecified" ; then
 	MP_TCL_PACKAGE([Thread],
 		[AC_MSG_RESULT([yes]); with_included_tclthread=no],
 		[AC_MSG_RESULT([no]); with_included_tclthread=yes])

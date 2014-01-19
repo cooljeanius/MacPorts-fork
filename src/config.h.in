@@ -479,6 +479,9 @@
 /* Defined to time_t if we have time_t timezone variable */
 #undef HAVE_TIMEZONE_VAR
 
+/* Define to 1 if you have the <time.h> header file. */
+#undef HAVE_TIME_H
+
 /* Defined to 1 if we have tm_gmtoff in struct tm */
 #undef HAVE_TM_GMTOFF
 

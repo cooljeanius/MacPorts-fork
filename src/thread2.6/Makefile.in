@@ -96,11 +96,11 @@ subdir = .
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/configure $(am__configure_deps) \
 	$(srcdir)/config.h.in $(srcdir)/pkgIndex.tcl.in $(PKG_HEADERS) \
-	ChangeLog README tclconfig/ar-lib tclconfig/compile \
-	tclconfig/config.guess tclconfig/config.rpath \
-	tclconfig/config.sub tclconfig/install-sh tclconfig/missing \
-	tclconfig/ltmain.sh $(top_srcdir)/tclconfig/ar-lib \
-	$(top_srcdir)/tclconfig/compile \
+	COPYING ChangeLog INSTALL README tclconfig/ar-lib \
+	tclconfig/compile tclconfig/config.guess \
+	tclconfig/config.rpath tclconfig/config.sub \
+	tclconfig/install-sh tclconfig/missing tclconfig/ltmain.sh \
+	$(top_srcdir)/tclconfig/ar-lib $(top_srcdir)/tclconfig/compile \
 	$(top_srcdir)/tclconfig/config.guess \
 	$(top_srcdir)/tclconfig/config.rpath \
 	$(top_srcdir)/tclconfig/config.sub \
@@ -241,6 +241,7 @@ ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
 AM_DEFAULT_VERBOSITY = @AM_DEFAULT_VERBOSITY@
 AR = @AR@
+AS = @AS@
 AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
