@@ -1,0 +1,20 @@
+language: C
+
+before_install:
+  - "sudo apt-get update"
+
+install:
+  # Prerequisites
+  - "sudo apt-get install autotools-dev debhelper gobjc curl libgnustep-base-dev sqlite openssl tclthread"
+
+# check env
+before_script: env | uniq | sort | uniq
+
+# try to build && test
+script: cd src && ./configure && make && make test
+
+compiler:
+  - clang
+  - gcc
+
+after_success: pwd
