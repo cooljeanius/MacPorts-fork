@@ -8,7 +8,7 @@ install:
   - "sudo apt-get install autotools-dev debhelper gobjc curl libgnustep-base-dev sqlite openssl tclthread freebsd-buildutils tclreadline"
 
 # check env
-before_script: env | uniq | sort | uniq
+before_script: export PATH=$PATH:/usr/lib/freebsd && env | uniq | sort | uniq
 
 # try to build && test
 script: ./configure && make && make test
