@@ -11,7 +11,7 @@ install:
 before_script: export PATH=${PATH}:/usr/lib/freebsd && env | uniq | sort | uniq
 
 # try to build && test
-script: ./configure --with-objc-runtime=GNU --with-objc-foundation=GNU && make
+script: ./configure --with-objc-runtime=GNU --with-objc-foundation=GNU --enable-maintainer-mode --with-included-tclthread --enable-symbols --enable-readline && make
 
 compiler:
   - clang
