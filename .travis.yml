@@ -11,10 +11,10 @@ install:
 before_script: export PATH=${PATH}:/usr/lib/freebsd && env | uniq | sort | uniq
 
 # try to build && test
-script: ./configure --with-objc-runtime=GNU --with-objc-foundation=GNU && make && make test
+script: ./configure --with-objc-runtime=GNU --with-objc-foundation=GNU && make
 
 compiler:
   - clang
   - gcc
 
-after_success: pwd
+after_success: pwd && make test
