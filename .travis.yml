@@ -5,13 +5,13 @@ before_install:
 
 install:
   # Prerequisites
-  - "sudo apt-get install autotools-dev debhelper gobjc curl libgnustep-base-dev sqlite openssl tclthread freebsd-buildutils tclreadline"
+  - "sudo apt-get install autotools-dev debhelper gobjc curl libgnustep-base-dev sqlite openssl tclthread freebsd-buildutils tclreadline binutils tcl tcl-dev libc6-dev gnustep-core-devel libsqlite3-dev libcurl4-openssl-dev"
 
 # check env
-before_script: export PATH=$PATH:/usr/lib/freebsd && env | uniq | sort | uniq
+before_script: export PATH=${PATH}:/usr/lib/freebsd && env | uniq | sort | uniq
 
 # try to build && test
-script: ./configure && make && make test
+script: ./configure --with-objc-runtime=GNU --with-objc-foundation=GNU && make && make test
 
 compiler:
   - clang
