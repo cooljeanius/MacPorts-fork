@@ -5,16 +5,17 @@ before_install:
 
 install:
   # Prerequisites
-  - "sudo apt-get install autotools-dev debhelper gobjc curl libgnustep-base-dev sqlite openssl tclthread freebsd-buildutils tclreadline binutils tcl tcl-dev libc6-dev gnustep-core-devel libsqlite3-dev libcurl4-openssl-dev perl doxygen swig2.0 cvs ed pax rlwrap"
+  - "sudo apt-get install autotools-dev debhelper gobjc gobjc-multilib libgnustep-base-dev gnustep-core-devel sqlite libsqlite3-dev openssl libcurl4-openssl-dev curl tcl tcl-dev tcl-doc tclthread tclreadline freebsd-buildutils binutils libc6-dev perl doxygen swig2.0 cvs ed pax rlwrap"
 
-# check env
+# make sure mtree installed by freebsd-buildutils is in path, then check env
 before_script: export PATH=${PATH}:/usr/lib/freebsd && env | uniq | sort | uniq
 
-# try to build && test
+# Just try to build first
 script: ./configure --with-objc-runtime=GNU --with-objc-foundation=GNU --enable-maintainer-mode --enable-symbols --enable-readline && make
 
 compiler:
   - clang
   - gcc
 
+# Only run tests after success
 after_success: pwd && make test
