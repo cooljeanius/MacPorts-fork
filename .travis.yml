@@ -5,13 +5,13 @@ before_install:
 
 install:
   # Prerequisites
-  - "sudo apt-get install autotools-dev debhelper gobjc curl libgnustep-base-dev sqlite openssl tclthread"
+  - "sudo apt-get install autotools-dev debhelper gobjc curl libgnustep-base-dev sqlite openssl tclthread freebsd-buildutils tclreadline"
 
 # check env
 before_script: env | uniq | sort | uniq
 
 # try to build && test
-script: cd src && ./configure && make && make test
+script: ./configure && make && make test
 
 compiler:
   - clang
