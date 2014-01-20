@@ -30,6 +30,7 @@ doc/macports.conf
 doc/pubkeys.conf
 *Makefile
 *Doxyfile
+*Doxyfile.bak
 src/*/*autoconf.tcl
 setupenv.bash
 src/macports1.0/macports_fastload.tcl
