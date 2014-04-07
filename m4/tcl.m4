@@ -1,4 +1,9 @@
 # This file is based on the tcl.m4 file distributed with Tcl 8.4
+# (Tcl 8.4 is old, we should check the tcl.m4 file from newer Tcl versions)
+# (in fact I think the tcl.m4 file that I have modified for other projects
+# is actually based on the one from newer Tcl versions; I should check some
+# of those so that I do not have to duplicate here the work that I did
+# there first already...)
 # Portions Copyright (2003) Apple Inc.
 #
 # Copyright and License for this file, copied verbatim from the official
@@ -74,7 +79,7 @@ AC_DEFUN([SC_PATH_TCLCONFIG],[
     if test x"${no_tcl}" = x ; then
 	# we reset no_tcl in case something fails here
 	no_tcl=true
-	AC_ARG_WITH([tcl],[AS_HELP_STRING([--with-tcl],[directory containing tcl configuration (tclConfig.sh)])], [with_tclconfig=${withval}])
+	AC_ARG_WITH([tcl],[AS_HELP_STRING([--with-tcl],[directory containing tcl configuration (tclConfig.sh)])],[with_tclconfig=${withval}])
 	AC_MSG_CHECKING([for Tcl configuration])
 	AC_CACHE_VAL([ac_cv_c_tclconfig],[
 
@@ -83,7 +88,7 @@ AC_DEFUN([SC_PATH_TCLCONFIG],[
 		if test -f "${with_tclconfig}/tclConfig.sh" ; then
 		    ac_cv_c_tclconfig=`(cd ${with_tclconfig}; pwd)`
 		else
-		    AC_MSG_ERROR([${with_tclconfig} directory doesn't contain tclConfig.sh])
+		    AC_MSG_ERROR([${with_tclconfig} directory does NOT contain tclConfig.sh])
 		fi
 	    fi
 
@@ -174,7 +179,7 @@ AC_DEFUN([SC_PATH_TKCONFIG],[
     if test x"${no_tk}" = x ; then
 	# we reset no_tk in case something fails here
 	no_tk=true
-	AC_ARG_WITH([tk], [AS_HELP_STRING([--with-tk],[directory containing tk configuration (tkConfig.sh)])], [with_tkconfig=${withval}])
+	AC_ARG_WITH([tk],[AS_HELP_STRING([--with-tk],[directory containing tk configuration (tkConfig.sh)])],[with_tkconfig=${withval}])
 	AC_MSG_CHECKING([for Tk configuration])
 	AC_CACHE_VAL([ac_cv_c_tkconfig],[
 
@@ -183,7 +188,7 @@ AC_DEFUN([SC_PATH_TKCONFIG],[
 		if test -f "${with_tkconfig}/tkConfig.sh" ; then
 		    ac_cv_c_tkconfig=`(cd ${with_tkconfig}; pwd)`
 		else
-		    AC_MSG_ERROR([${with_tkconfig} directory doesn't contain tkConfig.sh])
+		    AC_MSG_ERROR([${with_tkconfig} directory does NOT contain tkConfig.sh])
 		fi
 	    fi
 
@@ -261,23 +266,24 @@ AC_DEFUN([SC_PATH_TKCONFIG],[
 AC_DEFUN([SC_LOAD_TCLCONFIG],[
     AC_MSG_CHECKING([for existence of $TCL_BIN_DIR/tclConfig.sh])
 
-    if test -f "$TCL_BIN_DIR/tclConfig.sh" ; then
+    if test -f "${TCL_BIN_DIR}/tclConfig.sh" ; then
         AC_MSG_RESULT([loading])
-	. $TCL_BIN_DIR/tclConfig.sh
+	. ${TCL_BIN_DIR}/tclConfig.sh
     else
         AC_MSG_RESULT([file not found])
     fi
 
     #
-    # If the TCL_BIN_DIR is the build directory (not the install directory),
-    # then set the common variable name to the value of the build variables.
+    # If the TCL_BIN_DIR is the build directory (NOT the install
+    # directory), then set the common variable name to the value of the
+    # build variables.
     # For example, the variable TCL_LIB_SPEC will be set to the value
     # of TCL_BUILD_LIB_SPEC. An extension should make use of TCL_LIB_SPEC
     # instead of TCL_BUILD_LIB_SPEC since it will work with both an
     # installed and uninstalled version of Tcl.
     #
 
-    if test -f $TCL_BIN_DIR/Makefile ; then
+    if test -f ${TCL_BIN_DIR}/Makefile ; then
         TCL_LIB_SPEC=${TCL_BUILD_LIB_SPEC}
         TCL_STUB_LIB_SPEC=${TCL_BUILD_STUB_LIB_SPEC}
         TCL_STUB_LIB_PATH=${TCL_BUILD_STUB_LIB_PATH}
@@ -327,11 +333,11 @@ AC_DEFUN([SC_LOAD_TCLCONFIG],[
 AC_DEFUN([SC_LOAD_TKCONFIG],[
     AC_MSG_CHECKING([for existence of $TK_BIN_DIR/tkConfig.sh])
 
-    if test -f "$TK_BIN_DIR/tkConfig.sh" ; then
+    if test -f "${TK_BIN_DIR}/tkConfig.sh" ; then
         AC_MSG_RESULT([loading])
-	. $TK_BIN_DIR/tkConfig.sh
+	. ${TK_BIN_DIR}/tkConfig.sh
     else
-        AC_MSG_RESULT([could not find $TK_BIN_DIR/tkConfig.sh])
+        AC_MSG_RESULT([could not find ${TK_BIN_DIR}/tkConfig.sh])
     fi
 
     AC_SUBST([TK_VERSION])
@@ -367,20 +373,20 @@ AC_DEFUN([SC_ENABLE_SHARED],[
 	[AS_HELP_STRING([--enable-shared],[build and link with shared libraries [--enable-shared]])],
 	[tcl_ok=$enableval], [tcl_ok=yes])
 
-    if test "${enable_shared+set}" = set; then
-	enableval="$enable_shared"
-	tcl_ok=$enableval
+    if test "x${enable_shared+set}" = "xset"; then
+	enableval="${enable_shared}"
+	tcl_ok=${enableval}
     else
 	tcl_ok=yes
     fi
 
-    if test "$tcl_ok" = "yes" ; then
+    if test "x${tcl_ok}" = "xyes" ; then
 	AC_MSG_RESULT([shared])
 	SHARED_BUILD=1
     else
 	AC_MSG_RESULT([static])
 	SHARED_BUILD=0
-	AC_DEFINE([STATIC_BUILD], [1], [Define to 1 if static build is requested])
+	AC_DEFINE([STATIC_BUILD],[1],[Define to 1 if static build is requested])
     fi
 ])
 
@@ -405,16 +411,16 @@ AC_DEFUN([SC_ENABLE_FRAMEWORK],[
     AC_MSG_CHECKING([how to package libraries])
     AC_ARG_ENABLE([framework],
 	[AS_HELP_STRING([--enable-framework],[package shared libraries in frameworks [--disable-framework]])],
-	[tcl_ok=$enableval], [tcl_ok=no])
+	[tcl_ok=$enableval],[tcl_ok=no])
 
-    if test "${enable_framework+set}" = set; then
-	enableval="$enable_framework"
-	tcl_ok=$enableval
+    if test "x${enable_framework+set}" = "xset"; then
+	enableval="${enable_framework}"
+	tcl_ok=${enableval}
     else
 	tcl_ok=no
     fi
 
-    if test "$tcl_ok" = "yes" ; then
+    if test "x${tcl_ok}" = "xyes" ; then
 	AC_MSG_RESULT([framework])
 	FRAMEWORK_BUILD=1
 	if test "${SHARED_BUILD}" = "0" ; then
@@ -452,41 +458,41 @@ AC_DEFUN([SC_ENABLE_FRAMEWORK],[
 
 AC_DEFUN([SC_ENABLE_THREADS],[
     AC_MSG_CHECKING([for building with threads])
-    AC_ARG_ENABLE([threads], [AS_HELP_STRING([--enable-threads],[build with threads])],
-	[tcl_ok=$enableval], [tcl_ok=no])
+    AC_ARG_ENABLE([threads],[AS_HELP_STRING([--enable-threads],[build with threads])],
+	[tcl_ok=${enableval}],[tcl_ok=no])
 
-    if test "$tcl_ok" = "yes"; then
+    if test "x${tcl_ok}" = "xyes"; then
 	AC_MSG_RESULT([yes])
 	TCL_THREADS=1
-	AC_DEFINE([TCL_THREADS], [1], [Defined to 1 if using Tcl threads])
+	AC_DEFINE([TCL_THREADS],[1],[Defined to 1 if using Tcl threads])
 	# USE_THREAD_ALLOC tells us to try the special thread-based
 	# allocator that significantly reduces lock contention
-	AC_DEFINE([USE_THREAD_ALLOC], [1], [Defined to 1 to try the special thread-based allocator that significantly reduces lock contention])
-	AC_DEFINE([_REENTRANT], [1], [Some platforms require this to be defined])
-	AC_DEFINE([_THREAD_SAFE], [1], [Defined to 1 if thread safe])
+	AC_DEFINE([USE_THREAD_ALLOC],[1],[Defined to 1 to try the special thread-based allocator that significantly reduces lock contention])
+	AC_DEFINE([_REENTRANT],[1],[Some platforms require this to be defined])
+	AC_DEFINE([_THREAD_SAFE],[1],[Defined to 1 if thread safe])
 	AC_CHECK_LIB([pthread],[pthread_mutex_init],[tcl_ok=yes],[tcl_ok=no])
-	if test "$tcl_ok" = "no"; then
+	if test "x${tcl_ok}" = "xno"; then
 	    # Check a little harder for __pthread_mutex_init in the same
 	    # library, as some systems hide it there until pthread.h is
-	    # defined.  We could alternatively do an AC_COMPILE_IFELSE with
-	    # pthread.h, but that will work with libpthread really doesn't
-	    # exist, like AIX 4.2.  [Bug: 4359]
+	    # defined. We could alternatively do an AC_COMPILE_IFELSE with
+	    # pthread.h, but that will work even when libpthread really
+	    # does NOT exist, like AIX 4.2.  [Bug: 4359]
 	    AC_CHECK_LIB([pthread],[__pthread_mutex_init],[tcl_ok=yes],[tcl_ok=no])
 	fi
 
-	if test "$tcl_ok" = "yes"; then
+	if test "x${tcl_ok}" = "xyes"; then
 	    # The space is needed
 	    THREADS_LIBS=" -lpthread"
 	else
 	    AC_CHECK_LIB([pthreads],[pthread_mutex_init],[tcl_ok=yes],[tcl_ok=no])
-	    if test "$tcl_ok" = "yes"; then
+	    if test "x${tcl_ok}" = "xyes"; then
 		# The space is needed
 		THREADS_LIBS=" -lpthreads"
 	    else
 		AC_CHECK_LIB([c],[pthread_mutex_init],[tcl_ok=yes],[tcl_ok=no])
-	    	if test "$tcl_ok" = "no"; then
+	    	if test "x${tcl_ok}" = "xno"; then
 		    AC_CHECK_LIB([c_r],[pthread_mutex_init],[tcl_ok=yes],[tcl_ok=no])
-		    if test "$tcl_ok" = "yes"; then
+		    if test "x${tcl_ok}" = "xyes"; then
 			# The space is needed
 			THREADS_LIBS=" -pthread"
 		    else
@@ -500,10 +506,10 @@ AC_DEFUN([SC_ENABLE_THREADS],[
 	# Does the pthread-implementation provide
 	# 'pthread_attr_setstacksize' ?
 
-	ac_saved_libs=$LIBS
-	LIBS="$LIBS $THREADS_LIBS"
+	ac_saved_libs=${LIBS}
+	LIBS="${LIBS} ${THREADS_LIBS}"
 	AC_CHECK_FUNCS([pthread_attr_setstacksize])
-	LIBS=$ac_saved_libs
+	LIBS=${ac_saved_libs}
 	AC_CHECK_FUNCS([readdir_r])
     else
 	TCL_THREADS=0
@@ -544,9 +550,10 @@ AC_DEFUN([SC_ENABLE_THREADS],[
 
 AC_DEFUN([SC_ENABLE_SYMBOLS],[
     AC_MSG_CHECKING([for build with symbols])
-    AC_ARG_ENABLE([symbols], [AS_HELP_STRING([--enable-symbols],[build with debugging symbols [--disable-symbols]])],[tcl_ok=$enableval],[tcl_ok=no])
-# FIXME: Currently, LDFLAGS_DEFAULT is not used, it should work like CFLAGS_DEFAULT.
-    if test "$tcl_ok" = "no"; then
+    AC_ARG_ENABLE([symbols],[AS_HELP_STRING([--enable-symbols],[build with debugging symbols [--disable-symbols]])],[tcl_ok=${enableval}],[tcl_ok=no])
+# FIXME: Currently, LDFLAGS_DEFAULT is not used, it should work like
+# CFLAGS_DEFAULT.
+    if test "x${tcl_ok}" = "xno"; then
 	CFLAGS_DEFAULT='$(CFLAGS_OPTIMIZE)'
 	LDFLAGS_DEFAULT='$(LDFLAGS_OPTIMIZE)'
 	DBGX=""
@@ -555,27 +562,27 @@ AC_DEFUN([SC_ENABLE_SYMBOLS],[
 	CFLAGS_DEFAULT='$(CFLAGS_DEBUG)'
 	LDFLAGS_DEFAULT='$(LDFLAGS_DEBUG)'
 	DBGX=g
-	if test "$tcl_ok" = "yes"; then
+	if test "x${tcl_ok}" = "xyes"; then
 	    AC_MSG_RESULT([yes (standard debugging)])
 	fi
     fi
     AC_SUBST([CFLAGS_DEFAULT])
     AC_SUBST([LDFLAGS_DEFAULT])
 
-    if test "$tcl_ok" = "mem" -o "$tcl_ok" = "all"; then
-	AC_DEFINE([TCL_MEM_DEBUG], [1], [Defined to 1 if using the Tcl memdebug feature])
+    if test "x${tcl_ok}" = "xmem" -o "x${tcl_ok}" = "xall"; then
+	AC_DEFINE([TCL_MEM_DEBUG],[1],[Defined to 1 if using the Tcl memdebug feature])
     fi
 
-    if test "$tcl_ok" = "compile" -o "$tcl_ok" = "all"; then
-	AC_DEFINE([TCL_COMPILE_DEBUG], [1], [Defined to 1 if compiling for debugging])
-	AC_DEFINE([TCL_COMPILE_STATS], [1], [Defined to 1 if compiling with stats])
+    if test "x${tcl_ok}" = "xcompile" -o "x${tcl_ok}" = "xall"; then
+	AC_DEFINE([TCL_COMPILE_DEBUG],[1],[Defined to 1 if compiling for debugging])
+	AC_DEFINE([TCL_COMPILE_STATS],[1],[Defined to 1 if compiling with stats])
     fi
 
-    if test "$tcl_ok" != "yes" -a "$tcl_ok" != "no"; then
-	if test "$tcl_ok" = "all"; then
+    if test "x${tcl_ok}" != "xyes" -a "x${tcl_ok}" != "xno"; then
+	if test "x${tcl_ok}" = "xall"; then
 	    AC_MSG_RESULT([enabled symbols mem compile debugging])
 	else
-	    AC_MSG_RESULT([enabled $tcl_ok debugging])
+	    AC_MSG_RESULT([enabled ${tcl_ok} debugging])
 	fi
     fi
 ])
@@ -599,30 +606,31 @@ AC_DEFUN([SC_ENABLE_SYMBOLS],[
 #
 #------------------------------------------------------------------------
 
-AC_DEFUN([SC_ENABLE_LANGINFO], [
+AC_DEFUN([SC_ENABLE_LANGINFO],[
     AC_ARG_ENABLE([langinfo],
-	[AS_HELP_STRING([--enable-langinfo],[use nl_langinfo if possible to determine
-			  encoding at startup, otherwise use old heuristic])],
-	[langinfo_ok=$enableval], [langinfo_ok=yes])
+	[AS_HELP_STRING([--enable-langinfo],[use nl_langinfo if possible to
+			  determine encoding at startup, otherwise use old
+			  heuristic])],
+	[langinfo_ok=$enableval],[langinfo_ok=yes])
 
     HAVE_LANGINFO=0
-    if test "$langinfo_ok" = "yes"; then
-	if test "$langinfo_ok" = "yes"; then
+    if test "x${langinfo_ok}" = "xyes"; then
+	if test "x${langinfo_ok}" = "xyes"; then
 	    AC_CHECK_HEADER([langinfo.h],[langinfo_ok=yes],[langinfo_ok=no])
 	fi
     fi
     AC_MSG_CHECKING([whether to use nl_langinfo])
-    if test "$langinfo_ok" = "yes"; then
+    if test "x${langinfo_ok}" = "xyes"; then
 	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <langinfo.h>]],
 		[[nl_langinfo(CODESET);]])],[langinfo_ok=yes],[langinfo_ok=no])
-	if test "$langinfo_ok" = "no"; then
+	if test "x${langinfo_ok}" = "xno"; then
 	    langinfo_ok="no (could not compile with nl_langinfo)";
 	fi
-	if test "$langinfo_ok" = "yes"; then
-	    AC_DEFINE([HAVE_LANGINFO], [1], [Defined to 1 if we have langinfo])
+	if test "x${langinfo_ok}" = "xyes"; then
+	    AC_DEFINE([HAVE_LANGINFO],[1],[Defined to 1 if we have langinfo])
 	fi
     fi
-    AC_MSG_RESULT([$langinfo_ok])
+    AC_MSG_RESULT([${langinfo_ok}])
 ])
 
 #--------------------------------------------------------------------
@@ -651,18 +659,18 @@ AC_DEFUN([SC_CONFIG_MANPAGES],[
 	AC_MSG_CHECKING([whether to use symlinks for manpages])
 	AC_ARG_ENABLE([man-symlinks],
 		[AS_HELP_STRING([--enable-man-symlinks],[use symlinks for the manpages])],
-		test "$enableval" != "no" && MKLINKS_FLAGS="$MKLINKS_FLAGS --symlinks",
-		enableval="no")
-	AC_MSG_RESULT([$enableval])
+		[test "x${enableval}" != "xno" && MKLINKS_FLAGS="${MKLINKS_FLAGS} --symlinks"],
+		[enableval="no"])
+	AC_MSG_RESULT([${enableval}])
 
 	AC_MSG_CHECKING([compression for manpages])
 	AC_ARG_ENABLE([man-compression],
 		[AS_HELP_STRING([--enable-man-compression=PROG],
                           [compress the manpages with PROG])],
-		[test "$enableval" = "yes" && echo && AC_MSG_ERROR([missing argument to --enable-man-compression])
-		test "$enableval" != "no" && MKLINKS_FLAGS="$MKLINKS_FLAGS --compress $enableval"],
+		[test "x${enableval}" = "xyes" && echo && AC_MSG_ERROR([missing argument to --enable-man-compression])
+		test "x${enableval}" != "xno" && MKLINKS_FLAGS="${MKLINKS_FLAGS} --compress ${enableval}"],
 		[enableval="no"])
-	AC_MSG_RESULT([$enableval])
+	AC_MSG_RESULT([${enableval}])
 
 	AC_SUBST([MKLINKS_FLAGS])
 ])
@@ -683,18 +691,21 @@ AC_DEFUN([SC_CONFIG_MANPAGES],[
 #       DL_OBJS -       Name of the object file that implements dynamic
 #                       loading for Tcl on this system.
 #       DL_LIBS -       Library file(s) to include in tclsh and other base
-#                       applications in order for the "load" command to work.
-#       LDFLAGS -      Flags to pass to the compiler when linking object
+#                       applications in order for the "load" command to
+#                       work.
+#       LDFLAGS -       Flags to pass to the compiler when linking object
 #                       files into an executable application binary such
 #                       as tclsh.
-#       LD_SEARCH_FLAGS-Flags to pass to ld, such as "-R /usr/local/tcl/lib",
-#                       that tell the run-time dynamic linker where to look
-#                       for shared libraries such as libtcl.so.  Depends on
-#                       the variable LIB_RUNTIME_DIR in the Makefile. Could
-#                       be the same as CC_SEARCH_FLAGS if ${CC} is used to link.
-#       CC_SEARCH_FLAGS-Flags to pass to ${CC}, such as "-Wl,-rpath,/usr/local/tcl/lib",
-#                       that tell the run-time dynamic linker where to look
-#                       for shared libraries such as libtcl.so.  Depends on
+#       LD_SEARCH_FLAGS-Flags to pass to ld, such as
+#                       "-R /usr/local/tcl/lib", that tell the run-time
+#                       dynamic linker where to look for shared libraries
+#                       such as libtcl.so. Depends on the variable
+#                       LIB_RUNTIME_DIR in the Makefile. Could be the same
+#                       as CC_SEARCH_FLAGS if ${CC} is used to link.
+#       CC_SEARCH_FLAGS-Flags to pass to ${CC}, such as
+#                       "-Wl,-rpath,/usr/local/tcl/lib", that tell the
+#                       run-time dynamic linker where to look for shared
+#                       libraries such as libtcl.so. Depends on
 #                       the variable LIB_RUNTIME_DIR in the Makefile.
 #       MAKE_LIB -      Command to execute to build the a library;
 #                       differs when building shared or static.
@@ -707,8 +718,8 @@ AC_DEFUN([SC_CONFIG_MANPAGES],[
 #       STLIB_LD -      Base command to use for combining object files
 #                       into a static library.
 #       SHLIB_CFLAGS -  Flags to pass to cc when compiling the components
-#                       of a shared library (may request position-independent
-#                       code, among other things).
+#                       of a shared library (may request
+#                       position-independent code, among other things).
 #       SHLIB_LD -      Base command to use for combining object files
 #                       into a shared library.
 #       SHLIB_LD_FLAGS -Flags to pass when building a shared library. This
@@ -722,35 +733,37 @@ AC_DEFUN([SC_CONFIG_MANPAGES],[
 #                       be specified when creating a shared library.  If
 #                       dependent libraries should not be specified (as on
 #                       SunOS 4.x, where they cause the link to fail, or in
-#                       general if Tcl and Tk aren't themselves shared
+#                       general if Tcl and Tk are NOT themselves shared
 #                       libraries), then this symbol has an empty string
 #                       as its value.
 #       SHLIB_SUFFIX -  Suffix to use for the names of dynamically loadable
-#                       extensions.  An empty string means we don't know how
-#                       to use shared libraries on this platform.
+#                       extensions. An empty string means we do NOT know
+#                       how to use shared libraries on this platform.
 # TCL_SHLIB_LD_EXTRAS - Additional element which are added to SHLIB_LD_LIBS
-#  TK_SHLIB_LD_EXTRAS   for the build of Tcl and Tk, but not recorded in the
-#                       tclConfig.sh, since they are only used for the build
-#                       of Tcl and Tk. 
+#  TK_SHLIB_LD_EXTRAS   for the build of Tcl and Tk, but not recorded in
+#                       the tclConfig.sh, since they are only used for the
+#                       build of Tcl and Tk. 
 #                       Examples: MacOS X records the library version and
-#                       compatibility version in the shared library.  But
-#                       of course the Tcl version of this is only used for Tcl.
+#                       compatibility version in the shared library. But
+#                       of course the Tcl version of this is only used for
+#                       Tcl.
 #       LIB_SUFFIX -    Specifies everything that comes after the "libfoo"
-#                       in a static or shared library name, using the $VERSION variable
-#                       to put the version in the right place.  This is used
-#                       by platforms that need non-standard library names.
-#                       Examples:  ${VERSION}.so.1.1 on NetBSD, since it needs
-#                       to have a version after the .so, and ${VERSION}.a
-#                       on AIX, since a shared library needs to have
-#                       a .a extension whereas shared objects for loadable
-#                       extensions have a .so extension.  Defaults to
-#                       ${VERSION}${SHLIB_SUFFIX}.
+#                       in a static or shared library name, using the
+#                       $VERSION variable to put the version in the right
+#                       place. This is used by platforms that need
+#                       non-standard library names.
+#                       Examples: ${VERSION}.so.1.1 on NetBSD, since it
+#                       needs to have a version after the .so, and
+#                       ${VERSION}.a on AIX, since a shared library needs
+#                       to have a .a extension whereas shared objects for
+#                       loadable extensions have a .so extension. Defaults
+#                       to ${VERSION}${SHLIB_SUFFIX}.
 #       TCL_NEEDS_EXP_FILE -
 #                       1 means that an export file is needed to link to a
 #                       shared library.
-#       TCL_EXP_FILE -  The name of the installed export / import file which
-#                       should be used to link to the Tcl shared library.
-#                       Empty if Tcl is unshared.
+#       TCL_EXP_FILE -  The name of the installed export / import file
+#                       which should be used to link to the Tcl shared
+#                       library. Empty if Tcl is unshared.
 #       TCL_BUILD_EXP_FILE -
 #                       The name of the built export / import file which
 #                       should be used to link to the Tcl shared library.
@@ -758,7 +771,8 @@ AC_DEFUN([SC_CONFIG_MANPAGES],[
 #	CFLAGS_DEBUG -
 #			Flags used when running the compiler in debug mode
 #	CFLAGS_OPTIMIZE -
-#			Flags used when running the compiler in optimize mode
+#			Flags used when running the compiler in optimize
+#                       mode
 #	EXTRA_CFLAGS
 #
 #--------------------------------------------------------------------
@@ -770,30 +784,30 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
     AC_MSG_CHECKING([if 64bit support is requested])
     AC_ARG_ENABLE([64bit],[AS_HELP_STRING([--enable-64bit],[enable 64bit support (where applicable)])],[],[enableval="no"])
 
-    if test "$enableval" = "yes"; then
+    if test "x${enableval}" = "yes"; then
 	do64bit=yes
     else
 	do64bit=no
     fi
-    AC_MSG_RESULT([$do64bit])
+    AC_MSG_RESULT([${do64bit}])
 
     # Step 0.b: Enable Solaris 64 bit VIS support?
 
     AC_MSG_CHECKING([if 64bit Sparc VIS support is requested])
     AC_ARG_ENABLE([64bit-vis],[AS_HELP_STRING([--enable-64bit-vis],[enable 64bit Sparc VIS support])],[],[enableval="no"])
 
-    if test "$enableval" = "yes"; then
+    if test "x${enableval}" = "xyes"; then
 	# Force 64bit on with VIS
 	do64bit=yes
 	do64bitVIS=yes
     else
 	do64bitVIS=no
     fi
-    AC_MSG_RESULT([$do64bitVIS])
+    AC_MSG_RESULT([${do64bitVIS}])
 
     # Step 1: set the variable "system" to hold the name and version number
-    # for the system.  This can usually be done via the "uname" command, but
-    # there are a few systems, like Next, where this doesn't work.
+    # for the system. This can usually be done via the "uname" command, but
+    # there are a few systems, like Next, where this does NOT work.
 
     AC_MSG_CHECKING([system version (for dynamic loading)])
     if test -f /usr/lib/NextStep/software_version; then
@@ -801,7 +815,7 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
     else
 	system=`uname -s`-`uname -r`
 	if test "$?" -ne 0 ; then
-	    AC_MSG_RESULT([unknown (can't find uname command)])
+	    AC_MSG_RESULT([unknown (cannot find uname command)])
 	    system=unknown
 	else
 	    # Special check for weird MP-RAS system (uname returns weird
@@ -813,14 +827,14 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 	    if test "`uname -s`" = "AIX" ; then
 		system=AIX-`uname -v`.`uname -r`
 	    fi
-	    AC_MSG_RESULT([$system])
+	    AC_MSG_RESULT([${system}])
 	fi
     fi
 
     # Step 2: check for existence of -ldl library.  This is needed because
     # Linux can use either -ldl or -ldld for dynamic loading.
 
-    AC_CHECK_LIB([dl], [dlopen], [have_dl=yes], [have_dl=no])
+    AC_CHECK_LIB([dl],[dlopen],[have_dl=yes],[have_dl=no])
 
     # Require ranlib early so we can override it in special cases below.
 
@@ -841,7 +855,7 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
     TCL_LIB_VERSIONS_OK=ok
     CFLAGS_DEBUG=-g
     CFLAGS_OPTIMIZE=-O
-    if test "$GCC" = "yes" ; then
+    if test "x${GCC}" = "xyes" ; then
 	CFLAGS_WARNING="-Wall -Wconversion -Wno-implicit-int"
     else
 	CFLAGS_WARNING=""
@@ -849,33 +863,39 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
     TCL_NEEDS_EXP_FILE=0
     TCL_BUILD_EXP_FILE=""
     TCL_EXP_FILE=""
-    AC_CHECK_PROG([AR], [ar], [ar])
-    if test "${AR}" = "" ; then
+    m4_ifdef([AM_PROG_AR],[
+    # Not sure if AC_REQUIRE can be used here:
+    AM_PROG_AR
+    ],[
+    AC_CHECK_PROG([AR],[ar],[ar])
+    ])
+    if test "x${AR}" = "x"; then
 	AC_MSG_ERROR([Required archive tool 'ar' not found on PATH.])
     fi
     STLIB_LD='${AR} cr'
     LD_LIBRARY_PATH_VAR="LD_LIBRARY_PATH"
     PLAT_OBJS=""
-    case $system in
+    case ${system} in
 	AIX-5.*)
 	    if test "${TCL_THREADS}" = "1" -a "$GCC" != "yes" ; then
-		# AIX requires the _r compiler when gcc isn't being used
+		# AIX requires the _r compiler when gcc is NOT being used
 		if test "${CC}" != "cc_r" ; then
 		    CC=${CC}_r
 		fi
 		AC_MSG_RESULT([Using $CC for compiling with threads])
 	    fi
-	    LIBS="$LIBS -lc"
+	    LIBS="${LIBS} -lc"
 	    # AIX-5 uses ELF style dynamic libraries
 	    SHLIB_CFLAGS=""
 	    SHLIB_LD_LIBS='${LIBS}'
 	    SHLIB_SUFFIX=".so"
 	    if test "`uname -m`" = "ia64" ; then
-		# AIX-5 uses ELF style dynamic libraries on IA-64, but not PPC
+		# AIX-5 uses ELF style dynamic libraries on IA-64, but not
+		# PPC
 		SHLIB_LD="/usr/ccs/bin/ld -G -z text"
 		# AIX-5 has dl* in libc.so
 		DL_LIBS=""
-		if test "$GCC" = "yes" ; then
+		if test "x${GCC}" = "xyes" ; then
 		    CC_SEARCH_FLAGS='-Wl,-R,${LIB_RUNTIME_DIR}'
 		else
 		    CC_SEARCH_FLAGS='-R${LIB_RUNTIME_DIR}'
@@ -890,7 +910,7 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 		TCL_EXPORT_FILE_SUFFIX='${VERSION}\$\{DBGX\}.exp'
 	    fi
 
-	    # Note: need the LIBS below, otherwise Tk won't find Tcl's
+	    # Note: need the LIBS below, otherwise Tk will NOT find Tcl's
 	    # symbols when dynamically loaded into tclsh.
 
 	    DL_OBJS="tclLoadDl.o"
@@ -899,9 +919,9 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 	    LD_LIBRARY_PATH_VAR="LIBPATH"
 
 	    # Check to enable 64-bit flags for compiler/linker
-	    if test "$do64bit" = "yes" ; then
-		if test "$GCC" = "yes" ; then
-		    AC_MSG_WARN(["64bit mode not supported with GCC on $system"])
+	    if test "x${do64bit}" = "xyes" ; then
+		if test "x${GCC}" = "xyes" ; then
+		    AC_MSG_WARN(["64bit mode not supported with GCC on ${system}"])
 		else 
 		    do64bit_ok=yes
 		    EXTRA_CFLAGS="-q64"
@@ -913,14 +933,14 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 	    fi
 	    ;;
 	AIX-*)
-	    if test "${TCL_THREADS}" = "1" -a "$GCC" != "yes" ; then
-		# AIX requires the _r compiler when gcc isn't being used
+	    if test "${TCL_THREADS}" = "1" -a "x${GCC}" != "xyes" ; then
+		# AIX requires the _r compiler when gcc is NOT being used
 		if test "${CC}" != "cc_r" ; then
 		    CC=${CC}_r
 		fi
-		AC_MSG_RESULT([Using $CC for compiling with threads])
+		AC_MSG_RESULT([Using ${CC} for compiling with threads])
 	    fi
-	    LIBS="$LIBS -lc"
+	    LIBS="${LIBS} -lc"
 	    SHLIB_CFLAGS=""
 	    SHLIB_LD="${TCL_SRC_DIR}/unix/ldAix /bin/ld -bhalt:4 -bM:SRE -bE:lib.exp -H512 -T512 -bnoentry"
 	    SHLIB_LD_LIBS='${LIBS}'
@@ -935,15 +955,16 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 	    TCL_EXPORT_FILE_SUFFIX='${VERSION}\$\{DBGX\}.exp'
 
 	    # AIX v<=4.1 has some different flags than 4.2+
-	    if test "$system" = "AIX-4.1" -o "`uname -v`" -lt "4" ; then
-		LIBOBJS="$LIBOBJS tclLoadAix.o"
+	    if test "${system}" = "AIX-4.1" -o "`uname -v`" -lt "4" ; then
+		LIBOBJS="${LIBOBJS} tclLoadAix.o"
 		DL_LIBS="-lld"
 	    fi
 
 	    # On AIX <=v4 systems, libbsd.a has to be linked in to support
-	    # non-blocking file IO.  This library has to be linked in after
-	    # the MATH_LIBS or it breaks the pow() function.  The way to
-	    # insure proper sequencing, is to add it to the tail of MATH_LIBS.
+	    # non-blocking file IO. This library has to be linked in after
+	    # the MATH_LIBS or it breaks the pow() function. The way to
+	    # insure proper sequencing, is to add it to the tail of
+	    # MATH_LIBS.
 	    # This library also supplies gettimeofday.
 	    #
 	    # AIX does not have a timezone field in struct tm. When the AIX
@@ -952,16 +973,16 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 	    # deduce the timezone by comparing the localtime result on a
 	    # known GMT value.
 
-	    AC_CHECK_LIB([bsd], [gettimeofday], [libbsd=yes], [libbsd=no])
-	    if test $libbsd = yes; then
-	    	MATH_LIBS="$MATH_LIBS -lbsd"
-	    	AC_DEFINE([USE_DELTA_FOR_TZ], [1], [Defined to 1 if using delta for tz])
+	    AC_CHECK_LIB([bsd],[gettimeofday],[libbsd=yes],[libbsd=no])
+	    if test "x${libbsd}" = "xyes"; then
+	    	MATH_LIBS="${MATH_LIBS} -lbsd"
+	    	AC_DEFINE([USE_DELTA_FOR_TZ],[1],[Defined to 1 if using delta for tz])
 	    fi
 
 	    # Check to enable 64-bit flags for compiler/linker
-	    if test "$do64bit" = "yes" ; then
-		if test "$GCC" = "yes" ; then
-		    AC_MSG_WARN(["64bit mode not supported with GCC on $system"])
+	    if test "x${do64bit}" = "xyes" ; then
+		if test "x${GCC}" = "yes" ; then
+		    AC_MSG_WARN(["64bit mode not supported with GCC on ${system}"])
 		else 
 		    do64bit_ok=yes
 		    EXTRA_CFLAGS="-q64"
@@ -1007,13 +1028,13 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 	    ;;
 	HP-UX-*.11.*)
 	    # Use updated header definitions where possible
-	    AC_DEFINE([_XOPEN_SOURCE], [1], [Define to 1 to use the XOPEN network library])          # Use the XOPEN network library
-	    AC_DEFINE([_XOPEN_SOURCE_EXTENDED], [1], [Define to 1 to use the XOPEN network library]) # Use the XOPEN network library
-	    LIBS="$LIBS -lxnet"               # Use the XOPEN network library
+	    AC_DEFINE([_XOPEN_SOURCE],[1],[Define to 1 to use the XOPEN network library])          # Use the XOPEN network library
+	    AC_DEFINE([_XOPEN_SOURCE_EXTENDED],[1],[Define to 1 to use the XOPEN network library]) # Use the XOPEN network library
+	    LIBS="${LIBS} -lxnet"          # Use the XOPEN network library
 
 	    SHLIB_SUFFIX=".sl"
-	    AC_CHECK_LIB([dld], [shl_load], [tcl_ok=yes], [tcl_ok=no])
-	    if test "$tcl_ok" = yes; then
+	    AC_CHECK_LIB([dld],[shl_load],[tcl_ok=yes],[tcl_ok=no])
+	    if test "x${tcl_ok}" = "xyes"; then
 		SHLIB_CFLAGS="+z"
 		SHLIB_LD="ld -b"
 		SHLIB_LD_LIBS='${LIBS}'
@@ -1026,12 +1047,12 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 	    fi
 
 	    # Check to enable 64-bit flags for compiler/linker
-	    if test "$do64bit" = "yes" ; then
-		if test "$GCC" = "yes" ; then
+	    if test "x${do64bit}" = "xyes" ; then
+		if test "x${GCC}" = "xyes" ; then
 		    hpux_arch=`gcc -dumpmachine`
-		    case $hpux_arch in
+		    case ${hpux_arch} in
 			hppa64*)
-			    # 64-bit gcc in use.  Fix flags for GNU ld.
+			    # 64-bit gcc in use. Fix flags for GNU ld.
 			    do64bit_ok=yes
 			    SHLIB_LD="gcc -shared"
 			    SHLIB_LD_LIBS=""
@@ -1056,8 +1077,8 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 	    ;;
 	HP-UX-*.08.*|HP-UX-*.09.*|HP-UX-*.10.*)
 	    SHLIB_SUFFIX=".sl"
-	    AC_CHECK_LIB([dld], [shl_load], [tcl_ok=yes], [tcl_ok=no])
-	    if test "$tcl_ok" = yes; then
+	    AC_CHECK_LIB([dld],[shl_load],[tcl_ok=yes],[tcl_ok=no])
+	    if test "x${tcl_ok}" = "xyes"; then
 		SHLIB_CFLAGS="+z"
 		SHLIB_LD="ld -b"
 		SHLIB_LD_LIBS=""
@@ -1072,7 +1093,7 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 	IRIX-4.*)
 	    SHLIB_CFLAGS="-G 0"
 	    SHLIB_SUFFIX=".a"
-	    SHLIB_LD="echo tclLdAout $CC \{$SHLIB_CFLAGS\} | `pwd`/tclsh -r -G 0"
+	    SHLIB_LD="echo tclLdAout ${CC} \{$SHLIB_CFLAGS\} | `pwd`/tclsh -r -G 0"
 	    SHLIB_LD_LIBS='${LIBS}'
 	    DL_OBJS="tclLoadAout.o"
 	    DL_LIBS=""
@@ -1102,11 +1123,11 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 	    DL_LIBS=""
 	    CC_SEARCH_FLAGS='-Wl,-rpath,${LIB_RUNTIME_DIR}'
 	    LD_SEARCH_FLAGS='-rpath ${LIB_RUNTIME_DIR}'
-	    if test "$GCC" = "yes" ; then
+	    if test "x${GCC}" = "xyes" ; then
 		EXTRA_CFLAGS="-mabi=n32"
 		LDFLAGS="-mabi=n32"
 	    else
-		case $system in
+		case ${system} in
 		    IRIX-6.3)
 			# Use to build 6.2 compatible binaries on 6.3.
 			EXTRA_CFLAGS="-n32 -D_OLD_TERMIOS"
@@ -1131,8 +1152,8 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 
 	    # Check to enable 64-bit flags for compiler/linker
 
-	    if test "$do64bit" = "yes" ; then
-	        if test "$GCC" = "yes" ; then
+	    if test "x${do64bit}" = "xyes" ; then
+	        if test "x${GCC}" = "xyes" ; then
 	            AC_MSG_WARN([64bit mode not supported by gcc])
 	        else
 	            do64bit_ok=yes
@@ -1148,12 +1169,12 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 	    SHLIB_SUFFIX=".so"
 
 	    # egcs-2.91.66 on Redhat Linux 6.0 generates lots of warnings 
-	    # when you inline the string and math operations.  Turn this off to
-	    # get rid of the warnings.
+	    # when you inline the string and math operations. Turn this
+	    # off to get rid of the warnings.
 
 	    CFLAGS_OPTIMIZE="${CFLAGS_OPTIMIZE} -D__NO_STRING_INLINES -D__NO_MATH_INLINES"
 
-	    if test "$have_dl" = yes; then
+	    if test "x${have_dl}" = "xyes"; then
 		SHLIB_LD="${CC} -shared"
 		DL_OBJS="tclLoadDl.o"
 		DL_LIBS="-ldl"
@@ -1185,7 +1206,7 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 	    fi
 
 	    # XIM peeking works under XFree86.
-	    AC_DEFINE([PEEK_XCLOSEIM], [1], [Define to 1 if XIM peeking works under XFree86.])
+	    AC_DEFINE([PEEK_XCLOSEIM],[1],[Define to 1 if XIM peeking works under XFree86.])
 
 	    ;;
 	GNU*)
@@ -1193,7 +1214,7 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 	    SHLIB_LD_LIBS='${LIBS}'
 	    SHLIB_SUFFIX=".so"
 
-	    if test "$have_dl" = yes; then
+	    if test "x${have_dl}" = "xyes"; then
 		SHLIB_LD="${CC} -shared"
 		DL_OBJS=""
 		DL_LIBS="-ldl"
@@ -1237,7 +1258,7 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 	    ;;
 	NetBSD-*|FreeBSD-[[1-2]].*|OpenBSD-*)
 	    # Not available on all versions:  check for include file.
-	    AC_CHECK_HEADER([dlfcn.h], [
+	    AC_CHECK_HEADER([dlfcn.h],[
 		# NetBSD/SPARC needs -fPIC, -fpic will not do.
 		SHLIB_CFLAGS="-fPIC"
 		SHLIB_LD="ld -Bshareable -x"
@@ -1249,10 +1270,10 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 		CC_SEARCH_FLAGS='-Wl,-rpath,${LIB_RUNTIME_DIR}'
 		LD_SEARCH_FLAGS='-rpath ${LIB_RUNTIME_DIR}'
 		AC_MSG_CHECKING([for ELF])
-		AC_EGREP_CPP([yes],[
+		AC_EGREP_CPP([yes_this_is_elf],[
 #ifdef __ELF__
-	yes
-#endif
+	yes_this_is_elf
+#endif /* __ELF__ */
 		],[
 		    AC_MSG_RESULT([yes])
 		    SHARED_LIB_SUFFIX='${TCL_TRIM_DOTS}\$\{DBGX\}.so',
@@ -1261,7 +1282,7 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 		])
 	    ],[
 		SHLIB_CFLAGS=""
-		SHLIB_LD="echo tclLdAout $CC \{$SHLIB_CFLAGS\} | `pwd`/tclsh -r"
+		SHLIB_LD="echo tclLdAout ${CC} \{$SHLIB_CFLAGS\} | `pwd`/tclsh -r"
 		SHLIB_LD_LIBS='${LIBS}'
 		SHLIB_SUFFIX=".a"
 		DL_OBJS="tclLoadAout.o"
@@ -1272,7 +1293,7 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 		SHARED_LIB_SUFFIX='${TCL_TRIM_DOTS}\$\{DBGX\}.a'
 	    ])
 
-	    # FreeBSD doesn't handle version numbers with dots.
+	    # FreeBSD does NOT handle version numbers with dots.
 
 	    UNSHARED_LIB_SUFFIX='${TCL_TRIM_DOTS}\$\{DBGX\}.a'
 	    TCL_LIB_VERSIONS_OK=nodots
@@ -1294,9 +1315,9 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 		EXTRA_CFLAGS="-pthread"
 	    	LDFLAGS="$LDFLAGS -pthread"
 	    fi
-	    case $system in
+	    case ${system} in
 	    FreeBSD-3.*)
-	    	# FreeBSD-3 doesn't handle version numbers with dots.
+	    	# FreeBSD-3 does NOT handle version numbers with dots.
 	    	UNSHARED_LIB_SUFFIX='${TCL_TRIM_DOTS}\$\{DBGX\}.a'
 	    	SHARED_LIB_SUFFIX='${TCL_TRIM_DOTS}\$\{DBGX\}.so'
 	    	TCL_LIB_VERSIONS_OK=nodots
@@ -1321,7 +1342,7 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 	    # for compatibility with autoconf vers 2.13 :
 	    HACK=""
 	    EXTRA_CFLAGS="-DMA${HACK}C_OSX_TCL -DHAVE_CFBUNDLE -DUSE_VFORK -DTCL_DEFAULT_ENCODING=\\\"utf-8\\\""
-	    LIBS="$LIBS -framework CoreFoundation"
+	    LIBS="${LIBS} -framework CoreFoundation"
 	    ;;
 	NEXTSTEP-*)
 	    SHLIB_CFLAGS=""
@@ -1336,10 +1357,11 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 	    ;;
 	OS/390-*)
 	    CFLAGS_OPTIMIZE=""      # Optimizer is buggy
-	    AC_DEFINE([_OE_SOCKETS], [1], [This define is needed in sys/socket.h])  # needed in sys/socket.h
+	    AC_DEFINE([_OE_SOCKETS],[1],[This define is needed in sys/socket.h])  # needed in sys/socket.h
 	    ;;      
 	OSF1-1.0|OSF1-1.1|OSF1-1.2)
-	    # OSF/1 1.[012] from OSF, and derivatives, including Paragon OSF/1
+	    # OSF/1 1.[012] from OSF, and derivatives, including
+	    # Paragon OSF/1
 	    SHLIB_CFLAGS=""
 	    # Hack: make package name same as library name
 	    SHLIB_LD='ld -R -export $@:'
@@ -1382,7 +1404,7 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 	    LDFLAGS=""
 	    CC_SEARCH_FLAGS='-Wl,-rpath,${LIB_RUNTIME_DIR}'
 	    LD_SEARCH_FLAGS='-rpath ${LIB_RUNTIME_DIR}'
-	    if test "$GCC" != "yes" ; then
+	    if test "x${GCC}" != "xyes" ; then
 		EXTRA_CFLAGS="-DHAVE_TZSET -std1"
 	    fi
 	    # see pthread_intro(3) for pthread support on osf1, k.furukawa
@@ -1390,8 +1412,8 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 		EXTRA_CFLAGS="${EXTRA_CFLAGS} -DHAVE_PTHREAD_ATTR_SETSTACKSIZE"
 		EXTRA_CFLAGS="${EXTRA_CFLAGS} -DTCL_THREAD_STACK_MIN=PTHREAD_STACK_MIN*64"
 		LIBS=`echo $LIBS | sed s/-lpthreads//`
-		if test "$GCC" = "yes" ; then
-		    LIBS="$LIBS -lpthread -lmach -lexc"
+		if test "x${GCC}" = "xyes" ; then
+		    LIBS="${LIBS} -lpthread -lmach -lexc"
 		else
 		    EXTRA_CFLAGS="${EXTRA_CFLAGS} -pthread"
 		    LDFLAGS="-pthread"
@@ -1415,7 +1437,7 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 	    ;;
 	RISCos-*)
 	    SHLIB_CFLAGS="-G 0"
-	    SHLIB_LD="echo tclLdAout $CC \{$SHLIB_CFLAGS\} | `pwd`/tclsh -r -G 0"
+	    SHLIB_LD="echo tclLdAout ${CC} \{$SHLIB_CFLAGS\} | `pwd`/tclsh -r -G 0"
 	    SHLIB_LD_LIBS='${LIBS}'
 	    SHLIB_SUFFIX=".a"
 	    DL_OBJS="tclLoadAout.o"
@@ -1425,10 +1447,10 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 	    LD_SEARCH_FLAGS=${CC_SEARCH_FLAGS}
 	    ;;
 	SCO_SV-3.2*)
-	    # Note, dlopen is available only on SCO 3.2.5 and greater. However,
-	    # this test works, since "uname -s" was non-standard in 3.2.4 and
-	    # below.
-	    if test "$GCC" = "yes" ; then
+	    # Note, dlopen is available only on SCO 3.2.5 and greater.
+	    # However, this test works, since "uname -s" was non-standard
+	    # in 3.2.4 and below.
+	    if test "x${GCC}" = "xyes" ; then
 	    	SHLIB_CFLAGS="-fPIC -melf"
 	    	LDFLAGS="-melf -Wl,-Bexport"
 	    else
@@ -1465,10 +1487,11 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 	    CC_SEARCH_FLAGS='-L${LIB_RUNTIME_DIR}'
 	    LD_SEARCH_FLAGS=${CC_SEARCH_FLAGS}
 
-	    # SunOS can't handle version numbers with dots in them in library
-	    # specs, like -ltcl7.5, so use -ltcl75 instead.  Also, it
-	    # requires an extra version number at the end of .so file names.
-	    # So, the library has to have a name like libtcl75.so.1.0
+	    # SunOS cannot handle version numbers with dots in them in
+	    # library specs, like -ltcl7.5, so use -ltcl75 instead. Also,
+	    # it requires an extra version number at the end of .so file
+	    # names. So, the library has to have a name like
+	    # libtcl75.so.1.0
 
 	    SHARED_LIB_SUFFIX='${TCL_TRIM_DOTS}\$\{DBGX\}.so.1.0'
 	    UNSHARED_LIB_SUFFIX='${TCL_TRIM_DOTS}\$\{DBGX\}.a'
@@ -1476,15 +1499,15 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 	    ;;
 	SunOS-5.[[0-6]]*)
 
-	    # Note: If _REENTRANT isn't defined, then Solaris
-	    # won't define thread-safe library routines.
+	    # Note: If _REENTRANT is NOT defined, then Solaris
+	    # will NOT define thread-safe library routines.
 
-	    AC_DEFINE([_REENTRANT], [1], [If this is not defined, then Solaris will not define thread-safe library routines.])
-	    AC_DEFINE([_POSIX_PTHREAD_SEMANTICS], [1], [Defined to 1 if using POSIX pthread semantics])
+	    AC_DEFINE([_REENTRANT],[1],[If this is not defined, then Solaris will not define thread-safe library routines.])
+	    AC_DEFINE([_POSIX_PTHREAD_SEMANTICS],[1],[Defined to 1 if using POSIX pthread semantics])
 
 	    SHLIB_CFLAGS="-KPIC"
 
-	    # Note: need the LIBS below, otherwise Tk won't find Tcl's
+	    # Note: need the LIBS below, otherwise Tk will NOT find Tcl's
 	    # symbols when dynamically loaded into tclsh.
 
 	    SHLIB_LD_LIBS='${LIBS}'
@@ -1504,24 +1527,24 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 	    ;;
 	SunOS-5*)
 
-	    # Note: If _REENTRANT isn't defined, then Solaris
-	    # won't define thread-safe library routines.
+	    # Note: If _REENTRANT is NOT defined, then Solaris
+	    # will NOT define thread-safe library routines.
 
-	    AC_DEFINE([_REENTRANT], [1], [If this is not defined, then Solaris will not define thread-safe library routines.])
-	    AC_DEFINE([_POSIX_PTHREAD_SEMANTICS], [1], [Defined to 1 if using POSIX pthread semantics])
+	    AC_DEFINE([_REENTRANT],[1],[If this is not defined, then Solaris will not define thread-safe library routines.])
+	    AC_DEFINE([_POSIX_PTHREAD_SEMANTICS],[1],[Defined to 1 if using POSIX pthread semantics])
 
 	    SHLIB_CFLAGS="-KPIC"
 	    LDFLAGS=""
     
 	    # Check to enable 64-bit flags for compiler/linker
-	    if test "$do64bit" = "yes" ; then
+	    if test "x${do64bit}" = "xyes" ; then
 		arch=`isainfo`
-		if test "$arch" = "sparcv9 sparc" ; then
-			if test "$GCC" = "yes" ; then
+		if test "${arch}" = "sparcv9 sparc" ; then
+			if test "x${GCC}" = "xyes" ; then
 			    AC_MSG_WARN(["64bit mode not supported with GCC on $system"])
 			else
 			    do64bit_ok=yes
-			    if test "$do64bitVIS" = "yes" ; then
+			    if test "${do64bitVIS}" = "yes" ; then
 				EXTRA_CFLAGS="-xarch=v9a"
 			    	LDFLAGS="-xarch=v9a"
 			    else
@@ -1534,7 +1557,7 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 		fi
 	    fi
 	    
-	    # Note: need the LIBS below, otherwise Tk won't find Tcl's
+	    # Note: need the LIBS below, otherwise Tk will NOT find Tcl's
 	    # symbols when dynamically loaded into tclsh.
 
 	    SHLIB_LD_LIBS='${LIBS}'
@@ -1554,14 +1577,14 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 	ULTRIX-4.*)
 	    SHLIB_CFLAGS="-G 0"
 	    SHLIB_SUFFIX=".a"
-	    SHLIB_LD="echo tclLdAout $CC \{$SHLIB_CFLAGS\} | `pwd`/tclsh -r -G 0"
+	    SHLIB_LD="echo tclLdAout ${CC} \{$SHLIB_CFLAGS\} | `pwd`/tclsh -r -G 0"
 	    SHLIB_LD_LIBS='${LIBS}'
 	    DL_OBJS="tclLoadAout.o"
 	    DL_LIBS=""
 	    LDFLAGS="-Wl,-D,08000000"
 	    CC_SEARCH_FLAGS='-L${LIB_RUNTIME_DIR}'
 	    LD_SEARCH_FLAGS=${CC_SEARCH_FLAGS}
-	    if test "$GCC" != "yes" ; then
+	    if test "x${GCC}" != "xyes" ; then
 		EXTRA_CFLAGS="-DHAVE_TZSET -std1"
 	    fi
 	    ;;
@@ -1572,33 +1595,34 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 	    SHLIB_SUFFIX=".so"
 	    DL_OBJS="tclLoadDl.o"
 	    DL_LIBS="-ldl"
-	    # Some UNIX_SV* systems (unixware 1.1.2 for example) have linkers
-	    # that don't grok the -Bexport option.  Test that it does.
-	    hold_ldflags=$LDFLAGS
+	    # Some UNIX_SV* systems (unixware 1.1.2 for example) have
+	    # linkers that do NOT grok the -Bexport option. Test that it
+	    # does.
+	    hold_ldflags=${LDFLAGS}
 	    AC_MSG_CHECKING([for ld accepts -Bexport flag])
 	    LDFLAGS="${LDFLAGS} -Wl,-Bexport"
-	    AC_LINK_IFELSE([AC_LANG_SOURCE([[]],[[int i;]])], [found=yes], [found=no])
-	    LDFLAGS=$hold_ldflags
-	    AC_MSG_RESULT([$found])
-	    if test $found = yes; then
-	    LDFLAGS="-Wl,-Bexport"
+	    AC_LINK_IFELSE([AC_LANG_SOURCE([[]],[[int i;]])],[found=yes], [found=no])
+	    LDFLAGS=${hold_ldflags}
+	    AC_MSG_RESULT([${found}])
+	    if test "x${found}" = "xyes"; then
+	    	LDFLAGS="-Wl,-Bexport"
 	    else
-	    LDFLAGS=""
+	    	LDFLAGS=""
 	    fi
 	    CC_SEARCH_FLAGS=""
 	    LD_SEARCH_FLAGS=""
 	    ;;
     esac
 
-    if test "$do64bit" = "yes" -a "$do64bit_ok" = "no" ; then
+    if test "x${do64bit}" = "xyes" -a "x${do64bit_ok}" = "xno" ; then
     	AC_MSG_WARN(["64bit support is being disabled -- we do not know magic for this platform"])
     fi
 
     # Step 4: If pseudo-static linking is in use (see K. B. Kenny, "Dynamic
     # Loading for Tcl -- What Became of It?".  Proc. 2nd Tcl/Tk Workshop,
-    # New Orleans, LA, Computerized Processes Unlimited, 1994), then we need
-    # to determine which of several header files defines the a.out file
-    # format (a.out.h, sys/exec.h, or sys/exec_aout.h).  At present, we
+    # New Orleans, LA, Computerized Processes Unlimited, 1994), then we
+    # need to determine which of several header files defines the a.out
+    # file format (a.out.h, sys/exec.h, or sys/exec_aout.h). At present, we
     # support only a file format that is more or less version-7-compatible. 
     # In particular,
     #	- a.out files must begin with `struct exec'.
@@ -1606,14 +1630,14 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
     #	  of the text segment
     #	- The `struct exec' must contain a_magic, a_text, a_data, a_bss
     #	  and a_entry fields.
-    # The following compilation should succeed if and only if either sys/exec.h
-    # or a.out.h is usable for the purpose.
+    # The following compilation should succeed if and only if either
+    # sys/exec.h or a.out.h is usable for the purpose.
     #
-    # Note that the modified COFF format used on MIPS Ultrix 4.x is usable; the
-    # `struct exec' includes a second header that contains information that
-    # duplicates the v7 fields that are needed.
+    # Note that the modified COFF format used on MIPS Ultrix 4.x is usable;
+    # the `struct exec' includes a second header that contains information
+    # that duplicates the v7 fields that are needed.
 
-    if test "x$DL_OBJS" = "xtclLoadAout.o" ; then
+    if test "x${DL_OBJS}" = "xtclLoadAout.o" ; then
 	AC_MSG_CHECKING([sys/exec.h])
 	AC_COMPILE_IFELSE([AC_LANG_SOURCE([[#include <sys/exec.h>]],[[
 	    struct exec foo;
@@ -1623,13 +1647,13 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 	    seek = N_TXTOFF (foo.ex_f, foo.ex_o);
 #else
 	    seek = N_TXTOFF (foo);
-#endif
+#endif /* __mips || mips */
 	    flag = (foo.a_magic == OMAGIC);
 	    return foo.a_text + foo.a_data + foo.a_bss + foo.a_entry;
-    ]])], [tcl_ok=usable], [tcl_ok=unusable])
-	AC_MSG_RESULT([$tcl_ok])
-	if test $tcl_ok = usable; then
-	    AC_DEFINE([USE_SYS_EXEC_H], [1], [Defined to 1 if using sys/exec.h])
+    ]])],[tcl_ok=usable],[tcl_ok=unusable])
+	AC_MSG_RESULT([${tcl_ok}])
+	if test "x${tcl_ok}" = "xusable"; then
+	    AC_DEFINE([USE_SYS_EXEC_H],[1],[Defined to 1 if using sys/exec.h])
 	else
 	    AC_MSG_CHECKING([a.out.h])
 	    AC_COMPILE_IFELSE([AC_LANG_SOURCE([[#include <a.out.h>]],[[
@@ -1640,13 +1664,13 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 		seek = N_TXTOFF (foo.ex_f, foo.ex_o);
 #else
 		seek = N_TXTOFF (foo);
-#endif
+#endif /* __mips || mips */
 		flag = (foo.a_magic == OMAGIC);
 		return foo.a_text + foo.a_data + foo.a_bss + foo.a_entry;
-	    ]])], [tcl_ok=usable], [tcl_ok=unusable])
-	    AC_MSG_RESULT([$tcl_ok])
-	    if test $tcl_ok = usable; then
-		AC_DEFINE([USE_A_OUT_H], [1], [Defined to 1 if using a.out.h])
+	    ]])],[tcl_ok=usable],[tcl_ok=unusable])
+	    AC_MSG_RESULT([${tcl_ok}])
+	    if test "x${tcl_ok}" = "xusable"; then
+		AC_DEFINE([USE_A_OUT_H],[1],[Defined to 1 if using a.out.h])
 	    else
 		AC_MSG_CHECKING([sys/exec_aout.h])
 		AC_COMPILE_IFELSE([AC_LANG_SOURCE([[#include <sys/exec_aout.h>]],[[
@@ -1657,13 +1681,13 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 		    seek = N_TXTOFF (foo.ex_f, foo.ex_o);
 #else
 		    seek = N_TXTOFF (foo);
-#endif
+#endif /* __mips || mips */
 		    flag = (foo.a_midmag == OMAGIC);
 		    return foo.a_text + foo.a_data + foo.a_bss + foo.a_entry;
-		]])], [tcl_ok=usable], [tcl_ok=unusable])
-		AC_MSG_RESULT([$tcl_ok])
-		if test $tcl_ok = usable; then
-		    AC_DEFINE([USE_SYS_EXEC_AOUT_H], [1], [Defined to 1 if using sys/exec_aout.h])
+		]])],[tcl_ok=usable],[tcl_ok=unusable])
+		AC_MSG_RESULT([${tcl_ok}])
+		if test "x${tcl_ok}" = "xusable"; then
+		    AC_DEFINE([USE_SYS_EXEC_AOUT_H],[1],[Defined to 1 if using sys/exec_aout.h])
 		else
 		    DL_OBJS=""
 		fi
@@ -1671,19 +1695,21 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 	fi
     fi
 
-    # Step 5: disable dynamic loading if requested via a command-line switch.
+    # Step 5: disable dynamic loading if requested via a command-line
+    # switch.
 
-    AC_ARG_ENABLE([load], [  --disable-load          disallow dynamic loading and "load" command],
-	[tcl_ok=$enableval], [tcl_ok=yes])
-    if test "$tcl_ok" = "no"; then
+    AC_ARG_ENABLE([load],[AS_HELP_STRING([--disable-load],[disallow dynamic loading and "load" command])],
+	[tcl_ok=${enableval}],[tcl_ok=yes])
+    if test "x${tcl_ok}" = "xno"; then
 	DL_OBJS=""
     fi
 
-    if test "x$DL_OBJS" != "x" ; then
+    if test "x${DL_OBJS}" != "x" ; then
 	BUILD_DLTEST="\$(DLTEST_TARGETS)"
     else
-	echo "Can't figure out how to do dynamic loading or shared libraries"
-	echo "on this system."
+        # TODO: use AC_MSG_NOTICE instead:
+	echo "Cannot figure out how to do dynamic loading"
+	echo "or shared libraries on this system."
 	SHLIB_CFLAGS=""
 	SHLIB_LD=""
 	SHLIB_SUFFIX=""
@@ -1695,13 +1721,13 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 	BUILD_DLTEST=""
     fi
 
-    # If we're running gcc, then change the C flags for compiling shared
+    # If we are running gcc, then change the C flags for compiling shared
     # libraries to the right flags for gcc, instead of those for the
     # standard manufacturer compiler.
 
-    if test "$DL_OBJS" != "tclLoadNone.o" ; then
-	if test "$GCC" = "yes" ; then
-	    case $system in
+    if test "${DL_OBJS}" != "tclLoadNone.o" ; then
+	if test "x${GCC}" = "xyes" ; then
+	    case ${system} in
 		AIX-*)
 		    ;;
 		BSD/OS*)
@@ -1725,21 +1751,21 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 	fi
     fi
 
-    if test "$SHARED_LIB_SUFFIX" = "" ; then
+    if test "x${SHARED_LIB_SUFFIX}" = "x" ; then
 	SHARED_LIB_SUFFIX='${VERSION}\$\{DBGX\}${SHLIB_SUFFIX}'
     fi
-    if test "$UNSHARED_LIB_SUFFIX" = "" ; then
+    if test "x${UNSHARED_LIB_SUFFIX}" = "x" ; then
 	UNSHARED_LIB_SUFFIX='${VERSION}\$\{DBGX\}.a'
     fi
 
-    if test "${SHARED_BUILD}" = "1" && test "${SHLIB_SUFFIX}" != "" ; then
+    if test "${SHARED_BUILD}" = "1" && test "x${SHLIB_SUFFIX}" != "x" ; then
         LIB_SUFFIX=${SHARED_LIB_SUFFIX}
         MAKE_LIB='${SHLIB_LD} -o [$]@ ${SHLIB_LD_FLAGS} ${OBJS} ${SHLIB_LD_LIBS} ${TCL_SHLIB_LD_EXTRAS} ${TK_SHLIB_LD_EXTRAS} ${LD_SEARCH_FLAGS}'
         INSTALL_LIB='$(INSTALL_LIBRARY) $(LIB_FILE) $(LIB_INSTALL_DIR)/$(LIB_FILE)'
     else
         LIB_SUFFIX=${UNSHARED_LIB_SUFFIX}
 
-        if test "$RANLIB" = "" ; then
+        if test "x${RANLIB}" = "x" ; then
             MAKE_LIB='$(STLIB_LD) [$]@ ${OBJS}'
             INSTALL_LIB='$(INSTALL_LIBRARY) $(LIB_FILE) $(LIB_INSTALL_DIR)/$(LIB_FILE)'
         else
@@ -1750,7 +1776,7 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
 
 
     # Stub lib does not depend on shared/static configuration
-    if test "$RANLIB" = "" ; then
+    if test "x${RANLIB}" = "x" ; then
         MAKE_STUB_LIB='${STLIB_LD} [$]@ ${STUB_LIB_OBJS}'
         INSTALL_STUB_LIB='$(INSTALL_LIBRARY) $(STUB_LIB_FILE) $(LIB_INSTALL_DIR)/$(STUB_LIB_FILE)'
     else
@@ -1915,9 +1941,9 @@ int main() {
 #
 #	Supply substitutes for missing POSIX header files.  Special
 #	notes:
-#	    - stdlib.h doesn't define strtol, strtoul, or
+#	    - stdlib.h does NOT define strtol, strtoul, or
 #	      strtod insome versions of SunOS
-#	    - some versions of string.h don't declare procedures such
+#	    - some versions of string.h do NOT declare procedures such
 #	      as strstr
 #
 # Arguments:
@@ -1996,7 +2022,7 @@ closedir(d);
     AC_CHECK_HEADER([sys/wait.h],[],[AC_DEFINE([NO_SYS_WAIT_H],[1],[Defined to 1 if there is no sys/wait.h])])
     AC_CHECK_HEADER([dlfcn.h],[],[AC_DEFINE([NO_DLFCN_H],[1],[Defined to 1 if there is no dlfcn.h])])
 
-    # OS/390 lacks sys/param.h (and doesn't need it, by chance).
+    # OS/390 lacks sys/param.h (and does NOT need it, by chance).
 
     AC_CHECK_HEADERS_ONCE([unistd.h sys/param.h])
 ])
@@ -2005,8 +2031,8 @@ closedir(d);
 # SC_PATH_X
 #
 #	Locate the X11 header files and the X11 library archive.  Try
-#	the ac_path_x macro first, but if it doesn't find the X stuff
-#	(e.g. because there's no xmkmf program) then check through
+#	the ac_path_x macro first, but if it does NOT find the X stuff
+#	(e.g. because there is no xmkmf program) then check through
 #	a list of possible directories.  Under some conditions the
 #	autoconf macro will return an include directory that contains
 #	no include files, so double-check its result just to be safe.
@@ -2092,7 +2118,7 @@ AC_DEFUN([SC_PATH_X],[
 # SC_BLOCKING_STYLE
 #
 #	The statements below check for systems where POSIX-style
-#	non-blocking I/O (O_NONBLOCK) doesn't work or is unimplemented. 
+#	non-blocking I/O (O_NONBLOCK) does NOT work or is unimplemented. 
 #	On these systems (mostly older ones), use the old BSD-style
 #	FIONBIO approach instead.
 #
@@ -2132,22 +2158,22 @@ AC_DEFUN([SC_BLOCKING_STYLE],[
 	fi
     fi
     case $system in
-	# There used to be code here to use FIONBIO under AIX.  However, it
-	# was reported that FIONBIO doesn't work under AIX 3.2.5.  Since
+	# There used to be code here to use FIONBIO under AIX. However, it
+	# was reported that FIONBIO does NOT work under AIX 3.2.5. Since
 	# using O_NONBLOCK seems fine under AIX 4.*, I removed the FIONBIO
 	# code (JO, 5/31/97).
 
 	OSF*)
-	    AC_DEFINE([USE_FIONBIO], [1], [Defined to 1 if using FIONBIO])
+	    AC_DEFINE([USE_FIONBIO],[1],[Defined to 1 if using FIONBIO])
 	    AC_MSG_RESULT([FIONBIO])
 	    ;;
 	SunOS-4*)
-	    AC_DEFINE([USE_FIONBIO], [1], [Defined to 1 if using FIONBIO])
+	    AC_DEFINE([USE_FIONBIO],[1],[Defined to 1 if using FIONBIO])
 	    AC_MSG_RESULT([FIONBIO])
 	    ;;
 	ULTRIX-4.*)
-	    AC_DEFINE([USE_FIONBIO], [1], [Defined to 1 if using FIONBIO])
-	    AC_MSG_RESULT([FIONBIO], [1], [Defined to 1 if using FIONBIO])
+	    AC_DEFINE([USE_FIONBIO],[1],[Defined to 1 if using FIONBIO])
+	    AC_MSG_RESULT([FIONBIO],[1],[Defined to 1 if using FIONBIO])
 	    ;;
 	*)
 	    AC_MSG_RESULT([O_NONBLOCK])
@@ -2339,15 +2365,16 @@ AC_DEFUN([SC_TCL_LINK_LIBS],[
     #	special considerations:
     #	1. Use "connect" and "accept" to check for -lsocket, and
     #	   "gethostbyname" to check for -lnsl.
-    #	2. Use each function name only once:  can't redo a check because
-    #	   autoconf caches the results of the last check and won't redo it.
+    #	2. Use each function name only once:  cannot redo a check because
+    #	   autoconf caches the results of the last check and will NOT redo
+    #	   it (unless you unset the cache value, which is a pain).
     #	3. Use -lnsl and -lsocket only if they supply procedures that
-    #	   aren't already present in the normal libraries.  This is because
-    #	   IRIX 5.2 has libraries, but they aren't needed and they're
+    #	   are NOT already present in the normal libraries. This is because
+    #	   IRIX 5.2 has libraries, but they are NOT needed and they are
     #	   bogus:  they goof up name resolution if used.
-    #	4. On some SVR4 systems, can't use -lsocket without -lnsl too.
+    #	4. On some SVR4 systems, cannot use -lsocket without -lnsl too.
     #	   To get around this problem, check for both libraries together
-    #	   if -lsocket doesn't work by itself.
+    #	   if -lsocket does NOT work by itself.
     #--------------------------------------------------------------------
 
     tcl_checkBoth=0
@@ -2364,8 +2391,8 @@ AC_DEFUN([SC_TCL_LINK_LIBS],[
     AC_CHECK_FUNC([gethostbyname], [], [AC_CHECK_LIB([nsl], [gethostbyname],
 	    [LIBS="$LIBS -lnsl"])])
     
-    # Don't perform the eval of the libraries here because DL_LIBS
-    # won't be set until we call SC_CONFIG_CFLAGS
+    # Do NOT perform the eval of the libraries here because DL_LIBS
+    # wo NOT be set until we call SC_CONFIG_CFLAGS
 
     TCL_LIBS='${DL_LIBS} ${LIBS} ${MATH_LIBS}'
     AC_SUBST([TCL_LIBS])
