@@ -17,5 +17,7 @@ compiler:
   - clang
   - gcc
 
+after_failure: cat config.log
+
 # Only run tests after success
 after_success: pwd && make test
