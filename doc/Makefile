@@ -16,7 +16,7 @@ clean:
 
 test:
 
-distclean: clean
+distclean-local: clean
 	rm -f macports.conf base.mtree macosx.mtree prefix.mtree pubkeys.conf
 
 %.1.gz: %.1
