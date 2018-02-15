@@ -12,7 +12,7 @@ ifneq ($(MAKECMDGOALS),distclean)
 include ../Mk/macports.autoconf.mk
 endif
 
-all: ${MAN1:.1=.1.gz} ${MAN5:.5=.5.gz} ${MAN7:.7=.7.gz}
+all all-local: ${MAN1:.1=.1.gz} ${MAN5:.5=.5.gz} ${MAN7:.7=.7.gz}
 
 clean:
 	rm -f *.{1,5,7}.gz

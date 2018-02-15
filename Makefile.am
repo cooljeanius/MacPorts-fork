@@ -7,7 +7,8 @@ PATH		= @PATH_CLEANED@
 SUBDIR		= doc src tests
 DISTDIR		= dist
 DISTVER		=
-DISTTAG		= release_${subst .,_,${DISTVER}}
+@ifGNUmake@DISTTAG = release_${subst .,_,${DISTVER}}
+@ifnGNUmake@DISTTAG = release_${DISTVER}
 DISTNAME	= MacPorts-${DISTVER}
 DISTARCTAG	= ${DISTTAG}-archive
 DISTARCNAME	= ${DISTNAME}-archive
@@ -18,13 +19,13 @@ TCLDOC		= @TCLDOC@
 include Mk/macports.autoconf.mk.am
 
 
-all:: Mk/macports.autoconf.mk
+all_hardcoded:: Mk/macports.autoconf.mk
 
 Mk/macports.autoconf.mk: Mk/macports.autoconf.mk.in src/config.h.in Makefile.in config.status
 	./config.status
 	${MAKE} clean
 
-config.status: configure
+regen_config_dot_status: configure
 	@if test -f ./config.status ; then	\
 		set -x ;						\
 		./config.status --recheck ;		\
@@ -32,6 +33,7 @@ config.status: configure
 		set -x ;						\
 		echo "Source tree not configured. Use ./configure" ; \
 	fi
+.PHONY: regen_config_dot_status
 
 include Mk/macports.subdir.mk
 
@@ -40,72 +42,72 @@ install::
 	$(INSTALL) -o ${DSTUSR} -g ${DSTGRP} -m 444 setupenv.bash  $(DESTDIR)${datadir}/macports/
 	$(INSTALL) -o ${DSTUSR} -g ${DSTGRP} -m 444 macports-pubkey.pem  $(DESTDIR)${datadir}/macports/
 # Only run these scripts when not building in a destroot
-ifeq ($(DESTDIR),)
-# create run user if it does not exist
-	@if test -n "${DSCL}" -a -n "${DSEDITGROUP}" ; then \
-        if ! ${DSCL} -q . -read /Groups/${RUNUSR} > /dev/null 2>&1 ; then \
-            if test `id -u` -eq 0; then \
-                echo "Creating group \"${RUNUSR}\"" ; \
-                ${DSEDITGROUP} -q -o create ${RUNUSR} ; \
-            else \
-                echo "Not creating group \"${RUNUSR}\" (not root)" ; \
-            fi ; \
-        fi ; \
-        if ! ${DSCL} -q . -list /Users/${RUNUSR} > /dev/null 2>&1 ; then \
-            if test `id -u` -eq 0; then \
-                echo "Creating user \"${RUNUSR}\"" ; \
-                NEXTUID=501; \
-                while test -n "`${DSCL} -q /Search -search /Users UniqueID $$NEXTUID`"; do \
-                    let "NEXTUID=NEXTUID+1"; \
-                done; \
-                ${DSCL} -q . -create /Users/${RUNUSR} UniqueID $$NEXTUID ; \
-                \
-                ${DSCL} -q . -delete /Users/${RUNUSR} AuthenticationAuthority ; \
-                ${DSCL} -q . -delete /Users/${RUNUSR} PasswordPolicyOptions ; \
-                ${DSCL} -q . -delete /Users/${RUNUSR} dsAttrTypeNative:KerberosKeys ; \
-                ${DSCL} -q . -delete /Users/${RUNUSR} dsAttrTypeNative:ShadowHashData ; \
-                \
-                ${DSCL} -q . -create /Users/${RUNUSR} RealName MacPorts ; \
-                ${DSCL} -q . -create /Users/${RUNUSR} Password \* ; \
-                ${DSCL} -q . -create /Users/${RUNUSR} PrimaryGroupID $$(${DSCL} -q . -read /Groups/${RUNUSR} PrimaryGroupID | /usr/bin/awk '{print $$2}') ; \
-                ${DSCL} -q . -create /Users/${RUNUSR} NFSHomeDirectory ${localstatedir}/macports/home ; \
-                ${DSCL} -q . -create /Users/${RUNUSR} UserShell /usr/bin/false ; \
-            else \
-                echo "Not creating user \"${RUNUSR}\" (not root)" ; \
-            fi ; \
-        fi ; \
-        if test "$$(${DSCL} -q . -read /Users/${RUNUSR} NFSHomeDirectory)" = "NFSHomeDirectory: /var/empty" ; then \
-            if test `id -u` -eq 0; then \
-                echo "Updating home directory location for user \"${RUNUSR}\"" ; \
-                ${DSCL} -q . -create /Users/${RUNUSR} NFSHomeDirectory ${localstatedir}/macports/home ; \
-            else \
-                echo "Not updating home directory location for user \"${RUNUSR}\" (not root)" ; \
-            fi ; \
-        fi ; \
-        if test `sw_vers -productVersion | /usr/bin/awk -F . '{print $$2}'` -eq 4 -a `id -u` -eq 0; then \
-            GID=`${DSCL} -q . -read /Groups/${RUNUSR} PrimaryGroupID | /usr/bin/awk '{print $$2}'` ; \
-            if test "`${DSCL} -q . -read /Users/${RUNUSR} PrimaryGroupID 2>/dev/null | /usr/bin/awk '{print $$2}'`" != "$$GID"; then \
-                echo "Fixing PrimaryGroupID for user \"${RUNUSR}\"" ; \
-                ${DSCL} -q . -create /Users/${RUNUSR} PrimaryGroupID $$GID ; \
-                ${DSCL} -q . -create /Users/${RUNUSR} RealName MacPorts ; \
-            fi ; \
-        fi ; \
-    else \
-        echo "Cannot find ${DSCL} / ${DSEDITGROUP}, not creating user \"${RUNUSR}\"" ; \
-    fi
-# Add [default] tag to the central MacPorts repository, if it has not
-# already been added
-	$(TCLSH) src/upgrade_sources_conf_default.tcl "${prefix}"
-# Convert image directories (and direct mode installs) to image archives
-	$(TCLSH) src/images_to_archives.tcl "${macports_tcl_dir}"
-endif
-ifndef SELFUPDATING
-	@echo ""; echo "Congratulations, you have successfully installed the MacPorts system. To get the Portfiles and update the system, add ${prefix}/bin to your PATH and run:"; echo ""
-	@echo "sudo port -v selfupdate"; echo ""
-	@echo "Please read \"man port\", the MacPorts guide at http://guide.macports.org/ and Wiki at https://trac.macports.org/ for full documentation."; echo ""
-else
-	@echo ""; echo "Congratulations, you have successfully upgraded the MacPorts system."; echo ""
-endif
+@ifGNUmake@ifeq ($(DESTDIR),)
+@ifGNUmake@# create run user if it does not exist
+@ifGNUmake@	@if test -n "${DSCL}" -a -n "${DSEDITGROUP}" ; then \
+@ifGNUmake@        if ! ${DSCL} -q . -read /Groups/${RUNUSR} > /dev/null 2>&1 ; then \
+@ifGNUmake@            if test `id -u` -eq 0; then \
+@ifGNUmake@                echo "Creating group \"${RUNUSR}\"" ; \
+@ifGNUmake@                ${DSEDITGROUP} -q -o create ${RUNUSR} ; \
+@ifGNUmake@            else \
+@ifGNUmake@                echo "Not creating group \"${RUNUSR}\" (not root)" ; \
+@ifGNUmake@            fi ; \
+@ifGNUmake@        fi ; \
+@ifGNUmake@        if ! ${DSCL} -q . -list /Users/${RUNUSR} > /dev/null 2>&1 ; then \
+@ifGNUmake@            if test `id -u` -eq 0; then \
+@ifGNUmake@                echo "Creating user \"${RUNUSR}\"" ; \
+@ifGNUmake@                NEXTUID=501; \
+@ifGNUmake@                while test -n "`${DSCL} -q /Search -search /Users UniqueID $$NEXTUID`"; do \
+@ifGNUmake@                    let "NEXTUID=NEXTUID+1"; \
+@ifGNUmake@                done; \
+@ifGNUmake@                ${DSCL} -q . -create /Users/${RUNUSR} UniqueID $$NEXTUID ; \
+@ifGNUmake@                \
+@ifGNUmake@                ${DSCL} -q . -delete /Users/${RUNUSR} AuthenticationAuthority ; \
+@ifGNUmake@                ${DSCL} -q . -delete /Users/${RUNUSR} PasswordPolicyOptions ; \
+@ifGNUmake@                ${DSCL} -q . -delete /Users/${RUNUSR} dsAttrTypeNative:KerberosKeys ; \
+@ifGNUmake@                ${DSCL} -q . -delete /Users/${RUNUSR} dsAttrTypeNative:ShadowHashData ; \
+@ifGNUmake@                \
+@ifGNUmake@                ${DSCL} -q . -create /Users/${RUNUSR} RealName MacPorts ; \
+@ifGNUmake@                ${DSCL} -q . -create /Users/${RUNUSR} Password \* ; \
+@ifGNUmake@                ${DSCL} -q . -create /Users/${RUNUSR} PrimaryGroupID $$(${DSCL} -q . -read /Groups/${RUNUSR} PrimaryGroupID | /usr/bin/awk '{print $$2}') ; \
+@ifGNUmake@                ${DSCL} -q . -create /Users/${RUNUSR} NFSHomeDirectory ${localstatedir}/macports/home ; \
+@ifGNUmake@                ${DSCL} -q . -create /Users/${RUNUSR} UserShell /usr/bin/false ; \
+@ifGNUmake@            else \
+@ifGNUmake@                echo "Not creating user \"${RUNUSR}\" (not root)" ; \
+@ifGNUmake@            fi ; \
+@ifGNUmake@        fi ; \
+@ifGNUmake@        if test "$$(${DSCL} -q . -read /Users/${RUNUSR} NFSHomeDirectory)" = "NFSHomeDirectory: /var/empty" ; then \
+@ifGNUmake@            if test `id -u` -eq 0; then \
+@ifGNUmake@                echo "Updating home directory location for user \"${RUNUSR}\"" ; \
+@ifGNUmake@                ${DSCL} -q . -create /Users/${RUNUSR} NFSHomeDirectory ${localstatedir}/macports/home ; \
+@ifGNUmake@            else \
+@ifGNUmake@                echo "Not updating home directory location for user \"${RUNUSR}\" (not root)" ; \
+@ifGNUmake@            fi ; \
+@ifGNUmake@        fi ; \
+@ifGNUmake@        if test `sw_vers -productVersion | /usr/bin/awk -F . '{print $$2}'` -eq 4 -a `id -u` -eq 0; then \
+@ifGNUmake@            GID=`${DSCL} -q . -read /Groups/${RUNUSR} PrimaryGroupID | /usr/bin/awk '{print $$2}'` ; \
+@ifGNUmake@            if test "`${DSCL} -q . -read /Users/${RUNUSR} PrimaryGroupID 2>/dev/null | /usr/bin/awk '{print $$2}'`" != "$$GID"; then \
+@ifGNUmake@                echo "Fixing PrimaryGroupID for user \"${RUNUSR}\"" ; \
+@ifGNUmake@                ${DSCL} -q . -create /Users/${RUNUSR} PrimaryGroupID $$GID ; \
+@ifGNUmake@                ${DSCL} -q . -create /Users/${RUNUSR} RealName MacPorts ; \
+@ifGNUmake@            fi ; \
+@ifGNUmake@        fi ; \
+@ifGNUmake@    else \
+@ifGNUmake@        echo "Cannot find ${DSCL} / ${DSEDITGROUP}, not creating user \"${RUNUSR}\"" ; \
+@ifGNUmake@    fi
+@ifGNUmake@# Add [default] tag to the central MacPorts repository, if it has not
+@ifGNUmake@# already been added
+@ifGNUmake@	$(TCLSH) src/upgrade_sources_conf_default.tcl "${prefix}"
+@ifGNUmake@# Convert image directories (and direct mode installs) to image archives
+@ifGNUmake@	$(TCLSH) src/images_to_archives.tcl "${macports_tcl_dir}"
+@ifGNUmake@endif
+@ifGNUmake@ifndef SELFUPDATING
+@ifGNUmake@	@echo ""; echo "Congratulations, you have successfully installed the MacPorts system. To get the Portfiles and update the system, add ${prefix}/bin to your PATH and run:"; echo ""
+@ifGNUmake@	@echo "sudo port -v selfupdate"; echo ""
+@ifGNUmake@	@echo "Please read \"man port\", the MacPorts guide at http://guide.macports.org/ and Wiki at https://trac.macports.org/ for full documentation."; echo ""
+@ifGNUmake@else
+@ifGNUmake@	@echo ""; echo "Congratulations, you have successfully upgraded the MacPorts system."; echo ""
+@ifGNUmake@endif
 
 group::
 	@echo "creating a macports group..." && sudo dseditgroup -o create -n . macports && echo "done! use './configure --with-install-group=macports --with-shared-directory' if you have not done so already"

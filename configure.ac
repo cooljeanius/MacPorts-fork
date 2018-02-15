@@ -31,7 +31,7 @@ fi
 AC_MSG_CHECKING([MacPorts version])
 MACPORTS_VERSION=MACPORTS_VERSION_MACRO
 AC_MSG_RESULT([${MACPORTS_VERSION}])
-AC_SUBST([MACPORTS_VERSION])
+AC_SUBST([MACPORTS_VERSION])dnl
 
 # Check user PATH for MP paths, and remove as necessary.
 dnl# I would like to remove this macro, but removing it breaks the build...
@@ -57,7 +57,7 @@ fi
 
 AC_PATH_PROG([SW_VERS],[sw_vers])
 AC_PATH_PROG([DEFAULTS],[defaults])
-AC_PATH_PROG([XCODE_SELECT],[xcode-select])
+AC_PATH_PROG([XCODE_SELECT],[xcode-select])dnl
 
 if test "x${SW_VERS}" != "x"; then
   AC_MSG_CHECKING([Mac OS X version])
@@ -94,7 +94,7 @@ if test -z "${DEVELOPER_DIR}" -o ! -d "${DEVELOPER_DIR}" ; then
     fi
 fi
 AC_MSG_RESULT([${DEVELOPER_DIR}])
-AC_SUBST([DEVELOPER_DIR])
+AC_SUBST([DEVELOPER_DIR])dnl
 
 case "${DEVELOPER_DIR}" in
   *Xcode.app/Contents/Developer)
@@ -166,7 +166,6 @@ PKG_PROG_PKG_CONFIG
 
 dnl# AX_* macros are from the autoconf-archive package
 AX_PTHREAD
-AX_PROG_JAVAC
 AX_PROG_PERL_VERSION([5.12])
 AX_PROG_TCL([8.4])
 AX_CHECK_GNU_MAKE
@@ -189,8 +188,7 @@ XORG_WITH_DOXYGEN
 if test "x${PERL}" = "x"; then
   XORG_WITH_PERL
 else
-  test ! -z "${PERL}"
-  export PERL
+  test ! -z "${PERL}" && export PERL
   AC_SUBST([PERL])
 fi
 XORG_ENABLE_UNIT_TESTS
@@ -200,7 +198,9 @@ XORG_LD_WRAP
 dnl# AC_BAKEFILE_* macros are from the bakefile package
 AC_BAKEFILE_PROG_MWCC
 AC_BAKEFILE_PROG_MWCXX
-AC_BAKEFILE_METROWERKS_EXTO
+if test "x`whoami`" = "xroot"; then
+  test -d ~/.ccache && test -w ~/.ccache && AC_BAKEFILE_METROWERKS_EXTO
+fi
 AC_BAKEFILE_GNUMAKE
 
 dnl# checks for programs without specifically-crafted AC_* macros
@@ -268,9 +268,9 @@ AC_PATH_PROG([XARGS],[xargs],[])
 AC_PATH_PROG([XCODEBUILD],[xcodebuild],[])
 AC_PATH_PROG([XCRUN],[xcrun],[])
 AC_PATH_PROG([XZ],[xz],[])
-AC_PATH_PROG([ZIP],[zip])
+AC_PATH_PROG([ZIP],[zip])dnl
 
-AC_CHECK_PROG([HAVE_LAUNCHD],[launchd],[yes],[])
+AC_CHECK_PROG([HAVE_LAUNCHD],[launchd],[yes],[])dnl
 
 # Define some precious variables allowing user to override PATH for
 # some programs
@@ -290,7 +290,7 @@ AC_ARG_VAR([SWIG],[path to swig command])
 AC_ARG_VAR([TCLSH],[path to tclsh command])
 AC_ARG_VAR([TAR],[path to tar command])
 AC_ARG_VAR([XAR],[path to xar command])
-AC_ARG_VAR([XZ],[path to xz command])
+AC_ARG_VAR([XZ],[path to xz command])dnl
 
 if test "x${MTREE}" = "x"; then
     AC_MSG_ERROR([mtree not found; you can get a copy from http://opensource.apple.com/source/file_cmds/file_cmds-220.7/])
@@ -306,8 +306,8 @@ if test x${GCC} = xyes; then
 	CFLAGS_QUICHEEATERS='-Wextra -Wall'
 	CFLAGS_PEDANTIC='-pedantic'
 fi
-AC_SUBST([CFLAGS_QUICHEEATERS])
-AC_SUBST([CFLAGS_PEDANTIC])
+AC_SUBST([CFLAGS_QUICHEEATERS])dnl
+AC_SUBST([CFLAGS_PEDANTIC])dnl
 MP_WERROR
 
 MP_COMPILER_ATTRIBUTE_UNUSED
@@ -339,7 +339,7 @@ MP_OBJC_FOUNDATION
 
 MP_PROG_DAEMONDO
 
-AC_SUBST([EXTRA_PROGS])
+AC_SUBST([EXTRA_PROGS])dnl
 
 # set default ports-directory
 PORTS_DIR_DEFAULT=`pwd | sed -e "s/base/ports/"`
@@ -347,10 +347,10 @@ PORTS_DIR_DEFAULT=`pwd | sed -e "s/base/ports/"`
 # Check for paths
 AC_PREFIX_DEFAULT([/opt/local])
 AC_ARG_WITH([unsupported-prefix],
-		[AS_HELP_STRING([--with-unsupported-prefix],
-		[Acknowledge that you accept the consequences of using an unsupported prefix.])],
-		[with_unsupported_prefix=${withval}],
-		[with_unsupported_prefix=no])
+	    [AS_HELP_STRING([--with-unsupported-prefix],
+	                    [Acknowledge that you accept the consequences of using an unsupported prefix.])],
+	    [with_unsupported_prefix=${withval}],
+	    [with_unsupported_prefix=no])
 if test x${prefix} = x/usr/local -o x${prefix} = x/usr && test x${with_unsupported_prefix} != xyes; then
     AC_MSG_ERROR([Installing MacPorts into ${prefix} is not supported. If \
 you understand this and wish to do so anyway, pass \
@@ -377,8 +377,7 @@ MP_PATH_FRAMEWORKS
 MP_UNIVERSAL_OPTIONS
 
 # Checks for libraries.
-# FIXME: Replace `main' with a function in `-ltcl':
-AC_CHECK_LIB([tcl],[main])
+AC_CHECK_LIB([tcl],[Tcl_InitStubs])dnl
 
 # Check for standard header files.
 dnl# AC_HEADER_STDC is no longer needed by itself, as it automatically gets
@@ -431,7 +430,7 @@ AC_CHECK_ALIGNOF([long])
 AC_CHECK_SIZEOF([uint8_t])
 AC_CHECK_ALIGNOF([uint8_t])
 AC_CHECK_SIZEOF([uint32_t])
-AC_CHECK_ALIGNOF([uint32_t])
+AC_CHECK_ALIGNOF([uint32_t])dnl
 
 # Checks for library functions.
 AC_FUNC_CHOWN
@@ -448,15 +447,20 @@ AC_CHECK_FUNCS([OSAtomicCompareAndSwap32 OSAtomicCompareAndSwap64 \
                 select setenv setmode socket strcasecmp strchr strdup \
                 strerror strlcat strlcpy strncasecmp strrchr strstr \
                 strtol strtoul sysctlbyname system utime])
-AC_SUBST([ac_cv_func_strlcat])
+AC_SUBST([ac_cv_func_strlcat])dnl
 
 MP_CHECK_READLINK_IS_P1003_1A
 
 # Check for md5 implementation
-AC_CHECK_HEADER([CommonCrypto/CommonDigest.h],[AC_DEFINE([HAVE_COMMONCRYPTO_COMMONDIGEST_H],[1],[Define if CommonCrypto is available.])],[MP_LIB_MD5])
+AC_CHECK_HEADER([CommonCrypto/CommonDigest.h],
+                [AC_DEFINE([HAVE_COMMONCRYPTO_COMMONDIGEST_H],[1],
+                           [Define if CommonCrypto is available.])],
+                [MP_LIB_MD5])dnl
 
 # Check for readline
-AC_ARG_ENABLE([readline],[AS_HELP_STRING([--enable-readline],[Enable addition of readline support, if readline present.])],
+AC_ARG_ENABLE([readline],
+              [AS_HELP_STRING([--enable-readline],
+                              [Enable addition of readline support, if readline present.])],
 [
 	AC_CHECK_LIB([readline],[readline],[
 				 READLINE_LIBS=-lreadline
@@ -468,15 +472,17 @@ AC_ARG_ENABLE([readline],[AS_HELP_STRING([--enable-readline],[Enable addition of
 	#if HAVE_READLINE_READLINE_H
 	# include <readline/readline.h>
 	#else
-	# waring this conftest expects <readline/readline.h> to be included
+	# if defined(__GNUC__) && !defined(__STRICT_ANSI__)
+	#  waring "This conftest expects <readline/readline.h> to be included."
+	# endif /* __GNUC__ && !__STRICT_ANSI__ */
 	#endif /* HAVE_READLINE_READLINE_H */
 	])
 ])
-AC_SUBST([READLINE_LIBS])
+AC_SUBST([READLINE_LIBS])dnl
 
 # Lowest non-system-reserved uid and gid (Apple claims <500)
-AC_DEFINE([MIN_USABLE_UID],[500],[Lowest non-system-reserved UID.])
-AC_DEFINE([MIN_USABLE_GID],[500],[Lowest non-system-reserved GID.])
+AC_DEFINE([MIN_USABLE_UID],[500],[Lowest non-system-reserved UID.])dnl
+AC_DEFINE([MIN_USABLE_GID],[500],[Lowest non-system-reserved GID.])dnl
 
 # Load tclConfig.sh
 SC_PATH_TCLCONFIG
@@ -502,14 +508,15 @@ MP_TCL_THREAD_SUPPORT
 MP_LIBCURL_FLAGS
 LIBCURL_CHECK_CONFIG
 AX_LIB_CURL
-AC_CHECK_HEADERS([curl/curl.h curl/curlrules.h])
+AC_CHECK_HEADERS([curl/curl.h curl/curlrules.h])dnl
 
 ## sqlite3
 MP_SQLITE3_FLAGS
 
 MP_CHECK_SQLITE_VERSION([3003011])
 if test "x${mp_sqlite_version_ge_3003011}" = "xno"; then
-	AC_DEFINE([sqlite3_prepare_v2],[sqlite3_prepare],[define sqlite3_prepare to sqlite_prepare_v2 if the latter is not available])
+  AC_DEFINE([sqlite3_prepare_v2],[sqlite3_prepare],
+            [define sqlite3_prepare to sqlite_prepare_v2 if the latter is not available])
 fi
 
 # Determine if we need to install some bundled packages
@@ -517,10 +524,10 @@ OUR_INCLUDED_PACKAGES=""
 
 ## Thread package.
 AC_ARG_WITH([included-tclthread],
-		[AS_HELP_STRING([--with-included-tclthread],
-			[install included Thread package.])],
-		[with_included_tclthread=${withval}],
-		[with_included_tclthread="unspecified"])
+            [AS_HELP_STRING([--with-included-tclthread],
+                            [install included Thread package.])],
+            [with_included_tclthread=${withval}],
+            [with_included_tclthread="unspecified"])
 
 # Check if thread package is already installed.
 if test "x${with_included_tclthread}" = "xunspecified" ; then
@@ -548,7 +555,7 @@ AH_TEMPLATE([TRACE_SDK],[SDK for SDK redirect in tracelib])
 AC_ARG_WITH([trace-sdk],
 	[AS_HELP_STRING([--with-trace-sdk=SDK],
 		[SDK for redirection in trace lib (for example MacOSX10.4u.sdk)])],
-	[test -d ${DEVELOPER_DIR}/SDKs/${withval} && AC_DEFINE_UNQUOTED([TRACE_SDK],["${withval}"])],[])
+	[test -d ${DEVELOPER_DIR}/SDKs/${withval} && AC_DEFINE_UNQUOTED([TRACE_SDK],["${withval}"])],[])dnl
 
 # Allows building of shared libraries
 SC_ENABLE_SHARED
@@ -580,18 +587,18 @@ STLIB_LD=${TCL_STLIB_LD}
 SHLIB_CFLAGS=${TCL_SHLIB_CFLAGS}
 SHLIB_SUFFIX=${TCL_SHLIB_SUFFIX}
 
-AC_SUBST([AM_CPPFLAGS])
-AC_SUBST([INCLUDES])
-AC_SUBST([PATHCONF])
-AC_SUBST([STLIB_LD])
-AC_SUBST([SHLIB_LD])
-AC_SUBST([SHLIB_CFLAGS])
-AC_SUBST([SHLIB_LDFLAGS])
-AC_SUBST([SHLIB_SUFFIX])
-AC_SUBST([TCL_DEFS])
-AC_SUBST([TCL_STUB_LIB_SPEC])
-AC_SUBST([TCL_CC])
-AC_SUBST([OUR_INCLUDED_PACKAGES])
+AC_SUBST([AM_CPPFLAGS])dnl
+AC_SUBST([INCLUDES])dnl
+AC_SUBST([PATHCONF])dnl
+AC_SUBST([STLIB_LD])dnl
+AC_SUBST([SHLIB_LD])dnl
+AC_SUBST([SHLIB_CFLAGS])dnl
+AC_SUBST([SHLIB_LDFLAGS])dnl
+AC_SUBST([SHLIB_SUFFIX])dnl
+AC_SUBST([TCL_DEFS])dnl
+AC_SUBST([TCL_STUB_LIB_SPEC])dnl
+AC_SUBST([TCL_CC])dnl
+AC_SUBST([OUR_INCLUDED_PACKAGES])dnl
 
 # misc variables that need to be expanded for substitution into tcl
 
@@ -614,7 +621,7 @@ eval "localstatedir_expanded=${localstatedir}"
 AC_SUBST([localstatedir_expanded])
 eval "macports_tcl_dir=${datadir}/macports/Tcl"
 eval "macports_tcl_dir=${macports_tcl_dir}"
-AC_SUBST([macports_tcl_dir])
+AC_SUBST([macports_tcl_dir])dnl
 
 prefix=${oldprefix}
 
@@ -625,6 +632,7 @@ SC_CONFIG_MANPAGES
 # Output
 AC_CONFIG_FILES([Doxyfile
 		 Makefile
+		 Makefile_orig
 		 Mk/macports.autoconf.mk
 		 doc/base.mtree
 		 doc/prefix.mtree
@@ -632,18 +640,20 @@ AC_CONFIG_FILES([Doxyfile
 		 doc/macports.conf
 		 doc/pubkeys.conf
 		 src/Makefile
+		 src/Makefile_orig
 		 src/cregistry/Makefile
 		 src/machista1.0/Makefile
+		 src/machista1.0/Makefile_orig
 	 	 src/macports1.0/macports_autoconf.tcl
 	 	 src/port1.0/port_autoconf.tcl
 		 src/registry2.0/registry_autoconf.tcl
 		 src/programs/Makefile
 		 src/macports1.0/macports_fastload.tcl
-		 setupenv.bash])
+		 setupenv.bash])dnl
 
 dnl# Things removed from output files:
 dnl# portmgr/freebsd/Makefile (not a regular "makefile")
 
-AC_CONFIG_FILES([src/pkg_mkindex.sh],[chmod +x src/pkg_mkindex.sh])
+AC_CONFIG_FILES([src/pkg_mkindex.sh],[chmod +x src/pkg_mkindex.sh])dnl
 
 AC_OUTPUT

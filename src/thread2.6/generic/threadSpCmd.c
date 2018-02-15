@@ -768,7 +768,12 @@ ThreadEvalObjCmd(dummy, interp, objc, objv)
 
     if (ret == TCL_ERROR) {
         char msg[32 + TCL_INTEGER_SPACE];   
+#ifdef HAVE_STRUCT_TCL_INTERP_ERRORLINE
         sprintf(msg, "\n    (\"eval\" body line %d)", interp->errorLine);
+#else
+		snprintf(msg, sizeof(msg), "\n    (\"eval\" body line %d)",
+				 interp->errorLineDontUse);
+#endif /* HAVE_STRUCT_TCL_INTERP_ERRORLINE */
         Tcl_AddObjErrorInfo(interp, msg, -1);
     }
 

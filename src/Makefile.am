@@ -9,7 +9,7 @@ TCLPKG=		@OUR_INCLUDED_PACKAGES@ \
 			machista1.0
 SUBDIR=		${TCLPKG} port programs
 
-all::
+all-local::
 
 distclean-local::
 	rm -f config.h

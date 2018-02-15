@@ -168,7 +168,7 @@ COMPILE		= $(CC) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(C
 # for the BINARIES that you specified above have already been done.
 #========================================================================
 
-all: binaries
+all-local: binaries
 
 #========================================================================
 # The binaries target builds executable programs, Windows .dll's, unix
@@ -183,7 +183,7 @@ libraries:
 
 doc:
 
-install-all: all install-binaries install-libraries install-doc
+install-all: all-local install-binaries install-libraries install-doc
 
 install-binaries: binaries install-lib-binaries install-bin-binaries
 

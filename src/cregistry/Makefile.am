@@ -7,9 +7,9 @@ RANLIB = @RANLIB@
 SQLEXT_NAME = macports.sqlext
 SQLEXT_OBJS = sqlext.o vercomp.o
 
-include ../../Mk/macports.autoconf.mk
+include ../../Mk/macports.autoconf.mk.am
 
-all:: ${STLIB_NAME} ${SQLEXT_NAME}
+all-local:: ${STLIB_NAME} ${SQLEXT_NAME}
 
 .c.o:
 	${CC} -c -DUSE_TCL_STUBS ${CFLAGS} ${CPPFLAGS} ${SHLIB_CFLAGS} $< -o $@
@@ -28,4 +28,4 @@ distclean-local:: clean-local
 
 test:
 
-install:: all
+install:: all-local

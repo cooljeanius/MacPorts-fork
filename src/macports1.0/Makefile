@@ -19,13 +19,13 @@ test::
 	${TCLSH} tests/macports_dlist.tcl
 	${TCLSH} tests/macports_util.tcl
 
-clean::
+clean-local::
 	rm -f $(OBJS) $(SHLIB_NAME)
 
-distclean:: clean
+distclean-local:: clean-local
 	rm -f macports_autoconf.tcl macports_fastload.tcl ${SHLIB_NAME}
 
-install:: all
+install_stuff:: all
 	$(INSTALL) -d -o ${DSTUSR} -g ${DSTGRP} -m ${DSTMODE} ${INSTALLDIR}
 
 	$(SILENT) set -x; for file in ${SRCS}; do \

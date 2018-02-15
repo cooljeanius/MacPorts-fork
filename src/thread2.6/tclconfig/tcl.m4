@@ -1389,7 +1389,8 @@ AC_DEFUN([TEA_CONFIG_CFLAGS],[
 	    ;;
 	Rhapsody-*|Darwin-*)
 	    SHLIB_CFLAGS="-fno-common"
-	    SHLIB_LD="cc -dynamiclib \${LDFLAGS}"
+	    SHLIB_LD="${CC} -dynamiclib \${LDFLAGS}"
+	    SHLIB_LD_ORIG="cc -dynamiclib \${LDFLAGS}"
 	    SHLIB_LD_LIBS='${LIBS}'
 	    SHLIB_SUFFIX=".dylib"
 	    DL_OBJS="tclLoadDyld.o"

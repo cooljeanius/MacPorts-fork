@@ -864,10 +864,10 @@ AC_DEFUN([SC_CONFIG_CFLAGS],[
     TCL_BUILD_EXP_FILE=""
     TCL_EXP_FILE=""
     m4_ifdef([AM_PROG_AR],[
-    # Not sure if AC_REQUIRE can be used here:
-    AM_PROG_AR
+      # Not sure if AC_REQUIRE can be used here, but I shall try:
+      AC_REQUIRE([AM_PROG_AR])
     ],[
-    AC_CHECK_PROG([AR],[ar],[ar])
+      AC_CHECK_PROG([AR],[ar],[ar])
     ])
     if test "x${AR}" = "x"; then
 	AC_MSG_ERROR([Required archive tool 'ar' not found on PATH.])

@@ -32,6 +32,8 @@ AC_EXEEXT
 AC_OBJEXT
 AC_USE_SYSTEM_EXTENSIONS
 AM_INIT_AUTOMAKE([foreign dejagnu no-installinfo -Wall])
+AM_MISSING_PROG([AUTOMAKE],[automake])
+AM_MISSING_PROG([AUTOMAKE_1_15],[automake-1.15])
 AM_MAINTAINER_MODE
 AC_SEARCH_LIBS([strerror],[cposix]) dnl# This used to be AC\_ISC\_POSIX
 AX_CHECK_GNU_MAKE
@@ -119,7 +121,7 @@ TEA_ADD_INCLUDES([])
 TEA_ADD_LIBS([${GDBM_LIBS}])
 TEA_ADD_CFLAGS([${GDBM_CFLAGS}])
 TEA_ADD_STUB_SOURCES([])
-TEA_ADD_TCL_SOURCES([lib/ttrace.tcl])
+TEA_ADD_TCL_SOURCES([lib/ttrace.tcl])dnl
 
 #--------------------------------------------------------------------
 # __CHANGE__
@@ -144,7 +146,7 @@ else
     CLEANFILES=""
     TEA_ADD_SOURCES([unix/threadUnix.c])
 fi
-AC_SUBST([CLEANFILES])
+AC_SUBST([CLEANFILES])dnl
 
 #--------------------------------------------------------------------
 # __CHANGE__
@@ -173,7 +175,7 @@ XORG_CHECK_MALLOC_ZERO
 XORG_CWARNFLAGS
 
 # Checks for library functions.
-AC_CHECK_FUNCS([ftime gettimeofday memset strchr strstr])
+AC_CHECK_FUNCS([ftime gettimeofday memset strchr strstr])dnl
 
 dnl#
 #--------------------------------------------------------------------
@@ -198,7 +200,7 @@ gl_THREADLIB
 
 TEA_ENABLE_SHARED
 LT_INIT([shared dlopen win32-dll])
-LT_LANG([C])
+LT_LANG([C])dnl
 
 #--------------------------------------------------------------------
 # This macro figures out what flags to use with the compiler/linker
@@ -215,8 +217,7 @@ TEA_CONFIG_CFLAGS
 TEA_ENABLE_SYMBOLS
 
 # Checks for libraries.
-# FIXME: Replace `main' with a function in `-ltcl':
-AC_CHECK_LIB([tcl],[main])
+AC_CHECK_LIB([tcl],[Tcl_InitStubs])
 AX_DLL_STRING
 
 #--------------------------------------------------------------------
@@ -227,7 +228,7 @@ AX_DLL_STRING
 # necessary.
 #--------------------------------------------------------------------
 
-AC_DEFINE([USE_TCL_STUBS],[1],[Defined to 1 if using Tcl stubs])
+AC_DEFINE([USE_TCL_STUBS],[1],[Defined to 1 if using Tcl stubs])dnl
 
 #--------------------------------------------------------------------
 # This macro generates a line to use when building a library. It
@@ -254,9 +255,9 @@ TEA_PROG_TCLSH
 # which require substituting th AC variables in.  Include these here.
 #--------------------------------------------------------------------
 
-AC_SUBST([OBJEXT])
-AC_SUBST([CYGPATH])
-AC_SUBST([INSTALLdir])
-AC_SUBST([PKGdir])
+AC_SUBST([OBJEXT])dnl
+AC_SUBST([CYGPATH])dnl
+AC_SUBST([INSTALLdir])dnl
+AC_SUBST([PKGdir])dnl
 AC_CONFIG_FILES([Makefile pkgIndex.tcl])
 AC_OUTPUT
