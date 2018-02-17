@@ -5,7 +5,7 @@ before_install:
 
 install:
   # Prerequisites
-  - "sudo apt-get install autotools-dev debhelper gobjc gobjc-multilib libgnustep-base-dev gnustep-core-devel sqlite libsqlite3-dev openssl libcurl4-openssl-dev curl tcl tcl-dev tcl-doc tclthread tclreadline freebsd-buildutils binutils libc6-dev perl doxygen swig2.0 cvs ed pax rlwrap"
+  - "sudo apt-get install autotools-dev debhelper gobjc gobjc++ gobjc-multilib gobjc++-multilib gobjc-4.6 libgnustep-base-dev gnustep-core-devel sqlite libsqlite3-dev openssl libcurl4-openssl-dev curl tcl tcl-dev tcl-doc tclthread tclreadline freebsd-buildutils binutils libc6-dev perl doxygen swig2.0 cvs ed pax rlwrap"
 
 # make sure mtree installed by freebsd-buildutils is in path, then check env
 before_script: export PATH=${PATH}:/usr/lib/freebsd && env | uniq | sort | uniq
