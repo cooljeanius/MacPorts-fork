@@ -7,3 +7,6 @@ install-sh linguist-vendored
 ltmain.sh linguist-vendored
 missing linguist-vendored
 test-driver linguist-vendored
+
+# Gnulib's git-merge-changelog driver:
+ChangeLog    merge=cl-merge
