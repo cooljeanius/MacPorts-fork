@@ -13,7 +13,7 @@ jobs:
 #     # 'Transformers::TravisCI::Scripts::Dependencies' dependencies are currently unsupported
 #     # 'compiler' was not transformed because there is no suitable equivalent in GitHub Actions
     - run: sudo apt-get update
-    - run: sudo apt-get install autotools-dev debhelper gobjc gobjc++ gobjc-multilib gobjc++-multilib gobjc-9 libgnustep-base-dev gnustep-core-devel sqlite libsqlite3-dev openssl libcurl4-openssl-dev curl tcl tcl-dev tcl-doc tclthread tclreadline freebsd-buildutils binutils libc6-dev perl doxygen swig cvs ed pax rlwrap
+    - run: sudo apt-get install autotools-dev debhelper gobjc gobjc++ gobjc-multilib gobjc++-multilib gobjc-9 libgnustep-base-dev gnustep-core-devel sqlite libsqlite3-dev openssl libcurl4-openssl-dev curl tcl tcl-dev tcl-doc tclthread tclreadline binutils libc6-dev perl doxygen swig cvs ed pax rlwrap
     - run: export PATH=${PATH}:/usr/lib/freebsd && env | uniq | sort | uniq
     - run: "./configure --with-objc-runtime=GNU --with-objc-foundation=GNU --enable-maintainer-mode --enable-symbols --enable-readline && make"
     - run: pwd && make test
