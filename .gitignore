@@ -40,3 +40,4 @@ src/port/portmirror
 src/programs/daemondo/Makefile
 tcldo*/*
 Makefile_orig
+.env.local
