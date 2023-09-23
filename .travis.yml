@@ -1,14 +1,16 @@
-language: C
+language: c
+os: linux
+dist: xenial
 
 before_install:
   - "sudo apt-get update"
 
 install:
   # Prerequisites
-  - "sudo apt-get install autotools-dev debhelper gobjc gobjc++ gobjc-multilib gobjc++-multilib gobjc-5 libgnustep-base-dev gnustep-core-devel sqlite libsqlite3-dev openssl libcurl4-openssl-dev curl tcl tcl-dev tcl-doc tclthread tclreadline freebsd-buildutils binutils libc6-dev perl doxygen swig2.0 cvs ed pax rlwrap"
+  - "sudo apt-get install autotools-dev debhelper gobjc gobjc++ gobjc-multilib gobjc++-multilib gobjc-5 libgnustep-base-dev gnustep-core-devel sqlite libsqlite3-dev openssl libcurl4-openssl-dev curl tcl tcl-dev tcl-doc tclthread tclreadline freebsd-buildutils binutils libc6-dev perl doxygen swig2.0 cvs ed pax rlwrap mtree-netbsd"
 
 # make sure mtree installed by freebsd-buildutils is in path, then check env
-before_script: export PATH=${PATH}:/usr/lib/freebsd && env | uniq | sort | uniq
+before_script: if test -d /usr/lib/freebsd; then export PATH=${PATH}:/usr/lib/freebsd && env | uniq | sort | uniq; else echo "missing /usr/lib/freebsd"; fi
 
 # Just try to build first
 script: ./configure --with-objc-runtime=GNU --with-objc-foundation=GNU --enable-maintainer-mode --enable-symbols --enable-readline && make
@@ -17,7 +19,7 @@ compiler:
   - clang
   - gcc
 
-after_failure: cat config.log
+after_failure: if test -e config.log; then cat config.log; else ls; fi
 
 # Only run tests after success
 after_success: pwd && make test
