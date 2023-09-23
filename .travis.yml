@@ -7,7 +7,7 @@ before_install:
 
 install:
   # Prerequisites
-  - "sudo apt-get install autotools-dev debhelper gobjc gobjc++ gobjc-multilib gobjc++-multilib gobjc-5 libgnustep-base-dev gnustep-core-devel sqlite libsqlite3-dev openssl libcurl4-openssl-dev curl tcl tcl-dev tcl-doc tcl-thread tcl-tclreadline freebsd-buildutils binutils libc6-dev perl doxygen swig2.0 cvs ed pax rlwrap clang"
+  - "sudo apt-get install autotools-dev debhelper gobjc gobjc++ gobjc-multilib gobjc++-multilib gobjc-5 libgnustep-base-dev gnustep-core-devel sqlite libsqlite3-dev openssl libcurl4-openssl-dev curl tcl tcl-dev tcl-doc tcl-thread tcl-tclreadline freebsd-buildutils binutils libc6-dev perl doxygen swig2.0 cvs ed pax rlwrap clang libobjc-5-dev"
 
 # make sure mtree installed by freebsd-buildutils is in path, then check env
 before_script: if test -d /usr/lib/freebsd; then export PATH=${PATH}:/usr/lib/freebsd && env | uniq | sort | uniq; else echo "missing /usr/lib/freebsd"; fi
