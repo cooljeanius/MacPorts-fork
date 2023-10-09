@@ -18,7 +18,7 @@ jobs:
     - run: "./configure --with-objc-runtime=GNU --with-objc-foundation=GNU --enable-maintainer-mode --enable-symbols --enable-readline && make"
     - run: pwd && make test
       if: "${{ success() }}"
-    - run: if test -e config.log; then cat config.log; fi
+    - run: if test -r config.log; then cat config.log && wc -l config.log; elif test -e config.log; then stat config.log; else ls -AR; fi
       if: "${{ failure() }}"
     strategy:
       matrix:
