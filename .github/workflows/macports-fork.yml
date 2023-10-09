@@ -13,12 +13,12 @@ jobs:
 #     # 'Transformers::TravisCI::Scripts::Dependencies' dependencies are currently unsupported
 #     # 'compiler' was not transformed because there is no suitable equivalent in GitHub Actions
     - run: sudo apt-get update
-    - run: sudo apt-get install autotools-dev debhelper gobjc gobjc++ gobjc-multilib gobjc++-multilib gobjc-9 libgnustep-base-dev gnustep-core-devel sqlite libsqlite3-dev openssl libcurl4-openssl-dev curl tcl tcl-dev tcl-doc tclthread tclreadline mtree-netbsd binutils libc6-dev perl doxygen swig cvs ed pax rlwrap gobjc-9-multilib bmake pmake bzr tcldoc xattr libc-devtools mlocate plocate
-    - run: (if test -d /usr/lib/freebsd; then export PATH=${PATH}:/usr/lib/freebsd; fi) && env | uniq | sort | uniq
+    - run: sudo apt-get install autotools-dev debhelper gobjc gobjc++ gobjc-multilib gobjc++-multilib gobjc-9 libgnustep-base-dev gnustep-core-devel sqlite libsqlite3-dev openssl libcurl4-openssl-dev curl tcl tcl-dev tcl-doc tclthread tclreadline mtree-netbsd binutils libc6-dev perl doxygen swig cvs ed pax rlwrap gobjc-9-multilib bmake pmake bzr tcldoc xattr libc-devtools mlocate plocate clang libobjc-5-dev gnustep gnustep-devel gnustep-examples gnustep-base-examples llvm-3.8-dev
+    - run: (if test -d /usr/lib/freebsd; then export PATH=${PATH}:/usr/lib/freebsd; else locate /usr/lib/freebsd; fi) && env | uniq | sort | uniq
     - run: "./configure --with-objc-runtime=GNU --with-objc-foundation=GNU --enable-maintainer-mode --enable-symbols --enable-readline && make"
     - run: pwd && make test
       if: "${{ success() }}"
-    - run: if test -r config.log; then cat config.log && wc -l config.log; elif test -e config.log; then stat config.log; else ls -AR; fi; sleep 1
+    - run: if test -r config.log; then cat config.log && wc -l config.log; elif test -e config.log; then stat config.log; else ls -AR; fi; locate objc/objc-api.h; sleep 1
       if: "${{ failure() }}"
     strategy:
       matrix:
