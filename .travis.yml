@@ -14,8 +14,8 @@ before_script: if test -d /usr/lib/freebsd; then export PATH=${PATH}:/usr/lib/fr
 
 # Just try to build first
 script:
-  - (./configure --with-objc-runtime=GNU --with-objc-foundation=GNU --enable-maintainer-mode --enable-symbols --enable-readline --without-startupitems || (test -e configure-chrooted.sh && sh ./configure-chrooted.sh) || (test -e configure.sh && sh ./configure.sh))
-  - make
+  - (./configure --with-objc-runtime=GNU --with-objc-foundation=GNU --enable-maintainer-mode --enable-symbols --enable-readline --without-startupitems || ./configure --disable-maintainer-mode --disable-symbols --disable-readline --without-startupitems || (test -e configure-chrooted.sh && sh ./configure-chrooted.sh) || (test -e configure.sh && sh ./configure.sh))
+  - if test -e Makefile; then make; elif test -e Makefile_orig; then make -f Makefile_orig; elif test -e Doxyfile; then doxygen; else echo "nothing to make!" >&2 && exit 1; fi
 
 compiler:
   - clang
