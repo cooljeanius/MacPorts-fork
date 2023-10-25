@@ -22,6 +22,7 @@ jobs:
     - run: if test -r config.log; then cat config.log && wc -l config.log; elif test -e config.log; then stat config.log; else ls -AR; fi; (echo "looking for objc/objc-api.h..." && (locate objc/objc-api.h || find / -name objc/objc-api.h || echo "not found!")); sleep 3
       if: "${{ failure() }}"
     strategy:
+      fail-fast: false
       matrix:
         compiler:
         - clang
