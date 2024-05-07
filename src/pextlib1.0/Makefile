@@ -13,9 +13,9 @@ include ../../Mk/macports.tea.mk
 CFLAGS+= ${CURL_CFLAGS} ${MD5_CFLAGS} ${READLINE_CFLAGS}
 LIBS+= ${CURL_LIBS} ${MD5_LIBS} ${READLINE_LIBS}
 
-clean::
+clean-local::
 	rm -f $(OBJS) $(SHLIB_NAME)
-distclean: clean
+distclean: clean-local
 
 .PHONY: test
 

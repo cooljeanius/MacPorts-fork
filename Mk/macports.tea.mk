@@ -1,6 +1,7 @@
 # $Id: macports.tea.mk 66305 2010-04-09 00:13:29Z raimue@macports.org $
 
-SUFFIXES = .m
+SUFFIXES = .m .c .o
+.SUFFIXES: .m .c .o
 
 .m.o:
 	${CC} -c -DUSE_TCL_STUBS -DTCL_NO_DEPRECATED ${OBJCFLAGS} ${CPPFLAGS} ${SHLIB_CFLAGS} $< -o $@
