@@ -239,7 +239,6 @@ HAVE_LAUNCHD = yes
 HDIUTIL = /usr/bin/hdiutil
 HG = /opt/sw/bin/hg
 IF_GNU_MAKE = 
-INCLUDES = -I.. -I. 
 INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_LIB = $(INSTALL_LIBRARY) $(LIB_FILE) $(LIB_INSTALL_DIR)/$(LIB_FILE)
@@ -618,6 +617,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile all-local
 installdirs:
+install: install-am
 install-exec: install-exec-am
 install-data: install-data-am
 uninstall: uninstall-am
@@ -752,7 +752,7 @@ distclean-local:: clean-local
 
 test:
 
-install:: all-local
+install-data-and-exec-local:: all-local
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

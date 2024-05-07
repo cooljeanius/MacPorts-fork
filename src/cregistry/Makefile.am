@@ -28,4 +28,4 @@ distclean-local:: clean-local
 
 test:
 
-install:: all-local
+install-data-and-exec-local:: all-local

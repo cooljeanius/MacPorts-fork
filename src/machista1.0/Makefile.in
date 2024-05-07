@@ -15,8 +15,6 @@
 @SET_MAKE@
 
 # $Id: macports.autoconf.mk.am 81642 2011-08-03 09:09:55Z jmr@macports.org $
-
-# $Id: macports.tea.mk 66305 2010-04-09 00:13:29Z raimue@macports.org $
 am__is_gnu_make = { \
   if test -z '$(MAKELEVEL)'; then \
     false; \
@@ -348,8 +346,8 @@ TEST_LOG_DRIVER = $(SHELL) $(top_srcdir)/test-driver
 TEST_LOG_COMPILE = $(TEST_LOG_COMPILER) $(AM_TEST_LOG_FLAGS) \
 	$(TEST_LOG_FLAGS)
 am__DIST_COMMON = $(srcdir)/../../Mk/macports.autoconf.mk.am \
-	$(srcdir)/../../Mk/macports.tea.mk $(srcdir)/Makefile.in \
-	$(srcdir)/Makefile_orig.in $(top_srcdir)/test-driver
+	$(srcdir)/Makefile.in $(srcdir)/Makefile_orig.in \
+	$(top_srcdir)/test-driver
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 VPATH = @srcdir@
 ACLOCAL = @ACLOCAL@
@@ -389,7 +387,7 @@ CODESIGN = @CODESIGN@
 CP = @CP@
 CPIO = @CPIO@
 CPP = @CPP@
-CPPFLAGS = @CPPFLAGS@ @DEFS@ @INCLUDES@ @TCL_INCLUDES@
+CPPFLAGS = @CPPFLAGS@ @DEFS@ @AM_CPPFLAGS@ @TCL_INCLUDES@
 CSCOPE = @CSCOPE@
 CTAGS = @CTAGS@
 CURL_CFLAGS = @CFLAGS_LIBCURL@
@@ -446,7 +444,6 @@ HAVE_LAUNCHD = @HAVE_LAUNCHD@
 HDIUTIL = @HDIUTIL@
 HG = @HG@
 IF_GNU_MAKE = @IF_GNU_MAKE@
-INCLUDES = @INCLUDES@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_LIB = @INSTALL_LIB@
@@ -702,12 +699,11 @@ SQLITE3_LIBS = @LDFLAGS_SQLITE3@
 mpconfigdir = @MPCONFIGDIR@
 portsdir = @PORTSDIR@
 SILENT = @
-SUFFIXES = .m
 all: all-am
 
 .SUFFIXES:
-.SUFFIXES: .m .c .log .o .test .test$(EXEEXT) .trs
-$(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am $(srcdir)/../../Mk/macports.autoconf.mk.am $(srcdir)/../../Mk/macports.tea.mk $(am__configure_deps)
+.SUFFIXES: .log .test .test$(EXEEXT) .trs
+$(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am $(srcdir)/../../Mk/macports.autoconf.mk.am $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
 	    *$$dep*) \
@@ -727,7 +723,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	    echo ' cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__maybe_remake_depfiles)'; \
 	    cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__maybe_remake_depfiles);; \
 	esac;
-$(srcdir)/../../Mk/macports.autoconf.mk.am $(srcdir)/../../Mk/macports.tea.mk $(am__empty):
+$(srcdir)/../../Mk/macports.autoconf.mk.am $(am__empty):
 
 $(top_builddir)/config.status: $(top_srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
@@ -994,7 +990,7 @@ distdir-am: $(DISTFILES)
 check-am: all-am
 	$(MAKE) $(AM_MAKEFLAGS) check-DEJAGNU check-TESTS
 check: check-am
-all-am: Makefile all-local
+all-am: Makefile
 installdirs:
 install: install-am
 install-exec: install-exec-am
@@ -1098,9 +1094,9 @@ uninstall-am:
 
 .MAKE: check-am install-am install-strip
 
-.PHONY: all all-am all-local check check-DEJAGNU check-TESTS check-am \
-	clean clean-generic clean-libtool clean-local cscopelist-am \
-	ctags-am distclean distclean-DEJAGNU distclean-generic \
+.PHONY: all all-am check check-DEJAGNU check-TESTS check-am clean \
+	clean-generic clean-libtool clean-local cscopelist-am ctags-am \
+	distclean distclean-DEJAGNU distclean-generic \
 	distclean-libtool distclean-local distdir dvi dvi-am html \
 	html-am info info-am install install-am install-data \
 	install-data-am install-dvi install-dvi-am install-exec \
@@ -1115,29 +1111,7 @@ uninstall-am:
 .PRECIOUS: Makefile
 
 
-.m.o:
-	${CC} -c -DUSE_TCL_STUBS -DTCL_NO_DEPRECATED ${OBJCFLAGS} ${CPPFLAGS} ${SHLIB_CFLAGS} $< -o $@
-
-.c.o:
-	${CC} -c -DUSE_TCL_STUBS -DTCL_NO_DEPRECATED ${CFLAGS} ${CPPFLAGS} ${SHLIB_CFLAGS} $< -o $@
-
-all-local:: ${SHLIB_NAME} pkgIndex.tcl
-
-$(SHLIB_NAME):: ${OBJS}
-	${SHLIB_LD} ${OBJS} -o ${SHLIB_NAME} ${TCL_STUB_LIB_SPEC} ${SHLIB_LDFLAGS} ${LIBS}
-
-pkgIndex.tcl: $(SHLIB_NAME)
-	$(SILENT) ../pkg_mkindex.sh . || ( rm -rf $@ && exit 1 )
-
-clean-local::
-	rm -f ${OBJS} ${SHLIB_NAME} so_locations pkgIndex.tcl
-
-distclean-local:: clean-local
-
-install-data-and-exec-local:: all-local
-	$(INSTALL) -d -o ${DSTUSR} -g ${DSTGRP} -m ${DSTMODE} ${INSTALLDIR}
-	$(INSTALL) -o ${DSTUSR} -g ${DSTGRP} -m 444 ${SHLIB_NAME} ${INSTALLDIR}
-	$(INSTALL) -o ${DSTUSR} -g ${DSTGRP} -m 444 pkgIndex.tcl ${INSTALLDIR}
+@ifGNUmake@include ../../Mk/macports.tea.mk
 
 ${SWIG_SRCS}:: ${SWIG_IFACE}
 @ifGNUmake@ifdef SWIG

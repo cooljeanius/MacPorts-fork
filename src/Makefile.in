@@ -255,7 +255,6 @@ HAVE_LAUNCHD = @HAVE_LAUNCHD@
 HDIUTIL = @HDIUTIL@
 HG = @HG@
 IF_GNU_MAKE = @IF_GNU_MAKE@
-INCLUDES = @INCLUDES@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_LIB = @INSTALL_LIB@
@@ -699,6 +698,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile config.h all-local
 installdirs:
+install: install-am
 install-exec: install-exec-am
 install-data: install-data-am
 uninstall: uninstall-am
@@ -825,7 +825,7 @@ test::
 
 .PHONY : all-local
 .PHONY : clean distclean
-.PHONY : install
+.PHONY : install-data-and-exec-local
 
 all-local::
 	@for subdir in $(SUBDIR); do\
@@ -845,7 +845,7 @@ test::
 		( cd $$subdir && $(MAKE) DIRPRFX=${DIRPRFX}$$subdir/ $@) || exit 1; \
 	done
 
-install::
+install-data-and-exec-local::
 	@for subdir in $(SUBDIR); do\
 		echo ===\> making $@ in ${DIRPRFX}$$subdir; \
 		( cd $$subdir && $(MAKE) DIRPRFX=${DIRPRFX}$$subdir/ $@) || exit 1; \
