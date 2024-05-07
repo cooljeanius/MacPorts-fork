@@ -100,7 +100,12 @@ AC_DEFUN([MP_OBJC_RUNTIME],[
 	if test x"${with_objc_runtime}" != x"no"; then
 	
 	# Check for common header, objc/objc.h
-	AC_CHECK_HEADERS([objc/objc.h], ,[AC_MSG_ERROR([Can't locate Objective C runtime headers])])
+	AC_CHECK_HEADERS([objc/objc.h],[],[AC_MSG_ERROR([Cannot locate Objective C runtime headers])])
+	
+	# Check for which header to use in a later conftest, objc/objc-api.h or objc/runtime.h
+	AC_CHECK_HEADERS([objc/objc-api.h],[AC_CHECK_HEADERS([objc/runtime.h])],
+	                 [AC_CHECK_HEADERS([objc/runtime.h],[],
+	                   [AC_MSG_ERROR([Cannot locate Objective C runtime headers])])])
 
 	# Save LIBS & OBJCFLAGS 
 	# depending on whether the cache is used,
@@ -124,6 +129,7 @@ AC_DEFUN([MP_OBJC_RUNTIME],[
 				AC_LANG_PROGRAM([
 						#include <objc/objc.h>
 						#include <objc/Object.h>
+						#include <stdio.h>
 					], [
 						Object *obj = @<:@Object alloc@:>@;
 						puts(@<:@obj name@:>@);
@@ -145,6 +151,7 @@ AC_DEFUN([MP_OBJC_RUNTIME],[
 					AC_LANG_PROGRAM([
 							#include <objc/objc.h>
 							#include <objc/Object.h>
+							#include <stdio.h>
 						], [
 							Object *obj = @<:@Object alloc@:>@;
 							puts(@<:@obj name@:>@);
@@ -181,7 +188,21 @@ AC_DEFUN([MP_OBJC_RUNTIME],[
 			AC_LINK_IFELSE([
 					AC_LANG_PROGRAM([
 							#include <objc/objc.h>
-							#include <objc/objc-api.h>
+							#ifdef HAVE_OBJC_OBJC_API_H
+							# include <objc/objc-api.h>
+							#else
+							# ifdef HAVE_OBJC_RUNTIME_H
+							#  include <objc/runtime.h>
+							# else
+							#  if defined(__GNUC__) && !defined(__STRICT_ANSI__)
+							#   warning "missing a needed header for this ObjC runtime check"
+							#  endif /* __GNUC__ && !__STRICT_ANSI__ */
+							# endif /* HAVE_OBJC_RUNTIME_H */
+							#endif /* HAVE_OBJC_OBJC_API_H */
+							#if defined(HAVE_OBJC_RUNTIME_H) && !defined(_OBJC_RUNTIME_H)
+							# include <objc/runtime.h>
+							#endif /* HAVE_OBJC_RUNTIME_H && !_OBJC_RUNTIME_H */
+							#include <stdio.h>
 						], [
 							id class = objc_lookUpClass("Object");
 							id obj = @<:@class alloc@:>@;
@@ -208,7 +229,21 @@ AC_DEFUN([MP_OBJC_RUNTIME],[
 			AC_LINK_IFELSE([
 					AC_LANG_PROGRAM([
 							#include <objc/objc.h>
-							#include <objc/objc-api.h>
+							#ifdef HAVE_OBJC_OBJC_API_H
+							# include <objc/objc-api.h>
+							#else
+							# ifdef HAVE_OBJC_RUNTIME_H
+							#  include <objc/runtime.h>
+							# else
+							#  if defined(__GNUC__) && !defined(__STRICT_ANSI__)
+							#   warning "missing a needed header for this ObjC runtime check"
+							#  endif /* __GNUC__ && !__STRICT_ANSI__ */
+							# endif /* HAVE_OBJC_RUNTIME_H */
+							#endif /* HAVE_OBJC_OBJC_API_H */
+							#if defined(HAVE_OBJC_RUNTIME_H) && !defined(_OBJC_RUNTIME_H)
+							# include <objc/runtime.h>
+							#endif /* HAVE_OBJC_RUNTIME_H && !_OBJC_RUNTIME_H */
+							#include <stdio.h>
 						], [
 							id class = objc_lookup_class("Object");
 							id obj = @<:@class alloc@:>@;
