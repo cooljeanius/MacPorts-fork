@@ -5,7 +5,7 @@ OBJS = registry.o util.o \
 	entry.o entryobj.o \
 	file.o fileobj.o \
 	../cregistry/cregistry.a
-	#graph.o graphobj.o
+UNUSED_OBJS = graph.o graphobj.o
 
 SHLIB_NAME= registry${SHLIB_SUFFIX}
 INSTALLDIR= ${DESTDIR}${datadir}/macports/Tcl/registry2.0
@@ -24,13 +24,13 @@ test:: ${SHLIB_NAME}
 	${TCLSH} tests/entry.tcl ./${SHLIB_NAME}
 	${TCLSH} tests/depends.tcl ./${SHLIB_NAME}
 
-clean::
+clean-local::
 	rm -f $(OBJS) $(SHLIB_NAME)
 
-distclean:: clean
+distclean-local:: clean-local
 	rm -f registry_autoconf.tcl
 
-install:: all
+install-data-and-exec-local:: all
 	[ ! -d $(DESTDIR)${datadir}/macports/Tcl/registry1.0 ] || rm -vrf $(DESTDIR)${datadir}/macports/Tcl/registry1.0
 	$(INSTALL) -d -o ${DSTUSR} -g ${DSTGRP} -m ${DSTMODE} ${INSTALLDIR}
 	$(INSTALL) -o ${DSTUSR} -g ${DSTGRP} -m 444 ${SHLIB_NAME} ${INSTALLDIR}

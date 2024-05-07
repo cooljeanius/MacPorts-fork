@@ -134,6 +134,17 @@ esac
 # Checks for programs.
 AM_PROG_AS
 AM_PROG_AR
+if test "x${AR}" = "x"; then
+  test -z "${AR}" || unset AR
+  AC_CHECK_TOOLS([AR],[ar gar])dnl
+  ## might want to switch around these checks...
+  if test "x${ac_cv_prog_AR}" = "x"; then
+    test -z "${ac_cv_prog_AR}" || unset ac_cv_prog_AR
+    AC_PROG_AR
+  fi
+else
+  test -n "${AR}" && export AR
+fi
 if test "x${CC}" = "x"; then
   AC_PROG_CC
   test -x compile
@@ -148,6 +159,7 @@ fi
 AC_PROG_CXX
 AM_WITH_DMALLOC
 AC_PROG_INSTALL
+AC_PROG_LEX([yywrap])
 AM_PROG_LEX
 AC_PROG_LN_S
 AC_PROG_OBJC
@@ -394,13 +406,32 @@ AC_CHECK_HEADERS([crt_externs.h ctype.h err.h fcntl.h libkern/OSAtomic.h \
                   sys/file.h sys/ioctl.h sys/mount.h sys/param.h \
                   sys/paths.h sys/socket.h sys/sysctl.h sys/time.h \
                   time.h utime.h])
+dnl# other stuff that autoscan will warn about:
+if test "x${ac_cv_header_inttypes_h}" = "x"; then
+  test -z "${ac_cv_header_inttypes_h}" || unset ac_cv_header_inttypes_h
+  AC_CHECK_HEADERS([inttypes.h])
+fi
+if test "x${ac_cv_header_stdint_h}" = "x"; then
+  test -z "${ac_cv_header_stdint_h}" || unset ac_cv_header_stdint_h
+  AC_CHECK_HEADERS([stdint.h])
+fi
+if test "x${ac_cv_header_strings_h}" = "x"; then
+  test -z "${ac_cv_header_strings_h}" || unset ac_cv_header_strings_h
+  AC_CHECK_HEADERS([strings.h])
+fi
+if test "x${ac_cv_header_unistd_h}" = "x"; then
+  test -z "${ac_cv_header_unistd_h}" || unset ac_cv_header_unistd_h
+  AC_CHECK_HEADERS([unistd.h])
+fi
 dnl# readline/history.h and readline/readline.h are checked for by 
 dnl# the AX_LIB_READLINE macro above
 
 AM_CPPFLAGS="-I.. -I. ${AM_CPPFLAGS}"
 dnl# This should be permanently converted eventually,
 dnl# but as it is, the build fails without it.
-INCLUDES=${AM_CPPFLAGS}
+if test "x${INCLUDES}" = "x"; then
+  test -z "${INCLUDES}" && test -n "${AM_CPPFLAGS}" && export INCLUDES=${AM_CPPFLAGS}
+fi
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_TYPE_UID_T
