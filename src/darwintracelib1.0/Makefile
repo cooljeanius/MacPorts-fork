@@ -9,16 +9,16 @@ include ../../Mk/macports.autoconf.mk
 CFLAGS+= -fPIC -Wno-deprecated-declarations
 CFLAGS_PEDANTIC=
 
-all:: ${SHLIB_NAME}
+all-local:: ${SHLIB_NAME}
 
 $(SHLIB_NAME):: ${OBJS}
 	${SHLIB_LD} ${OBJS} -o ${SHLIB_NAME} ${SHLIB_LDFLAGS} ${LIBS}
 
-clean::
+clean-local::
 	rm -f ${OBJS} ${SHLIB_NAME} so_locations
 
-distclean:: clean
+distclean-local:: clean-local
 
-install:: all
+install-data-and-exec-local:: all-local
 	$(INSTALL) -d -o ${DSTUSR} -g ${DSTGRP} -m ${DSTMODE} ${INSTALLDIR}
 	$(INSTALL) -o ${DSTUSR} -g ${DSTGRP} -m 444 ${SHLIB_NAME} ${INSTALLDIR}
