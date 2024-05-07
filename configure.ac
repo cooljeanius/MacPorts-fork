@@ -140,7 +140,11 @@ if test "x${AR}" = "x"; then
   ## might want to switch around these checks...
   if test "x${ac_cv_prog_AR}" = "x"; then
     test -z "${ac_cv_prog_AR}" || unset ac_cv_prog_AR
-    AC_PROG_AR
+    m4_ifdef([AC_PROG_AR],[
+      AC_PROG_AR
+    ],[
+      test -x "`which ar`"
+    ])
   fi
 else
   test -n "${AR}" && export AR

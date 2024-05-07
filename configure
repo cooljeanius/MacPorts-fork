@@ -7072,7 +7072,8 @@ fi
   ## might want to switch around these checks...
   if test "x${ac_cv_prog_AR}" = "x"; then
     test -z "${ac_cv_prog_AR}" || unset ac_cv_prog_AR
-    if test -n "$ac_tool_prefix"; then
+
+      if test -n "$ac_tool_prefix"; then
   # Extract the first word of "${ac_tool_prefix}ar", so it can be a program name with args.
 set dummy ${ac_tool_prefix}ar; ac_word=$2
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
@@ -7175,6 +7176,7 @@ esac
 else
   AR="$ac_cv_prog_AR"
 fi
+
 
   fi
 else
