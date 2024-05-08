@@ -41,3 +41,5 @@ src/programs/daemondo/Makefile
 tcldo*/*
 Makefile_orig
 .env.local
+macports.sum
+site.exp

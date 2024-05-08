@@ -21,9 +21,9 @@ jobs:
     - run: if test -e Makefile; then make; elif test -e Makefile_orig; then make -f Makefile_orig; elif test -e Doxyfile; then doxygen; else echo "nothing to make!" >&2 && exit 1; fi
       env:
         CC: ${{ matrix.compiler }}
-    - run: pwd && make test
+    - run: pwd && (make test || make check)
       if: "${{ success() }}"
-    - run: if test -r config.log; then cat config.log && wc -l config.log; elif test -e config.log; then stat config.log; else ls -AR; fi; sync; sleep 3
+    - run: if test -r config.log; then cat config.log && sync && wc -l config.log; elif test -e config.log; then stat config.log; else ls -AR; fi; sync; sleep 3
       if: "${{ failure() }}"
     strategy:
       fail-fast: false
