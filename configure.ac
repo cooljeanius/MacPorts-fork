@@ -403,6 +403,7 @@ MP_UNIVERSAL_OPTIONS
 # Checks for libraries.
 AC_MSG_CHECKING([libraries])
 AC_MSG_RESULT([ ])
+AC_SEARCH_LIBS([Darwintrace_Init],[darwintrace c System])
 AC_CHECK_LIB([tcl],[Tcl_InitStubs])
 AC_SEARCH_LIBS([sqlite3_create_collation],
                [sqlite3 sqlite c tclsqlite3 tclsqlite SQLiteCpp sqlitewrapped])dnl

@@ -14,7 +14,7 @@ all-local:: ${SHLIB_NAME} pkgIndex.tcl
 $(SHLIB_NAME):: ${OBJS}
 	${SHLIB_LD} ${OBJS} -o ${SHLIB_NAME} ${TCL_STUB_LIB_SPEC} ${SHLIB_LDFLAGS} ${LIBS}
 
-pkgIndex.tcl: $(SHLIB_NAME)
+pkgIndex.tcl: $(SHLIB_NAME) ../pkg_mkindex.sh
 	$(SILENT) ../pkg_mkindex.sh . || ( rm -rf $@ && exit 1 )
 
 clean-local::
