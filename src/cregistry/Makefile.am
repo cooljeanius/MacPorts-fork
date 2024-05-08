@@ -19,7 +19,7 @@ ${STLIB_NAME}:: ${OBJS}
 	${RANLIB} ${STLIB_NAME}
 
 ${SQLEXT_NAME}: ${SQLEXT_OBJS}
-	${SHLIB_LD} ${SQLEXT_OBJS} -o $@
+	${SHLIB_LD} ${SQLEXT_OBJS} -o $@ $(LIBS)
 
 clean-local::
 	rm -f ${STLIB_NAME} ${SQLEXT_NAME} ${SQLEXT_OBJS} ${OBJS}

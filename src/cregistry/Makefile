@@ -261,7 +261,7 @@ LEX_OUTPUT_ROOT = lex.yy
 LIBCURL = -L/Users/ericgallager/miniconda3/lib -lcurl
 LIBCURL_CPPFLAGS = -I/Users/ericgallager/miniconda3/include
 LIBOBJS =  ${LIBOBJDIR}lstat$U.o ${LIBOBJDIR}fixstrtod$U.o
-LIBS = -ltcl  -lreadline -framework CoreFoundation
+LIBS = -lsqlite3 -ltcl  -lreadline -framework CoreFoundation
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = /usr/bin/lipo
 LN_S = ln -s
@@ -270,7 +270,7 @@ LTLIBOBJS =  ${LIBOBJDIR}lstat$U.lo ${LIBOBJDIR}fixstrtod$U.lo
 LT_SYS_LIBRARY_PATH = 
 LZMA = /Users/ericgallager/miniconda3/bin/lzma
 MACPORTS_VERSION = 2.1.3
-MAINT = #
+MAINT = 
 MAKE = /usr/bin/make
 MAKEINFO = ${SHELL} '/Users/ericgallager/MacPorts-fork/missing' makeinfo
 MAKE_LIB = ${SHLIB_LD} -o $@ ${SHLIB_LD_FLAGS} ${OBJS} ${SHLIB_LD_LIBS} ${TCL_SHLIB_LD_EXTRAS} ${TK_SHLIB_LD_EXTRAS} ${LD_SEARCH_FLAGS}
@@ -493,7 +493,7 @@ all: all-am
 
 .SUFFIXES:
 .SUFFIXES: .c .o
-$(srcdir)/Makefile.in: # $(srcdir)/Makefile.am $(srcdir)/../../Mk/macports.autoconf.mk.am $(am__configure_deps)
+$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am $(srcdir)/../../Mk/macports.autoconf.mk.am $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
 	    *$$dep*) \
@@ -518,9 +518,9 @@ $(srcdir)/../../Mk/macports.autoconf.mk.am $(am__empty):
 $(top_builddir)/config.status: $(top_srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 
-$(top_srcdir)/configure: # $(am__configure_deps)
+$(top_srcdir)/configure:  $(am__configure_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
-$(ACLOCAL_M4): # $(am__aclocal_m4_deps)
+$(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
 
@@ -743,7 +743,7 @@ ${STLIB_NAME}:: ${OBJS}
 	${RANLIB} ${STLIB_NAME}
 
 ${SQLEXT_NAME}: ${SQLEXT_OBJS}
-	${SHLIB_LD} ${SQLEXT_OBJS} -o $@
+	${SHLIB_LD} ${SQLEXT_OBJS} -o $@ $(LIBS)
 
 clean-local::
 	rm -f ${STLIB_NAME} ${SQLEXT_NAME} ${SQLEXT_OBJS} ${OBJS}

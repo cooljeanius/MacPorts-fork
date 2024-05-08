@@ -6634,6 +6634,10 @@ printf "%s\n" "$as_me: WARNING: Please consider upgrading as some ports fail com
 esac
 
 # Checks for programs.
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking programs" >&5
+printf %s "checking programs... " >&6; }
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result:  " >&5
+printf "%s\n" " " >&6; }
 # By default we simply use the C compiler to build assembly code.
 
 test "${CCAS+set}" = set || CCAS=$CC
@@ -21450,6 +21454,8 @@ printf "%s\n" "no" >&6; }
 	fi
 fi
 
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: doing checks from macros from the autoconf-archive" >&5
+printf "%s\n" "$as_me: doing checks from macros from the autoconf-archive" >&6;}
 ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'
 ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
@@ -23104,6 +23110,10 @@ fi
   fi
 
 
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking xorg things" >&5
+printf %s "checking xorg things... " >&6; }
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result:  " >&5
+printf "%s\n" " " >&6; }
 if test "x${CPP}" = "x"; then
   test -z "${CPP}"
   ac_ext=c
@@ -29752,7 +29762,7 @@ fi
 
 
 else
-  test ! -z "${PERL}" && export PERL
+  test -n "${PERL}" && export PERL
 
 fi
 
@@ -29870,6 +29880,10 @@ fi
 #
 
 
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking bakefile things" >&5
+printf %s "checking bakefile things... " >&6; }
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result:  " >&5
+printf "%s\n" " " >&6; }
 
 
     ac_ext=c
@@ -30044,6 +30058,10 @@ printf "%s\n" "$bakefile_cv_prog_makeisgnu" >&6; }
 
 
 
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking generic programs" >&5
+printf %s "checking generic programs... " >&6; }
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result:  " >&5
+printf "%s\n" " " >&6; }
 for ac_prog in bsdmake pmake
 do
   # Extract the first word of "$ac_prog", so it can be a program name with args.
@@ -30606,7 +30624,7 @@ fi
 
 
 else
-  test ! -z "${DOXYGEN}"
+  test -n "${DOXYGEN}" && export DOXYGEN
 
 fi
 # Extract the first word of "dscl", so it can be a program name with args.
@@ -32011,7 +32029,7 @@ fi
 
 
 else
-  test ! -z "${SED}" && export SED
+  test -n "${SED}" && export SED
 
 fi
 # Extract the first word of "svn", so it can be a program name with args.
@@ -34540,6 +34558,10 @@ printf "%s\n" "$UNIVERSAL_ARCHS" >&6; }
 
 
 # Checks for libraries.
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking libraries" >&5
+printf %s "checking libraries... " >&6; }
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result:  " >&5
+printf "%s\n" " " >&6; }
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for Tcl_InitStubs in -ltcl" >&5
 printf %s "checking for Tcl_InitStubs in -ltcl... " >&6; }
 if test ${ac_cv_lib_tcl_Tcl_InitStubs+y}
@@ -34591,7 +34613,78 @@ then :
 
 fi
 
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for library containing sqlite3_create_collation" >&5
+printf %s "checking for library containing sqlite3_create_collation... " >&6; }
+if test ${ac_cv_search_sqlite3_create_collation+y}
+then :
+  printf %s "(cached) " >&6
+else case e in #(
+  e) ac_func_search_save_LIBS=$LIBS
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.
+   The 'extern "C"' is for builds by C++ compilers;
+   although this is not generally supported in C code supporting it here
+   has little cost and some practical benefit (sr 110532).  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char sqlite3_create_collation (void);
+int
+main (void)
+{
+return sqlite3_create_collation ();
+  ;
+  return 0;
+}
+_ACEOF
+for ac_lib in '' sqlite3 sqlite c tclsqlite3 tclsqlite SQLiteCpp sqlitewrapped
+do
+  if test -z "$ac_lib"; then
+    ac_res="none required"
+  else
+    ac_res=-l$ac_lib
+    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
+  fi
+  if ac_fn_c_try_link "$LINENO"
+then :
+  ac_cv_search_sqlite3_create_collation=$ac_res
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.beam \
+    conftest$ac_exeext
+  if test ${ac_cv_search_sqlite3_create_collation+y}
+then :
+  break
+fi
+done
+if test ${ac_cv_search_sqlite3_create_collation+y}
+then :
+
+else case e in #(
+  e) ac_cv_search_sqlite3_create_collation=no ;;
+esac
+fi
+rm conftest.$ac_ext
+LIBS=$ac_func_search_save_LIBS ;;
+esac
+fi
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_search_sqlite3_create_collation" >&5
+printf "%s\n" "$ac_cv_search_sqlite3_create_collation" >&6; }
+ac_res=$ac_cv_search_sqlite3_create_collation
+if test "$ac_res" != no
+then :
+  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
+
+fi
+
 # Check for standard header files.
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking headers" >&5
+printf %s "checking headers... " >&6; }
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result:  " >&5
+printf "%s\n" " " >&6; }
 ac_header_dirent=no
 for ac_hdr in dirent.h sys/ndir.h sys/dir.h ndir.h; do
   as_ac_Header=`printf "%s\n" "ac_cv_header_dirent_$ac_hdr" | sed "$as_sed_sh"`
@@ -35138,6 +35231,10 @@ if test "x${INCLUDES}" = "x"; then
 fi
 
 # Checks for typedefs, structures, and compiler characteristics.
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking typedefs, structures, and compiler characteristics" >&5
+printf %s "checking typedefs, structures, and compiler characteristics... " >&6; }
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result:  " >&5
+printf "%s\n" " " >&6; }
 ac_fn_c_check_type "$LINENO" "uid_t" "ac_cv_type_uid_t" "$ac_includes_default"
 if test "x$ac_cv_type_uid_t" = xyes
 then :
@@ -36269,6 +36366,10 @@ printf "%s\n" "#define ALIGNOF_UINT32_T $ac_cv_alignof_uint32_t" >>confdefs.h
 
 
 # Checks for library functions.
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking library functions" >&5
+printf %s "checking library functions... " >&6; }
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result:  " >&5
+printf "%s\n" " " >&6; }
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for working chown" >&5
 printf %s "checking for working chown... " >&6; }
 if test ${ac_cv_func_chown_works+y}
@@ -37313,6 +37414,11 @@ printf "%s\n" "#define READLINK_IS_NOT_P1003_1A /**/" >>confdefs.h
 	fi
 
 
+
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking other packages" >&5
+printf %s "checking other packages... " >&6; }
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result:  " >&5
+printf "%s\n" " " >&6; }
 
 # Check for md5 implementation
 
@@ -42085,7 +42191,7 @@ SHLIB_SUFFIX=${TCL_SHLIB_SUFFIX}
 # misc variables that need to be expanded for substitution into tcl
 
 oldprefix=${prefix}
-if test "x${prefix}" = "xNONE" ; then
+if test "x${prefix}" = "xNONE"; then
    prefix=${ac_default_prefix}
 fi
 

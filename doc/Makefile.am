@@ -14,12 +14,12 @@ endif
 
 all all-local: ${MAN1:.1=.1.gz} ${MAN5:.5=.5.gz} ${MAN7:.7=.7.gz}
 
-clean:
+clean-local:
 	rm -f *.{1,5,7}.gz
 
 test:
 
-distclean-local: clean
+distclean-local: clean-local
 	rm -f macports.conf base.mtree macosx.mtree prefix.mtree pubkeys.conf
 
 %.1.gz: %.1

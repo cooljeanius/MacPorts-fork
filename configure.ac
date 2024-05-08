@@ -132,6 +132,8 @@ case "${XCODE_VERSION}" in
 esac
 
 # Checks for programs.
+AC_MSG_CHECKING([programs])
+AC_MSG_RESULT([ ])
 AM_PROG_AS
 AM_PROG_AR
 if test "x${AR}" = "x"; then
@@ -180,6 +182,7 @@ fi
 PKG_PROG_PKG_CONFIG
 
 dnl# AX_* macros are from the autoconf-archive package
+AC_MSG_NOTICE([doing checks from macros from the autoconf-archive])
 AX_PTHREAD
 AX_PROG_PERL_VERSION([5.12])
 AX_PROG_TCL([8.4])
@@ -190,6 +193,8 @@ AX_C___ATTRIBUTE__
 AX_LIB_READLINE
 
 dnl# XORG_* macros are from the xorg-util-macros package
+AC_MSG_CHECKING([xorg things])
+AC_MSG_RESULT([ ])
 if test "x${CPP}" = "x"; then
   test -z "${CPP}"
   AC_PROG_CPP
@@ -203,7 +208,7 @@ XORG_WITH_DOXYGEN
 if test "x${PERL}" = "x"; then
   XORG_WITH_PERL
 else
-  test ! -z "${PERL}" && export PERL
+  test -n "${PERL}" && export PERL
   AC_SUBST([PERL])
 fi
 XORG_ENABLE_UNIT_TESTS
@@ -211,6 +216,8 @@ XORG_ENABLE_INTEGRATION_TESTS
 XORG_LD_WRAP
 
 dnl# AC_BAKEFILE_* macros are from the bakefile package
+AC_MSG_CHECKING([bakefile things])
+AC_MSG_RESULT([ ])
 AC_BAKEFILE_PROG_MWCC
 AC_BAKEFILE_PROG_MWCXX
 if test "x`whoami`" = "xroot"; then
@@ -219,6 +226,8 @@ fi
 AC_BAKEFILE_GNUMAKE
 
 dnl# checks for programs without specifically-crafted AC_* macros
+AC_MSG_CHECKING([generic programs])
+AC_MSG_RESULT([ ])
 AC_PATH_PROGS([BSDMAKE],[bsdmake pmake],[])
 AC_PATH_PROG([BZIP2],[bzip2],[])
 AC_PATH_PROG([BZR],[bzr],[])
@@ -233,7 +242,7 @@ AC_PATH_PROG([DIFF],[diff],[])
 if test "x${DOXYGEN}" = "x"; then
   AC_PATH_PROG([DOXYGEN],[doxygen],[])
 else
-  test ! -z "${DOXYGEN}"
+  test -n "${DOXYGEN}" && export DOXYGEN
   AC_SUBST([DOXYGEN])
 fi
 AC_PATH_PROG([DSCL],[dscl],[])
@@ -269,7 +278,7 @@ if test "x${SED}" = "x"; then
   AC_PATH_PROG([SED],[sed],[])
   AC_ARG_VAR([SED],[path to sed command])
 else
-  test ! -z "${SED}" && export SED
+  test -n "${SED}" && export SED
   AC_SUBST([SED])
 fi
 AC_PATH_PROG([SVN],[svn],[])
@@ -392,9 +401,15 @@ MP_PATH_FRAMEWORKS
 MP_UNIVERSAL_OPTIONS
 
 # Checks for libraries.
-AC_CHECK_LIB([tcl],[Tcl_InitStubs])dnl
+AC_MSG_CHECKING([libraries])
+AC_MSG_RESULT([ ])
+AC_CHECK_LIB([tcl],[Tcl_InitStubs])
+AC_SEARCH_LIBS([sqlite3_create_collation],
+               [sqlite3 sqlite c tclsqlite3 tclsqlite SQLiteCpp sqlitewrapped])dnl
 
 # Check for standard header files.
+AC_MSG_CHECKING([headers])
+AC_MSG_RESULT([ ])
 dnl# AC_HEADER_STDC is no longer needed by itself, as it automatically gets
 dnl# pulled in by other macros
 AC_HEADER_DIRENT
@@ -438,6 +453,8 @@ if test "x${INCLUDES}" = "x"; then
 fi
 
 # Checks for typedefs, structures, and compiler characteristics.
+AC_MSG_CHECKING([typedefs, structures, and compiler characteristics])
+AC_MSG_RESULT([ ])
 AC_TYPE_UID_T
 AC_C_BIGENDIAN
 AC_C_INLINE
@@ -467,6 +484,8 @@ AC_CHECK_SIZEOF([uint32_t])
 AC_CHECK_ALIGNOF([uint32_t])dnl
 
 # Checks for library functions.
+AC_MSG_CHECKING([library functions])
+AC_MSG_RESULT([ ])
 AC_FUNC_CHOWN
 AC_FUNC_FORK
 AC_FUNC_LSTAT dnl# calls "AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK"
@@ -484,6 +503,10 @@ AC_CHECK_FUNCS([OSAtomicCompareAndSwap32 OSAtomicCompareAndSwap64 \
 AC_SUBST([ac_cv_func_strlcat])dnl
 
 MP_CHECK_READLINK_IS_P1003_1A
+
+dnl# Checks for additional packages.
+AC_MSG_CHECKING([other packages])
+AC_MSG_RESULT([ ])
 
 # Check for md5 implementation
 AC_CHECK_HEADER([CommonCrypto/CommonDigest.h],
@@ -636,7 +659,7 @@ AC_SUBST([OUR_INCLUDED_PACKAGES])dnl
 # misc variables that need to be expanded for substitution into tcl
 
 oldprefix=${prefix}
-if test "x${prefix}" = "xNONE" ; then
+if test "x${prefix}" = "xNONE"; then
    prefix=${ac_default_prefix}
 fi
 

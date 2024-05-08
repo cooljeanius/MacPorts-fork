@@ -122,16 +122,24 @@ attempted_completion_function(const char* word, int start, int end)
 				 */
 				s = Tcl_GetString(generator_word);
 				if (0 == strcmp("filename_completion", s))
+#ifdef FILENAME_COMPLETION_FUNCTION
 					generator_func = FILENAME_COMPLETION_FUNCTION;
+#else
+					(void)generator_func;
+#endif /* FILENAME_COMPLETION_FUNCTION */
 				else if (0 == strcmp("username_completion", s))
+#ifdef USERNAME_COMPLETION_FUNCTION
 					generator_func = USERNAME_COMPLETION_FUNCTION;
+#else
+					(void)generator_func;
+#endif /* USERNAME_COMPLETION_FUNCTION */
 				else {
 					/* Not a built-in completer, so call the word as a command */
 					generator_func = completion_generator;
 				}
-				
+#ifdef COMPLETION_MATCHES
 				matches = COMPLETION_MATCHES(word, generator_func);
-
+#endif /* COMPLETION_MATCHES */
 				 	
 				Tcl_DecrRefCount(generator_word);
 			}
@@ -140,7 +148,7 @@ attempted_completion_function(const char* word, int start, int end)
 	
 	return matches;
 }
-#endif
+#endif /* HAVE_LIBREADLINE */
 
 
 /*
