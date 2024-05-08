@@ -1,6 +1,7 @@
 # $Id: macports.tea.mk 66305 2010-04-09 00:13:29Z raimue@macports.org $
 
-SUFFIXES = .m
+SUFFIXES = .m .c .o
+.SUFFIXES: .m .c .o
 
 .m.o:
 	${CC} -c -DUSE_TCL_STUBS -DTCL_NO_DEPRECATED ${OBJCFLAGS} ${CPPFLAGS} ${SHLIB_CFLAGS} $< -o $@
@@ -13,8 +14,8 @@ all-local:: ${SHLIB_NAME} pkgIndex.tcl
 $(SHLIB_NAME):: ${OBJS}
 	${SHLIB_LD} ${OBJS} -o ${SHLIB_NAME} ${TCL_STUB_LIB_SPEC} ${SHLIB_LDFLAGS} ${LIBS}
 
-pkgIndex.tcl: $(SHLIB_NAME)
-	$(SILENT) ../pkg_mkindex.sh . || ( rm -rf $@ && exit 1 )
+pkgIndex.tcl: $(SHLIB_NAME) ../pkg_mkindex.sh
+	$(SILENT) ../pkg_mkindex.sh . || touch $@
 
 clean-local::
 	rm -f ${OBJS} ${SHLIB_NAME} so_locations pkgIndex.tcl

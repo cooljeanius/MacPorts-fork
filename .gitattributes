@@ -1,11 +1,24 @@
+aclocal.m4 linguist-generated
 ar-lib linguist-vendored
 compile linguist-vendored
 config.guess linguist-vendored
 config.sub linguist-vendored
+configure linguist-generated
+configure.scan linguist-generated
 depcomp linguist-vendored
 install-sh linguist-vendored
 ltmain.sh linguist-vendored
+m4/ax_*.m4 linguist-vendored
+m4/libtool.m4 linguist-vendored
+m4/lt*.m4 linguist-vendored
+Makefile.in linguist-generated
 missing linguist-vendored
+Mk/macports.autoconf.mk.in linguist-generated
+src/config.h.in linguist-generated
+src/cregistry/Makefile linguist-generated
+src/cregistry/Makefile.in linguist-generated
+src/machista1.0/Makefile.in linguist-generated
+src/Makefile.in linguist-generated
 test-driver linguist-vendored
 
 # Gnulib's git-merge-changelog driver:

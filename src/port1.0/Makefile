@@ -13,18 +13,18 @@ include ../../Mk/macports.autoconf.mk
 
 .PHONY: test
 
-all:: pkgIndex.tcl
+all-local:: pkgIndex.tcl
 
 pkgIndex.tcl: $(SRCS)
 	$(SILENT) ../pkg_mkindex.sh . || ( rm -rf $@ && exit 1 )
 
-clean::
+clean-local::
 	rm -f pkgIndex.tcl
 
-distclean:: clean
+distclean-local:: clean-local
 	rm -f port_autoconf.tcl
 
-install:: all
+install-data-and-exec-local:: all-local
 	$(INSTALL) -d -o ${DSTUSR} -g ${DSTGRP} -m ${DSTMODE} ${INSTALLDIR}
 	$(SILENT)set -x; for file in ${SRCS}; do \
 		$(INSTALL) -o ${DSTUSR} -g ${DSTGRP} -m 444 $$file ${INSTALLDIR}; \

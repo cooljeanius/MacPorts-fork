@@ -10,7 +10,7 @@ include ../../Mk/macports.autoconf.mk
 
 .PHONY: mkdirs
 
-all: ${SCRIPTS}
+all all-local: ${SCRIPTS}
 
 portmirror: portmirror.tcl ../../Mk/macports.autoconf.mk
 	${edit} portmirror.tcl > $@
@@ -25,12 +25,13 @@ mkdirs:
 	< ../../doc/prefix.mtree $(MTREE) -U -d -e -p ${INSTALLDIR} > /dev/null
 	< ../../doc/base.mtree $(MTREE) -U -d -e -p ${INSTALLDIR} > /dev/null
 
-clean:
+clean clean-local:
 	rm -f ${SCRIPTS}
 
 test:
 
 distclean: clean
+distclean-local: clean-local
 
 install: all mkdirs
 	$(INSTALL) -d -o ${DSTUSR} -g ${DSTGRP} -m ${DSTMODE} ${INSTALLDIR}/bin

@@ -132,8 +132,25 @@ case "${XCODE_VERSION}" in
 esac
 
 # Checks for programs.
+AC_MSG_CHECKING([programs])
+AC_MSG_RESULT([ ])
 AM_PROG_AS
 AM_PROG_AR
+if test "x${AR}" = "x"; then
+  test -z "${AR}" || unset AR
+  AC_CHECK_TOOLS([AR],[ar gar])dnl
+  ## might want to switch around these checks...
+  if test "x${ac_cv_prog_AR}" = "x"; then
+    test -z "${ac_cv_prog_AR}" || unset ac_cv_prog_AR
+    m4_ifdef([AC_PROG_AR],[
+      AC_PROG_AR
+    ],[
+      test -x "`which ar`"
+    ])
+  fi
+else
+  test -n "${AR}" && export AR
+fi
 if test "x${CC}" = "x"; then
   AC_PROG_CC
   test -x compile
@@ -147,8 +164,8 @@ else
 fi
 AC_PROG_CXX
 AM_WITH_DMALLOC
-AC_PROG_GCC_TRADITIONAL
 AC_PROG_INSTALL
+AC_PROG_LEX([yywrap])
 AM_PROG_LEX
 AC_PROG_LN_S
 AC_PROG_OBJC
@@ -165,6 +182,7 @@ fi
 PKG_PROG_PKG_CONFIG
 
 dnl# AX_* macros are from the autoconf-archive package
+AC_MSG_NOTICE([doing checks from macros from the autoconf-archive])
 AX_PTHREAD
 AX_PROG_PERL_VERSION([5.12])
 AX_PROG_TCL([8.4])
@@ -175,6 +193,8 @@ AX_C___ATTRIBUTE__
 AX_LIB_READLINE
 
 dnl# XORG_* macros are from the xorg-util-macros package
+AC_MSG_CHECKING([xorg things])
+AC_MSG_RESULT([ ])
 if test "x${CPP}" = "x"; then
   test -z "${CPP}"
   AC_PROG_CPP
@@ -188,7 +208,7 @@ XORG_WITH_DOXYGEN
 if test "x${PERL}" = "x"; then
   XORG_WITH_PERL
 else
-  test ! -z "${PERL}" && export PERL
+  test -n "${PERL}" && export PERL
   AC_SUBST([PERL])
 fi
 XORG_ENABLE_UNIT_TESTS
@@ -196,6 +216,8 @@ XORG_ENABLE_INTEGRATION_TESTS
 XORG_LD_WRAP
 
 dnl# AC_BAKEFILE_* macros are from the bakefile package
+AC_MSG_CHECKING([bakefile things])
+AC_MSG_RESULT([ ])
 AC_BAKEFILE_PROG_MWCC
 AC_BAKEFILE_PROG_MWCXX
 if test "x`whoami`" = "xroot"; then
@@ -204,6 +226,8 @@ fi
 AC_BAKEFILE_GNUMAKE
 
 dnl# checks for programs without specifically-crafted AC_* macros
+AC_MSG_CHECKING([generic programs])
+AC_MSG_RESULT([ ])
 AC_PATH_PROGS([BSDMAKE],[bsdmake pmake],[])
 AC_PATH_PROG([BZIP2],[bzip2],[])
 AC_PATH_PROG([BZR],[bzr],[])
@@ -218,7 +242,7 @@ AC_PATH_PROG([DIFF],[diff],[])
 if test "x${DOXYGEN}" = "x"; then
   AC_PATH_PROG([DOXYGEN],[doxygen],[])
 else
-  test ! -z "${DOXYGEN}"
+  test -n "${DOXYGEN}" && export DOXYGEN
   AC_SUBST([DOXYGEN])
 fi
 AC_PATH_PROG([DSCL],[dscl],[])
@@ -254,7 +278,7 @@ if test "x${SED}" = "x"; then
   AC_PATH_PROG([SED],[sed],[])
   AC_ARG_VAR([SED],[path to sed command])
 else
-  test ! -z "${SED}" && export SED
+  test -n "${SED}" && export SED
   AC_SUBST([SED])
 fi
 AC_PATH_PROG([SVN],[svn],[])
@@ -377,9 +401,16 @@ MP_PATH_FRAMEWORKS
 MP_UNIVERSAL_OPTIONS
 
 # Checks for libraries.
-AC_CHECK_LIB([tcl],[Tcl_InitStubs])dnl
+AC_MSG_CHECKING([libraries])
+AC_MSG_RESULT([ ])
+AC_SEARCH_LIBS([Darwintrace_Init],[darwintrace c System])
+AC_CHECK_LIB([tcl],[Tcl_InitStubs])
+AC_SEARCH_LIBS([sqlite3_create_collation],
+               [sqlite3 sqlite c tclsqlite3 tclsqlite SQLiteCpp sqlitewrapped])dnl
 
 # Check for standard header files.
+AC_MSG_CHECKING([headers])
+AC_MSG_RESULT([ ])
 dnl# AC_HEADER_STDC is no longer needed by itself, as it automatically gets
 dnl# pulled in by other macros
 AC_HEADER_DIRENT
@@ -395,15 +426,36 @@ AC_CHECK_HEADERS([crt_externs.h ctype.h err.h fcntl.h libkern/OSAtomic.h \
                   sys/file.h sys/ioctl.h sys/mount.h sys/param.h \
                   sys/paths.h sys/socket.h sys/sysctl.h sys/time.h \
                   time.h utime.h])
+dnl# other stuff that autoscan will warn about:
+if test "x${ac_cv_header_inttypes_h}" = "x"; then
+  test -z "${ac_cv_header_inttypes_h}" || unset ac_cv_header_inttypes_h
+  AC_CHECK_HEADERS([inttypes.h])
+fi
+if test "x${ac_cv_header_stdint_h}" = "x"; then
+  test -z "${ac_cv_header_stdint_h}" || unset ac_cv_header_stdint_h
+  AC_CHECK_HEADERS([stdint.h])
+fi
+if test "x${ac_cv_header_strings_h}" = "x"; then
+  test -z "${ac_cv_header_strings_h}" || unset ac_cv_header_strings_h
+  AC_CHECK_HEADERS([strings.h])
+fi
+if test "x${ac_cv_header_unistd_h}" = "x"; then
+  test -z "${ac_cv_header_unistd_h}" || unset ac_cv_header_unistd_h
+  AC_CHECK_HEADERS([unistd.h])
+fi
 dnl# readline/history.h and readline/readline.h are checked for by 
 dnl# the AX_LIB_READLINE macro above
 
 AM_CPPFLAGS="-I.. -I. ${AM_CPPFLAGS}"
 dnl# This should be permanently converted eventually,
 dnl# but as it is, the build fails without it.
-INCLUDES=${AM_CPPFLAGS}
+if test "x${INCLUDES}" = "x"; then
+  test -z "${INCLUDES}" && test -n "${AM_CPPFLAGS}" && export INCLUDES=${AM_CPPFLAGS}
+fi
 
 # Checks for typedefs, structures, and compiler characteristics.
+AC_MSG_CHECKING([typedefs, structures, and compiler characteristics])
+AC_MSG_RESULT([ ])
 AC_TYPE_UID_T
 AC_C_BIGENDIAN
 AC_C_INLINE
@@ -433,6 +485,8 @@ AC_CHECK_SIZEOF([uint32_t])
 AC_CHECK_ALIGNOF([uint32_t])dnl
 
 # Checks for library functions.
+AC_MSG_CHECKING([library functions])
+AC_MSG_RESULT([ ])
 AC_FUNC_CHOWN
 AC_FUNC_FORK
 AC_FUNC_LSTAT dnl# calls "AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK"
@@ -450,6 +504,10 @@ AC_CHECK_FUNCS([OSAtomicCompareAndSwap32 OSAtomicCompareAndSwap64 \
 AC_SUBST([ac_cv_func_strlcat])dnl
 
 MP_CHECK_READLINK_IS_P1003_1A
+
+dnl# Checks for additional packages.
+AC_MSG_CHECKING([other packages])
+AC_MSG_RESULT([ ])
 
 # Check for md5 implementation
 AC_CHECK_HEADER([CommonCrypto/CommonDigest.h],
@@ -489,7 +547,7 @@ SC_PATH_TCLCONFIG
 SC_LOAD_TCLCONFIG
 
 # Check for Tcl public headers (and other Tcl-relevant headers)
-dnl# XXX hardwire CYGPATH (CYGPATH must be set for SC_PUBLIC_TCL_HEADERS)
+dnl# XXX: hardwire CYGPATH (CYGPATH must be set for SC_PUBLIC_TCL_HEADERS)
 CYGPATH=echo
 SC_PUBLIC_TCL_HEADERS
 SC_TIME_HANDLER
@@ -588,7 +646,6 @@ SHLIB_CFLAGS=${TCL_SHLIB_CFLAGS}
 SHLIB_SUFFIX=${TCL_SHLIB_SUFFIX}
 
 AC_SUBST([AM_CPPFLAGS])dnl
-AC_SUBST([INCLUDES])dnl
 AC_SUBST([PATHCONF])dnl
 AC_SUBST([STLIB_LD])dnl
 AC_SUBST([SHLIB_LD])dnl
@@ -603,7 +660,7 @@ AC_SUBST([OUR_INCLUDED_PACKAGES])dnl
 # misc variables that need to be expanded for substitution into tcl
 
 oldprefix=${prefix}
-if test "x${prefix}" = "xNONE" ; then
+if test "x${prefix}" = "xNONE"; then
    prefix=${ac_default_prefix}
 fi
 

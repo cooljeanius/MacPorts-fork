@@ -13,7 +13,7 @@ SWIG_OBJS  = ${SWIG_SRCS:%.c=%.o}
 TESTS = ./tests/libmachista-test
 
 include ../../Mk/macports.autoconf.mk.am
-include ../../Mk/macports.tea.mk
+@ifGNUmake@include ../../Mk/macports.tea.mk
 
 CFLAGS+= -fPIC -std=c99 -pedantic
 
@@ -39,7 +39,7 @@ clean-local::
 	rm -f ${SWIG_OBJS} ${PKG_INDEX}
 	rm -f ${TESTS}
 	rm -rf ${TESTS:%=%.dSYM}
-distclean-local: clean-local
+distclean-local:: clean-local
 
 test:: ${TESTS}
 	${TESTS}

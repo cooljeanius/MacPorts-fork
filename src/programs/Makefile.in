@@ -4,5 +4,5 @@ SUBDIR=	@EXTRA_PROGS@
 
 include ../../Mk/macports.subdir.mk
 
-distclean::
+distclean-local:: Makefile
 	rm -f Makefile

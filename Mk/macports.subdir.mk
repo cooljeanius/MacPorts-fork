@@ -2,7 +2,7 @@
 
 .PHONY : all-local
 .PHONY : clean distclean
-.PHONY : install
+.PHONY : install-data-and-exec-local
 
 all-local::
 	@for subdir in $(SUBDIR); do\
@@ -22,7 +22,7 @@ test::
 		( cd $$subdir && $(MAKE) DIRPRFX=${DIRPRFX}$$subdir/ $@) || exit 1; \
 	done
 
-install::
+install-data-and-exec-local::
 	@for subdir in $(SUBDIR); do\
 		echo ===\> making $@ in ${DIRPRFX}$$subdir; \
 		( cd $$subdir && $(MAKE) DIRPRFX=${DIRPRFX}$$subdir/ $@) || exit 1; \

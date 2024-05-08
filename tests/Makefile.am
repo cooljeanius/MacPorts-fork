@@ -4,9 +4,9 @@ TESTS?=checksums-1 svn-and-patchsites envvariables site-tags trace universal uni
 
 PWD=$(shell pwd)
 
-.PHONY: all clean install test PortIndex
+.PHONY: all-local clean-local install-data-and-exec-local test PortIndex
 
-all::
+all-local::
 
 /tmp/macports-tests/opt/local/etc/macports/sources.conf: sources.conf
 	@echo setting up test installation
@@ -27,7 +27,7 @@ all::
 PortIndex:
 	$(bindir)/portindex
 
-clean::
+clean-local::
 	rm -rf /tmp/macports-tests/
 	rm -f PortIndex PortIndex.quick
 	for testname in $(TESTS); do \
@@ -81,6 +81,6 @@ test:: clean /tmp/macports-tests/ports/PortIndex /tmp/macports-tests/opt/local/e
 test-%:
 	$(MAKE) TESTS="$(@:test-%=%)" test
 
-install::
+install-data-and-exec-local::
 
-distclean:: clean
+distclean-local:: clean-local

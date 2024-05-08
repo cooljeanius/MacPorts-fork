@@ -11,6 +11,7 @@ SUBDIR=		${TCLPKG} port programs
 
 all-local::
 
+clean-local:: Makefile
 distclean-local::
 	rm -f config.h
 	rm -f Makefile
