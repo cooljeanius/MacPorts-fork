@@ -141,7 +141,7 @@ AM_CPPFLAGS	= @PKG_INCLUDES@ @TCL_INCLUDES@
 PKG_CFLAGS	= @PKG_CFLAGS@
 
 # TCL_DEFS is not strictly need here, but if you remove it, then you
-# must make sure that configure.in checks for the necessary components
+# must make sure that configure.ac checks for the necessary components
 # that your library may use.  TCL_DEFS can actually be a problem if
 # you do not compile with a similar machine setup as the Tcl core was
 # compiled with.
@@ -149,6 +149,7 @@ OTHER_DEFS	= $(TCL_DEFS) @DEFS@ $(PKG_CFLAGS)
 DEFS		= @DEFS@ $(PKG_CFLAGS)
 
 CONFIG_CLEAN_FILES = Makefile pkgIndex.tcl
+DISTCLEANFILES = *~ *.o stamp-h1 *.dylib *.log *.status
 
 CPPFLAGS	= @CPPFLAGS@
 LIBS		= @PKG_LIBS@ @LIBS@
@@ -270,7 +271,7 @@ VPATH = $(srcdir):$(srcdir)/generic:$(srcdir)/unix:$(srcdir)/win
 # It is usually easiest to let Tcl do this for you with pkg_mkIndex, but
 # you may find that you need to customize the package.  If so, either
 # modify the -hand version, or create a pkgIndex.tcl.in file and have
-# the configure script output the pkgIndex.tcl by editing configure.in.
+# the configure script output the pkgIndex.tcl by editing configure.ac.
 #========================================================================
 
 pkgIndex.tcl-local:
@@ -300,7 +301,7 @@ dist-local: dist-clean
         $(srcdir)/*.in \
 		$(DIST_DIR)/
 	chmod 664 $(DIST_DIR)/Makefile.in $(DIST_DIR)/aclocal.m4
-	chmod 775 $(DIST_DIR)/configure $(DIST_DIR)/configure.in
+	chmod 775 $(DIST_DIR)/configure $(DIST_DIR)/configure.ac
 
 	mkdir $(DIST_DIR)/tclconfig
 	cp $(srcdir)/tclconfig/install-sh $(srcdir)/tclconfig/tcl.m4 \
@@ -341,7 +342,7 @@ dist-local: dist-clean
 
 #========================================================================
 # Don't modify the file to clean here.  Instead, set the "CLEANFILES"
-# variable in configure.in
+# variable in configure.ac
 #========================================================================
 
 clean-local:  
@@ -353,6 +354,7 @@ distclean-local: clean-local
 	-rm -f *.tab.c
 	-rm -f $(CONFIG_CLEAN_FILES)
 	-rm -f config.cache config.log config.status
+	-rm -rf autom4te.cache || rmdir autom4te.cache
 
 #========================================================================
 # Install binary object libraries.  On Windows this includes both .dll and

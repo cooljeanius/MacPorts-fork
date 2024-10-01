@@ -25,6 +25,7 @@ clean-local::
 	rm -f ${STLIB_NAME} ${SQLEXT_NAME} ${SQLEXT_OBJS} ${OBJS}
 
 distclean-local:: clean-local
+	-rm -rf *.dSYM || rmdir *.dSYM || find . -name '*.dSYM' -delete
 
 test:
 
