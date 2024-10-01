@@ -287,7 +287,7 @@ TpoolCreateObjCmd(dummy, interp, objc, objv)
     SpliceIn(tpoolPtr, tpoolList);
     Tcl_MutexUnlock(&listMutex);
 
-    sprintf(buf, "%s%p", TPOOL_HNDLPREFIX, tpoolPtr);
+    snprintf(buf, sizeof(buf), "%s%p", TPOOL_HNDLPREFIX, tpoolPtr);
     Tcl_SetObjResult(interp, Tcl_NewStringObj(buf, -1));
 
     return TCL_OK;
