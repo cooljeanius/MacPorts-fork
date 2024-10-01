@@ -96,7 +96,7 @@ jobs:
         sudo apt-get -y install mtree-netbsd gobjc gobjc++ gobjc-multilib \
           gobjc++-multilib gobjc-9 gobjc-9-multilib libgnustep-base-dev \
           gnustep-core-devel clang-14 clang gnustep gnustep-devel \
-          gnustep-examples
+          gnustep-examples curl libcurl4-gnutls-dev
 
     - name: Autobuild
       uses: github/codeql-action/autobuild@v3
