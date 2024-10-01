@@ -727,7 +727,11 @@ install(Tcl_Interp *interp, const char *from_name, const char *to_name, u_long f
 			char errmsg[255];
 
 			serrno = errno;
+#if defined(HAVE_UNLINKAT) && defined(AT_EMPTY_PATH)
+			(void)unlinkat(to_fd, "", AT_EMPTY_PATH);
+#else
 			(void)unlink(to_name);
+#endif /* HAVE_UNLINKAT && AT_EMPTY_PATH */
 			errno = serrno;
 			snprintf(errmsg, sizeof errmsg, "%s: chown/chgrp %s, %s",
 				 funcname, to_name, strerror(errno));
