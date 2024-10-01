@@ -500,7 +500,7 @@ AC_CHECK_FUNCS([OSAtomicCompareAndSwap32 OSAtomicCompareAndSwap64 \
                 mkdir munmap posix_spawn printf realpath regcomp rmdir \
                 select setenv setmode socket strcasecmp strchr strdup \
                 strerror strlcat strlcpy strncasecmp strrchr strstr \
-                strtol strtoul sysctlbyname system utime])
+                strtol strtoul sysctlbyname system unlinkat utime])
 AC_SUBST([ac_cv_func_strlcat])dnl
 
 MP_CHECK_READLINK_IS_P1003_1A
