@@ -698,7 +698,8 @@ install(Tcl_Interp *interp, const char *from_name, const char *to_name, u_long f
 		char errmsg[255];
 
 		serrno = errno;
-		(void)unlink(to_name);
+		(void)ftruncate(to_fd, 0);
+		(void)close(to_fd);
 		errno = serrno;
 		snprintf(errmsg, sizeof errmsg, "%s: Cannot stat %s, %s",
 			 funcname, to_name, strerror(errno));
@@ -739,7 +740,8 @@ install(Tcl_Interp *interp, const char *from_name, const char *to_name, u_long f
 			char errmsg[255];
 
 			serrno = errno;
-			(void)unlink(to_name);
+			(void)ftruncate(to_fd, 0);
+			(void)close(to_fd);
 			errno = serrno;
 			snprintf(errmsg, sizeof errmsg, "%s: chmod %s, %s",
 				 funcname, to_name, strerror(errno));
