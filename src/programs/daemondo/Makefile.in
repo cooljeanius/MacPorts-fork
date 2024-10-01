@@ -30,8 +30,8 @@ mkdirs:
 clean:
 	rm -Rf build ${PROGRAM} ${OBJS}
 
-distclean: clean
-	rm -f Makefile
+distclean distclean-local: clean
+	-rm -f Makefile
 
 install: daemondo
 	${INSTALL} -o ${DSTUSR} -g ${DSTGRP} -m 555 ${PROGRAM} ${DESTDIR}${bindir}

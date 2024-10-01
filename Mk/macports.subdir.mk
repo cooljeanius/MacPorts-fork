@@ -12,8 +12,12 @@ all-local::
 
 clean-local distclean-local::
 	@for subdir in $(SUBDIR); do\
+	  if test -e $${subdir}/Makefile && test -r $${subdir}/Makefile; then \
 		echo ===\> making $@ in ${DIRPRFX}$$subdir; \
 		( cd $$subdir && $(MAKE) DIRPRFX=${DIRPRFX}$$subdir/ $@) || exit 1; \
+	  else \
+	    echo "skipping making $@ in $${subdir} due to missing or unreadable Makefile"; \
+	  fi; \
 	done
 
 test::

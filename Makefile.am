@@ -15,6 +15,7 @@ DISTARCNAME	= ${DISTNAME}-archive
 SVNURL		= https://svn.macports.org/repository/macports
 TCLDOC		= @TCLDOC@
 
+DISTCLEANFILES = *~ *.log
 
 include Mk/macports.autoconf.mk.am
 
