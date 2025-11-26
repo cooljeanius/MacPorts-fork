@@ -19,8 +19,8 @@ jobs:
       - run: |
           sudo apt-get install autotools-dev debhelper gobjc gobjc++ \
             gobjc-multilib gobjc++-multilib gobjc-9 libgnustep-base-dev \
-            gnustep-core-devel sqlite sqlite3 libsqlite3-dev openssl curl \
-            libcurl4-gnutls-dev tcl8.6 tcl tcl-dev tcl-doc tclthread \
+            gnustep-core-devel sqlite3 libsqlite3-0 libsqlite3-dev libsqlite3-tcl \
+            openssl curl libcurl4-gnutls-dev tcl8.6 tcl tcl-dev tcl-doc tclthread \
             tclreadline mtree-netbsd binutils libc6-dev perl doxygen swig cvs \
             ed pax rlwrap gobjc-9-multilib bmake pmake bzr tcldoc xattr \
             libc-devtools clang-14 clang gnustep gnustep-devel \
