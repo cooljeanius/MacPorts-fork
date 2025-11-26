@@ -19,12 +19,14 @@ on:
       - autofix/alert-*
       - cooljeanius-patch-*
       - dependabot/*
+      - github_actions/*
   pull_request:
     branches:
       - master
       - autofix/alert-*
       - cooljeanius-patch-*
       - dependabot/*
+      - github_actions/*
   schedule:
     - cron: '40 0 * * 4'
 
@@ -53,6 +55,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          - language: actions
+            build-mode: none
           - language: c-cpp
             build-mode: autobuild
             # CodeQL supports the following values keywords for 'language':
