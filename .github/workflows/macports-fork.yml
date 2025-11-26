@@ -33,13 +33,15 @@ jobs:
             libc6-dev-amd64-cross libgcc-s1-amd64-cross libtbb-dev libfl-dev \
             libieee1284-3-dev
           # warning: installing libmd-dev w/these deps can lead to build errors
-      - run: (if test -d /usr/lib/freebsd; then export PATH=${PATH}:/usr/lib/freebsd; elif test -e /usr/lib/freebsd; then stat /usr/lib/freebsd; else sync && sleep 1; fi) && env | uniq | sort | uniq
+      - run: (if test -d /usr/lib/freebsd; then export PATH=${PATH}:/usr/lib/freebsd; elif test -e /usr/lib/freebsd; then stat /usr/lib/freebsd; else sync && sleep 1; fi) && env | uniq | sort | uniq | grep -v "\*\*\*" | grep -v "PWD\="
       - run: "(./configure --with-objc-runtime=GNU --with-objc-foundation=GNU --enable-silent-rules --enable-symbols --enable-readline --without-startupitems || ./configure --disable-maintainer-mode --disable-symbols --disable-readline --without-startupitems || (test -e configure-chrooted.sh && sh ./configure-chrooted.sh) || (test -e configure.sh && sh ./configure.sh))"
         env:
           CC: ${{ matrix.compiler }}
+          CFLAGS: "-Wno-error=implicit-function-declaration"
       - run: if test -e Makefile; then make; elif test -e Makefile_orig; then make -f Makefile_orig; elif test -e Doxyfile; then doxygen; else echo "nothing to make!" >&2 && exit 1; fi
         env:
           CC: ${{ matrix.compiler }}
+          CFLAGS: "-Wno-error=implicit-function-declaration"
       - run: pwd && sync && (make test || make check) && sync && sleep 1
         if: "${{ success() }}"
       - run: if test -r config.log; then cat config.log && sync && wc -l config.log; elif test -e config.log; then stat config.log; else ls -AR; fi; sync; sleep 3
