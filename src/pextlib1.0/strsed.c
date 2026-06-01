@@ -455,7 +455,7 @@ int *range;
     if (!(from = backslash_eliminate(from, REGEX, MEM_FROM))){
         RETURN(0);
     }
-    if (to && !(to = backslash_eliminate(to, REPLACEMENT, MEM_TO))){
+    if (!(to = backslash_eliminate(to, REPLACEMENT, MEM_TO))){
         RETURN(0);
     }
     
