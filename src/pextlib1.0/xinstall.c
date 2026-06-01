@@ -443,12 +443,22 @@ install(Tcl_Interp *interp, const char *from_name, const char *to_name, u_long f
 
 	/* If try to install NULL file to a directory, fails. */
 	if (flags & DIRECTORY || strcmp(from_name, _PATH_DEVNULL)) {
-		if (stat(from_name, &from_sb)) {
+		if ((from_fd = open(from_name, O_RDONLY, 0)) < 0) {
+			char errmsg[255];
+
+			snprintf(errmsg, sizeof errmsg, "%s: Unable to open: %s, %s",
+				 funcname, from_name, strerror(errno));
+			Tcl_SetResult(interp, errmsg, TCL_VOLATILE);
+			return TCL_ERROR;
+		}
+		if (fstat(from_fd, &from_sb)) {
 			char errmsg[255];
 
 			snprintf(errmsg, sizeof errmsg, "%s: Cannot stat: %s, %s",
 				 funcname, from_name, strerror(errno));
 			Tcl_SetResult(interp, errmsg, TCL_VOLATILE);
+			close(from_fd);
+			from_fd = 0;
 			return TCL_ERROR;
 		}
 		if (!S_ISREG(from_sb.st_mode)) {
@@ -458,6 +468,8 @@ install(Tcl_Interp *interp, const char *from_name, const char *to_name, u_long f
 				 funcname, from_name);
 			Tcl_SetResult(interp, errmsg, TCL_VOLATILE);
 			errno = EINVAL;
+			close(from_fd);
+			from_fd = 0;
 			return TCL_ERROR;
 		}
 		/* Build the target path. */
@@ -487,14 +499,7 @@ install(Tcl_Interp *interp, const char *from_name, const char *to_name, u_long f
 	/* Only copy safe if the target exists. */
 	tempcopy = safecopy && target;
 
-	if (!devnull && (from_fd = open(from_name, O_RDONLY, 0)) < 0) {
-		char errmsg[255];
-
-		snprintf(errmsg, sizeof errmsg, "%s: Unable to open: %s, %s",
-			 funcname, from_name, strerror(errno));
-		Tcl_SetResult(interp, errmsg, TCL_VOLATILE);
-		return TCL_ERROR;
-	}
+	/* from_fd already opened and validated above when !devnull. */
 
 	/* If we don't strip, we can compare first. */
 	if (docompare && !dostrip && target) {
