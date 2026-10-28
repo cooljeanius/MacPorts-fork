@@ -100,7 +100,7 @@ jobs:
         sudo apt-get -qq update
         sudo apt-get -y install mtree-netbsd gobjc gobjc++ gobjc-multilib \
           gobjc++-multilib gobjc-11 gobjc-11-multilib libgnustep-base-dev \
-          gnustep-core-devel clang-16 clang gnustep gnustep-devel \
+          gnustep-core-devel clang-17 clang gnustep gnustep-devel \
           gnustep-examples curl libcurl4-gnutls-dev
 
     - name: Autobuild
