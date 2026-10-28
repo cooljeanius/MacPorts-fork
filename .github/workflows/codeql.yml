@@ -95,11 +95,12 @@ jobs:
         # queries: security-extended,security-and-quality
 
     - name: dependencies
+      if: matrix.language == 'c-cpp'
       run: |
         sudo apt-get -qq update
         sudo apt-get -y install mtree-netbsd gobjc gobjc++ gobjc-multilib \
-          gobjc++-multilib gobjc-9 gobjc-9-multilib libgnustep-base-dev \
-          gnustep-core-devel clang-14 clang gnustep gnustep-devel \
+          gobjc++-multilib gobjc-10 gobjc-10-multilib libgnustep-base-dev \
+          gnustep-core-devel clang-15 clang gnustep gnustep-devel \
           gnustep-examples curl libcurl4-gnutls-dev
 
     - name: Autobuild
